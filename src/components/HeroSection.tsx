@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Rocket } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
 
 export const HeroSection = () => {
   return (
@@ -12,6 +13,7 @@ export const HeroSection = () => {
             className="w-full h-auto"
           />
         </div>
+        <Separator className="bg-black my-6" />
         <div className="max-w-3xl mx-auto text-center animate-fade-up">
           <p className="text-xl md:text-2xl mb-6 font-manrope">
             Transform your B2B SaaS journey with expert product consulting that drives growth and innovation
