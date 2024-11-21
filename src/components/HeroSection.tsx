@@ -19,7 +19,7 @@ export const HeroSection = () => {
           </p>
           <Button 
             size="lg" 
-            className="bg-[#F49040] text-white hover:bg-[#F49040]/90 font-manrope"
+            className="bg-black text-white hover:bg-black/90 font-manrope"
           >
             <Rocket className="mr-2 h-5 w-5" />
             Schedule a Consultation
