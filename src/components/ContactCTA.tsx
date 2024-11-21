@@ -3,18 +3,18 @@ import { Mail } from "lucide-react";
 
 export const ContactCTA = () => {
   return (
-    <section className="py-20 bg-black">
+    <section className="py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white font-manrope">
+          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black font-manrope">
             Ready to Transform Your Business?
           </h2>
-          <p className="text-xl text-white mb-8 font-manrope">
+          <p className="text-xl text-black mb-8 font-manrope">
             Let's discuss how we can help you achieve your business goals
           </p>
           <Button 
             size="lg"
-            className="bg-[#F49040] text-white hover:bg-[#F49040]/90 font-manrope mb-12"
+            className="bg-black text-white hover:bg-black/90 font-manrope mb-12"
           >
             <Mail className="mr-2 h-5 w-5" />
             Contact Us Now
