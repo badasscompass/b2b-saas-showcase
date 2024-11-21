@@ -14,11 +14,18 @@ export const ContactCTA = () => {
           </p>
           <Button 
             size="lg"
-            className="bg-[#F49040] text-white hover:bg-[#F49040]/90 font-manrope"
+            className="bg-[#F49040] text-white hover:bg-[#F49040]/90 font-manrope mb-12"
           >
             <Mail className="mr-2 h-5 w-5" />
             Contact Us Now
           </Button>
+          <div className="flex justify-center">
+            <img 
+              src="/lovable-uploads/ac928757-746d-4571-b2f0-de32e4c5470e.png"
+              alt="LMN3 Logo"
+              className="w-24 h-24"
+            />
+          </div>
         </div>
       </div>
     </section>
