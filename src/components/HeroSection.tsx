@@ -3,14 +3,23 @@ import { Rocket } from "lucide-react";
 
 export const HeroSection = () => {
   return (
-    <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/lovable-uploads/9e02f633-1ab0-44d5-9c81-769877a0e184.png')] opacity-10 bg-center bg-no-repeat bg-contain" />
-      <div className="container mx-auto px-4 relative">
-        <div className="max-w-3xl mx-auto text-center animate-fade-up mt-20">
-          <p className="text-xl md:text-2xl text-foreground/90 mb-12">
+    <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#EA3E3A] to-[#FFF33B]">
+      <div className="container mx-auto px-4 relative flex flex-col items-center justify-center space-y-12">
+        <div className="w-full max-w-[300px] relative">
+          <img 
+            src="/lovable-uploads/9e02f633-1ab0-44d5-9c81-769877a0e184.png" 
+            alt="Logo" 
+            className="w-full h-auto"
+          />
+        </div>
+        <div className="max-w-3xl mx-auto text-center animate-fade-up">
+          <p className="text-xl md:text-2xl text-white mb-12 font-manrope">
             Transform your B2B SaaS journey with expert product consulting that drives growth and innovation
           </p>
-          <Button size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90">
+          <Button 
+            size="lg" 
+            className="bg-[#F49040] text-white hover:bg-[#F49040]/90 font-manrope"
+          >
             <Rocket className="mr-2 h-5 w-5" />
             Schedule a Consultation
           </Button>
