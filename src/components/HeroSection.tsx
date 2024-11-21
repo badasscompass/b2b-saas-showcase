@@ -5,10 +5,10 @@ export const HeroSection = () => {
   return (
     <section className="min-h-[80vh] flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-[#EA3E3A] to-[#FFF33B]">
       <div className="container mx-auto px-4 relative flex flex-col items-center justify-center space-y-12">
-        <div className="w-full max-w-[300px] relative">
+        <div className="w-full max-w-[600px] relative">
           <img 
-            src="/lovable-uploads/9e02f633-1ab0-44d5-9c81-769877a0e184.png" 
-            alt="Logo" 
+            src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png" 
+            alt="LMN3 Logo" 
             className="w-full h-auto"
           />
         </div>
