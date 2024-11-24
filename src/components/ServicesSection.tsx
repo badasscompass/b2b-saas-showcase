@@ -9,14 +9,14 @@ export const ServicesSection = () => {
       description: "Transform your vision to ready to launch products",
     },
     {
-      icon: <Users className="h-12 w-12" style={{ stroke: "url(#gradient)" }} />,
-      title: "User Experience",
-      description: "Create intuitive experiences that delight users and drive adoption",
-    },
-    {
       icon: <Cog className="h-12 w-12" style={{ stroke: "url(#gradient)" }} />,
       title: "Strategic Advisory",
       description: "Providing guidance to early-stage founders in proofing their value prop and positioning",
+    },
+    {
+      icon: <Users className="h-12 w-12" style={{ stroke: "url(#gradient)" }} />,
+      title: "User Experience",
+      description: "Create intuitive experiences that delight users and drive adoption",
     },
   ];
 
