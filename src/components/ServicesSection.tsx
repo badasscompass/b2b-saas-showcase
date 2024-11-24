@@ -24,7 +24,7 @@ export const ServicesSection = () => {
     <section className="py-20 bg-[#F6F6F7]">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Expertise</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <svg width="0" height="0">
             <defs>
               <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -34,11 +34,13 @@ export const ServicesSection = () => {
             </defs>
           </svg>
           {services.map((service, index) => (
-            <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow h-full">
-              <CardHeader className="text-center">
-                <div className="mb-4 flex justify-center">{service.icon}</div>
-                <CardTitle className="mb-2">{service.title}</CardTitle>
-                <CardDescription>{service.description}</CardDescription>
+            <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
+              <CardHeader className="text-center flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="mb-4 flex justify-center">{service.icon}</div>
+                  <CardTitle className="mb-2">{service.title}</CardTitle>
+                  <CardDescription>{service.description}</CardDescription>
+                </div>
               </CardHeader>
             </Card>
           ))}
