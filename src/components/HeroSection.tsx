@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Rocket } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 
 export const HeroSection = () => {
   return (
@@ -19,13 +18,12 @@ export const HeroSection = () => {
           </p>
           <Button 
             size="lg" 
-            className="bg-black text-white hover:bg-black/90 font-manrope"
+            className="bg-[#EA3E3A] text-white hover:bg-[#FF7A00] font-manrope transition-colors"
           >
             <Rocket className="mr-2 h-5 w-5" />
             Schedule a Consultation
           </Button>
         </div>
-        <Separator className="bg-black" />
       </div>
     </section>
   );
