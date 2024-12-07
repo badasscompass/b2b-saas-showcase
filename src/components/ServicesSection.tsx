@@ -25,6 +25,14 @@ export const ServicesSection = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Expertise</h2>
         <div className="flex flex-col items-center gap-6">
+          <svg width="0" height="0">
+            <defs>
+              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style={{ stopColor: "#EA3E3A" }} />
+                <stop offset="100%" style={{ stopColor: "#FFF33B" }} />
+              </linearGradient>
+            </defs>
+          </svg>
           <div className="w-full md:w-1/2">
             <Card className="border-none shadow-lg hover:shadow-xl transition-shadow flex flex-col h-full">
               <CardHeader className="text-center flex-1 flex flex-col justify-between">
