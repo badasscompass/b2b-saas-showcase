@@ -11,7 +11,7 @@ export const ServicesSection = () => {
     {
       icon: <Cog className="h-12 w-12" style={{ stroke: "url(#gradient)" }} />,
       title: "Strategic Advisory",
-      description: "Providing guidance to early-stage founders in proofing their value prop and positioning",
+      description: "Guiding early-stage founders in defining their value proposition and positioning",
     },
     {
       icon: <Users className="h-12 w-12" style={{ stroke: "url(#gradient)" }} />,
