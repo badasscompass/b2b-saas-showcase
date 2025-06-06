@@ -11,8 +11,8 @@ const Index = () => {
       <HeroSection />
       <WhoWeServeSection />
       <ServicesSection />
-      <WhyChooseUs />
       <ContactCTA />
+      <WhyChooseUs />
     </main>
   );
 };
