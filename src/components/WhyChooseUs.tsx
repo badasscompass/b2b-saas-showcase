@@ -1,30 +1,71 @@
-import { Check } from "lucide-react";
+
+import { Check, Clock, Users, Target, Zap, Award } from "lucide-react";
 
 export const WhyChooseUs = () => {
+  const reasons = [
+    {
+      icon: <Award className="w-6 h-6" />,
+      title: "Deep B2B SaaS Expertise",
+      description: "Proven track record in B2B SaaS product development and strategy across multiple verticals."
+    },
+    {
+      icon: <Target className="w-6 h-6" />,
+      title: "Successful Digital Transformations", 
+      description: "Led numerous companies through successful digital transformations and product pivots."
+    },
+    {
+      icon: <Users className="w-6 h-6" />,
+      title: "Tailored Solutions",
+      description: "Custom-built strategies and solutions designed for your unique business challenges and goals."
+    },
+    {
+      icon: <Zap className="w-6 h-6" />,
+      title: "Agile Methodology",
+      description: "Fast, iterative approach ensuring faster time-to-market and continuous improvement."
+    },
+    {
+      icon: <Clock className="w-6 h-6" />,
+      title: "Continuous Partnership",
+      description: "Ongoing support and strategic partnership throughout your entire growth journey."
+    }
+  ];
+
   return (
-    <section className="py-20">
+    <section id="why-choose-us" className="py-24 bg-gradient-to-r from-gray-50 to-white">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center font-manrope">
-            Why Choose LMN3 Consulting?
-          </h2>
-          <ul className="space-y-6">
-            {[
-              "Deep expertise in B2B SaaS product development and strategy",
-              "Proven track record of successful digital transformations",
-              "Tailored solutions for your unique business challenges",
-              "Agile methodology for faster time-to-market",
-              "Continuous support and partnership throughout your journey"
-            ].map((item, index) => (
-              <li 
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
+              Why Choose LMN3 Consulting?
+            </h2>
+            <p className="text-xl text-gray-600 font-manrope">
+              We bring the experience, expertise, and execution you need to accelerate your product success.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {reasons.map((reason, index) => (
+              <div 
                 key={index}
-                className="flex items-start space-x-4 p-4 rounded-lg transition-all duration-300 hover:bg-gradient-to-r hover:from-[#EA3E3A] hover:to-[#FFF33B] hover:text-white group"
+                className="group p-6 rounded-xl transition-all duration-300 hover:bg-gradient-to-r hover:from-[#EA3E3A] hover:to-[#F4A42C] hover:text-white hover:shadow-lg hover:-translate-y-1 bg-white shadow-sm border border-gray-100"
               >
-                <Check className="w-6 h-6 text-[#F49040] mt-1 flex-shrink-0 group-hover:text-white" />
-                <span className="text-lg font-manrope">{item}</span>
-              </li>
+                <div className="flex items-start space-x-4">
+                  <div className="text-[#F4A42C] group-hover:text-white transition-colors mt-1">
+                    {reason.icon}
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold font-manrope mb-2 text-gray-900 group-hover:text-white">
+                      {reason.title}
+                    </h3>
+                    <p className="text-gray-600 font-manrope leading-relaxed group-hover:text-white/90">
+                      {reason.description}
+                    </p>
+                  </div>
+                  <Check className="w-6 h-6 text-[#F4A42C] group-hover:text-white transition-colors flex-shrink-0" />
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </section>
