@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Mail, Calendar, ArrowRight } from "lucide-react";
 
@@ -28,17 +27,23 @@ export const ContactCTA = () => {
             <Button 
               size="lg"
               className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4 transition-all hover:scale-105 shadow-lg"
+              asChild
             >
-              <Calendar className="mr-2 h-5 w-5" />
-              Schedule a Consultation
+              <a href="https://calendly.com/iva-rumora/lmn3-discovery" target="_blank" rel="noopener noreferrer">
+                <Calendar className="mr-2 h-5 w-5" />
+                Schedule a Consultation
+              </a>
             </Button>
             <Button 
               size="lg"
               variant="outline"
               className="border-white text-white hover:bg-white hover:text-[#EA3E3A] font-manrope text-lg px-8 py-4 transition-all"
+              asChild
             >
-              <Mail className="mr-2 h-5 w-5" />
-              Email Us
+              <a href="mailto:hello@lmn3.digital">
+                <Mail className="mr-2 h-5 w-5" />
+                Email Us
+              </a>
             </Button>
           </div>
 

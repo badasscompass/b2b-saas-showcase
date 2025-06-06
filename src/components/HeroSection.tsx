@@ -57,16 +57,12 @@ export const HeroSection = () => {
               <Button 
                 size="lg" 
                 className="bg-[#EA3E3A] text-white hover:bg-[#F4A42C] font-manrope text-lg px-8 py-4 transition-all hover:scale-105"
+                asChild
               >
-                <Rocket className="mr-2 h-5 w-5" />
-                Schedule a Consultation
-              </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white font-manrope text-lg px-8 py-4"
-              >
-                View Our Work
+                <a href="https://calendly.com/iva-rumora/lmn3-discovery" target="_blank" rel="noopener noreferrer">
+                  <Rocket className="mr-2 h-5 w-5" />
+                  Schedule a Consultation
+                </a>
               </Button>
             </div>
           </div>
