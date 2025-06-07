@@ -61,7 +61,7 @@ export const HeroSection = () => {
               >
                 <a href="https://calendly.com/iva-rumora/lmn3-discovery" target="_blank" rel="noopener noreferrer">
                   <Rocket className="mr-2 h-5 w-5" />
-                  Schedule a Consultation
+                  Get a Free Discovery Session
                 </a>
               </Button>
             </div>

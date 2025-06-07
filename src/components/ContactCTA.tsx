@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Mail, Calendar, ArrowRight } from "lucide-react";
 
@@ -37,8 +36,7 @@ export const ContactCTA = () => {
             </Button>
             <Button 
               size="lg"
-              variant="outline"
-              className="border-2 border-white text-white hover:bg-white hover:text-[#EA3E3A] font-manrope text-lg px-8 py-4 transition-all"
+              className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4 transition-all shadow-lg"
               asChild
             >
               <a href="mailto:hello@lmn3.digital">
