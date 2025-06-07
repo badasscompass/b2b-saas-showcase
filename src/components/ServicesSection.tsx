@@ -2,6 +2,7 @@
 import { Rocket, Users, Cog, ArrowRight } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export const ServicesSection = () => {
   const services = [
@@ -10,21 +11,24 @@ export const ServicesSection = () => {
       title: "Product Development",
       subtitle: "From MVP to Scale",
       description: "Transform your vision into ready-to-launch products with proven development processes and senior product expertise.",
-      features: ["MVP Strategy & Development", "Product Roadmapping", "Technical Architecture", "User Testing & Validation"]
+      features: ["MVP Strategy & Development", "Product Roadmapping", "Technical Architecture", "User Testing & Validation"],
+      link: "/product-development"
     },
     {
       icon: <Cog className="h-12 w-12 text-[#F4A42C]" />,
       title: "Strategic Advisory",
       subtitle: "Clear Direction & Positioning",
       description: "Guide early-stage founders in defining their value proposition, market positioning, and go-to-market strategy.",
-      features: ["Value Proposition Design", "Market Positioning", "Competitive Analysis", "GTM Strategy"]
+      features: ["Value Proposition Design", "Market Positioning", "Competitive Analysis", "GTM Strategy"],
+      link: "#"
     },
     {
       icon: <Users className="h-12 w-12 text-[#EA3E3A]" />,
       title: "User Experience",
       subtitle: "Intuitive & Conversion-Focused",
       description: "Create intuitive experiences that delight users and drive adoption through data-driven design decisions.",
-      features: ["UX/UI Design", "User Research", "Conversion Optimization", "Design Systems"]
+      features: ["UX/UI Design", "User Research", "Conversion Optimization", "Design Systems"],
+      link: "#"
     },
   ];
 
@@ -66,12 +70,24 @@ export const ServicesSection = () => {
                     </li>
                   ))}
                 </ul>
-                <Button 
-                  variant="outline" 
-                  className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white group-hover:bg-[#EA3E3A] group-hover:text-white transition-all"
-                >
-                  Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                {service.link === "#" ? (
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white group-hover:bg-[#EA3E3A] group-hover:text-white transition-all"
+                  >
+                    Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                ) : (
+                  <Button 
+                    variant="outline" 
+                    className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white group-hover:bg-[#EA3E3A] group-hover:text-white transition-all"
+                    asChild
+                  >
+                    <Link to={service.link}>
+                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                )}
               </CardContent>
             </Card>
           ))}
