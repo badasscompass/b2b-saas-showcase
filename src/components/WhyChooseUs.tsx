@@ -10,8 +10,8 @@ export const WhyChooseUs = () => {
     },
     {
       icon: <Target className="w-6 h-6" />,
-      title: "Successful Digital Transformations", 
-      description: "Led numerous companies through successful digital transformations and product pivots."
+      title: "Product Leadership Track Record", 
+      description: "Extensive experience leading product teams through successful launches, pivots, and scaling initiatives."
     },
     {
       icon: <Users className="w-6 h-6" />,
