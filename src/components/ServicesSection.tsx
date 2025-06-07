@@ -1,5 +1,5 @@
 
-import { Rocket, Users, Cog, ArrowRight } from "lucide-react";
+import { Rocket, Users, Cog, ArrowRight, Target } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -27,12 +27,12 @@ export const ServicesSection = () => {
       borderColor: "border-[#F4A42C]/20"
     },
     {
-      icon: <Users className="h-12 w-12 text-[#EA3E3A]" />,
-      title: "User Experience",
-      subtitle: "Intuitive & Conversion-Focused",
-      description: "Create intuitive experiences that delight users and drive adoption through data-driven design decisions.",
-      features: ["UX/UI Design", "User Research", "Conversion Optimization", "Design Systems"],
-      link: "#",
+      icon: <Target className="h-12 w-12 text-[#EA3E3A]" />,
+      title: "Product Marketing & GTM",
+      subtitle: "Strategy to Scale",
+      description: "Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine.",
+      features: ["Value Proposition & Messaging", "Market Segmentation", "GTM Planning & Execution", "Sales Enablement & Metrics"],
+      link: "/product-marketing-gtm",
       gradient: "from-[#EA3E3A]/10 to-[#F4A42C]/10",
       borderColor: "border-[#EA3E3A]/20"
     },
@@ -79,24 +79,15 @@ export const ServicesSection = () => {
                     </li>
                   ))}
                 </ul>
-                {service.link === "#" ? (
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white group-hover:bg-[#EA3E3A] group-hover:text-white transition-all text-sm md:text-base"
-                  >
+                <Button 
+                  variant="outline" 
+                  className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white group-hover:bg-[#EA3E3A] group-hover:text-white transition-all text-sm md:text-base"
+                  asChild
+                >
+                  <Link to={service.link}>
                     Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                ) : (
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white group-hover:bg-[#EA3E3A] group-hover:text-white transition-all text-sm md:text-base"
-                    asChild
-                  >
-                    <Link to={service.link}>
-                      Learn More <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                )}
+                  </Link>
+                </Button>
               </CardContent>
             </Card>
           ))}

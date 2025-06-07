@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Index from "./pages/Index";
 import ProductDevelopment from "./pages/ProductDevelopment";
 import StrategicAdvisory from "./pages/StrategicAdvisory";
+import ProductMarketingGTM from "./pages/ProductMarketingGTM";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/product-development" element={<ProductDevelopment />} />
           <Route path="/strategic-advisory" element={<StrategicAdvisory />} />
+          <Route path="/product-marketing-gtm" element={<ProductMarketingGTM />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
