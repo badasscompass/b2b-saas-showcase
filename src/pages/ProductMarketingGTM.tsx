@@ -1,8 +1,13 @@
 
 import { Navigation } from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Target, Users, Rocket, BarChart3, CheckCircle, Calendar } from "lucide-react";
+import { PageHero } from "@/components/PageHero";
+import { SectionHeader } from "@/components/SectionHeader";
+import { ServiceCard } from "@/components/ServiceCard";
+import { ProcessStep } from "@/components/ProcessStep";
+import { SuccessMetric } from "@/components/SuccessMetric";
+import { PageCTA } from "@/components/PageCTA";
+import { PageFooter } from "@/components/PageFooter";
+import { Target, Users, Rocket, BarChart3 } from "lucide-react";
 
 const ProductMarketingGTM = () => {
   const whatWeDo = [
@@ -69,118 +74,60 @@ const ProductMarketingGTM = () => {
     <>
       <Navigation />
       <main className="min-h-screen pt-20">
-        {/* Hero Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-[#EA3E3A]/5 via-white to-[#F4A42C]/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-manrope text-gray-900">
-                Product Marketing & GTM
-              </h1>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto mb-6"></div>
-              <p className="text-xl md:text-2xl text-gray-600 font-manrope mb-8 leading-relaxed">
-                Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine.
-              </p>
-              <Button className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope text-lg px-8 py-4">
-                <Calendar className="mr-2 h-5 w-5" />
-                Book a GTM Discovery Call
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Product Marketing & GTM"
+          subtitle="Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine."
+          ctaText="Book a GTM Discovery Call"
+        />
 
-        {/* What We Do Section */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                What We Do
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="What We Do" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {whatWeDo.map((item, index) => (
-                <Card key={index} className="border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <CardHeader className="p-6 md:p-8">
-                    <div className="flex items-start space-x-4">
-                      <div className="p-3 bg-white rounded-full shadow-lg border border-gray-100">
-                        {item.icon}
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-xl font-manrope text-gray-900 mb-3">
-                          {item.title}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600 font-manrope leading-relaxed text-base">
-                          {item.description}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                </Card>
+                <ServiceCard
+                  key={index}
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* How It Works Section */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                How It Works
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="How It Works" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {howItWorks.map((step, index) => (
-                <Card key={index} className="text-center border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardHeader className="p-6">
-                    <div className="w-12 h-12 bg-[#EA3E3A] text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
-                      {step.step}
-                    </div>
-                    <CardTitle className="text-lg font-manrope text-gray-900 mb-3">
-                      {step.title}
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 font-manrope leading-relaxed">
-                      {step.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <ProcessStep
+                  key={index}
+                  step={step.step}
+                  title={step.title}
+                  description={step.description}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* What Success Looks Like Section */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                What Success Looks Like
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="What Success Looks Like" />
             <div className="max-w-3xl mx-auto">
               <div className="grid grid-cols-1 gap-4">
                 {successMetrics.map((metric, index) => (
-                  <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <CheckCircle className="h-6 w-6 text-[#EA3E3A] flex-shrink-0" />
-                    <span className="text-gray-700 font-manrope text-lg">{metric}</span>
-                  </div>
+                  <SuccessMetric key={index} text={metric} />
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Why This Works Section */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                Why This Works
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="Why This Works" />
             <div className="max-w-3xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {whyItWorks.map((reason, index) => (
@@ -194,34 +141,13 @@ const ProductMarketingGTM = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-[#EA3E3A] to-[#F4A42C]">
-          <div className="container mx-auto px-4">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-white">
-                Ready to Transform Your GTM Strategy?
-              </h2>
-              <p className="text-xl text-white font-manrope mb-8 max-w-3xl mx-auto leading-relaxed">
-                Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan.
-              </p>
-              <Button className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4">
-                <Calendar className="mr-2 h-5 w-5" />
-                Book a GTM Discovery Call
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PageCTA
+          title="Ready to Transform Your GTM Strategy?"
+          subtitle="Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan."
+          ctaText="Book a GTM Discovery Call"
+        />
 
-        {/* Footer */}
-        <footer className="py-8 bg-gray-100 border-t border-gray-200">
-          <div className="container mx-auto px-4">
-            <div className="text-center">
-              <p className="text-gray-600 font-manrope text-sm">
-                © 2024 LMN3 Consulting. Launching products that win markets.
-              </p>
-            </div>
-          </div>
-        </footer>
+        <PageFooter tagline="Launching products that win markets." />
       </main>
     </>
   );

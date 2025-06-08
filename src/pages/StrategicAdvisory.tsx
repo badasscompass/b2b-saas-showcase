@@ -1,9 +1,15 @@
 
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowRight, CheckCircle, Target, Users, MessageSquare, TrendingUp, Calendar } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
+import { PageHero } from "@/components/PageHero";
+import { SectionHeader } from "@/components/SectionHeader";
+import { ServiceCard } from "@/components/ServiceCard";
+import { ProcessStep } from "@/components/ProcessStep";
+import { SuccessMetric } from "@/components/SuccessMetric";
+import { PageFooter } from "@/components/PageFooter";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Target, Users, MessageSquare, TrendingUp, CheckCircle, Calendar } from "lucide-react";
 import { ContactCTA } from "@/components/ContactCTA";
 
 const StrategicAdvisory = () => {
@@ -92,96 +98,59 @@ const StrategicAdvisory = () => {
     <>
       <Navigation />
       <main className="min-h-screen pt-20">
-        {/* Hero Section with CTA */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-[#EA3E3A]/5 via-white to-[#F4A42C]/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-manrope text-gray-900">
-                Strategic Advisory
-              </h1>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto mb-6"></div>
-              <p className="text-xl md:text-2xl text-gray-600 font-manrope mb-8 leading-relaxed">
-                Guidance for early-stage founders in defining their value proposition, market positioning, and go-to-market strategy.
-              </p>
-              <Button className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope text-lg px-8 py-4">
-                <Calendar className="mr-2 h-5 w-5" />
-                Book a Strategy Discovery Call
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Strategic Advisory"
+          subtitle="Guidance for early-stage founders in defining their value proposition, market positioning, and go-to-market strategy."
+          ctaText="Book a Strategy Discovery Call"
+        />
 
-        {/* What We Do Section */}
         <section className="py-16 md:py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12 md:mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                  What We Do
-                </h2>
-                <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-              </div>
+              <SectionHeader title="What We Do" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 {services.map((service, index) => (
-                  <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-gray-50 to-white">
-                    <CardHeader className="p-6 md:p-8">
-                      <CardTitle className="font-manrope text-lg md:text-xl text-gray-900 mb-3 md:mb-4">
-                        {index + 1}. {service.title}
-                      </CardTitle>
-                      <CardDescription className="text-gray-600 font-manrope leading-relaxed text-sm md:text-base">
-                        {service.description}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                  <ServiceCard
+                    key={index}
+                    title={service.title}
+                    description={service.description}
+                    index={index}
+                  />
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* How It Works Section - Symmetric Layout */}
         <section className="py-16 md:py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12 md:mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                  How It Works
-                </h2>
-                <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-              </div>
+              <SectionHeader title="How It Works" />
               
-              {/* First Row - 3 elements */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
                 {process.slice(0, 3).map((step, index) => (
-                  <div key={index} className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center text-white mb-4 mx-auto shadow-lg">
-                      {step.icon}
-                    </div>
-                    <h3 className="text-base md:text-lg font-bold font-manrope text-gray-900 mb-2 md:mb-3">
-                      {step.title}
-                    </h3>
-                    <p className="text-gray-600 font-manrope text-xs md:text-sm leading-relaxed">
-                      {step.description}
-                    </p>
-                  </div>
+                  <ProcessStep
+                    key={index}
+                    step={index + 1}
+                    title={step.title}
+                    description={step.description}
+                    icon={step.icon}
+                    layout="icon"
+                  />
                 ))}
               </div>
               
-              {/* Second Row - 2 elements centered */}
               <div className="flex justify-center">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-16 max-w-2xl">
                   {process.slice(3, 5).map((step, index) => (
-                    <div key={index + 3} className="text-center">
-                      <div className="w-16 h-16 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center text-white mb-4 mx-auto shadow-lg">
-                        {step.icon}
-                      </div>
-                      <h3 className="text-base md:text-lg font-bold font-manrope text-gray-900 mb-2 md:mb-3">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600 font-manrope text-xs md:text-sm leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
+                    <ProcessStep
+                      key={index + 3}
+                      step={index + 4}
+                      title={step.title}
+                      description={step.description}
+                      icon={step.icon}
+                      layout="icon"
+                    />
                   ))}
                 </div>
               </div>
@@ -189,41 +158,26 @@ const StrategicAdvisory = () => {
           </div>
         </section>
 
-        {/* Success Outcomes Section */}
         <section className="py-16 md:py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12 md:mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                  What Success Looks Like
-                </h2>
-                <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-              </div>
+              <SectionHeader title="What Success Looks Like" />
               <div className="space-y-3 md:space-y-4 mb-8 md:mb-12">
                 {outcomes.map((outcome, index) => (
-                  <div key={index} className="flex items-start space-x-3 md:space-x-4 bg-gray-50 p-4 md:p-6 rounded-lg hover:bg-gray-100 transition-colors">
-                    <CheckCircle className="w-5 h-5 md:w-6 md:h-6 text-[#F4A42C] flex-shrink-0 mt-0.5" />
-                    <span className="text-base md:text-lg font-manrope text-gray-800 leading-relaxed">{outcome}</span>
-                  </div>
+                  <SuccessMetric key={index} text={outcome} variant="highlight" />
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Client Work Showcase Section */}
         <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-12 md:mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                  Client Work Showcase
-                </h2>
-                <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto mb-6"></div>
-                <p className="text-lg text-gray-600 font-manrope max-w-3xl mx-auto leading-relaxed">
-                  Explore how we've helped companies transform their strategic positioning and go-to-market approach.
-                </p>
-              </div>
+              <SectionHeader 
+                title="Client Work Showcase"
+                subtitle="Explore how we've helped companies transform their strategic positioning and go-to-market approach."
+              />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                 {clientWork.map((work, index) => (
@@ -293,6 +247,7 @@ const StrategicAdvisory = () => {
         </section>
 
         <ContactCTA />
+        <PageFooter />
       </main>
     </>
   );

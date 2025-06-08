@@ -1,8 +1,14 @@
 
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowRight, CheckCircle, Calendar, Target, Users, Zap, Clock } from "lucide-react";
 import { Navigation } from "@/components/Navigation";
+import { PageHero } from "@/components/PageHero";
+import { SectionHeader } from "@/components/SectionHeader";
+import { ServiceCard } from "@/components/ServiceCard";
+import { ProcessStep } from "@/components/ProcessStep";
+import { SuccessMetric } from "@/components/SuccessMetric";
+import { PageCTA } from "@/components/PageCTA";
+import { PageFooter } from "@/components/PageFooter";
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { ArrowRight, Target, Users, Zap, Clock } from "lucide-react";
 
 const ProductDevelopment = () => {
   const services = [
@@ -85,121 +91,63 @@ const ProductDevelopment = () => {
     <>
       <Navigation />
       <main className="min-h-screen pt-20">
-        {/* Hero Section with CTA */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-[#EA3E3A]/5 via-white to-[#F4A42C]/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-manrope text-gray-900">
-                Product Development
-              </h1>
-              <div className="w-24 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto mb-6"></div>
-              <p className="text-xl md:text-2xl text-gray-600 font-manrope mb-8 leading-relaxed">
-                Transform your vision into ready-to-launch products with proven development processes and senior product expertise.
-              </p>
-              <Button className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope text-lg px-8 py-4">
-                <Calendar className="mr-2 h-5 w-5" />
-                Book a Product Strategy Call
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PageHero
+          title="Product Development"
+          subtitle="Transform your vision into ready-to-launch products with proven development processes and senior product expertise."
+          ctaText="Book a Product Strategy Call"
+        />
 
-        {/* What We Do Section */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                What We Do
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="What We Do" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {services.map((service, index) => (
-                <Card key={index} className="border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <CardHeader className="p-6 md:p-8">
-                    <div className="flex items-start space-x-4">
-                      <div className="p-3 bg-white rounded-full shadow-lg border border-gray-100">
-                        {service.icon}
-                      </div>
-                      <div className="flex-1">
-                        <CardTitle className="text-xl font-manrope text-gray-900 mb-3">
-                          {service.title}
-                        </CardTitle>
-                        <CardDescription className="text-gray-600 font-manrope leading-relaxed text-base">
-                          {service.description}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                </Card>
+                <ServiceCard
+                  key={index}
+                  icon={service.icon}
+                  title={service.title}
+                  description={service.description}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* How It Works Section */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                How It Works
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="How It Works" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {process.map((step, index) => (
-                <Card key={index} className="border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300">
-                  <CardHeader className="p-6 md:p-8 text-center">
-                    <div className="w-12 h-12 bg-[#EA3E3A] text-white rounded-full flex items-center justify-center font-bold text-lg mx-auto mb-4">
-                      {index + 1}
-                    </div>
-                    <CardTitle className="text-xl font-manrope text-gray-900 mb-3">
-                      {step.title}
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 font-manrope leading-relaxed text-base">
-                      {step.description}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <ProcessStep
+                  key={index}
+                  step={index + 1}
+                  title={step.title}
+                  description={step.description}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* What Success Looks Like Section */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                What Success Looks Like
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="What Success Looks Like" />
             <div className="max-w-3xl mx-auto">
               <p className="text-xl font-manrope text-gray-700 mb-8 text-center">
                 We help you:
               </p>
               <div className="grid grid-cols-1 gap-4">
                 {outcomes.map((outcome, index) => (
-                  <div key={index} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                    <CheckCircle className="h-6 w-6 text-[#EA3E3A] flex-shrink-0" />
-                    <span className="text-gray-700 font-manrope text-lg">{outcome}</span>
-                  </div>
+                  <SuccessMetric key={index} text={outcome} />
                 ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Client Work Showcase Section */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                Client Work
-              </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
-            </div>
+            <SectionHeader title="Client Work" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {clientWork.map((work, index) => (
                 <Card key={index} className="border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
@@ -222,34 +170,13 @@ const ProductDevelopment = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-16 md:py-24 bg-gradient-to-br from-[#EA3E3A] to-[#F4A42C]">
-          <div className="container mx-auto px-4">
-            <div className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-white">
-                Ready to Build Your Product?
-              </h2>
-              <p className="text-xl text-white font-manrope mb-8 max-w-3xl mx-auto leading-relaxed">
-                From MVP to scale, we'll help you build products that users love and investors fund. Let's discuss your product vision.
-              </p>
-              <Button className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4">
-                <Calendar className="mr-2 h-5 w-5" />
-                Book a Product Strategy Call
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PageCTA
+          title="Ready to Build Your Product?"
+          subtitle="From MVP to scale, we'll help you build products that users love and investors fund. Let's discuss your product vision."
+          ctaText="Book a Product Strategy Call"
+        />
 
-        {/* Footer */}
-        <footer className="py-8 bg-gray-100 border-t border-gray-200">
-          <div className="container mx-auto px-4">
-            <div className="text-center">
-              <p className="text-gray-600 font-manrope text-sm">
-                © 2024 LMN3 Consulting. Building products that scale.
-              </p>
-            </div>
-          </div>
-        </footer>
+        <PageFooter tagline="Building products that scale." />
       </main>
     </>
   );
