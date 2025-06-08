@@ -19,8 +19,7 @@ export const HeroSection = () => {
           <div className="text-center space-y-8 animate-fade-up">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-manrope text-gray-900 leading-tight">
               Senior product leadership for 
-              <span className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent">
-fast-moving B2B teams</span>
+              <span className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent"> fast-moving B2B teams</span>
             </h1>
             
             <p className="text-xl md:text-2xl font-manrope text-gray-700 max-w-4xl mx-auto leading-relaxed">
