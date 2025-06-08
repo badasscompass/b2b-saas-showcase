@@ -211,6 +211,17 @@ const ProductMarketingGTM = () => {
             </div>
           </div>
         </section>
+
+        {/* Footer */}
+        <footer className="py-8 bg-gray-100 border-t border-gray-200">
+          <div className="container mx-auto px-4">
+            <div className="text-center">
+              <p className="text-gray-600 font-manrope text-sm">
+                © 2024 LMN3 Consulting. Launching products that win markets.
+              </p>
+            </div>
+          </div>
+        </footer>
       </main>
     </>
   );
