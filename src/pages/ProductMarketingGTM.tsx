@@ -2,7 +2,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Search, Users, Rocket, BarChart3, Target, CheckCircle, ArrowRight, Calendar } from "lucide-react";
+import { Target, Users, Rocket, BarChart3, CheckCircle, Calendar } from "lucide-react";
 
 const ProductMarketingGTM = () => {
   const whatWeDo = [
@@ -74,8 +74,9 @@ const ProductMarketingGTM = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-manrope text-gray-900">
-                Product Marketing & GTM: <span className="text-[#EA3E3A]">Strategy to Scale</span>
+                Product Marketing & GTM
               </h1>
+              <div className="w-24 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto mb-6"></div>
               <p className="text-xl md:text-2xl text-gray-600 font-manrope mb-8 leading-relaxed">
                 Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine.
               </p>
@@ -92,8 +93,9 @@ const ProductMarketingGTM = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                🔍 What We Do
+                What We Do
               </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {whatWeDo.map((item, index) => (
@@ -124,8 +126,9 @@ const ProductMarketingGTM = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                🏗️ How It Works
+                How It Works
               </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {howItWorks.map((step, index) => (
@@ -152,8 +155,9 @@ const ProductMarketingGTM = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-                🎯 What Success Looks Like
+                What Success Looks Like
               </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
             </div>
             <div className="max-w-3xl mx-auto">
               <div className="grid grid-cols-1 gap-4">
@@ -175,6 +179,7 @@ const ProductMarketingGTM = () => {
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
                 Why This Works
               </h2>
+              <div className="w-16 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] mx-auto"></div>
             </div>
             <div className="max-w-3xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -194,7 +199,7 @@ const ProductMarketingGTM = () => {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-white">
-                ⚡ Next Step
+                Ready to Transform Your GTM Strategy?
               </h2>
               <p className="text-xl text-white font-manrope mb-8 max-w-3xl mx-auto leading-relaxed">
                 Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan.

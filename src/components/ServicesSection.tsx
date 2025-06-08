@@ -1,4 +1,3 @@
-
 import { Rocket, Users, Cog, ArrowRight, Target } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,7 +30,7 @@ export const ServicesSection = () => {
       title: "Product Marketing & GTM",
       subtitle: "Strategy to Scale",
       description: "Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine.",
-      features: ["Value Proposition & Messaging", "Market Segmentation", "GTM Planning & Execution", "Sales Enablement & Metrics"],
+      features: ["Unique Selling Proposition", "Market Segmentation", "GTM Planning & Support", "Sales Enablement & Metrics"],
       link: "/product-marketing-gtm",
       gradient: "from-[#EA3E3A]/10 to-[#F4A42C]/10",
       borderColor: "border-[#EA3E3A]/20"
