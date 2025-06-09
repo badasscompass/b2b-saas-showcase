@@ -79,6 +79,15 @@ const ProductDevelopment = () => {
       result: "Identified winning feature set through rapid testing",
       metrics: "3x user engagement increase",
       image: "photo-1486312338219-ce68d2c6f44d"
+    },
+    {
+      title: "Unblocking Remote Dev Team in 4 Weeks",
+      scope: "Development Process & Team Alignment",
+      description: "A B2B hospitality client was stuck in legacy code refactoring with no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog, launched sprints with release goals, focused on bug fixes to stabilize delivery, and resolved key contributor bottlenecks causing conflicts.",
+      lead: "iva@lmn3.digital",
+      result: "Functional delivery flow re-established in 2 sprints",
+      metrics: "Major bottleneck cleared, delivery pace restored",
+      image: "photo-1522071820081-009f0129c71c"
     }
   ];
 
@@ -148,7 +157,7 @@ const ProductDevelopment = () => {
                 subtitle="Explore how we've helped companies transform their product development approach and accelerate time-to-market."
               />
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
                 {clientWork.map((work, index) => (
                   <Dialog key={index}>
                     <DialogTrigger asChild>
