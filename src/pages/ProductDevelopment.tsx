@@ -1,4 +1,3 @@
-
 import { Navigation } from "@/components/Navigation";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -8,7 +7,9 @@ import { SuccessMetric } from "@/components/SuccessMetric";
 import { PageCTA } from "@/components/PageCTA";
 import { PageFooter } from "@/components/PageFooter";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { ArrowRight, Target, Users, Zap, Clock } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Target, Users, Zap, Clock, Calendar } from "lucide-react";
 
 const ProductDevelopment = () => {
   const services = [
@@ -63,27 +64,21 @@ const ProductDevelopment = () => {
   const clientWork = [
     {
       title: "MVP to Series A in 8 Months",
-      company: "FinTech Startup",
+      scope: "Complete Product Development & Strategy",
+      description: "Guided a FinTech startup from concept validation through MVP launch to Series A funding round. Implemented agile development processes, technical architecture planning, and user feedback loops that accelerated their time-to-market.",
+      lead: "Sarah Chen, CTO",
       result: "From concept to $5M funding round",
-      metrics: "40% faster development cycles"
+      metrics: "40% faster development cycles",
+      image: "photo-1488590528505-98d2b5aba04b"
     },
     {
       title: "Product-Market Fit Discovery",
-      company: "B2B SaaS Platform",
+      scope: "User Research & Feature Validation", 
+      description: "Helped a B2B SaaS platform identify their winning feature set through rapid prototyping and user testing. Conducted over 50 user interviews and A/B tested key features to validate product-market fit assumptions.",
+      lead: "Marcus Rodriguez, Head of Product",
       result: "Identified winning feature set through rapid testing",
-      metrics: "3x user engagement increase"
-    },
-    {
-      title: "Architecture Redesign",
-      company: "E-commerce Platform",
-      result: "Scaled from 1K to 100K daily users",
-      metrics: "99.9% uptime maintained"
-    },
-    {
-      title: "Agile Transformation",
-      company: "Enterprise Software",
-      result: "Reduced time-to-market by 60%",
-      metrics: "2-week sprint cycles achieved"
+      metrics: "3x user engagement increase",
+      image: "photo-1486312338219-ce68d2c6f44d"
     }
   ];
 
@@ -145,27 +140,86 @@ const ProductDevelopment = () => {
           </div>
         </section>
 
-        <section className="py-16 md:py-24 bg-gray-50">
+        <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
           <div className="container mx-auto px-4">
-            <SectionHeader title="Client Work" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {clientWork.map((work, index) => (
-                <Card key={index} className="border-2 border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer">
-                  <CardHeader className="p-6">
-                    <div className="flex items-center justify-between mb-3">
-                      <CardTitle className="text-lg font-manrope text-gray-900">
-                        {work.title}
-                      </CardTitle>
-                      <ArrowRight className="h-5 w-5 text-[#EA3E3A]" />
-                    </div>
-                    <CardDescription className="text-gray-600 font-manrope mb-2">
-                      {work.company}
-                    </CardDescription>
-                    <p className="text-gray-700 font-manrope mb-2">{work.result}</p>
-                    <p className="text-[#F4A42C] font-manrope font-semibold">{work.metrics}</p>
-                  </CardHeader>
-                </Card>
-              ))}
+            <div className="max-w-6xl mx-auto">
+              <SectionHeader 
+                title="Client Work Showcase"
+                subtitle="Explore how we've helped companies transform their product development approach and accelerate time-to-market."
+              />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                {clientWork.map((work, index) => (
+                  <Dialog key={index}>
+                    <DialogTrigger asChild>
+                      <Card className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50">
+                        <CardHeader className="p-6 md:p-8">
+                          <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
+                            <img 
+                              src={`https://images.unsplash.com/${work.image}?q=80&w=600&h=300&fit=crop`}
+                              alt={work.title}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                          </div>
+                          <CardTitle className="font-manrope text-lg md:text-xl text-gray-900 mb-2">
+                            {work.title}
+                          </CardTitle>
+                          <div className="text-[#F4A42C] font-manrope font-semibold mb-3 text-sm md:text-base">
+                            {work.scope}
+                          </div>
+                          <CardDescription className="text-gray-600 font-manrope leading-relaxed text-sm md:text-base line-clamp-3">
+                            {work.description}
+                          </CardDescription>
+                          <div className="mt-4 flex items-center text-[#EA3E3A] font-manrope font-semibold text-sm">
+                            View Case Study <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </CardHeader>
+                      </Card>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[600px]">
+                      <DialogHeader>
+                        <DialogTitle className="font-manrope text-xl md:text-2xl text-gray-900 mb-4">
+                          {work.title}
+                        </DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden">
+                          <img 
+                            src={`https://images.unsplash.com/${work.image}?q=80&w=800&h=400&fit=crop`}
+                            alt={work.title}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="space-y-3">
+                          <div>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Lead</h4>
+                            <p className="text-gray-700 font-manrope">{work.lead}</p>
+                          </div>
+                          <div>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Scope of Work</h4>
+                            <p className="text-gray-700 font-manrope">{work.scope}</p>
+                          </div>
+                          <div>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Project Description</h4>
+                            <p className="text-gray-700 font-manrope leading-relaxed">{work.description}</p>
+                          </div>
+                          <div>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results</h4>
+                            <p className="text-gray-700 font-manrope">{work.result}</p>
+                            <p className="text-[#F4A42C] font-manrope font-semibold">{work.metrics}</p>
+                          </div>
+                        </div>
+                        <div className="pt-4 border-t">
+                          <Button className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90">
+                            <Calendar className="mr-2 h-4 w-4" />
+                            Discuss Your Project
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                ))}
+              </div>
             </div>
           </div>
         </section>

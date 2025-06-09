@@ -1,4 +1,3 @@
-
 import { Navigation } from "@/components/Navigation";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -73,28 +72,18 @@ const StrategicAdvisory = () => {
 
   const clientWork = [
     {
-      title: "SaaS Platform Positioning",
-      scope: "Value Proposition & Market Positioning",
-      description: "Helped a B2B SaaS startup refine their value proposition and positioning strategy, resulting in a 40% increase in qualified leads within 3 months of launch.",
-      image: "photo-1486312338219-ce68d2c6f44d"
+      title: "AI Trust & Adoption Strategy",
+      scope: "User Experience & Trust Framework Design",
+      description: "A legal tech client had a high-performing AI tool—accurate, fast, and reliable. But 80% of users bypassed it or manually rechecked results. The issue wasn't performance. It was trust. We identified decision-friction points, added explainability and confidence scores, integrated human benchmarks and educational UI, and reframed the AI as a user-controlled assistant, not a black box.",
+      lead: "Dr. Elena Vasquez, Head of Product Strategy",
+      image: "photo-1581091226825-a6a2a5aee158"
     },
     {
       title: "FinTech GTM Strategy", 
       scope: "Complete Go-to-Market Planning",
-      description: "Developed comprehensive GTM strategy for a fintech platform, including pricing strategy, channel selection, and messaging framework that led to successful Series A funding.",
+      description: "Developed comprehensive GTM strategy for a fintech platform, including pricing strategy, channel selection, and messaging framework. Conducted competitive analysis, defined target customer segments, and created launch sequences that positioned the company for successful Series A funding.",
+      lead: "James Park, VP of Strategy",
       image: "photo-1488590528505-98d2b5aba04b"
-    },
-    {
-      title: "HealthTech Competitive Analysis",
-      scope: "Market Research & Competitive Intelligence", 
-      description: "Conducted deep competitive analysis for a health tech company, identifying market gaps that informed their product roadmap and positioning strategy.",
-      image: "photo-1581091226825-a6a2a5aee158"
-    },
-    {
-      title: "EdTech Messaging Framework",
-      scope: "Messaging & Communication Strategy",
-      description: "Created cohesive messaging framework for an education technology startup, aligning internal teams and external communications for consistent brand voice.",
-      image: "photo-1460925895917-afdab827c52f"
     }
   ];
 
@@ -227,6 +216,10 @@ const StrategicAdvisory = () => {
                         </div>
                         <div className="space-y-3">
                           <div>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Lead</h4>
+                            <p className="text-gray-700 font-manrope">{work.lead}</p>
+                          </div>
+                          <div>
                             <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Scope of Work</h4>
                             <p className="text-gray-700 font-manrope">{work.scope}</p>
                           </div>
@@ -234,6 +227,18 @@ const StrategicAdvisory = () => {
                             <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Project Description</h4>
                             <p className="text-gray-700 font-manrope leading-relaxed">{work.description}</p>
                           </div>
+                          {work.title === "AI Trust & Adoption Strategy" && (
+                            <div>
+                              <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 45 days</h4>
+                              <div className="space-y-1 text-gray-700 font-manrope">
+                                <p>• 3× increase in AI usage</p>
+                                <p>• +22% time saved per session</p>
+                                <p>• +47% boost in user satisfaction</p>
+                                <p>• First enterprise deal closed, directly tied to improved UX</p>
+                                <p className="mt-2 font-semibold text-[#F4A42C]">Insight: Trust, not tech, unlocks real adoption in AI-driven products.</p>
+                              </div>
+                            </div>
+                          )}
                         </div>
                         <div className="pt-4 border-t">
                           <Button className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90">
