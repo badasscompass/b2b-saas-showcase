@@ -79,11 +79,13 @@ const StrategicAdvisory = () => {
       image: "photo-1581091226825-a6a2a5aee158"
     },
     {
-      title: "FinTech GTM Strategy", 
-      scope: "Complete Go-to-Market Planning",
-      description: "Developed comprehensive GTM strategy for a fintech platform, including pricing strategy, channel selection, and messaging framework. Conducted competitive analysis, defined target customer segments, and created launch sequences that positioned the company for successful Series A funding.",
-      lead: "James Park, VP of Strategy",
-      image: "photo-1488590528505-98d2b5aba04b"
+      title: "Product Positioning Clarity",
+      scope: "Strategic Positioning & Market Alignment", 
+      description: "A middleware startup building an MVP (backend-as-a-service for DMS use cases) needed help defining what their product actually is—and who it's for. Working fractionally over 12 weeks, we co-created product vision, mission, and value proposition, developed a clear elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope and UX based on strategic positioning.",
+      lead: "iva@lmn3.digital",
+      image: "photo-1488590528505-98d2b5aba04b",
+      sector: "Middleware / Content Management",
+      product: "contendo.io"
     }
   ];
 
@@ -219,6 +221,12 @@ const StrategicAdvisory = () => {
                             <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Lead</h4>
                             <p className="text-gray-700 font-manrope">{work.lead}</p>
                           </div>
+                          {work.sector && work.product && (
+                            <div>
+                              <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Sector & Product</h4>
+                              <p className="text-gray-700 font-manrope">{work.sector} | {work.product}</p>
+                            </div>
+                          )}
                           <div>
                             <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Scope of Work</h4>
                             <p className="text-gray-700 font-manrope">{work.scope}</p>
@@ -236,6 +244,17 @@ const StrategicAdvisory = () => {
                                 <p>• +47% boost in user satisfaction</p>
                                 <p>• First enterprise deal closed, directly tied to improved UX</p>
                                 <p className="mt-2 font-semibold text-[#F4A42C]">Insight: Trust, not tech, unlocks real adoption in AI-driven products.</p>
+                              </div>
+                            </div>
+                          )}
+                          {work.title === "Product Positioning Clarity" && (
+                            <div>
+                              <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 12 weeks</h4>
+                              <div className="space-y-1 text-gray-700 font-manrope">
+                                <p>• Strategic clarity across team and stakeholders</p>
+                                <p>• Stronger product narrative and pitch for early-stage buyers</p>
+                                <p>• Website and messaging aligned with market fit</p>
+                                <p className="mt-2 font-semibold text-[#F4A42C]">Client Win: From MVP confusion to clear market positioning</p>
                               </div>
                             </div>
                           )}
