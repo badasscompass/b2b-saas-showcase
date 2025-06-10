@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { PageHero } from "@/components/PageHero";
 import { PageFooter } from "@/components/PageFooter";
@@ -9,6 +10,10 @@ import { StrategicAdvisoryOutcomes } from "@/components/StrategicAdvisoryOutcome
 import { StrategicAdvisoryClientWork } from "@/components/StrategicAdvisoryClientWork";
 
 const StrategicAdvisory = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Navigation />
