@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Mail, Globe } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { clientWork } from "@/data/productDevelopmentData";
 
@@ -16,7 +16,7 @@ export const ClientWorkShowcase = () => {
             subtitle="Explore how we've helped companies transform their product development approach and accelerate time-to-market."
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
             {clientWork.map((work, index) => (
               <Dialog key={index}>
                 <DialogTrigger asChild>
@@ -61,8 +61,37 @@ export const ClientWorkShowcase = () => {
                     <div className="space-y-3">
                       <div>
                         <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Lead</h4>
-                        <p className="text-gray-700 font-manrope">{work.lead}</p>
+                        <div className="flex items-center space-x-4">
+                          <p className="text-gray-700 font-manrope">{work.lead}</p>
+                          <a 
+                            href={`mailto:${work.lead}`}
+                            className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors"
+                          >
+                            <Mail className="h-4 w-4 mr-1" />
+                            <span className="text-sm font-manrope">Email</span>
+                          </a>
+                        </div>
                       </div>
+                      {work.sector && work.product && (
+                        <div>
+                          <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Sector & Product</h4>
+                          <div className="flex items-center space-x-2">
+                            <p className="text-gray-700 font-manrope">{work.sector} | </p>
+                            {work.productUrl ? (
+                              <a 
+                                href={work.productUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-[#EA3E3A] hover:text-[#F4A42C] font-manrope underline"
+                              >
+                                {work.product}
+                              </a>
+                            ) : (
+                              <span className="text-gray-700 font-manrope">{work.product}</span>
+                            )}
+                          </div>
+                        </div>
+                      )}
                       <div>
                         <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Scope of Work</h4>
                         <p className="text-gray-700 font-manrope">{work.scope}</p>
@@ -78,9 +107,14 @@ export const ClientWorkShowcase = () => {
                       </div>
                     </div>
                     <div className="pt-4 border-t">
-                      <Button className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90">
-                        <Calendar className="mr-2 h-4 w-4" />
-                        Discuss Your Project
+                      <Button 
+                        className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90"
+                        asChild
+                      >
+                        <a href="mailto:hello@lmn3.digital">
+                          <Calendar className="mr-2 h-4 w-4" />
+                          Discuss Your Project
+                        </a>
                       </Button>
                     </div>
                   </div>

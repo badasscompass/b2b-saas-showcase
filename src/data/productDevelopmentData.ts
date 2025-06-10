@@ -56,13 +56,16 @@ export const productOutcomes = [
 
 export const clientWork = [
   {
-    title: "MVP to Series A in 8 Months",
-    scope: "Complete Product Development & Strategy",
-    description: "Guided a FinTech startup from concept validation through MVP launch to Series A funding round. Implemented agile development processes, technical architecture planning, and user feedback loops that accelerated their time-to-market.",
-    lead: "Sarah Chen, CTO",
-    result: "From concept to $5M funding round",
-    metrics: "40% faster development cycles",
-    image: "photo-1488590528505-98d2b5aba04b"
+    title: "Client Win: From Beta Instability to AI Product Maturity in 3 Months",
+    scope: "AI Developer Tools",
+    description: "Working 1h/day in a lightweight advisory format with a solo founder. Initial challenge: An unstable beta MVP and unclear direction—at a time when the AI dev tool landscape was rapidly evolving. Progress by milestone: Month 1: Resolved major bugs and stabilised the product. Month 2: Improved core developer features and workflows. Month 3: Redesigned onboarding for better UX and stronger differentiation.",
+    lead: "iva@lmn3.digital",
+    result: "Product moved from beta to functional, competitive state. Clearer edge in UX and value delivery. Founder equipped with direction for next growth phase.",
+    metrics: "Product stabilized and positioned for growth",
+    image: "photo-1488590528505-98d2b5aba04b",
+    sector: "AI Developer Tools",
+    product: "codx-junior",
+    productUrl: "https://github.com/gbrian/codx-junior"
   },
   {
     title: "Product-Market Fit Discovery",
@@ -72,14 +75,5 @@ export const clientWork = [
     result: "Identified winning feature set through rapid testing",
     metrics: "3x user engagement increase",
     image: "photo-1486312338219-ce68d2c6f44d"
-  },
-  {
-    title: "Unblocking Remote Dev Team in 4 Weeks",
-    scope: "Development Process & Team Alignment",
-    description: "A B2B hospitality client was stuck in legacy code refactoring with no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog, launched sprints with release goals, focused on bug fixes to stabilize delivery, and resolved key contributor bottlenecks causing conflicts.",
-    lead: "iva@lmn3.digital",
-    result: "Functional delivery flow re-established in 2 sprints",
-    metrics: "Major bottleneck cleared, delivery pace restored",
-    image: "photo-1522071820081-009f0129c71c"
   }
 ];

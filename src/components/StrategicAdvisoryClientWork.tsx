@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, Mail, Globe } from "lucide-react";
+import { ArrowRight, Calendar, Mail } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 
 const clientWork = [
@@ -13,8 +13,7 @@ const clientWork = [
     description: "A legal tech client had a high-performing AI tool—accurate, fast, and reliable. But 80% of users bypassed it or manually rechecked results. The issue wasn't performance. It was trust. We identified decision-friction points, added explainability and confidence scores, integrated human benchmarks and educational UI, and reframed the AI as a user-controlled assistant, not a black box.",
     lead: "anamarija@lmn3.digital",
     image: "photo-1581091226825-a6a2a5aee158",
-    email: "anamarija@lmn3.digital",
-    website: "lmn3.digital"
+    email: "anamarija@lmn3.digital"
   },
   {
     title: "Product Positioning Clarity",
@@ -24,8 +23,8 @@ const clientWork = [
     image: "photo-1488590528505-98d2b5aba04b",
     sector: "Middleware / Content Management",
     product: "contendo.io",
-    email: "iva@lmn3.digital",
-    website: "lmn3.digital"
+    productUrl: "https://contendo.io",
+    email: "iva@lmn3.digital"
   }
 ];
 
@@ -87,30 +86,33 @@ export const StrategicAdvisoryClientWork = () => {
                           <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-2">Lead</h4>
                           <div className="flex items-center space-x-4">
                             <p className="text-gray-700 font-manrope">{work.lead}</p>
-                            <div className="flex items-center space-x-2">
-                              <a 
-                                href={`mailto:${work.email}`}
-                                className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors"
-                              >
-                                <Mail className="h-4 w-4 mr-1" />
-                                <span className="text-sm font-manrope">Email</span>
-                              </a>
-                              <a 
-                                href={`https://${work.website}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors"
-                              >
-                                <Globe className="h-4 w-4 mr-1" />
-                                <span className="text-sm font-manrope">Website</span>
-                              </a>
-                            </div>
+                            <a 
+                              href={`mailto:${work.email}`}
+                              className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors"
+                            >
+                              <Mail className="h-4 w-4 mr-1" />
+                              <span className="text-sm font-manrope">Email</span>
+                            </a>
                           </div>
                         </div>
                         {work.sector && work.product && (
                           <div>
                             <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Sector & Product</h4>
-                            <p className="text-gray-700 font-manrope">{work.sector} | {work.product}</p>
+                            <div className="flex items-center space-x-2">
+                              <p className="text-gray-700 font-manrope">{work.sector} | </p>
+                              {work.productUrl ? (
+                                <a 
+                                  href={work.productUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[#EA3E3A] hover:text-[#F4A42C] font-manrope underline"
+                                >
+                                  {work.product}
+                                </a>
+                              ) : (
+                                <span className="text-gray-700 font-manrope">{work.product}</span>
+                              )}
+                            </div>
                           </div>
                         )}
                         <div>
@@ -129,7 +131,8 @@ export const StrategicAdvisoryClientWork = () => {
                               <p>• +22% time saved per session</p>
                               <p>• +47% boost in user satisfaction</p>
                               <p>• First enterprise deal closed, directly tied to improved UX</p>
-                              <p className="mt-2 font-semibold text-[#F4A42C]">Insight: Trust, not tech, unlocks real adoption in AI-driven products.</p>
+                              <br />
+                              <p className="font-semibold text-[#F4A42C]">Insight: Trust, not tech, unlocks real adoption in AI-driven products.</p>
                             </div>
                           </div>
                         )}
@@ -140,15 +143,21 @@ export const StrategicAdvisoryClientWork = () => {
                               <p>• Strategic clarity across team and stakeholders</p>
                               <p>• Stronger product narrative and pitch for early-stage buyers</p>
                               <p>• Website and messaging aligned with market fit</p>
-                              <p className="mt-2 font-semibold text-[#F4A42C]">Client Win: From MVP confusion to clear market positioning</p>
+                              <br />
+                              <p className="font-semibold text-[#F4A42C]">Client Win: From MVP confusion to clear market positioning</p>
                             </div>
                           </div>
                         )}
                       </div>
                       <div className="pt-4 border-t">
-                        <Button className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90">
-                          <Calendar className="mr-2 h-4 w-4" />
-                          Discuss Your Project
+                        <Button 
+                          className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90"
+                          asChild
+                        >
+                          <a href="mailto:hello@lmn3.digital">
+                            <Calendar className="mr-2 h-4 w-4" />
+                            Discuss Your Project
+                          </a>
                         </Button>
                       </div>
                     </div>
