@@ -10,18 +10,19 @@ const clientWork = [
   {
     title: "AI Trust & Adoption Strategy",
     scope: "User Experience & Trust Framework Design",
-    description: "A legal tech client had a high-performing AI tool—accurate, fast, and reliable. But 80% of users bypassed it or manually rechecked results. The issue wasn't performance. It was trust. We identified decision-friction points, added explainability and confidence scores, integrated human benchmarks and educational UI, and reframed the AI as a user-controlled assistant, not a black box.",
+    description: "Enterprise client had a high-performing AI tool—accurate, fast, and reliable. But 80% of users bypassed it or manually rechecked results. The issue wasn't performance. It was trust. We identified decision-friction points, added explainability and confidence scores, integrated human benchmarks and educational UI, and reframed the AI as a user-controlled assistant, not a black box.",
     lead: "anamarija@lmn3.digital",
+    sector: "B2B SaaS / Legal Tech",
     image: "photo-1581091226825-a6a2a5aee158",
     email: "anamarija@lmn3.digital"
   },
   {
     title: "Product Positioning Clarity",
     scope: "Strategic Positioning & Market Alignment", 
-    description: "A middleware startup building an MVP (backend-as-a-service for DMS use cases) needed help defining what their product actually is—and who it's for. Working fractionally over 12 weeks, we co-created product vision, mission, and value proposition, developed a clear elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope and UX based on strategic positioning.",
+    description: "Agency in-house team building an MVP (backend-as-a-service for content mmanagement use cases) needed help defining what their product actually is and who it's for. Working fractionally over 12 weeks, we co-created product vision, mission, and value proposition, developed elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope based on strategic positioning.",
     lead: "iva@lmn3.digital",
     image: "photo-1488590528505-98d2b5aba04b",
-    sector: "Middleware / Content Management",
+    sector: "B2B SaaS / CMS/DMS",
     product: "contendo.io",
     productUrl: "https://contendo.io",
     email: "iva@lmn3.digital"
@@ -32,6 +33,7 @@ const clientWork = [
     description: "A client faced a 15% user drop-off within 2 minutes of onboarding—despite clean UX and no bugs. Past fixes (redesigns, tooltips, shorter flows) had no impact. We uncovered the real issue: lack of emotional relevance. Solution included intent-based signup tagging, personalised onboarding copy and CTAs, visual progress tracker, and triggered 24h nudge campaign.",
     lead: "anamarija@lmn3.digital",
     image: "photo-1460925895917-afdab827c52f",
+    sector: "B2B SaaS",
     email: "anamarija@lmn3.digital"
   }
 ];
@@ -43,7 +45,7 @@ export const StrategicAdvisoryClientWork = () => {
         <div className="max-w-6xl mx-auto">
           <SectionHeader 
             title="Client Work Showcase"
-            subtitle="Explore how we've helped companies transform their strategic positioning and go-to-market approach."
+            subtitle="Explore how we've helped companies transform their strategic positioning, growth issues and go-to-market approach."
           />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

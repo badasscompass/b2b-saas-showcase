@@ -20,7 +20,7 @@ const StrategicAdvisory = () => {
       <main className="min-h-screen pt-20">
         <PageHero
           title="Strategic Advisory"
-          subtitle="Guidance for early-stage founders in defining their value proposition, market positioning, and go-to-market strategy."
+          subtitle="Guidance for product teams and founders in defining their value proposition, market positioning, and go-to-market strategy."
           ctaText="Book a Strategy Discovery Call"
         />
 

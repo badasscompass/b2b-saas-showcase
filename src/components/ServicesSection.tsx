@@ -8,7 +8,7 @@ export const ServicesSection = () => {
     {
       icon: <Rocket className="h-12 w-12 text-[#EA3E3A]" />,
       title: "Product Development",
-      subtitle: "From MVP to Scale",
+      subtitle: "From MVP to Launch",
       description: "Transform your vision into ready-to-launch products with proven development processes and senior product expertise.",
       features: ["MVP Strategy & Development", "Product Roadmapping", "Technical Architecture", "User Testing & Validation"],
       link: "/product-development",
@@ -29,7 +29,7 @@ export const ServicesSection = () => {
       icon: <Target className="h-12 w-12 text-[#EA3E3A]" />,
       title: "Product Marketing & GTM",
       subtitle: "Strategy to Scale",
-      description: "Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine.",
+      description: "Launch smarter, reach buyers faster, and drive growth with a data-driven and creative go-to-market engine.",
       features: ["Unique Selling Proposition", "Market Segmentation", "GTM Planning & Support", "Sales Enablement & Metrics"],
       link: "/product-marketing-gtm",
       gradient: "from-[#EA3E3A]/10 to-[#F4A42C]/10",

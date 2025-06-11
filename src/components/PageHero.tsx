@@ -14,6 +14,12 @@ export const PageHero = ({ title, subtitle, ctaText, onCtaClick }: PageHeroProps
     <section className="py-16 md:py-24 bg-gradient-to-br from-[#EA3E3A]/5 via-white to-[#F4A42C]/5">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
+        <img
+  src="/lovable-uploads/lmn3_logo_bullet.png"
+  alt="LMN3 Logo"
+  className="mx-auto mb-8 w-40 h-40 md:w-48 md:h-48 object-contain"
+  style={{ maxWidth: "100%", height: "auto" }}
+/>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 font-manrope text-gray-900">
             {title}
           </h1>

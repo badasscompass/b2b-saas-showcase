@@ -26,7 +26,7 @@ export const PageCTA = ({ title, subtitle, ctaText, onCtaClick }: PageCTAProps) 
 >
   <a href="https://calendly.com/d/cssk-mv3-n33/product-services-discovery">
     <Calendar className="mr-2 h-5 w-5" />
-      Book GTM Audit Call
+      Book GTM Discovery Call
             </a>
           </Button>
         </div>
