@@ -10,8 +10,8 @@ export const HeroSection = () => {
           {/* LMN3 Logo */}
           <a href="/" aria-label="LMN3 Home">
   <img
-    src="public/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
-    alt="LMN3 Logo"
+    src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
+    alt="LMN3"
     className="
       mx-auto mb-8
       w-72 h-72
