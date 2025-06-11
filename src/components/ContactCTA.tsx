@@ -25,15 +25,15 @@ export const ContactCTA = () => {
               </a>
             </Button>
             <Button 
-              variant="outline" 
-              size="lg" 
-              className="border-2 border-white text-white hover:bg-white hover:text-[#EA3E3A] font-manrope font-semibold text-lg px-8 py-4 h-auto"
-              asChild
-            >
-              <a href="mailto:hello@lmn3.digital">
-                Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
+  variant="outline" 
+  size="lg" 
+  className="border-2 border-white bg-transparent text-white hover:bg-white hover:text-[#EA3E3A] font-manrope font-semibold text-lg px-8 py-4 h-auto"
+  asChild
+>
+  <a href="mailto:hello@lmn3.digital">
+    Get in Touch <ArrowRight className="ml-2 h-5 w-5" />
+  </a>
+</Button>
           </div>
         </div>
       </div>
