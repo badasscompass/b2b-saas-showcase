@@ -9,8 +9,7 @@ export const HeroSection = () => {
         <div className="max-w-4xl mx-auto text-center">
           {/* LMN3 Logo */}
           <a href="/" aria-label="LMN3 Home">
-  <img
-    src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
+  <img src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
     alt="LMN3"
     className="
       mx-auto mb-8
