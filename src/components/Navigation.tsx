@@ -19,9 +19,9 @@ export const Navigation = () => {
             <Link to="/#services" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Services</Link>
             <Link to="/#who-we-serve" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
             <Link to="/#why-choose-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
-            <Button className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope">
+            {/*<Button className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope">
               Get Started
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

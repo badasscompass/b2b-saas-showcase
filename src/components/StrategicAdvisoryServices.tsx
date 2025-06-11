@@ -7,7 +7,7 @@ const services = [
   {
     icon: <Lightbulb className="h-8 w-8 text-[#EA3E3A]" />,
     title: "Value Proposition Design",
-    description: "We help you define the core value your product delivers, using frameworks like Jobs-To-Be-Done and Value Proposition Canvas. This ensures messaging resonates with real customer needs and highlights your unique value over alternatives."
+    description: "We help you define the core value your product delivers. This ensures messaging resonates with real customer needs and highlights your unique value over alternatives."
   },
   {
     icon: <Target className="h-8 w-8 text-[#F4A42C]" />,

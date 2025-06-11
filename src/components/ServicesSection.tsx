@@ -19,7 +19,7 @@ export const ServicesSection = () => {
       icon: <Cog className="h-12 w-12 text-[#F4A42C]" />,
       title: "Strategic Advisory",
       subtitle: "Clear Direction & Positioning",
-      description: "Guide early-stage founders in defining their value proposition, market positioning, and go-to-market strategy.",
+      description: "Guiding early-stage founders in defining their value proposition, market positioning, and go-to-market strategy.",
       features: ["Value Proposition Design", "Market Positioning", "Competitive Analysis", "GTM Strategy"],
       link: "/strategic-advisory",
       gradient: "from-[#F4A42C]/10 to-[#FFF33B]/10",

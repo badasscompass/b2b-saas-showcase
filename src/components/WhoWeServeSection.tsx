@@ -17,7 +17,7 @@ export const WhoWeServeSection = () => {
       icon: <Gift className="h-8 w-8 text-[#F4A42C]" />,
       title: "What we offer",
       items: [
-        "Embedded product leadership pods (not just one PM)",
+        "Embedded product leadership pods (2 or more product experts)",
         "Flexible, fractional involvement across delivery, growth, and GTM",
         "Structured product ops, growth loops, and messaging refinement"
       ]
@@ -28,7 +28,7 @@ export const WhoWeServeSection = () => {
       items: [
         "Senior-only team: every partner has 7–12+ years' experience",
         "Cross-functional by design: delivery + growth + marketing",
-        "Adaptable pricing: retainers, outcome-based, or project bundles"
+        "Adaptable pricing: retainers, SOW-based, or project bundles"
       ]
     }
   ];

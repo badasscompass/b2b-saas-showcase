@@ -1,5 +1,5 @@
 
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Check, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
@@ -10,7 +10,7 @@ export const HeroSection = () => {
           {/* LMN3 Logo */}
           <a href="/" aria-label="LMN3 Home">
   <img
-    src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
+    src="public/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
     alt="LMN3 Logo"
     className="
       mx-auto mb-8
@@ -46,16 +46,19 @@ export const HeroSection = () => {
 
           {/* Feature Bullets */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-10">
-            <div className="flex items-center gap-2 text-gray-700 font-manrope">
-              <span className="text-[#F4A42C] text-xl">✔</span> Embedded teams
-            </div>
-            <div className="flex items-center gap-2 text-gray-700 font-manrope">
-              <span className="text-[#F4A42C] text-xl">✔</span> Fractional leaders
-            </div>
-            <div className="flex items-center gap-2 text-gray-700 font-manrope">
-              <span className="text-[#F4A42C] text-xl">✔</span> Ready in weeks, not months
-            </div>
-          </div>
+  <div className="flex items-center gap-2 text-gray-700 font-manrope">
+    <CheckCircle className="w-6 h-6 text-[#F4A42C]" />
+    Embedded teams
+  </div>
+  <div className="flex items-center gap-2 text-gray-700 font-manrope">
+    <CheckCircle className="w-6 h-6 text-[#F4A42C]" />
+    Fractional leaders
+  </div>
+  <div className="flex items-center gap-2 text-gray-700 font-manrope">
+    <CheckCircle className="w-6 h-6 text-[#F4A42C]" />
+    Ready in weeks, not months
+  </div>
+</div>
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
