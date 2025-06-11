@@ -6,7 +6,7 @@ export const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto text-center">
           {/* LMN3 Logo */}
           <a href="/" aria-label="LMN3 Home">
   <img src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
