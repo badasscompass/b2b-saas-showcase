@@ -9,8 +9,8 @@ export const WhoWeServeSection = () => {
       title: "Who we help",
       items: [
         "Funded startups and scaleups (Seed → Series B)",
-        "B2B SaaS teams with 5–20 engineers", 
-        "Technical or commercial founders lacking full product leadership"
+        "In-house B2B SaaS teams with 5–20 engineers", 
+        "Technical or commercial founders needing product guidance or leadership"
       ]
     },
     {
@@ -41,7 +41,7 @@ export const WhoWeServeSection = () => {
             Built for Growing B2B Teams
           </h2>
           <p className="text-xl text-gray-600 font-manrope max-w-3xl mx-auto">
-            We understand the unique challenges of scaling product teams and provide tailored solutions for your growth stage.
+            We understand the unique challenges of leading product teams and provide tailored solutions for your growth stage.
           </p>
         </div>
 

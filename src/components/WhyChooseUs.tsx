@@ -20,7 +20,7 @@ export const WhyChooseUs = () => {
     },
     {
       icon: <Zap className="w-6 h-6" />,
-      title: "Agile Methodology",
+      title: "Agile Mindset",
       description: "Fast, iterative approach ensuring faster time-to-market and continuous improvement."
     },
     {
@@ -36,7 +36,7 @@ export const WhyChooseUs = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-              Why Choose LMN3 Consulting?
+              Why Choose LMN3 Collective?
             </h2>
             <p className="text-xl text-gray-600 font-manrope">
               We bring the experience, expertise, and execution you need to accelerate your product success.
