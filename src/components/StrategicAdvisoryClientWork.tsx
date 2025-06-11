@@ -20,7 +20,7 @@ const clientWork = [
   {
     title: "Product Positioning Clarity",
     scope: "Strategic Positioning & Market Alignment", 
-    description: "Agency in-house team building an MVP (backend-as-a-service for content mmanagement use cases) needed help defining what their product actually is and who it's for. Working fractionally over 12 weeks, we co-created product vision, mission, and value proposition, developed elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope based on strategic positioning.",
+    description: "Agency in-house team building an MVP (backend-as-a-service for content mmanagement use cases) needed help defining what their product actually is and who it's for. Working fractionally (~45 hrs) over 12 weeks, we co-created product vision, mission, and value proposition, developed elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope based on strategic positioning.",
     lead: "Iva Rumora",
     image: "photo-1488590528505-98d2b5aba04b",
     sector: "B2B SaaS / CMS/DMS",
@@ -150,13 +150,15 @@ export const StrategicAdvisoryClientWork = () => {
                         )}
                         {work.title === "Product Positioning Clarity" && (
                           <div>
-                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 12 weeks</h4>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 3 months</h4>
                             <div className="space-y-1 text-gray-700 font-manrope">
                               <p>• Strategic clarity across team and stakeholders</p>
+                              <p>• Benchmarked missing feature areas against category leaders</p>
+                              <p>• Prioritised strategic feature set aligned with development roadmap</p>
                               <p>• Stronger product narrative and pitch for early-stage buyers</p>
                               <p>• Website and messaging aligned with market fit</p>
                               <br />
-                              <p className="font-semibold text-[#F4A42C]">Client Win: From MVP confusion to clear market positioning</p>
+                              <p className="font-semibold text-[#F4A42C]">From MVP confusion to clear market positioning</p>
                             </div>
                           </div>
                         )}
