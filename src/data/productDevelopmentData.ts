@@ -58,7 +58,7 @@ export const clientWork = [
   {
     title: "Client Win: From Beta Instability to AI Product Maturity in 3 Months",
     scope: "AI Developer Tools",
-    description: "Working 1h/day in a lightweight advisory format with a solo founder. Initial challenge: An unstable beta MVP and unclear direction—at a time when the AI dev tool landscape was rapidly evolving. Progress by milestone: Month 1: Resolved major bugs and stabilised the product. Month 2: Improved core developer features and workflows. Month 3: Redesigned onboarding for better UX and stronger differentiation.",
+    description: "Working 1h/day in a lightweight advisory format with a solo founder. Initial challenge: An unstable beta MVP and unclear direction—at a time when the AI dev tool landscape was rapidly evolving.",
     lead: "iva@lmn3.digital",
     result: "Product moved from beta to functional, competitive state. Clearer edge in UX and value delivery. Founder equipped with direction for next growth phase.",
     metrics: "Product stabilized and positioned for growth",
@@ -70,21 +70,23 @@ export const clientWork = [
   {
     title: "Transforming a Classifieds Platform into a Scalable Digital Marketplace",
     scope: "End-to-end Product Strategy & Delivery",
-    description: "Leading Classifieds Platform in Central Europe was experiencing slowed growth due to legacy infrastructure, fragmented user journeys, and misaligned internal processes. We started with in-depth user and stakeholder interviews to identify friction points and growth opportunities. A strategic product roadmap was created, focused on three pillars: UX/UI modernisation, AI-powered content recommendations, and monetisation through vertical-specific features. Collaborating with cross-functional teams, we introduced agile methodologies, defined clear KPIs, and enabled fast iteration cycles through continuous validation and feedback loops.",
-    lead: "iva@lmn3.digital",
-    result: "+21% YoY growth in user engagement within 6 months post-launch. 2× increase in listing conversions through improved search, filtering, and onboarding flows. Introduced modular architecture, enabling faster development and feature rollout. Enhanced team velocity and product quality via agile coaching and OKR alignment.",
+    description: "Leading Classifieds Platform in Central Europe was experiencing slowed growth due to legacy infrastructure, fragmented user journeys, and misaligned internal processes. We started with in-depth user and stakeholder interviews to identify friction points and growth opportunities.",
+    lead: "anamarija@lmn3.digital",
+    result: "+21% YoY growth in user engagement within 6 months post-launch. 2× increase in listing conversions through improved search, filtering, and onboarding flows. Introduced modular architecture, enabling faster development and feature rollout.",
     metrics: "+21% YoY user engagement, 2× listing conversions",
     image: "photo-1486312338219-ce68d2c6f44d",
     sector: "Online Marketplaces",
     product: "Central Europe Classifieds Platform"
   },
   {
-    title: "Product-Market Fit Discovery",
-    scope: "User Research & Feature Validation", 
-    description: "Helped a B2B SaaS platform identify their winning feature set through rapid prototyping and user testing. Conducted over 50 user interviews and A/B tested key features to validate product-market fit assumptions.",
-    lead: "Marcus Rodriguez, Head of Product",
-    result: "Identified winning feature set through rapid testing",
-    metrics: "3x user engagement increase",
-    image: "photo-1486312338219-ce68d2c6f44d"
+    title: "Client Win: Unblocking Remote Dev Team in 4 Weeks",
+    scope: "B2B Hospitality (Tourism & Transport), Portugal", 
+    description: "A client was stuck in legacy code refactoring—no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog and launched first sprint with release goals, focused on bug fixes to stabilise delivery. In Sprint 2, resolved a key contributor bottleneck causing conflicts and enabled smoother, aligned implementation across the team.",
+    lead: "iva@lmn3.digital",
+    result: "Functional delivery flow re-established in 2 sprints. Major bottleneck cleared. Delivery pace and team alignment restored.",
+    metrics: "Team alignment and delivery flow restored",
+    image: "photo-1486312338219-ce68d2c6f44d",
+    sector: "B2B Hospitality",
+    product: "Tourism & Transport Platform"
   }
 ];
