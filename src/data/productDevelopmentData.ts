@@ -68,6 +68,17 @@ export const clientWork = [
     productUrl: "https://github.com/gbrian/codx-junior"
   },
   {
+    title: "Transforming a Classifieds Platform into a Scalable Digital Marketplace",
+    scope: "End-to-end Product Strategy & Delivery",
+    description: "Leading Classifieds Platform in Central Europe was experiencing slowed growth due to legacy infrastructure, fragmented user journeys, and misaligned internal processes. We started with in-depth user and stakeholder interviews to identify friction points and growth opportunities. A strategic product roadmap was created, focused on three pillars: UX/UI modernisation, AI-powered content recommendations, and monetisation through vertical-specific features. Collaborating with cross-functional teams, we introduced agile methodologies, defined clear KPIs, and enabled fast iteration cycles through continuous validation and feedback loops.",
+    lead: "iva@lmn3.digital",
+    result: "+21% YoY growth in user engagement within 6 months post-launch. 2× increase in listing conversions through improved search, filtering, and onboarding flows. Introduced modular architecture, enabling faster development and feature rollout. Enhanced team velocity and product quality via agile coaching and OKR alignment.",
+    metrics: "+21% YoY user engagement, 2× listing conversions",
+    image: "photo-1486312338219-ce68d2c6f44d",
+    sector: "Online Marketplaces",
+    product: "Central Europe Classifieds Platform"
+  },
+  {
     title: "Product-Market Fit Discovery",
     scope: "User Research & Feature Validation", 
     description: "Helped a B2B SaaS platform identify their winning feature set through rapid prototyping and user testing. Conducted over 50 user interviews and A/B tested key features to validate product-market fit assumptions.",

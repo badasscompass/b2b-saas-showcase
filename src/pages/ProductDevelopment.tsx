@@ -16,7 +16,7 @@ const ProductDevelopment = () => {
         <PageHero
           title="Product Development"
           subtitle="Transform your vision into ready-to-launch products with proven development processes and senior product expertise."
-          ctaText="Book a Product Strategy Call"
+          ctaText="Book a Product Audit Call"
         />
 
         <ProductServicesSection />
@@ -27,7 +27,7 @@ const ProductDevelopment = () => {
         <PageCTA
           title="Ready to Build Your Product?"
           subtitle="From MVP to scale, we'll help you build products that users love and investors fund. Let's discuss your product vision."
-          ctaText="Book a Product Strategy Call"
+          ctaText="Book a Product Audit Call"
         />
 
         <PageFooter tagline="Building products that scale." />

@@ -10,7 +10,7 @@ export const PageFooter = ({ companyName = "LMN3 Consulting", tagline = "Buildin
       <div className="container mx-auto px-4">
         <div className="text-center">
           <p className="text-gray-600 font-manrope text-sm">
-            © 2024 {companyName}. {tagline}
+            © 2025 {companyName}. {tagline}
           </p>
         </div>
       </div>
