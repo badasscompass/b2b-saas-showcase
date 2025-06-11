@@ -21,13 +21,15 @@ export const PageHero = ({ title, subtitle, ctaText, onCtaClick }: PageHeroProps
           <p className="text-xl md:text-2xl text-gray-600 font-manrope mb-8 leading-relaxed">
             {subtitle}
           </p>
-          <Button 
-            className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope text-lg px-8 py-4"
-            onClick={onCtaClick}
-          >
-            <Calendar className="mr-2 h-5 w-5" />
-            {ctaText}
-          </Button>
+          <Button
+  className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope text-lg px-8 py-4"
+  asChild
+>
+  <a href="https://calendly.com/d/cssk-mv3-n33/product-services-discovery">
+    <Calendar className="mr-2 h-5 w-5" />
+    {ctaText}
+  </a>
+</Button>
         </div>
       </div>
     </section>
