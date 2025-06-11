@@ -8,7 +8,7 @@ export const ContactCTA = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-manrope mb-6">
-            Ready to transform your product strategy?
+            Ready to transform your business?
           </h2>
           <p className="text-xl md:text-2xl mb-8 font-manrope opacity-90 leading-relaxed">
             Let's discuss how we can help you build products that users love and markets embrace.

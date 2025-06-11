@@ -8,12 +8,12 @@ export const HeroSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-manrope text-gray-900 mb-6 leading-tight">
-            Scale your product with
-            <span className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent"> strategic clarity</span>
+            Transform your business with
+            <span className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent"> strategic product consulting</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-600 mb-8 font-manrope leading-relaxed max-w-3xl mx-auto">
-            We help early-stage founders and growing companies build products that users love and markets embrace.
+            We help companies build better products, faster. From strategic planning to market launch, we guide you through every step of product development.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -38,21 +38,6 @@ export const HeroSection = () => {
                 Explore Services <ArrowRight className="ml-2 h-5 w-5" />
               </a>
             </Button>
-          </div>
-          
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold font-manrope text-[#EA3E3A] mb-2">50+</div>
-              <div className="text-gray-600 font-manrope">Products Launched</div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold font-manrope text-[#F4A42C] mb-2">$10M+</div>
-              <div className="text-gray-600 font-manrope">Revenue Generated</div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold font-manrope text-[#EA3E3A] mb-2">98%</div>
-              <div className="text-gray-600 font-manrope">Client Satisfaction</div>
-            </div>
           </div>
         </div>
       </div>

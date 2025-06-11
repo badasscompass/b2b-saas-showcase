@@ -25,6 +25,14 @@ const clientWork = [
     product: "contendo.io",
     productUrl: "https://contendo.io",
     email: "iva@lmn3.digital"
+  },
+  {
+    title: "Onboarding Drop-Off Turned Into Activation Growth",
+    scope: "User Activation & Retention Strategy",
+    description: "A client faced a 15% user drop-off within 2 minutes of onboarding—despite clean UX and no bugs. Past fixes (redesigns, tooltips, shorter flows) had no impact. We uncovered the real issue: lack of emotional relevance. Solution included intent-based signup tagging, personalised onboarding copy and CTAs, visual progress tracker, and triggered 24h nudge campaign.",
+    lead: "anamarija@lmn3.digital",
+    image: "photo-1460925895917-afdab827c52f",
+    email: "anamarija@lmn3.digital"
   }
 ];
 
@@ -38,7 +46,7 @@ export const StrategicAdvisoryClientWork = () => {
             subtitle="Explore how we've helped companies transform their strategic positioning and go-to-market approach."
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {clientWork.map((work, index) => (
               <Dialog key={index}>
                 <DialogTrigger asChild>
@@ -145,6 +153,18 @@ export const StrategicAdvisoryClientWork = () => {
                               <p>• Website and messaging aligned with market fit</p>
                               <br />
                               <p className="font-semibold text-[#F4A42C]">Client Win: From MVP confusion to clear market positioning</p>
+                            </div>
+                          </div>
+                        )}
+                        {work.title === "Onboarding Drop-Off Turned Into Activation Growth" && (
+                          <div>
+                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 3 weeks</h4>
+                            <div className="space-y-1 text-gray-700 font-manrope">
+                              <p>• +24% onboarding completion</p>
+                              <p>• +38% Day 1 activation</p>
+                              <p>• 2× feature engagement</p>
+                              <br />
+                              <p className="font-semibold text-[#F4A42C]">Lesson: Motivation gaps kill retention. Fixing them delivers compounding growth.</p>
                             </div>
                           </div>
                         )}
