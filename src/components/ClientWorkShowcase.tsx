@@ -104,13 +104,15 @@ export const ClientWorkShowcase = () => {
                         </div>
                         <div>
                           <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results</h4>
+                  
                           <p className="text-gray-700 font-manrope">{work.result}</p>
+                          <br/>
                           <p className="text-[#F4A42C] font-manrope font-semibold">{work.metrics}</p>
+                          <br/>
                         </div>
                       </div>
                     </div>
-                  </ScrollArea>
-                  <div className="pt-4 border-t mt-4">
+                  <div className="pt-4 border-t">
                     <Button 
                       className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90"
                       asChild
@@ -121,6 +123,7 @@ export const ClientWorkShowcase = () => {
                       </a>
                     </Button>
                   </div>
+                  </ScrollArea>
                 </DialogContent>
               </Dialog>
             ))}

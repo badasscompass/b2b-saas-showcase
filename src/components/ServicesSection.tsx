@@ -10,7 +10,7 @@ export const ServicesSection = () => {
       title: "Product Development",
       subtitle: "From MVP to Launch",
       description: "Transform your vision into ready-to-launch products with proven development processes and senior product expertise.",
-      features: ["MVP Strategy & Development", "Product Roadmapping", "Technical Architecture", "User Testing & Validation"],
+      features: ["MVP Strategy & Development", "Product Roadmapping", "Product Architecture", "User Testing & Validation"],
       link: "/product-development",
       gradient: "from-[#EA3E3A]/10 to-[#F4A42C]/10",
       borderColor: "border-[#EA3E3A]/20"
