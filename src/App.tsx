@@ -46,13 +46,13 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <AppContent /> {/* Add this line to render the routes */}
+        <AppContent />
         <Toaster />
         <Sonner />
-        <CookieConsent />
+        <CookieConsent /> {/* This is where your new banner will be rendered */}
       </TooltipProvider>
     </QueryClientProvider>
   );
 };
 
-export default App;
+export default App; // Ensure App is exported

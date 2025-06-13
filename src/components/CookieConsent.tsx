@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button"; // Assuming you have this Button component
 
 declare global {
   interface Window {
@@ -7,57 +8,108 @@ declare global {
 }
 
 export const CookieConsent = () => {
+  const [showBanner, setShowBanner] = useState(false);
+
   useEffect(() => {
-    // This useEffect is mainly for initial setup/listeners if needed.
-    // The main HubSpot script (loaded in index.html) will handle
-    // showing the banner on page load based on portal settings.
-    const _hsp = window._hsp = window._hsp || [];
+    // Check if user has already consented
+    const hasConsented = localStorage.getItem('cookieConsentAccepted');
+
+    if (!hasConsented) {
+      setShowBanner(true);
+    }
+
+    // Initialize HubSpot's _hsp array if it doesn't exist
+    window._hsp = window._hsp || [];
 
     // Optional: Add listeners for debugging, if desired
-    _hsp.push(['onBannerShown', () => {
-      console.log('HubSpot banner was successfully shown!');
-    }]);
-    _hsp.push(['onBannerHidden', () => {
-      console.log('HubSpot banner was hidden.');
-    }]);
     _hsp.push(['onReady', () => {
-        console.log('HubSpot core script is ready.');
+      console.log('HubSpot core script is ready for consent communication.');
     }]);
 
   }, []);
 
-  const handleClick = () => {
-    console.log('Cookie Settings button clicked. Attempting to show HubSpot banner...');
-    const _hsp = window._hsp = window._hsp || [];
-    _hsp.push(['showBanner']); // This command tells HubSpot to display the banner
+  const handleAcceptAll = () => {
+    localStorage.setItem('cookieConsentAccepted', 'true');
+    setShowBanner(false);
+
+    // Communicate consent to HubSpot
+    if (window._hsp) {
+      window._hsp.push(['setPrivacyConsent', {
+        necessary: true,
+        marketing: true, // Assuming you want to enable marketing cookies on "Accept All"
+        preferences: true,
+        statistics: true
+      }]);
+      console.log('HubSpot: Consent accepted and communicated.');
+    }
   };
 
+  const handleDecline = () => {
+    localStorage.setItem('cookieConsentAccepted', 'false');
+    setShowBanner(false);
+
+    // Communicate declined consent to HubSpot
+    if (window._hsp) {
+      window._hsp.push(['setPrivacyConsent', {
+        necessary: true, // Necessary cookies are often still allowed
+        marketing: false,
+        preferences: false,
+        statistics: false
+      }]);
+      console.log('HubSpot: Consent declined and communicated.');
+    }
+  };
+
+  const handleCookieSettings = () => {
+    // For now, this will trigger the HubSpot banner if it ever works,
+    // or you can add a modal here for granular settings later.
+    if (window._hsp) {
+      window._hsp.push(['showBanner']);
+      console.log('HubSpot: Attempting to show native settings banner.');
+    }
+    // Alternatively, you could open a custom modal for settings here
+    // alert('Custom cookie settings would open here.');
+  };
+
+  if (!showBanner) {
+    return null;
+  }
+
   return (
-    <button
-      type="button"
-      id="hs_show_banner_button"
-      style={{
-        backgroundColor: '#f49040',
-        border: '1px solid #f49040',
-        borderRadius: '3px',
-        padding: '10px 16px',
-        textDecoration: 'none',
-        color: '#fff',
-        fontFamily: 'inherit',
-        fontSize: 'inherit',
-        fontWeight: 'normal',
-        lineHeight: 'inherit',
-        textAlign: 'left',
-        textShadow: 'none',
-        cursor: 'pointer',
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        zIndex: 1000
-      }}
-      onClick={handleClick}
-    >
-      Cookie Settings
-    </button>
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
+      <div className="container mx-auto max-w-7xl">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Cookie Consent</h3>
+            <p className="text-gray-600">
+              We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. 
+              By clicking "Accept All", you consent to our use of cookies.
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button
+              variant="outline"
+              onClick={handleDecline}
+              className="border-gray-300 hover:bg-gray-100"
+            >
+              Decline
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleCookieSettings}
+              className="border-gray-300 hover:bg-gray-100"
+            >
+              Cookie Settings
+            </Button>
+            <Button
+              onClick={handleAcceptAll}
+              className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white"
+            >
+              Accept All
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
