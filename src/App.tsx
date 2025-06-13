@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import ProductDevelopment from "./pages/ProductDevelopment";
 import StrategicAdvisory from "./pages/StrategicAdvisory";
 import ProductMarketingGTM from "./pages/ProductMarketingGTM";
+import { CookieConsent } from "@/components/CookieConsent";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,7 @@ const App = () => {
         <AppContent /> {/* Add this line to render the routes */}
         <Toaster />
         <Sonner />
+        <CookieConsent />
       </TooltipProvider>
     </QueryClientProvider>
   );
