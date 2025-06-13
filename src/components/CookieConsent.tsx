@@ -94,13 +94,7 @@ export const CookieConsent = () => {
             >
               Decline
             </Button>
-            <Button
-              variant="outline"
-              onClick={handleCookieSettings}
-              className="border-gray-300 hover:bg-gray-100"
-            >
-              Cookie Settings
-            </Button>
+            
             <Button
               onClick={handleAcceptAll}
               className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white"
