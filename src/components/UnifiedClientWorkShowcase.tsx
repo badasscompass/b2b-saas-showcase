@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { SectionHeader } from "@/components/SectionHeader";
 import { UnifiedClientWorkCard } from "@/components/UnifiedClientWorkCard";
 import { ClientWorkDialog } from "@/components/ClientWorkDialog";
-import { useClientWork } from "@/hooks/useClientWork";
+import { useOptimizedClientWork } from "@/hooks/useOptimizedClientWork";
 import { ServiceConfig } from "@/types/unified";
 
 interface UnifiedClientWorkShowcaseProps {
@@ -12,7 +12,7 @@ interface UnifiedClientWorkShowcaseProps {
 }
 
 export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClientWorkShowcaseProps) => {
-  const { clientWorks, loading } = useClientWork(serviceType);
+  const { clientWorks, loading, error, cacheStats } = useOptimizedClientWork(serviceType);
 
   if (loading) {
     return (
@@ -32,6 +32,23 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
         </div>
       </section>
     );
+  }
+
+  if (error) {
+    return (
+      <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-red-600">Error loading client work: {error}</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Development logging for cache performance
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`Cache stats for ${serviceType}:`, cacheStats);
   }
 
   return (

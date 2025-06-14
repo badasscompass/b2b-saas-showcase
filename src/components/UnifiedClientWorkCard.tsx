@@ -1,7 +1,7 @@
 
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
-import { FlexibleImage } from "@/components/FlexibleImage";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { UnifiedClientWork } from "@/types/unified";
 
 interface UnifiedClientWorkCardProps {
@@ -26,11 +26,13 @@ export const UnifiedClientWorkCard = ({ work, onClick }: UnifiedClientWorkCardPr
     >
       <CardHeader className="p-4 md:p-6 flex-1 flex flex-col relative h-full">
         <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 overflow-hidden flex-shrink-0">
-          <FlexibleImage
+          <OptimizedImage
             source={work.image}
             config={{ width: 600, height: 300, quality: 80 }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loadingClassName="w-full h-full"
+            lazy={true}
+            priority={false}
           />
         </div>
         
