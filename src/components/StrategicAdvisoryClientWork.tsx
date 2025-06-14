@@ -14,12 +14,12 @@ const clientWork = [
     lead: "Anamarija Ledic",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1649972904349-6e44c42644a7',
-      alt: 'Woman using AI-powered laptop',
+      id: 'photo-1581091226825-a6a2a5aee158',
+      alt: 'Woman in white long sleeve shirt using black laptop computer',
       fallback: {
         type: 'unsplash' as const,
         id: 'photo-1498050108023-c5249f4df085',
-        alt: 'MacBook with code on screen'
+        alt: 'MacBook with lines of code on its screen on a busy desk'
       }
     },
     sector: "B2B SaaS / Legal Tech",
@@ -33,12 +33,12 @@ const clientWork = [
     lead: "Iva Rumora",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1488590528505-98d2b5aba04b',
-      alt: 'Laptop showing strategic planning',
+      id: 'photo-1531297484001-80022131f5a1',
+      alt: 'Gray and black laptop computer on surface',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1486312338219-ce68d2c6f44d',
-        alt: 'Person using MacBook Pro'
+        id: 'photo-1487058792275-0ad4aaf24ca7',
+        alt: 'Colorful software or web code on a computer monitor'
       }
     },
     sector: "B2B SaaS / CMS/DMS",
@@ -53,12 +53,12 @@ const clientWork = [
     lead: "Anamarija Ledic",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1518770660439-4636190af475',
-      alt: 'Analytics dashboard showing user engagement',
+      id: 'photo-1460925895917-afdab827c52f',
+      alt: 'Laptop computer on glass-top table',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1461749280684-dccba630e2f6',
-        alt: 'Monitor showing programming'
+        id: 'photo-1487058792275-0ad4aaf24ca7',
+        alt: 'Colorful software or web code on a computer monitor'
       }
     },
     sector: "B2B SaaS / BI",
