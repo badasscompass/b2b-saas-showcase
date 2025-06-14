@@ -1,71 +1,9 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Calendar, Mail } from "lucide-react";
-import { SectionHeader } from "@/components/SectionHeader";
-import { FlexibleImage } from "@/components/FlexibleImage";
 
-const clientWork = [
-  {
-    title: "AI Trust & Adoption Strategy",
-    scope: "User Experience & Trust Framework Design",
-    description: "Enterprise client had a high-performing AI tool—accurate, fast, and reliable. But 80% of users bypassed it or manually rechecked results. The issue wasn't performance. It was trust. We identified decision-friction points, added explainability and confidence scores, integrated human benchmarks and educational UI, and reframed the AI as a user-controlled assistant, not a black box.",
-    lead: "Anamarija Ledic",
-    image: {
-      type: 'unsplash' as const,
-      id: 'photo-1581091226825-a6a2a5aee158',
-      alt: 'Woman in white long sleeve shirt using black laptop computer',
-      fallback: {
-        type: 'unsplash' as const,
-        id: 'photo-1498050108023-c5249f4df085',
-        alt: 'MacBook with lines of code on its screen on a busy desk'
-      }
-    },
-    sector: "B2B SaaS / Legal Tech",
-    product: "AI assistant",
-    email: "anamarija@lmn3.digital"
-  },
-  {
-    title: "Product Positioning Clarity",
-    scope: "Strategic Positioning & Market Alignment", 
-    description: "Agency in-house team building an MVP (backend-as-a-service for content mmanagement use cases) needed help defining what their product actually is and who it's for. Working fractionally (~45 hrs) over 12 weeks, we co-created product vision, mission, and value proposition, developed elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope based on strategic positioning.",
-    lead: "Iva Rumora",
-    image: {
-      type: 'unsplash' as const,
-      id: 'photo-1531297484001-80022131f5a1',
-      alt: 'Gray and black laptop computer on surface',
-      fallback: {
-        type: 'unsplash' as const,
-        id: 'photo-1487058792275-0ad4aaf24ca7',
-        alt: 'Colorful software or web code on a computer monitor'
-      }
-    },
-    sector: "B2B SaaS / CMS/DMS",
-    product: "contendo.io",
-    productUrl: "https://contendo.io",
-    email: "iva@lmn3.digital"
-  },
-  {
-    title: "Onboarding Drop-Off Turned Into Activation Growth",
-    scope: "User Activation & Retention Strategy",
-    description: "A client faced a 15% user drop-off within 2 minutes of onboarding—despite clean UX and no bugs. Past fixes (redesigns, tooltips, shorter flows) had no impact. We uncovered the real issue: lack of emotional relevance. Solution included intent-based signup tagging, personalised onboarding copy and CTAs, visual progress tracker, and triggered 24h nudge campaign.",
-    lead: "Anamarija Ledic",
-    image: {
-      type: 'unsplash' as const,
-      id: 'photo-1460925895917-afdab827c52f',
-      alt: 'Laptop computer on glass-top table',
-      fallback: {
-        type: 'unsplash' as const,
-        id: 'photo-1487058792275-0ad4aaf24ca7',
-        alt: 'Colorful software or web code on a computer monitor'
-      }
-    },
-    sector: "B2B SaaS / BI",
-    product: "Analytics Platform",
-    email: "anamarija@lmn3.digital"
-  }
-];
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { SectionHeader } from "@/components/SectionHeader";
+import { ClientWorkCard } from "@/components/ClientWorkCard";
+import { ClientWorkDialog } from "@/components/ClientWorkDialog";
+import { clientWorkData } from "@/data/strategicAdvisoryClientWork";
 
 export const StrategicAdvisoryClientWork = () => {
   return (
@@ -78,146 +16,14 @@ export const StrategicAdvisoryClientWork = () => {
           />
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {clientWork.map((work, index) => (
+            {clientWorkData.map((work, index) => (
               <Dialog key={index}>
                 <DialogTrigger asChild>
-                  <Card className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50">
-                    <CardHeader className="p-6 md:p-8">
-                      <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
-                        <FlexibleImage
-                          source={work.image}
-                          config={{ width: 600, height: 300, quality: 80 }}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                          loadingClassName="w-full h-full"
-                        />
-                      </div>
-                      <CardTitle className="font-manrope text-lg md:text-xl text-gray-900 mb-2">
-                        {work.title}
-                      </CardTitle>
-                      <div className="text-[#F4A42C] font-manrope font-semibold mb-3 text-sm md:text-base">
-                        {work.scope}
-                      </div>
-                      <CardDescription className="text-gray-600 font-manrope leading-relaxed text-sm md:text-base line-clamp-3">
-                        {work.description}
-                      </CardDescription>
-                      <div className="mt-4 flex items-center text-[#EA3E3A] font-manrope font-semibold text-sm">
-                        View Case Study <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </CardHeader>
-                  </Card>
+                  <div>
+                    <ClientWorkCard work={work} onClick={() => {}} />
+                  </div>
                 </DialogTrigger>
-                <DialogContent className="sm:max-w-4xl max-h-[90vh] w-[95vw] p-0">
-                  <DialogHeader className="p-6 pb-4">
-                    <DialogTitle className="font-manrope text-xl md:text-2xl text-gray-900">
-                      {work.title}
-                    </DialogTitle>
-                  </DialogHeader>
-                  <ScrollArea className="max-h-[calc(90vh-120px)] px-6">
-                    <div className="space-y-6 pb-6">
-                      <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden">
-                        <FlexibleImage
-                          source={work.image}
-                          config={{ width: 800, height: 400, quality: 80 }}
-                          className="w-full h-full object-cover"
-                          loadingClassName="w-full h-full"
-                        />
-                      </div>
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-2">Lead</h4>
-                          <div className="flex items-center space-x-4">
-                            <p className="text-gray-700 font-manrope">{work.lead}</p>
-                            <a 
-                              href={`mailto:${work.email}`}
-                              className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors"
-                            >
-                              <Mail className="h-4 w-4 mr-1" />
-                              <span className="text-sm font-manrope">Email</span>
-                            </a>
-                          </div>
-                        </div>
-                        {work.sector && work.product && (
-                          <div>
-                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Sector & Product</h4>
-                            <div className="flex items-center space-x-2">
-                              <p className="text-gray-700 font-manrope">{work.sector} | </p>
-                              {work.productUrl ? (
-                                <a 
-                                  href={work.productUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-[#EA3E3A] hover:text-[#F4A42C] font-manrope underline"
-                                >
-                                  {work.product}
-                                </a>
-                              ) : (
-                                <span className="text-gray-700 font-manrope">{work.product}</span>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                        <div>
-                          <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Scope of Work</h4>
-                          <p className="text-gray-700 font-manrope">{work.scope}</p>
-                        </div>
-                        <div>
-                          <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Project Description</h4>
-                          <p className="text-gray-700 font-manrope leading-relaxed">{work.description}</p>
-                        </div>
-                        {work.title === "AI Trust & Adoption Strategy" && (
-                          <div>
-                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 45 days</h4>
-                            <div className="space-y-1 text-gray-700 font-manrope">
-                              <p>• 3× increase in AI usage</p>
-                              <p>• +22% time saved per session</p>
-                              <p>• +47% boost in user satisfaction</p>
-                              <p>• First enterprise deal closed, directly tied to improved UX</p>
-                              <br />
-                              <p className="font-semibold text-[#F4A42C]">Insight: Trust, not tech, unlocks real adoption in AI-driven products.</p>
-                            </div>
-                          </div>
-                        )}
-                        {work.title === "Product Positioning Clarity" && (
-                          <div>
-                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 3 months</h4>
-                            <div className="space-y-1 text-gray-700 font-manrope">
-                              <p>• Strategic clarity across team and stakeholders</p>
-                              <p>• Benchmarked missing feature areas against category leaders</p>
-                              <p>• Prioritised strategic feature set aligned with development roadmap</p>
-                              <p>• Stronger product narrative and pitch for early-stage buyers</p>
-                              <p>• Website and messaging aligned with market fit</p>
-                              <br />
-                              <p className="font-semibold text-[#F4A42C]">From MVP confusion to clear market positioning</p>
-                            </div>
-                          </div>
-                        )}
-                        {work.title === "Onboarding Drop-Off Turned Into Activation Growth" && (
-                          <div>
-                            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results in 3 weeks</h4>
-                            <div className="space-y-1 text-gray-700 font-manrope">
-                              <p>• +24% onboarding completion</p>
-                              <p>• +38% Day 1 activation</p>
-                              <p>• 2× feature engagement</p>
-                              <br />
-                              <p className="font-semibold text-[#F4A42C]">Lesson: Motivation gaps kill retention. Fixing them delivers compounding growth.</p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                      <div className="pt-4 border-t">
-                        <Button 
-                          className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90"
-                          asChild
-                        >
-                          <a href="mailto:hello@lmn3.digital">
-                            <Calendar className="mr-2 h-4 w-4" />
-                            Discuss Your Project
-                          </a>
-                        </Button>
-                      </div>
-                    </div>
-                  </ScrollArea>
-                </DialogContent>
+                <ClientWorkDialog work={work} />
               </Dialog>
             ))}
           </div>
