@@ -24,7 +24,7 @@ export const OptimizedImage = memo(({
 }: OptimizedImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const { elementRef, isIntersecting } = useLazyLoad({
+  const { elementRef, isIntersecting } = useLazyLoad<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: '100px',
     triggerOnce: true

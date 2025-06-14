@@ -7,7 +7,7 @@ interface UseLazyLoadOptions {
   triggerOnce?: boolean;
 }
 
-export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
+export const useLazyLoad = <T extends HTMLElement = HTMLElement>(options: UseLazyLoadOptions = {}) => {
   const {
     threshold = 0.1,
     rootMargin = '50px',
@@ -16,7 +16,7 @@ export const useLazyLoad = (options: UseLazyLoadOptions = {}) => {
 
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
-  const elementRef = useRef<HTMLElement | null>(null);
+  const elementRef = useRef<T | null>(null);
 
   useEffect(() => {
     const element = elementRef.current;
