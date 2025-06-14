@@ -1,23 +1,18 @@
 
-import { Navigation } from "@/components/Navigation";
+import { PageLayout } from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/HeroSection";
 import { WhoWeServeSection } from "@/components/WhoWeServeSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
-import { ContactCTA } from "@/components/ContactCTA";
 
 const Index = () => {
   return (
-    <>
-      <Navigation />
-      <main className="min-h-screen">
-        <HeroSection />
-        <WhoWeServeSection />
-        <ServicesSection />
-        <WhyChooseUs />
-        <ContactCTA />
-      </main>
-    </>
+    <PageLayout footerTagline="Building products that scale.">
+      <HeroSection />
+      <WhoWeServeSection />
+      <ServicesSection />
+      <WhyChooseUs />
+    </PageLayout>
   );
 };
 

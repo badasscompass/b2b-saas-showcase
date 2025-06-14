@@ -1,12 +1,10 @@
 
-import { Navigation } from "@/components/Navigation";
-import { PageHero } from "@/components/PageHero";
-import { SectionHeader } from "@/components/SectionHeader";
+import { ServicePageLayout } from "@/components/layout/ServicePageLayout";
+import { ServiceSection } from "@/components/layout/ServiceSection";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ProcessStep } from "@/components/ProcessStep";
 import { SuccessMetric } from "@/components/SuccessMetric";
 import { PageCTA } from "@/components/PageCTA";
-import { PageFooter } from "@/components/PageFooter";
 import { Target, Users, Rocket, BarChart3 } from "lucide-react";
 
 const ProductMarketingGTM = () => {
@@ -71,85 +69,67 @@ const ProductMarketingGTM = () => {
   ];
 
   return (
-    <>
-      <Navigation />
-      <main className="min-h-screen pt-20">
-        <PageHero
-          title="Product Marketing & GTM"
-          subtitle="Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine."
-          ctaText="Book a GTM Discovery Call"
-        />
+    <ServicePageLayout
+      title="Product Marketing & GTM"
+      subtitle="Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine."
+      ctaText="Book a GTM Discovery Call"
+      footerTagline="Launching products that win markets."
+    >
+      <ServiceSection title="What We Do" background="white">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {whatWeDo.map((item, index) => (
+            <ServiceCard
+              key={index}
+              icon={item.icon}
+              title={item.title}
+              description={item.description}
+            />
+          ))}
+        </div>
+      </ServiceSection>
 
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <SectionHeader title="What We Do" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {whatWeDo.map((item, index) => (
-                <ServiceCard
-                  key={index}
-                  icon={item.icon}
-                  title={item.title}
-                  description={item.description}
-                />
-              ))}
-            </div>
+      <ServiceSection title="How It Works" background="gray">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {howItWorks.map((step, index) => (
+            <ProcessStep
+              key={index}
+              step={step.step}
+              title={step.title}
+              description={step.description}
+            />
+          ))}
+        </div>
+      </ServiceSection>
+
+      <ServiceSection title="What Success Looks Like" background="white">
+        <div className="max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 gap-4">
+            {successMetrics.map((metric, index) => (
+              <SuccessMetric key={index} text={metric} />
+            ))}
           </div>
-        </section>
+        </div>
+      </ServiceSection>
 
-        <section className="py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <SectionHeader title="How It Works" />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {howItWorks.map((step, index) => (
-                <ProcessStep
-                  key={index}
-                  step={step.step}
-                  title={step.title}
-                  description={step.description}
-                />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <SectionHeader title="What Success Looks Like" />
-            <div className="max-w-3xl mx-auto">
-              <div className="grid grid-cols-1 gap-4">
-                {successMetrics.map((metric, index) => (
-                  <SuccessMetric key={index} text={metric} />
-                ))}
+      <ServiceSection title="Why This Works" background="gray">
+        <div className="max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {whyItWorks.map((reason, index) => (
+              <div key={index} className="flex items-start space-x-3 p-4">
+                <div className="w-2 h-2 bg-[#F4A42C] rounded-full mt-3 flex-shrink-0"></div>
+                <span className="text-gray-700 font-manrope text-lg leading-relaxed">{reason}</span>
               </div>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </ServiceSection>
 
-        <section className="py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
-            <SectionHeader title="Why This Works" />
-            <div className="max-w-3xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {whyItWorks.map((reason, index) => (
-                  <div key={index} className="flex items-start space-x-3 p-4">
-                    <div className="w-2 h-2 bg-[#F4A42C] rounded-full mt-3 flex-shrink-0"></div>
-                    <span className="text-gray-700 font-manrope text-lg leading-relaxed">{reason}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <PageCTA
-          title="Ready to Transform Your GTM Strategy?"
-          subtitle="Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan."
-          ctaText="Book a GTM Discovery Call"
-        />
-
-        <PageFooter tagline="Launching products that win markets." />
-      </main>
-    </>
+      <PageCTA
+        title="Ready to Transform Your GTM Strategy?"
+        subtitle="Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan."
+        ctaText="Book a GTM Discovery Call"
+      />
+    </ServicePageLayout>
   );
 };
 
