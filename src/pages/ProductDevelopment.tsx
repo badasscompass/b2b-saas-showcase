@@ -22,7 +22,7 @@ const ProductDevelopment = () => {
       <ProductProcessSection />
       <ProductOutcomesSection />
       <ClientWorkShowcase 
-        title="Product Development Case Studies"
+        title="Client Work Showcase"
         subtitle="See how we've helped companies build and scale successful products from concept to launch."
         clientWork={mappedClientWork}
       />
