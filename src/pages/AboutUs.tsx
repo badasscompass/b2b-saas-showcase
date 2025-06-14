@@ -8,8 +8,8 @@ import { useSEO } from "@/hooks/useSEO";
 
 const AboutUs = () => {
   useSEO({
-    title: "About Us - LMN3 Consulting",
-    description: "Meet the strategic minds behind LMN3 Consulting. Learn about our mission, values, and the expert partners who guide product development and growth.",
+    title: "About Us - LMN3 Collective",
+    description: "Meet the strategic minds behind LMN3 Collective. Learn about our mission, values, and the expert partners who guide product development and growth.",
     keywords: ["about us", "team", "partners", "product consultants", "company mission"],
     openGraph: {
       type: "website",
@@ -18,7 +18,7 @@ const AboutUs = () => {
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "LMN3 Consulting",
+      "name": "LMN3 Collective",
       "url": "https://lmn3.digital",
       "description": "Product development and strategic advisory consulting",
       "employee": [
@@ -26,13 +26,13 @@ const AboutUs = () => {
           "@type": "Person",
           "name": "Iva Rumora",
           "jobTitle": "Strategic Product Partner",
-          "worksFor": "LMN3 Consulting"
+          "worksFor": "LMN3 Collective"
         },
         {
           "@type": "Person",
           "name": "Anamarija Ledic",
           "jobTitle": "Product Growth Catalyst",
-          "worksFor": "LMN3 Consulting"
+          "worksFor": "LMN3 Collective"
         }
       ]
     }
