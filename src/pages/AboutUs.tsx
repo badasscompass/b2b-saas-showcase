@@ -43,7 +43,7 @@ const AboutUs = () => {
       <PageHero
         title="About LMN3"
         subtitle="Strategic product consultancy focused on transforming visions into market-ready products. We combine deep product expertise with strategic thinking to help companies build products that matter, scale efficiently, and achieve sustainable growth."
-        ctaText="Schedule Discovery Call"
+        ctaText="Let's meet!"
       />
 
       {/* Mission & Vision Section */}

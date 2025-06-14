@@ -20,8 +20,8 @@ export const partnerBios: PartnerBio[] = [
     informalName: "Product Whisperer",
     role: "Strategic Product Partner",
     image: "/lovable-uploads/195b913c-4f2a-4d17-9a3f-b9e1751cb51c.png",
-    linkedinUrl: "https://linkedin.com/in/iva-rumora",
-    shortDescription: "Strategic product expert specializing in positioning and go-to-market strategy for early-stage companies.",
+    linkedinUrl: "https://www.linkedin.com/in/iva-rumora/",
+    shortDescription: "Product partner who observes closely, makes sense of moving parts, and helps teams find steady footing in shifting ground.",
     fullDescription: "Iva blends analytical clarity with grounded execution to help product teams unlock progress—whether that means defining a vision, rebuilding a roadmap, or untangling misalignment between teams.\n\nWith over 8 years of experience across startups, agencies, and scaleups, she brings a calm, systems-thinking approach to complex product environments. Her superpower is asking the sharp question no one else thought to voice—and turning the answer into strategy.\n\nAs a consultant, Iva partners closely with founders and product leaders to set direction, stabilize delivery, and refocus efforts on outcomes that matter. She's also the instigator behind LMN3, driven by a belief that foundational product thinking should be both pragmatic and scalable.",
     expertise: [
       "Strategic Positioning",
@@ -45,8 +45,8 @@ export const partnerBios: PartnerBio[] = [
     informalName: "Impact Architect",
     role: "Product Growth Catalyst",
     image: "/lovable-uploads/43e1fa05-852f-4467-9ed5-9d3d1e4f106f.png",
-    linkedinUrl: "https://linkedin.com/in/anamarija-ledic",
-    shortDescription: "Product development specialist focused on building scalable solutions and driving measurable growth outcomes.",
+    linkedinUrl: "https://www.linkedin.com/in/anamarija-ledic/",
+    shortDescription: "A product strategist with a nose for momentum, a knack for user insight, and a talent for turning \"we're not sure yet\" into clear, confident moves.",
     fullDescription: "Anamarija is a product strategist with a sharp eye for turning user insight into growth levers. With a background that spans scaleups, enterprise, and B2C startups, she excels at bridging customer needs with business goals. And she does it fast.\n\nHer work centers on activating product-market fit: defining the core value, positioning it clearly, and aligning cross-functional teams around it. Whether it's refining a go-to-market motion or revamping retention mechanics, Anamarija brings energy, empathy, and strategic clarity.\n\nAt LMN3, she's the partner who leans into experimentation, embraces ambiguity, and brings momentum to ideas that are ready to scale.",
     expertise: [
       "Product Development",
