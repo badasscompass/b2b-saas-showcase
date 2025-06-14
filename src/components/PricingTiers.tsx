@@ -69,10 +69,26 @@ export const PricingTiers = ({
     return <User className="h-4 w-4" />;
   };
 
+  const getLeadLabel = (tier: string, lead: string) => {
+    if (tier === 'Collab') {
+      return 'Iva AND Anamarija';
+    }
+    if (tier === 'Duo') {
+      return 'Iva OR Anamarija';
+    }
+    return lead;
+  };
+
   const handleLeadClick = (leadName: string) => {
     try {
-      if (leadName === 'Both') {
-        // For "Both", we could show Iva as the primary contact
+      if (leadName === 'Both' || leadName === 'Iva AND Anamarija') {
+        // For "Both" or "Iva AND Anamarija", show Iva as the primary contact
+        const partner = getPartnerByName('Iva Rumora');
+        if (partner) {
+          setSelectedPartner(partner);
+        }
+      } else if (leadName === 'Iva OR Anamarija') {
+        // For "Iva OR Anamarija", show Iva as the primary contact
         const partner = getPartnerByName('Iva Rumora');
         if (partner) {
           setSelectedPartner(partner);
@@ -89,6 +105,11 @@ export const PricingTiers = ({
     }
   };
 
+  // Center two columns when there are exactly 2 tiers
+  const gridCols = tiers.length === 2 
+    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
+    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
+
   return (
     <section className="py-16 md:py-24 bg-gray-50">
       <div className="container mx-auto px-4">
@@ -102,7 +123,7 @@ export const PricingTiers = ({
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className={`grid ${gridCols} gap-6 lg:gap-8`}>
             {tiers.map((tier, index) => (
               <Card key={index} className="border-2 border-gray-200 hover:border-[#EA3E3A]/30 transition-colors duration-300 h-full flex flex-col">
                 <CardHeader className="pb-4 flex-shrink-0">
@@ -122,10 +143,10 @@ export const PricingTiers = ({
                       {getLeadIcon(tier.lead)}
                       <span className="font-manrope">Lead: </span>
                       <button
-                        onClick={() => handleLeadClick(tier.lead)}
+                        onClick={() => handleLeadClick(getLeadLabel(tier.tier, tier.lead))}
                         className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
                       >
-                        {tier.lead}
+                        {getLeadLabel(tier.tier, tier.lead)}
                       </button>
                     </div>
                     
