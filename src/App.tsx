@@ -45,7 +45,7 @@ const AppContent = () => {
       const routesToPreload = routeConfig.filter(route => route.preload);
       for (const route of routesToPreload) {
         try {
-          await route.component();
+          await route.component;
           console.log(`Preloaded: ${route.path}`);
         } catch (error) {
           console.warn(`Failed to preload: ${route.path}`, error);

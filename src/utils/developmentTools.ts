@@ -40,10 +40,11 @@ class DevelopmentTools {
         const entries = list.getEntries();
         entries.forEach((entry) => {
           if (entry.entryType === 'navigation') {
+            const navigationEntry = entry as PerformanceNavigationTiming;
             console.log(`🚀 Navigation Performance:`, {
-              domContentLoaded: entry.domContentLoadedEventEnd - entry.domContentLoadedEventStart,
-              loadComplete: entry.loadEventEnd - entry.loadEventStart,
-              totalTime: entry.loadEventEnd - entry.fetchStart
+              domContentLoaded: navigationEntry.domContentLoadedEventEnd - navigationEntry.domContentLoadedEventStart,
+              loadComplete: navigationEntry.loadEventEnd - navigationEntry.loadEventStart,
+              totalTime: navigationEntry.loadEventEnd - navigationEntry.fetchStart
             });
           }
         });

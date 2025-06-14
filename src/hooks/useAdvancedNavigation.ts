@@ -92,7 +92,7 @@ export const useAdvancedNavigation = () => {
     if (!route) return;
 
     try {
-      await route.component();
+      await route.component;
       console.log(`Preloaded route: ${path}`);
     } catch (error) {
       console.warn(`Failed to preload route: ${path}`, error);
