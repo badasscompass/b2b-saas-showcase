@@ -5,6 +5,8 @@ import { StrategicAdvisoryServices } from "@/components/StrategicAdvisoryService
 import { StrategicAdvisoryProcess } from "@/components/StrategicAdvisoryProcess";
 import { StrategicAdvisoryOutcomes } from "@/components/StrategicAdvisoryOutcomes";
 import { StrategicAdvisoryClientWork } from "@/components/StrategicAdvisoryClientWork";
+import { PricingTiers } from "@/components/PricingTiers";
+import { strategicAdvisoryPricingTiers } from "@/data/strategicAdvisoryData";
 
 const StrategicAdvisory = () => {
   useEffect(() => {
@@ -21,6 +23,12 @@ const StrategicAdvisory = () => {
       <StrategicAdvisoryServices />
       <StrategicAdvisoryProcess />
       <StrategicAdvisoryOutcomes />
+      <PricingTiers 
+        title="Strategic Advisory Packages"
+        subtitle="Choose the right strategic engagement to accelerate your product vision"
+        tiers={strategicAdvisoryPricingTiers}
+        ctaText="Book a Strategy Discovery Call"
+      />
       <StrategicAdvisoryClientWork />
     </ServicePageLayout>
   );
