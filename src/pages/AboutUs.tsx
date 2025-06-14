@@ -42,8 +42,8 @@ const AboutUs = () => {
     <PageLayout footerTagline="Building the future, one product at a time.">
       <PageHero
         title="About LMN3"
-        subtitle="Strategic product consultancy focused on transforming visions into market-ready products"
-        description="We combine deep product expertise with strategic thinking to help companies build products that matter, scale efficiently, and achieve sustainable growth."
+        subtitle="Strategic product consultancy focused on transforming visions into market-ready products. We combine deep product expertise with strategic thinking to help companies build products that matter, scale efficiently, and achieve sustainable growth."
+        ctaText="Schedule Discovery Call"
       />
 
       {/* Mission & Vision Section */}

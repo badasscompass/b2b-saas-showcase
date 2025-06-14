@@ -25,7 +25,7 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="w-48 h-48 mx-auto md:mx-0 rounded-lg overflow-hidden flex-shrink-0">
               <OptimizedImage
-                source={{ url: partner.image, alt: partner.name }}
+                source={{ type: 'external', url: partner.image, alt: partner.name }}
                 config={{ width: 192, height: 192, quality: 80 }}
                 className="w-full h-full object-cover"
                 loadingClassName="w-full h-full bg-gray-200"

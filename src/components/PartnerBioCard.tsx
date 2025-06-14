@@ -16,7 +16,7 @@ export const PartnerBioCard = ({ partner, onClick }: PartnerBioCardProps) => {
       <CardContent className="p-6 text-center">
         <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden">
           <OptimizedImage
-            source={{ url: partner.image, alt: partner.name }}
+            source={{ type: 'external', url: partner.image, alt: partner.name }}
             config={{ width: 128, height: 128, quality: 80 }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loadingClassName="w-full h-full bg-gray-200"
