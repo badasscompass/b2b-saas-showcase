@@ -1,5 +1,6 @@
 
 import React from 'react';
+import LazyLoadError from '../components/LazyLoadError';
 
 export interface RouteConfig {
   path: string;
@@ -17,6 +18,14 @@ export interface RouteGuard {
   redirect?: string;
 }
 
+const createLazyComponentWithErrorHandler = (importFn: () => Promise<any>) => {
+  return React.lazy(() => 
+    importFn().catch(() => ({ 
+      default: () => React.createElement(LazyLoadError) 
+    }))
+  );
+};
+
 export const routeConfig: RouteConfig[] = [
   {
     path: '/',
@@ -28,28 +37,28 @@ export const routeConfig: RouteConfig[] = [
   },
   {
     path: '/product-development',
-    component: React.lazy(() => import('../pages/ProductDevelopment').catch(() => ({ default: () => <div>Error loading page</div> }))),
+    component: createLazyComponentWithErrorHandler(() => import('../pages/ProductDevelopment')),
     title: 'Product Development Services - LMN3 Consulting',
     description: 'From MVP to launch - comprehensive product development services with proven processes.',
     keywords: ['product development', 'MVP', 'product strategy', 'development process']
   },
   {
     path: '/strategic-advisory',
-    component: React.lazy(() => import('../pages/StrategicAdvisory').catch(() => ({ default: () => <div>Error loading page</div> }))),
+    component: createLazyComponentWithErrorHandler(() => import('../pages/StrategicAdvisory')),
     title: 'Strategic Advisory Services - LMN3 Consulting',
     description: 'Clear direction and positioning for early-stage founders and product teams.',
     keywords: ['strategic advisory', 'positioning', 'value proposition', 'market strategy']
   },
   {
     path: '/product-marketing-gtm',
-    component: React.lazy(() => import('../pages/ProductMarketingGTM').catch(() => ({ default: () => <div>Error loading page</div> }))),
+    component: createLazyComponentWithErrorHandler(() => import('../pages/ProductMarketingGTM')),
     title: 'Product Marketing & GTM - LMN3 Consulting',
     description: 'Launch smarter and reach buyers faster with data-driven go-to-market strategies.',
     keywords: ['product marketing', 'go-to-market', 'GTM strategy', 'launch strategy']
   },
   {
     path: '/about-us',
-    component: React.lazy(() => import('../pages/AboutUs').catch(() => ({ default: () => <div>Error loading page</div> }))),
+    component: createLazyComponentWithErrorHandler(() => import('../pages/AboutUs')),
     title: 'About Us - LMN3 Consulting',
     description: 'Meet the strategic minds behind LMN3 Consulting and learn about our mission to transform product visions into market success.',
     keywords: ['about us', 'team', 'partners', 'product consultants', 'company mission']
