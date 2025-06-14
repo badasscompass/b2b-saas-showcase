@@ -10,6 +10,15 @@ interface ClientWorkCardProps {
 }
 
 export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
+  // Function to extract first sentence and add ellipsis
+  const getFirstSentence = (text: string) => {
+    const sentences = text.split(/[.!?]+/);
+    if (sentences.length > 1 && sentences[0].trim()) {
+      return sentences[0].trim() + "...";
+    }
+    return text;
+  };
+
   return (
     <Card 
       className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50 h-[500px] flex flex-col"
@@ -33,9 +42,7 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
             {work.scope}
           </div>
           <CardDescription className="text-gray-600 font-manrope leading-snug text-sm flex-1 overflow-hidden">
-            <span className="line-clamp-3 block">
-              {work.description}
-            </span>
+            {getFirstSentence(work.description)}
           </CardDescription>
         </div>
         
