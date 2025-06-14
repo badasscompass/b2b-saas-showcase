@@ -1,10 +1,10 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Mail } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { FlexibleImage } from "@/components/FlexibleImage";
 import { clientWork } from "@/data/productDevelopmentData";
 
 export const ClientWorkShowcase = () => {
@@ -24,10 +24,11 @@ export const ClientWorkShowcase = () => {
                   <Card className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50">
                     <CardHeader className="p-6">
                       <div className="w-full h-40 bg-gray-200 rounded-lg mb-4 overflow-hidden">
-                        <img 
-                          src={`https://images.unsplash.com/${work.image}?q=80&w=400&h=200&fit=crop`}
-                          alt={work.title}
+                        <FlexibleImage
+                          source={work.image}
+                          config={{ width: 400, height: 200, quality: 80 }}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loadingClassName="w-full h-full"
                         />
                       </div>
                       <CardTitle className="font-manrope text-lg text-gray-900 mb-2 line-clamp-2">
@@ -54,10 +55,11 @@ export const ClientWorkShowcase = () => {
                   <ScrollArea className="max-h-[70vh] pr-4">
                     <div className="space-y-4">
                       <div className="w-full h-48 bg-gray-200 rounded-lg overflow-hidden">
-                        <img 
-                          src={`https://images.unsplash.com/${work.image}?q=80&w=800&h=300&fit=crop`}
-                          alt={work.title}
+                        <FlexibleImage
+                          source={work.image}
+                          config={{ width: 800, height: 300, quality: 80 }}
                           className="w-full h-full object-cover"
+                          loadingClassName="w-full h-full"
                         />
                       </div>
                       <div className="space-y-3">

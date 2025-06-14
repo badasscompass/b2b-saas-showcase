@@ -1,10 +1,10 @@
-
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Mail } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { FlexibleImage } from "@/components/FlexibleImage";
 
 const clientWork = [
   {
@@ -12,7 +12,16 @@ const clientWork = [
     scope: "User Experience & Trust Framework Design",
     description: "Enterprise client had a high-performing AI tool—accurate, fast, and reliable. But 80% of users bypassed it or manually rechecked results. The issue wasn't performance. It was trust. We identified decision-friction points, added explainability and confidence scores, integrated human benchmarks and educational UI, and reframed the AI as a user-controlled assistant, not a black box.",
     lead: "Anamarija Ledic",
-    image: "photo-1581091226825-a6a2a5aee158",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1581091226825-a6a2a5aee158',
+      alt: 'Woman using AI-powered laptop',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1498050108023-c5249f4df085',
+        alt: 'MacBook with code on screen'
+      }
+    },
     sector: "B2B SaaS / Legal Tech",
     product: "AI assistant",
     email: "anamarija@lmn3.digital"
@@ -22,7 +31,16 @@ const clientWork = [
     scope: "Strategic Positioning & Market Alignment", 
     description: "Agency in-house team building an MVP (backend-as-a-service for content mmanagement use cases) needed help defining what their product actually is and who it's for. Working fractionally (~45 hrs) over 12 weeks, we co-created product vision, mission, and value proposition, developed elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope based on strategic positioning.",
     lead: "Iva Rumora",
-    image: "photo-1488590528505-98d2b5aba04b",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1488590528505-98d2b5aba04b',
+      alt: 'Laptop showing strategic planning',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1519389950473-47ba0277781c',
+        alt: 'People working with laptops'
+      }
+    },
     sector: "B2B SaaS / CMS/DMS",
     product: "contendo.io",
     productUrl: "https://contendo.io",
@@ -33,7 +51,16 @@ const clientWork = [
     scope: "User Activation & Retention Strategy",
     description: "A client faced a 15% user drop-off within 2 minutes of onboarding—despite clean UX and no bugs. Past fixes (redesigns, tooltips, shorter flows) had no impact. We uncovered the real issue: lack of emotional relevance. Solution included intent-based signup tagging, personalised onboarding copy and CTAs, visual progress tracker, and triggered 24h nudge campaign.",
     lead: "Anamarija Ledic",
-    image: "photo-1460925895917-afdab827c52f",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1460925895917-afdab827c52f',
+      alt: 'Analytics dashboard showing user engagement',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1487058792275-0ad4aaf24ca7',
+        alt: 'Colorful code on computer monitor'
+      }
+    },
     sector: "B2B SaaS / BI",
     product: "Analytics Platform",
     email: "anamarija@lmn3.digital"
@@ -57,10 +84,11 @@ export const StrategicAdvisoryClientWork = () => {
                   <Card className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50">
                     <CardHeader className="p-6 md:p-8">
                       <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
-                        <img 
-                          src={`https://images.unsplash.com/${work.image}?q=80&w=600&h=300&fit=crop`}
-                          alt={work.title}
+                        <FlexibleImage
+                          source={work.image}
+                          config={{ width: 600, height: 300, quality: 80 }}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          loadingClassName="w-full h-full"
                         />
                       </div>
                       <CardTitle className="font-manrope text-lg md:text-xl text-gray-900 mb-2">
@@ -87,10 +115,11 @@ export const StrategicAdvisoryClientWork = () => {
                   <ScrollArea className="max-h-[calc(90vh-120px)] px-6">
                     <div className="space-y-6 pb-6">
                       <div className="w-full h-64 bg-gray-200 rounded-lg overflow-hidden">
-                        <img 
-                          src={`https://images.unsplash.com/${work.image}?q=80&w=800&h=400&fit=crop`}
-                          alt={work.title}
+                        <FlexibleImage
+                          source={work.image}
+                          config={{ width: 800, height: 400, quality: 80 }}
                           className="w-full h-full object-cover"
+                          loadingClassName="w-full h-full"
                         />
                       </div>
                       <div className="space-y-4">

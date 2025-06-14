@@ -1,4 +1,3 @@
-
 import { Target, Users, Zap, Clock } from "lucide-react";
 
 export const productServices = [
@@ -62,7 +61,16 @@ export const clientWork = [
     lead: "Iva Rumora",
     result: "Product moved from beta to functional state. Clearer edge in UX and value delivery. Founder equipped with direction for next growth phase. (Ongoing)",
     metrics: "Product stabilized and positioned for growth",
-    image: "photo-1488590528505-98d2b5aba04b",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1488590528505-98d2b5aba04b',
+      alt: 'Laptop computer showing development work',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1498050108023-c5249f4df085',
+        alt: 'MacBook with code on screen'
+      }
+    },
     sector: "AI Developer Tools",
     product: "codx-junior",
     productUrl: "https://github.com/gbrian/codx-junior"
@@ -74,7 +82,16 @@ export const clientWork = [
     lead: "Anamarija Ledic",
     result: "+21% YoY growth in user engagement within 6 months post-launch. 2× increase in listing conversions through improved search, filtering, and onboarding flows. Introduced modular architecture, enabling faster development and feature rollout.",
     metrics: "+21% YoY user engagement, 2× listing conversions",
-    image: "photo-1486312338219-ce68d2c6f44d",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1486312338219-ce68d2c6f44d',
+      alt: 'Digital marketplace interface',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1519389950473-47ba0277781c',
+        alt: 'People working with laptops'
+      }
+    },
     sector: "Online Marketplaces",
     product: "Central Europe Classifieds Platform"
   },
@@ -85,7 +102,16 @@ export const clientWork = [
     lead: "Iva Rumora",
     result: "Functional delivery flow re-established in 2 sprints. Major bottleneck cleared. Delivery pace and team alignment restored.",
     metrics: "Team alignment and delivery flow restored",
-    image: "photo-1486312338219-ce68d2c6f44d",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1605810230434-7631ac76ec81',
+      alt: 'Team collaboration with displays',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1519389950473-47ba0277781c',
+        alt: 'People working with computers'
+      }
+    },
     sector: "B2B Hospitality",
     product: "Tourism & Transport Platform"
   }
