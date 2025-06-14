@@ -31,7 +31,7 @@ export const PageHero = ({ title, subtitle, ctaText, onCtaClick }: PageHeroProps
   className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope text-lg px-8 py-4"
   asChild
 >
-  <a href="https://calendly.com/d/cssk-mv3-n33/product-services-discovery">
+  <a href="https://calendly.com/iva-lmn3/30min">
     <Calendar className="mr-2 h-5 w-5" />
     {ctaText}
   </a>

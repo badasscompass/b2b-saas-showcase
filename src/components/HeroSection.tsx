@@ -69,7 +69,7 @@ export const HeroSection = () => {
               className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90 font-manrope font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto w-full sm:w-auto"
               asChild
             >
-              <a href="https://calendly.com/d/cssk-mv3-n33/product-services-discovery">
+              <a href="https://calendly.com/iva-lmn3/30min">
                 <Calendar className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Book Discovery Call
               </a>
