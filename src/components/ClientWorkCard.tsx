@@ -15,7 +15,7 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
       className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50 h-[500px] flex flex-col"
       onClick={onClick}
     >
-      <CardHeader className="p-6 md:p-8 flex-1 flex flex-col relative">
+      <CardHeader className="p-6 md:p-8 flex-1 flex flex-col relative pb-16">
         <div className="w-full h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden flex-shrink-0">
           <FlexibleImage
             source={work.image}
@@ -32,7 +32,7 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
           <div className="text-[#F4A42C] font-manrope font-semibold mb-3 text-sm md:text-base">
             {work.scope}
           </div>
-          <CardDescription className="text-gray-600 font-manrope leading-relaxed text-sm md:text-base line-clamp-4 flex-1">
+          <CardDescription className="text-gray-600 font-manrope leading-relaxed text-sm md:text-base line-clamp-3 flex-1 mb-4">
             {work.description}
           </CardDescription>
         </div>
