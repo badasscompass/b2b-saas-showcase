@@ -17,21 +17,23 @@ const ProductDevelopment = () => {
   const pricingTiers: PricingTier[] = [
     {
       packageName: "Product Clarity Sprint",
-      tier: "Duo",
+      tier: "Solo",
       lead: "Both",
       teamSetup: "1 PM",
       format: "4-6 weeks",
       useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",
-      outcomes: "Clear product roadmap, validated feature priorities, and strategic direction for scaling."
+      outcomes: "Clear product roadmap, validated feature priorities, and strategic direction for scaling.",
+      pricing: "Custom"
     },
     {
       packageName: "Discovery-to-Strategy Accelerator",
       tier: "Collab",
       lead: "Both",
-      teamSetup: "1 or 2 PMs",
+      teamSetup: "2 senior PMs",
       format: "6–8 weeks",
       useCase: "Founders/CPOs testing new product lines or repositioning to grow.",
-      outcomes: "Prioritized opportunities, structured discovery docs, value hypotheses & next steps."
+      outcomes: "Prioritized opportunities, structured discovery docs, value hypotheses & next steps.",
+      pricing: "Custom"
     },
     {
       packageName: "Product Ops-in-a-Box",
@@ -40,7 +42,8 @@ const ProductDevelopment = () => {
       teamSetup: "1 PM",
       format: "4–6 weeks",
       useCase: "Growing teams in need of structure, decision hygiene, and velocity.",
-      outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership."
+      outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership.",
+      pricing: "Custom"
     }
   ];
 

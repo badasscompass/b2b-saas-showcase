@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Users, Clock, User } from "lucide-react";
+import { Users, Clock, User, Euro } from "lucide-react";
 import { useState } from "react";
 import { PartnerBioDialog } from "@/components/PartnerBioDialog";
 import { getPartnerByName } from "@/data/partnerBios";
@@ -16,6 +16,7 @@ export interface PricingTier {
   format: string;
   useCase: string;
   outcomes?: string;
+  pricing?: string;
 }
 
 interface PricingTiersProps {
@@ -104,7 +105,7 @@ export const PricingTiers = ({
       );
     }
     
-    if (tier.tier === 'Duo') {
+    if (tier.tier === 'Solo' && tier.lead === 'Both') {
       return (
         <div className="flex items-center space-x-2 text-sm text-gray-600">
           <Users className="h-4 w-4" />
@@ -126,7 +127,7 @@ export const PricingTiers = ({
       );
     }
     
-    // Solo tier
+    // Solo tier with single lead
     return (
       <div className="flex items-center space-x-2 text-sm text-gray-600">
         <User className="h-4 w-4" />
@@ -167,6 +168,12 @@ export const PricingTiers = ({
                     <Badge className={`${getTierColor(tier.tier)} font-manrope text-xs`}>
                       {tier.tier}
                     </Badge>
+                    {tier.pricing && (
+                      <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
+                        <Euro className="h-4 w-4" />
+                        <span className="font-manrope">{tier.pricing}</span>
+                      </div>
+                    )}
                   </div>
                   <CardTitle className="text-lg lg:text-xl font-bold font-manrope text-gray-900 leading-tight">
                     {tier.packageName}
