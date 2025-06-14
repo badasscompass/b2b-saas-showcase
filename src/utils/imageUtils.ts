@@ -1,37 +1,12 @@
 
 import { ImageSource, ImageConfig } from '@/types/image';
+import { ImageService } from '@/services/imageService';
 
+// Legacy wrapper for backward compatibility
 export const buildImageUrl = (source: ImageSource, config: ImageConfig = {}): string => {
-  const { width = 400, height = 200, fit = 'crop', quality = 80 } = config;
-  
-  switch (source.type) {
-    case 'unsplash':
-      if (!source.id) throw new Error('Unsplash ID is required');
-      // Use proper Unsplash API format
-      return `https://images.unsplash.com/${source.id}?auto=format&fit=${fit}&w=${width}&h=${height}&q=${quality}`;
-    
-    case 'upload':
-    case 'external':
-      return source.url || '';
-    
-    default:
-      return '';
-  }
+  return ImageService.buildUrl(source, config);
 };
 
 export const getImageWithFallback = (source: ImageSource, config?: ImageConfig): { url: string; alt: string } => {
-  try {
-    const url = buildImageUrl(source, config);
-    return { url, alt: source.alt };
-  } catch (error) {
-    console.log('Error building image URL:', error);
-    if (source.fallback) {
-      return getImageWithFallback(source.fallback, config);
-    }
-    // Default fallback with proper Unsplash format
-    return {
-      url: `https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=200&q=80`,
-      alt: 'Default placeholder image'
-    };
-  }
+  return ImageService.getWithFallback(source, config);
 };

@@ -1,10 +1,10 @@
 
 import { GenericClientWork } from "@/types/clientWork";
+import { UnifiedClientWork } from "@/types/unified";
 import { ClientWork } from "@/data/strategicAdvisoryClientWork";
 
-// Mapper for Strategic Advisory client work
+// Mapper for Strategic Advisory client work (legacy support)
 export const mapStrategicAdvisoryToGeneric = (work: ClientWork): GenericClientWork => {
-  // Generate results content based on title
   const getResultsContent = (title: string) => {
     switch (title) {
       case "AI Trust & Adoption Strategy":
@@ -12,7 +12,7 @@ export const mapStrategicAdvisoryToGeneric = (work: ClientWork): GenericClientWo
           timeframe: "Results in 45 days",
           results: [
             "• 3× increase in AI usage",
-            "• +22% time saved per session",
+            "• +22% time saved per session", 
             "• +47% boost in user satisfaction",
             "• First enterprise deal closed, directly tied to improved UX"
           ],
@@ -60,6 +60,25 @@ export const mapStrategicAdvisoryToGeneric = (work: ClientWork): GenericClientWo
   };
 };
 
+// Mapper from unified to generic (for backward compatibility)
+export const mapUnifiedToGeneric = (work: UnifiedClientWork): GenericClientWork => {
+  return {
+    id: work.id,
+    title: work.title,
+    scope: work.scope,
+    description: work.description,
+    lead: work.lead,
+    email: work.email,
+    image: work.image,
+    sector: work.sector,
+    product: work.product,
+    productUrl: work.productUrl,
+    result: work.result,
+    metrics: work.metrics,
+    resultsContent: work.resultsContent
+  };
+};
+
 // Generic mapper for other client work types (like Product Development)
 export const mapGenericClientWork = (work: any): GenericClientWork => {
   return {
@@ -68,7 +87,7 @@ export const mapGenericClientWork = (work: any): GenericClientWork => {
     scope: work.scope,
     description: work.description,
     lead: work.lead,
-    email: work.email || work.lead, // fallback to lead if email not available
+    email: work.email || work.lead,
     image: work.image,
     sector: work.sector,
     product: work.product,

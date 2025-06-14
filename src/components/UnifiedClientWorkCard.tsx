@@ -2,15 +2,14 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { FlexibleImage } from "@/components/FlexibleImage";
-import { GenericClientWork } from "@/types/clientWork";
 import { UnifiedClientWork } from "@/types/unified";
 
-interface ClientWorkCardProps {
-  work: GenericClientWork | UnifiedClientWork;
+interface UnifiedClientWorkCardProps {
+  work: UnifiedClientWork;
   onClick: () => void;
 }
 
-export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
+export const UnifiedClientWorkCard = ({ work, onClick }: UnifiedClientWorkCardProps) => {
   // Function to extract first sentence and add ellipsis
   const getFirstSentence = (text: string) => {
     const sentences = text.split(/[.!?]+/);
