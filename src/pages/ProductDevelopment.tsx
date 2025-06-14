@@ -5,11 +5,24 @@ import { ProductProcessSection } from "@/components/ProductProcessSection";
 import { ProductOutcomesSection } from "@/components/ProductOutcomesSection";
 import { ClientWorkShowcase } from "@/components/ClientWorkShowcase";
 import { PageCTA } from "@/components/PageCTA";
+import { PricingTiers, PricingTier } from "@/components/PricingTiers";
 import { clientWork } from "@/data/productDevelopmentData";
 import { mapGenericClientWork } from "@/utils/clientWorkMappers";
 
 const ProductDevelopment = () => {
   const mappedClientWork = clientWork.map(mapGenericClientWork);
+
+  const pricingTiers: PricingTier[] = [
+    {
+      packageName: "Product Clarity Sprint",
+      tier: "Solo",
+      lead: "Iva",
+      teamSetup: "1 PM",
+      format: "4-6 weeks",
+      useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",
+      outcomes: "Clear product roadmap, validated feature priorities, and strategic direction for scaling."
+    }
+  ];
 
   return (
     <ServicePageLayout
@@ -21,6 +34,14 @@ const ProductDevelopment = () => {
       <ProductServicesSection />
       <ProductProcessSection />
       <ProductOutcomesSection />
+      
+      <PricingTiers 
+        title="Product Development Packages"
+        subtitle="Structured engagements designed to move your product forward efficiently"
+        tiers={pricingTiers}
+        ctaText="Book a Product Audit Call"
+      />
+
       <ClientWorkShowcase 
         title="Client Work Showcase"
         subtitle="See how we've helped companies build and scale successful products from concept to launch."
