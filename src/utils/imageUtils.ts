@@ -7,7 +7,8 @@ export const buildImageUrl = (source: ImageSource, config: ImageConfig = {}): st
   switch (source.type) {
     case 'unsplash':
       if (!source.id) throw new Error('Unsplash ID is required');
-      return `https://images.unsplash.com/${source.id}?q=${quality}&w=${width}&h=${height}&fit=${fit}`;
+      // Use proper Unsplash API format
+      return `https://images.unsplash.com/${source.id}?auto=format&fit=${fit}&w=${width}&h=${height}&q=${quality}`;
     
     case 'upload':
     case 'external':
@@ -23,12 +24,13 @@ export const getImageWithFallback = (source: ImageSource, config?: ImageConfig):
     const url = buildImageUrl(source, config);
     return { url, alt: source.alt };
   } catch (error) {
+    console.log('Error building image URL:', error);
     if (source.fallback) {
       return getImageWithFallback(source.fallback, config);
     }
-    // Default fallback
+    // Default fallback with proper Unsplash format
     return {
-      url: `https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=400&h=200&fit=crop`,
+      url: `https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=200&q=80`,
       alt: 'Default placeholder image'
     };
   }
