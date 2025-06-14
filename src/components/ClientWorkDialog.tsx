@@ -1,16 +1,28 @@
-
 import { DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
-import { Calendar, Mail } from "lucide-react";
+import { Calendar, Mail, User } from "lucide-react";
 import { FlexibleImage } from "@/components/FlexibleImage";
 import { GenericClientWork } from "@/types/clientWork";
+import { getPartnerByName } from "@/data/partnerBios";
+import { useAdvancedNavigation } from "@/hooks/useAdvancedNavigation";
 
 interface ClientWorkDialogProps {
   work: GenericClientWork;
 }
 
 export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
+  const { navigate } = useAdvancedNavigation();
+  
+  const handlePartnerClick = () => {
+    if (work.lead) {
+      const partner = getPartnerByName(work.lead);
+      if (partner) {
+        navigate('/about-us');
+      }
+    }
+  };
+
   return (
     <DialogContent className="sm:max-w-4xl max-h-[90vh] w-[95vw] p-0">
       <DialogHeader className="p-6 pb-4">
@@ -32,7 +44,17 @@ export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
             <div>
               <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-2">Lead</h4>
               <div className="flex items-center space-x-4">
-                <p className="text-gray-700 font-manrope">{work.lead}</p>
+                {work.lead && getPartnerByName(work.lead) ? (
+                  <button
+                    onClick={handlePartnerClick}
+                    className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors group"
+                  >
+                    <User className="h-4 w-4 mr-1" />
+                    <span className="font-manrope underline group-hover:no-underline">{work.lead}</span>
+                  </button>
+                ) : (
+                  <p className="text-gray-700 font-manrope">{work.lead}</p>
+                )}
                 <a 
                   href={`mailto:${work.email}`}
                   className="flex items-center text-[#EA3E3A] hover:text-[#F4A42C] transition-colors"

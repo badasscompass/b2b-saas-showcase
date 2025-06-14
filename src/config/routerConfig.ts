@@ -46,5 +46,12 @@ export const routeConfig: RouteConfig[] = [
     title: 'Product Marketing & GTM - LMN3 Consulting',
     description: 'Launch smarter and reach buyers faster with data-driven go-to-market strategies.',
     keywords: ['product marketing', 'go-to-market', 'GTM strategy', 'launch strategy']
+  },
+  {
+    path: '/about-us',
+    component: React.lazy(() => import('../pages/AboutUs')),
+    title: 'About Us - LMN3 Consulting',
+    description: 'Meet the strategic minds behind LMN3 Consulting and learn about our mission to transform product visions into market success.',
+    keywords: ['about us', 'team', 'partners', 'product consultants', 'company mission']
   }
 ];

@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { FlexibleImage } from "@/components/FlexibleImage";
 import { GenericClientWork } from "@/types/clientWork";
 import { UnifiedClientWork } from "@/types/unified";
+import { getPartnerByName } from "@/data/partnerBios";
+import { useAdvancedNavigation } from "@/hooks/useAdvancedNavigation";
 
 interface ClientWorkCardProps {
   work: GenericClientWork | UnifiedClientWork;
@@ -11,6 +13,8 @@ interface ClientWorkCardProps {
 }
 
 export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
+  const { navigate } = useAdvancedNavigation();
+  
   // Function to extract first sentence and add ellipsis
   const getFirstSentence = (text: string) => {
     const sentences = text.split(/[.!?]+/);
@@ -18,6 +22,14 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
       return sentences[0].trim() + "...";
     }
     return text;
+  };
+
+  const handlePartnerClick = (e: React.MouseEvent, partnerName: string) => {
+    e.stopPropagation();
+    const partner = getPartnerByName(partnerName);
+    if (partner) {
+      navigate('/about-us');
+    }
   };
 
   return (
@@ -42,6 +54,17 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
           <div className="text-[#F4A42C] font-manrope font-semibold mb-2 text-sm line-clamp-1">
             {work.scope}
           </div>
+          {work.lead && (
+            <div className="text-xs text-gray-500 font-manrope mb-2">
+              Led by{' '}
+              <button
+                onClick={(e) => handlePartnerClick(e, work.lead)}
+                className="text-[#EA3E3A] hover:text-[#F4A42C] underline transition-colors"
+              >
+                {work.lead}
+              </button>
+            </div>
+          )}
           <CardDescription className="text-gray-600 font-manrope leading-snug text-sm flex-1 overflow-hidden">
             {getFirstSentence(work.description)}
           </CardDescription>

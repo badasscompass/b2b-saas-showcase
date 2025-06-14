@@ -25,6 +25,7 @@ export const Navigation = () => {
             <Link to="/#services" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Services</Link>
             <Link to="/#who-we-serve" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
             <Link to="/#why-choose-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
+            <Link to="/about-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -61,6 +62,13 @@ export const Navigation = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Why Us
+              </Link>
+              <Link 
+                to="/about-us" 
+                className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
               </Link>
             </div>
           </div>
