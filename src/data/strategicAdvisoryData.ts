@@ -4,8 +4,8 @@ import { PricingTier } from "@/components/PricingTiers";
 export const strategicAdvisoryPricingTiers: PricingTier[] = [
   {
     packageName: "Product Strategy Blueprint",
-    tier: "Solo",
-    lead: "Iva",
+    tier: "Collab",
+    lead: "Both",
     teamSetup: "1 senior PM",
     format: "4–6 weeks",
     useCase: "Product-led orgs prepping for scale or funding; early product hires in new orgs.",
@@ -13,8 +13,8 @@ export const strategicAdvisoryPricingTiers: PricingTier[] = [
   },
   {
     packageName: "Fractional Product Leadership",
-    tier: "Solo", 
-    lead: "Anamarija",
+    tier: "Duo", 
+    lead: "Both",
     teamSetup: "1 senior PM",
     format: "Daily 2-6 hours",
     useCase: "Founders without a head of product, product teams needing interim support (3-6 months).",

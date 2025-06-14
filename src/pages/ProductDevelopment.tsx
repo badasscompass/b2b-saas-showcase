@@ -17,8 +17,8 @@ const ProductDevelopment = () => {
   const pricingTiers: PricingTier[] = [
     {
       packageName: "Product Clarity Sprint",
-      tier: "Solo",
-      lead: "Iva",
+      tier: "Duo",
+      lead: "Both",
       teamSetup: "1 PM",
       format: "4-6 weeks",
       useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",

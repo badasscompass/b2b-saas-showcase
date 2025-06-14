@@ -12,12 +12,12 @@ export const productMarketingGTMPricingTiers: PricingTier[] = [
     outcomes: "Market messaging & segments, Monetization model audit, GTM activation checklist."
   },
   {
-    packageName: "Fractional Product Marketing Leadership",
-    tier: "Solo", 
-    lead: "Anamarija",
+    packageName: "Fractional Product Marketing Specialist",
+    tier: "Duo", 
+    lead: "Both",
     teamSetup: "1 senior PMM",
-    format: "Daily 2-6 hours",
-    useCase: "Founders without a head of product marketing, teams needing interim PMM support (3-6 months).",
-    outcomes: "Executive-level product marketing ownership, team coaching + mentoring, strategic + delivery alignment."
+    format: "Daily 2-4 hours",
+    useCase: "Founders without a head of product marketing, teams needing interim PMM specialist support (3-6 months).",
+    outcomes: "Senior-level product marketing support, team coaching + mentoring, strategic + delivery alignment."
   }
 ];
