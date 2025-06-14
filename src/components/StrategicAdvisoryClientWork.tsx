@@ -14,7 +14,7 @@ const clientWork = [
     lead: "Anamarija Ledic",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1581091226825-a6a2a5aee158',
+      id: 'photo-1649972904349-6e44c42644a7',
       alt: 'Woman using AI-powered laptop',
       fallback: {
         type: 'unsplash' as const,
@@ -37,8 +37,8 @@ const clientWork = [
       alt: 'Laptop showing strategic planning',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1519389950473-47ba0277781c',
-        alt: 'People working with laptops'
+        id: 'photo-1486312338219-ce68d2c6f44d',
+        alt: 'Person using MacBook Pro'
       }
     },
     sector: "B2B SaaS / CMS/DMS",
@@ -53,12 +53,12 @@ const clientWork = [
     lead: "Anamarija Ledic",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1460925895917-afdab827c52f',
+      id: 'photo-1518770660439-4636190af475',
       alt: 'Analytics dashboard showing user engagement',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1487058792275-0ad4aaf24ca7',
-        alt: 'Colorful code on computer monitor'
+        id: 'photo-1461749280684-dccba630e2f6',
+        alt: 'Monitor showing programming'
       }
     },
     sector: "B2B SaaS / BI",

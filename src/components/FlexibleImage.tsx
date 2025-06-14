@@ -19,24 +19,35 @@ export const FlexibleImage = ({
 }: FlexibleImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [currentImageAttempt, setCurrentImageAttempt] = useState(0);
   
   const { url, alt } = getImageWithFallback(source, config);
 
   const handleLoad = () => {
+    console.log('Image loaded successfully:', url);
     setIsLoading(false);
     setHasError(false);
   };
 
   const handleError = () => {
+    console.log('Image failed to load:', url);
     setIsLoading(false);
     setHasError(true);
+    
+    // Try fallback if available and we haven't tried it yet
+    if (source.fallback && currentImageAttempt === 0) {
+      console.log('Trying fallback image...');
+      setCurrentImageAttempt(1);
+      setIsLoading(true);
+      setHasError(false);
+    }
   };
 
-  if (isLoading) {
-    return <Skeleton className={loadingClassName} />;
-  }
+  // Get the appropriate image source based on attempt
+  const imageSource = currentImageAttempt === 0 ? source : (source.fallback || source);
+  const { url: currentUrl, alt: currentAlt } = getImageWithFallback(imageSource, config);
 
-  if (hasError) {
+  if (hasError && currentImageAttempt >= 1) {
     return (
       <div className={`${loadingClassName} bg-gray-100 flex items-center justify-center`}>
         <span className="text-gray-400 text-sm">Image unavailable</span>
@@ -45,12 +56,15 @@ export const FlexibleImage = ({
   }
 
   return (
-    <img
-      src={url}
-      alt={alt}
-      className={className}
-      onLoad={handleLoad}
-      onError={handleError}
-    />
+    <>
+      {isLoading && <Skeleton className={loadingClassName} />}
+      <img
+        src={currentUrl}
+        alt={currentAlt}
+        className={`${className} ${isLoading ? 'opacity-0 absolute' : 'opacity-100'}`}
+        onLoad={handleLoad}
+        onError={handleError}
+      />
+    </>
   );
 };
