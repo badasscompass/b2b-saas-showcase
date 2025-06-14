@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button"; // Assuming you have this Button component
 
@@ -22,7 +23,7 @@ export const CookieConsent = () => {
     window._hsp = window._hsp || [];
 
     // Optional: Add listeners for debugging, if desired
-    _hsp.push(['onReady', () => {
+    window._hsp.push(['onReady', () => {
       console.log('HubSpot core script is ready for consent communication.');
     }]);
 
