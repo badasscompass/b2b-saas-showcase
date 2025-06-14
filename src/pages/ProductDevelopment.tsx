@@ -23,7 +23,7 @@ const ProductDevelopment = () => {
       format: "4-6 weeks",
       useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",
       outcomes: "Clear product roadmap, validated feature priorities, and strategic direction for scaling.",
-      pricing: "Custom"
+      pricing: "2000-4000 €"
     },
     {
       packageName: "Discovery-to-Strategy Accelerator",
@@ -43,7 +43,7 @@ const ProductDevelopment = () => {
       format: "4–6 weeks",
       useCase: "Growing teams in need of structure, decision hygiene, and velocity.",
       outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership.",
-      pricing: "Custom"
+      pricing: "3000-5000 €"
     }
   ];
 
