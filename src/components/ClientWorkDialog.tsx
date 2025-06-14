@@ -4,55 +4,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { Calendar, Mail } from "lucide-react";
 import { FlexibleImage } from "@/components/FlexibleImage";
-import { ClientWork } from "@/data/strategicAdvisoryClientWork";
+import { GenericClientWork } from "@/types/clientWork";
 
 interface ClientWorkDialogProps {
-  work: ClientWork;
+  work: GenericClientWork;
 }
 
-const getResultsContent = (title: string) => {
-  switch (title) {
-    case "AI Trust & Adoption Strategy":
-      return {
-        timeframe: "Results in 45 days",
-        results: [
-          "• 3× increase in AI usage",
-          "• +22% time saved per session",
-          "• +47% boost in user satisfaction",
-          "• First enterprise deal closed, directly tied to improved UX"
-        ],
-        insight: "Insight: Trust, not tech, unlocks real adoption in AI-driven products."
-      };
-    case "Product Positioning Clarity":
-      return {
-        timeframe: "Results in 3 months",
-        results: [
-          "• Strategic clarity across team and stakeholders",
-          "• Benchmarked missing feature areas against category leaders",
-          "• Prioritised strategic feature set aligned with development roadmap",
-          "• Stronger product narrative and pitch for early-stage buyers",
-          "• Website and messaging aligned with market fit"
-        ],
-        insight: "From MVP confusion to clear market positioning"
-      };
-    case "Onboarding Drop-Off Turned Into Activation Growth":
-      return {
-        timeframe: "Results in 3 weeks",
-        results: [
-          "• +24% onboarding completion",
-          "• +38% Day 1 activation",
-          "• 2× feature engagement"
-        ],
-        insight: "Lesson: Motivation gaps kill retention. Fixing them delivers compounding growth."
-      };
-    default:
-      return null;
-  }
-};
-
 export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
-  const resultsContent = getResultsContent(work.title);
-
   return (
     <DialogContent className="sm:max-w-4xl max-h-[90vh] w-[95vw] p-0">
       <DialogHeader className="p-6 pb-4">
@@ -112,16 +70,28 @@ export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
               <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Project Description</h4>
               <p className="text-gray-700 font-manrope leading-relaxed">{work.description}</p>
             </div>
-            {resultsContent && (
+            {work.resultsContent && (
               <div>
-                <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">{resultsContent.timeframe}</h4>
+                <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">{work.resultsContent.timeframe}</h4>
                 <div className="space-y-1 text-gray-700 font-manrope">
-                  {resultsContent.results.map((result, index) => (
+                  {work.resultsContent.results.map((result, index) => (
                     <p key={index}>{result}</p>
                   ))}
                   <br />
-                  <p className="font-semibold text-[#F4A42C]">{resultsContent.insight}</p>
+                  <p className="font-semibold text-[#F4A42C]">{work.resultsContent.insight}</p>
                 </div>
+              </div>
+            )}
+            {work.result && (
+              <div>
+                <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Results</h4>
+                <p className="text-gray-700 font-manrope">{work.result}</p>
+                {work.metrics && (
+                  <>
+                    <br/>
+                    <p className="text-[#F4A42C] font-manrope font-semibold">{work.metrics}</p>
+                  </>
+                )}
               </div>
             )}
           </div>

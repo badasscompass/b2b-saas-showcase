@@ -2,10 +2,10 @@
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 import { FlexibleImage } from "@/components/FlexibleImage";
-import { ClientWork } from "@/data/strategicAdvisoryClientWork";
+import { GenericClientWork } from "@/types/clientWork";
 
 interface ClientWorkCardProps {
-  work: ClientWork;
+  work: GenericClientWork;
   onClick: () => void;
 }
 
