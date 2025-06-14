@@ -7,8 +7,12 @@ import { ProductOutcomesSection } from "@/components/ProductOutcomesSection";
 import { ClientWorkShowcase } from "@/components/ClientWorkShowcase";
 import { PageCTA } from "@/components/PageCTA";
 import { PageFooter } from "@/components/PageFooter";
+import { clientWork } from "@/data/productDevelopmentData";
+import { mapGenericClientWork } from "@/utils/clientWorkMappers";
 
 const ProductDevelopment = () => {
+  const mappedClientWork = clientWork.map(mapGenericClientWork);
+
   return (
     <>
       <Navigation />
@@ -22,7 +26,11 @@ const ProductDevelopment = () => {
         <ProductServicesSection />
         <ProductProcessSection />
         <ProductOutcomesSection />
-        <ClientWorkShowcase />
+        <ClientWorkShowcase 
+          title="Product Development Case Studies"
+          subtitle="See how we've helped companies build and scale successful products from concept to launch."
+          clientWork={mappedClientWork}
+        />
 
         <PageCTA
           title="Ready to Build Your Product?"
