@@ -25,7 +25,7 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
           <div className="flex flex-col md:flex-row gap-6">
             <div className="w-48 h-48 mx-auto md:mx-0 rounded-lg overflow-hidden flex-shrink-0">
               <OptimizedImage
-                source={{ type: 'external', url: partner.image, alt: partner.name }}
+                source={{ type: 'upload', url: partner.image, alt: partner.name }}
                 config={{ width: 192, height: 192, quality: 80 }}
                 className="w-full h-full object-cover"
                 loadingClassName="w-full h-full bg-gray-200"
@@ -39,9 +39,9 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
                 <h3 className="font-manrope text-lg font-semibold text-[#EA3E3A] mb-1">
                   {partner.role}
                 </h3>
-                <p className="text-gray-700 font-manrope leading-relaxed">
+                <div className="text-gray-700 font-manrope leading-relaxed whitespace-pre-line">
                   {partner.fullDescription}
-                </p>
+                </div>
               </div>
               
               <div className="flex flex-wrap gap-2">
@@ -68,46 +68,21 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
             </div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-3">
-                Expertise Areas
-              </h4>
-              <div className="flex flex-wrap gap-2">
-                {partner.expertise.map((skill, index) => (
-                  <Badge 
-                    key={index} 
-                    variant="outline" 
-                    className="border-[#F4A42C] text-[#F4A42C]"
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-            
-            <div>
-              <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-3">
-                Key Achievements
-              </h4>
-              <ul className="space-y-2">
-                {partner.achievements.map((achievement, index) => (
-                  <li key={index} className="text-gray-700 font-manrope text-sm flex items-start">
-                    <span className="text-[#F4A42C] mr-2 font-bold">•</span>
-                    {achievement}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          
           <div>
-            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-2">
-              Philosophy
+            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-3">
+              Expertise Areas
             </h4>
-            <blockquote className="italic text-gray-700 font-manrope border-l-4 border-[#F4A42C] pl-4">
-              "{partner.philosophy}"
-            </blockquote>
+            <div className="flex flex-wrap gap-2">
+              {partner.expertise.map((skill, index) => (
+                <Badge 
+                  key={index} 
+                  variant="outline" 
+                  className="border-[#F4A42C] text-[#F4A42C]"
+                >
+                  {skill}
+                </Badge>
+              ))}
+            </div>
           </div>
           
           <div className="pt-4 border-t">
