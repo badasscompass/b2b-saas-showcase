@@ -69,40 +69,76 @@ export const PricingTiers = ({
     return <User className="h-4 w-4" />;
   };
 
-  const getLeadLabel = (tier: string, lead: string) => {
-    if (tier === 'Collab') {
-      return 'Iva AND Anamarija';
-    }
-    if (tier === 'Duo') {
-      return 'Iva OR Anamarija';
-    }
-    return lead;
-  };
-
-  const handleLeadClick = (leadName: string) => {
+  const handlePartnerClick = (partnerName: string) => {
     try {
-      if (leadName === 'Both' || leadName === 'Iva AND Anamarija') {
-        // For "Both" or "Iva AND Anamarija", show Iva as the primary contact
-        const partner = getPartnerByName('Iva Rumora');
-        if (partner) {
-          setSelectedPartner(partner);
-        }
-      } else if (leadName === 'Iva OR Anamarija') {
-        // For "Iva OR Anamarija", show Iva as the primary contact
-        const partner = getPartnerByName('Iva Rumora');
-        if (partner) {
-          setSelectedPartner(partner);
-        }
-      } else {
-        const fullName = leadName === 'Iva' ? 'Iva Rumora' : 'Anamarija Ledic';
-        const partner = getPartnerByName(fullName);
-        if (partner) {
-          setSelectedPartner(partner);
-        }
+      const fullName = partnerName === 'Iva' ? 'Iva Rumora' : 'Anamarija Ledic';
+      const partner = getPartnerByName(fullName);
+      if (partner) {
+        setSelectedPartner(partner);
       }
     } catch (error) {
-      console.error('Error handling lead click:', error);
+      console.error('Error handling partner click:', error);
     }
+  };
+
+  const renderLeadSection = (tier: PricingTier) => {
+    if (tier.tier === 'Collab') {
+      return (
+        <div className="flex items-center space-x-2 text-sm text-gray-600">
+          <Users className="h-4 w-4" />
+          <span className="font-manrope">Lead: </span>
+          <button
+            onClick={() => handlePartnerClick('Iva')}
+            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
+          >
+            Iva
+          </button>
+          <span className="font-manrope">AND</span>
+          <button
+            onClick={() => handlePartnerClick('Anamarija')}
+            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
+          >
+            Anamarija
+          </button>
+        </div>
+      );
+    }
+    
+    if (tier.tier === 'Duo') {
+      return (
+        <div className="flex items-center space-x-2 text-sm text-gray-600">
+          <Users className="h-4 w-4" />
+          <span className="font-manrope">Lead: </span>
+          <button
+            onClick={() => handlePartnerClick('Iva')}
+            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
+          >
+            Iva
+          </button>
+          <span className="font-manrope">OR</span>
+          <button
+            onClick={() => handlePartnerClick('Anamarija')}
+            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
+          >
+            Anamarija
+          </button>
+        </div>
+      );
+    }
+    
+    // Solo tier
+    return (
+      <div className="flex items-center space-x-2 text-sm text-gray-600">
+        <User className="h-4 w-4" />
+        <span className="font-manrope">Lead: </span>
+        <button
+          onClick={() => handlePartnerClick(tier.lead)}
+          className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
+        >
+          {tier.lead}
+        </button>
+      </div>
+    );
   };
 
   // Center two columns when there are exactly 2 tiers
@@ -139,16 +175,7 @@ export const PricingTiers = ({
                 
                 <CardContent className="pt-0 flex flex-col flex-grow">
                   <div className="space-y-3 mb-6 flex-shrink-0">
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      {getLeadIcon(tier.lead)}
-                      <span className="font-manrope">Lead: </span>
-                      <button
-                        onClick={() => handleLeadClick(getLeadLabel(tier.tier, tier.lead))}
-                        className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
-                      >
-                        {getLeadLabel(tier.tier, tier.lead)}
-                      </button>
-                    </div>
+                    {renderLeadSection(tier)}
                     
                     <div className="flex items-center space-x-2 text-sm text-gray-600">
                       <Users className="h-4 w-4 flex-shrink-0" />
