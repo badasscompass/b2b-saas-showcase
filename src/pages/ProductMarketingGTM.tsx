@@ -1,10 +1,11 @@
-
 import { ServicePageLayout } from "@/components/layout/ServicePageLayout";
 import { ServiceSection } from "@/components/layout/ServiceSection";
 import { ServiceCard } from "@/components/ServiceCard";
 import { ProcessStep } from "@/components/ProcessStep";
 import { SuccessMetric } from "@/components/SuccessMetric";
 import { PageCTA } from "@/components/PageCTA";
+import { PricingTiers } from "@/components/PricingTiers";
+import { productMarketingGTMPricingTiers } from "@/data/productMarketingGTMData";
 import { Target, Users, Rocket, BarChart3 } from "lucide-react";
 
 const ProductMarketingGTM = () => {
@@ -123,6 +124,13 @@ const ProductMarketingGTM = () => {
           </div>
         </div>
       </ServiceSection>
+
+      <PricingTiers 
+        title="Product Marketing & GTM Packages"
+        subtitle="Choose the right marketing engagement to accelerate your go-to-market success"
+        tiers={productMarketingGTMPricingTiers}
+        ctaText="Book a GTM Discovery Call"
+      />
 
       <PageCTA
         title="Ready to Transform Your GTM Strategy?"
