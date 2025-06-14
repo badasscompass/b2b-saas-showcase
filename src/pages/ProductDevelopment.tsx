@@ -10,6 +10,8 @@ import { clientWork } from "@/data/productDevelopmentData";
 import { mapGenericClientWork } from "@/utils/clientWorkMappers";
 
 const ProductDevelopment = () => {
+  console.log('ProductDevelopment page rendering');
+  
   const mappedClientWork = clientWork.map(mapGenericClientWork);
 
   const pricingTiers: PricingTier[] = [
@@ -41,6 +43,8 @@ const ProductDevelopment = () => {
       outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership."
     }
   ];
+
+  console.log('PricingTiers data:', pricingTiers);
 
   return (
     <ServicePageLayout

@@ -28,10 +28,26 @@ interface PricingTiersProps {
 export const PricingTiers = ({ 
   title = "Service Packages", 
   subtitle = "Choose the right engagement model for your needs",
-  tiers,
+  tiers = [],
   ctaText = "Get Started"
 }: PricingTiersProps) => {
   const [selectedPartner, setSelectedPartner] = useState<any>(null);
+
+  // Add error logging for debugging
+  console.log('PricingTiers rendered with:', { title, subtitle, tiersLength: tiers.length, ctaText });
+
+  if (!tiers || tiers.length === 0) {
+    console.warn('PricingTiers: No tiers provided');
+    return (
+      <section className="py-16 md:py-24 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <p className="text-gray-600 font-manrope">No pricing tiers available.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const getTierColor = (tier: string) => {
     switch (tier) {
@@ -54,18 +70,22 @@ export const PricingTiers = ({
   };
 
   const handleLeadClick = (leadName: string) => {
-    if (leadName === 'Both') {
-      // For "Both", we could show Iva as the primary contact
-      const partner = getPartnerByName('Iva Rumora');
-      if (partner) {
-        setSelectedPartner(partner);
+    try {
+      if (leadName === 'Both') {
+        // For "Both", we could show Iva as the primary contact
+        const partner = getPartnerByName('Iva Rumora');
+        if (partner) {
+          setSelectedPartner(partner);
+        }
+      } else {
+        const fullName = leadName === 'Iva' ? 'Iva Rumora' : 'Anamarija Ledic';
+        const partner = getPartnerByName(fullName);
+        if (partner) {
+          setSelectedPartner(partner);
+        }
       }
-    } else {
-      const fullName = leadName === 'Iva' ? 'Iva Rumora' : 'Anamarija Ledic';
-      const partner = getPartnerByName(fullName);
-      if (partner) {
-        setSelectedPartner(partner);
-      }
+    } catch (error) {
+      console.error('Error handling lead click:', error);
     }
   };
 
