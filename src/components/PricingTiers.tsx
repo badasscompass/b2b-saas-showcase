@@ -1,12 +1,10 @@
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogTrigger } from "@/components/ui/dialog";
-import { Users, Clock, User, Euro } from "lucide-react";
+import { Dialog } from "@/components/ui/dialog";
 import { useState } from "react";
 import { PartnerBioDialog } from "@/components/PartnerBioDialog";
 import { getPartnerByName } from "@/data/partnerBios";
+import { PricingTierGrid } from "./pricing/PricingTierGrid";
+import { PricingDisclaimer } from "./pricing/PricingDisclaimer";
 
 export interface PricingTier {
   packageName: string;
@@ -50,26 +48,6 @@ export const PricingTiers = ({
     );
   }
 
-  const getTierColor = (tier: string) => {
-    switch (tier) {
-      case 'Solo':
-        return 'bg-[#EA3E3A] text-white';
-      case 'Duo':
-        return 'bg-[#F4A42C] text-white';
-      case 'Collab':
-        return 'bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
-  };
-
-  const getLeadIcon = (lead: string) => {
-    if (lead === 'Both') {
-      return <Users className="h-4 w-4" />;
-    }
-    return <User className="h-4 w-4" />;
-  };
-
   const handlePartnerClick = (partnerName: string) => {
     try {
       const fullName = partnerName === 'Iva' ? 'Iva Rumora' : 'Anamarija Ledic';
@@ -81,71 +59,6 @@ export const PricingTiers = ({
       console.error('Error handling partner click:', error);
     }
   };
-
-  const renderLeadSection = (tier: PricingTier) => {
-    if (tier.tier === 'Collab') {
-      return (
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <Users className="h-4 w-4" />
-          <span className="font-manrope">Lead: </span>
-          <button
-            onClick={() => handlePartnerClick('Iva')}
-            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
-          >
-            Iva
-          </button>
-          <span className="font-manrope">AND</span>
-          <button
-            onClick={() => handlePartnerClick('Anamarija')}
-            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
-          >
-            Anamarija
-          </button>
-        </div>
-      );
-    }
-    
-    if (tier.tier === 'Solo' && tier.lead === 'Both') {
-      return (
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <Users className="h-4 w-4" />
-          <span className="font-manrope">Lead: </span>
-          <button
-            onClick={() => handlePartnerClick('Iva')}
-            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
-          >
-            Iva
-          </button>
-          <span className="font-manrope">OR</span>
-          <button
-            onClick={() => handlePartnerClick('Anamarija')}
-            className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
-          >
-            Anamarija
-          </button>
-        </div>
-      );
-    }
-    
-    // Solo tier with single lead
-    return (
-      <div className="flex items-center space-x-2 text-sm text-gray-600">
-        <User className="h-4 w-4" />
-        <span className="font-manrope">Lead: </span>
-        <button
-          onClick={() => handlePartnerClick(tier.lead)}
-          className="text-[#EA3E3A] hover:text-[#EA3E3A]/80 underline font-medium transition-colors"
-        >
-          {tier.lead}
-        </button>
-      </div>
-    );
-  };
-
-  // Center two columns when there are exactly 2 tiers
-  const gridCols = tiers.length === 2 
-    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
-    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 
   return (
     <section className="py-16 md:py-24 bg-gray-50">
@@ -160,78 +73,13 @@ export const PricingTiers = ({
             </p>
           </div>
 
-          <div className={`grid ${gridCols} gap-6 lg:gap-8`}>
-            {tiers.map((tier, index) => (
-              <Card key={index} className="border-2 border-gray-200 hover:border-[#EA3E3A]/30 transition-colors duration-300 h-full flex flex-col">
-                <CardHeader className="pb-4 flex-shrink-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className={`${getTierColor(tier.tier)} font-manrope text-xs`}>
-                      {tier.tier}
-                    </Badge>
-                    {tier.pricing && (
-                      <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
-                        <Euro className="h-4 w-4" />
-                        <span className="font-manrope">{tier.pricing}</span>
-                      </div>
-                    )}
-                  </div>
-                  <CardTitle className="text-lg lg:text-xl font-bold font-manrope text-gray-900 leading-tight">
-                    {tier.packageName}
-                  </CardTitle>
-                </CardHeader>
-                
-                <CardContent className="pt-0 flex flex-col flex-grow">
-                  <div className="space-y-3 mb-6 flex-shrink-0">
-                    {renderLeadSection(tier)}
-                    
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <Users className="h-4 w-4 flex-shrink-0" />
-                      <span className="font-manrope">Team: {tier.teamSetup}</span>
-                    </div>
-                    
-                    <div className="flex items-center space-x-2 text-sm text-gray-600">
-                      <Clock className="h-4 w-4 flex-shrink-0" />
-                      <span className="font-manrope">Duration: {tier.format}</span>
-                    </div>
-                  </div>
+          <PricingTierGrid 
+            tiers={tiers}
+            ctaText={ctaText}
+            onPartnerClick={handlePartnerClick}
+          />
 
-                  <div className="space-y-4 flex-grow">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 font-manrope mb-2">Best Fit:</h4>
-                      <p className="text-sm text-gray-600 font-manrope leading-relaxed break-words">
-                        {tier.useCase}
-                      </p>
-                    </div>
-
-                    {tier.outcomes && (
-                      <div>
-                        <h4 className="font-semibold text-gray-900 font-manrope mb-2">Outcomes:</h4>
-                        <p className="text-sm text-gray-600 font-manrope leading-relaxed break-words">
-                          {tier.outcomes}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-
-                  <Button 
-                    className="w-full bg-[#EA3E3A] hover:bg-[#EA3E3A]/90 text-white font-manrope mt-6 flex-shrink-0"
-                    asChild
-                  >
-                    <a href="https://calendly.com/iva-lmn3/30min">
-                      {ctaText}
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Pricing Disclaimer */}
-          <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500 font-manrope italic">
-              * Pricing estimates are based on EU market rates for SMB organizations and may vary depending on project scope and requirements.
-            </p>
-          </div>
+          <PricingDisclaimer />
         </div>
       </div>
 
