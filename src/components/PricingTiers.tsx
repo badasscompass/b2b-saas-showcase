@@ -62,6 +62,14 @@ export const PricingTiers = ({
     }
   };
 
+  // Detect if all shown tiers are "Fractional" — by package name
+  // Basic logic: if all visible tiers use 'Fractional' in packageName, disable Duo (else allow)
+  const disableDuo =
+    tiers.length > 0 &&
+    tiers.every(tier =>
+      tier.packageName.toLowerCase().includes('fractional')
+    );
+
   // Remove filter logic: all tiers are always shown
   return (
     <section className="py-16 md:py-24 bg-gray-50">
@@ -76,7 +84,11 @@ export const PricingTiers = ({
             </p>
           </div>
 
-          <PricingTierLabelToggle selected={labelState} onChange={setLabelState} />
+          <PricingTierLabelToggle
+            selected={labelState}
+            onChange={setLabelState}
+            disableDuo={disableDuo}
+          />
 
           <PricingTierGrid
             tiers={tiers}
