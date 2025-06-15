@@ -92,8 +92,6 @@ export const PricingTiers = ({
           <PricingTierLabelToggle
             selected={labelState}
             onChange={setLabelState}
-            disableDuo={isFractionalPresent}
-            disableCollab={isFractionalPresent}
           />
 
           <PricingTierGrid

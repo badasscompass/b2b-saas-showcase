@@ -22,6 +22,9 @@ export const PricingTierCard = ({
   onPartnerClick,
   labelState,
 }: PricingTierCardProps) => {
+  const isFractional = tier.packageName.toLowerCase().includes('fractional');
+  const currentLabelState = isFractional ? 'Solo' : labelState;
+
   // Pick what to display based on labelState, but fallback to tier content if not available
   const labelMap = {
     Solo: {
@@ -46,14 +49,14 @@ export const PricingTierCard = ({
 
   // Always use "Duo" and "Collab" if the state is set, but if the tier doesn't match, keep the original
   // Best: only change the displayed label; leave card data as is (package name, description, etc)
-  const label = labelMap[labelState];
+  const label = labelMap[currentLabelState];
 
   return (
     <Card key={index} className="border-2 border-gray-200 hover:border-[#EA3E3A]/30 transition-colors duration-300 h-full flex flex-col">
       <CardHeader className="pb-4 flex-shrink-0">
         <div className="flex items-center justify-between mb-2">
           <Badge className={`${label.color} font-manrope text-xs`}>
-            {labelState}
+            {currentLabelState}
           </Badge>
           <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
             <Euro className="h-4 w-4" />
@@ -72,7 +75,7 @@ export const PricingTierCard = ({
           <PricingTierLead
             tier={tier}
             onPartnerClick={onPartnerClick}
-            labelState={labelState}
+            labelState={currentLabelState}
           />
 
           <div className="flex items-center space-x-2 text-sm text-gray-600">
@@ -84,7 +87,7 @@ export const PricingTierCard = ({
             <Clock className="h-4 w-4 flex-shrink-0" />
             <span className="font-manrope">
               Duration: {tier.format}
-              {labelState === 'Collab' && ' (async work)'}
+              {currentLabelState === 'Collab' && ' (async work)'}
             </span>
           </div>
         </div>
