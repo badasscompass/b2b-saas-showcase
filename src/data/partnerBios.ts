@@ -49,6 +49,15 @@ export const partnerBios: PartnerBio[] = [
     ],
     philosophy: "Great products aren't just built—they're positioned. I believe that understanding your market position is the foundation of every successful product strategy.",
     packageOffers: [
+      // Added Fractional Product Leadership
+      {
+        packageName: "Fractional Product Leadership",
+        tier: "Solo",
+        serviceType: "product-development",
+        servicePage: "/product-development",
+        serviceTitle: "Product Development",
+        pricing: "Starting at 40€/h"
+      },
       {
         packageName: "Strategic Clarity Session",
         tier: "Solo",
@@ -92,21 +101,32 @@ export const partnerBios: PartnerBio[] = [
     ],
     philosophy: "Impact comes from building the right thing, the right way, at the right time. I focus on creating sustainable product development practices that deliver long-term value.",
     packageOffers: [
+      // 1. Fractional Product Leadership
       {
-        packageName: "GTM & Monetisation Alignment",
+        packageName: "Fractional Product Leadership",
+        tier: "Solo",
+        serviceType: "product-development",
+        servicePage: "/product-development",
+        serviceTitle: "Product Development",
+        pricing: "Starting at 40€/h"
+      },
+      // 2. Product Reset
+      {
+        packageName: "Product Reset",
+        tier: "Solo",
+        serviceType: "product-development",
+        servicePage: "/product-development",
+        serviceTitle: "Product Development",
+        pricing: "Custom"
+      },
+      // 3. GTM Monetisation and Alignment
+      {
+        packageName: "GTM Monetisation and Alignment",
         tier: "Collab",
         serviceType: "product-marketing-gtm",
         servicePage: "/product-marketing-gtm",
         serviceTitle: "Product Marketing & GTM",
         pricing: "Custom"
-      },
-      {
-        packageName: "Product Clarity Sprint",
-        tier: "Solo",
-        serviceType: "product-development",
-        servicePage: "/product-development",
-        serviceTitle: "Product Development",
-        pricing: "2000-4000 €"
       }
     ]
   }
