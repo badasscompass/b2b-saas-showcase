@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Linkedin, Mail } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { PartnerBio } from "@/data/partnerBios";
+import { PartnerPackageOffers } from "@/components/PartnerPackageOffers";
 
 interface PartnerBioDialogProps {
   partner: PartnerBio;
@@ -67,6 +68,11 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
               </div>
             </div>
           </div>
+          
+          <PartnerPackageOffers 
+            packages={partner.packageOffers} 
+            partnerName={partner.name}
+          />
           
           <div>
             <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-3">

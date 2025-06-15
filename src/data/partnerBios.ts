@@ -1,4 +1,13 @@
 
+export interface PackageOffer {
+  packageName: string;
+  tier: 'Solo' | 'Duo' | 'Collab';
+  serviceType: 'strategic-advisory' | 'product-development' | 'product-marketing-gtm';
+  servicePage: string;
+  serviceTitle: string;
+  pricing?: string;
+}
+
 export interface PartnerBio {
   id: string;
   name: string;
@@ -11,6 +20,7 @@ export interface PartnerBio {
   expertise: string[];
   achievements: string[];
   philosophy: string;
+  packageOffers: PackageOffer[];
 }
 
 export const partnerBios: PartnerBio[] = [
@@ -37,7 +47,25 @@ export const partnerBios: PartnerBio[] = [
       "Featured speaker at ProductCon and Mind the Product events",
       "Mentor at Techstars and Y Combinator programs"
     ],
-    philosophy: "Great products aren't just built—they're positioned. I believe that understanding your market position is the foundation of every successful product strategy."
+    philosophy: "Great products aren't just built—they're positioned. I believe that understanding your market position is the foundation of every successful product strategy.",
+    packageOffers: [
+      {
+        packageName: "Strategic Clarity Session",
+        tier: "Solo",
+        serviceType: "strategic-advisory",
+        servicePage: "/strategic-advisory",
+        serviceTitle: "Strategic Advisory",
+        pricing: "Starting at 150€/h"
+      },
+      {
+        packageName: "Product Ops-in-a-Box",
+        tier: "Solo",
+        serviceType: "product-development",
+        servicePage: "/product-development",
+        serviceTitle: "Product Development",
+        pricing: "3000-5000 €"
+      }
+    ]
   },
   {
     id: "anamarija-ledic",
@@ -62,7 +90,25 @@ export const partnerBios: PartnerBio[] = [
       "Implemented development processes reducing time-to-market by 40%",
       "Recognized as Top Product Leader by Product Management Association"
     ],
-    philosophy: "Impact comes from building the right thing, the right way, at the right time. I focus on creating sustainable product development practices that deliver long-term value."
+    philosophy: "Impact comes from building the right thing, the right way, at the right time. I focus on creating sustainable product development practices that deliver long-term value.",
+    packageOffers: [
+      {
+        packageName: "GTM & Monetisation Alignment",
+        tier: "Collab",
+        serviceType: "product-marketing-gtm",
+        servicePage: "/product-marketing-gtm",
+        serviceTitle: "Product Marketing & GTM",
+        pricing: "Custom"
+      },
+      {
+        packageName: "Product Clarity Sprint",
+        tier: "Solo",
+        serviceType: "product-development",
+        servicePage: "/product-development",
+        serviceTitle: "Product Development",
+        pricing: "2000-4000 €"
+      }
+    ]
   }
 ];
 
