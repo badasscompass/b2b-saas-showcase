@@ -1,6 +1,5 @@
-
 import { Dialog } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PartnerBioDialog } from "@/components/PartnerBioDialog";
 import { getPartnerByName } from "@/data/partnerBios";
 import { PricingTierGrid } from "./pricing/PricingTierGrid";
@@ -62,13 +61,19 @@ export const PricingTiers = ({
     }
   };
 
-  // Detect if all shown tiers are "Fractional" — by package name
-  // Basic logic: if all visible tiers use 'Fractional' in packageName, disable Duo (else allow)
-  const disableDuo =
+  // Detect if any shown tiers are "Fractional" — by package name
+  const isFractionalPresent =
     tiers.length > 0 &&
-    tiers.every(tier =>
+    tiers.some(tier =>
       tier.packageName.toLowerCase().includes('fractional')
     );
+
+  // If Duo/Collab is selected but becomes disabled (e.g., on a page with fractional tiers), reset to Solo
+  useEffect(() => {
+    if (isFractionalPresent && (labelState === 'Duo' || labelState === 'Collab')) {
+      setLabelState('Solo');
+    }
+  }, [isFractionalPresent, labelState]);
 
   // Remove filter logic: all tiers are always shown
   return (
@@ -87,7 +92,8 @@ export const PricingTiers = ({
           <PricingTierLabelToggle
             selected={labelState}
             onChange={setLabelState}
-            disableDuo={disableDuo}
+            disableDuo={isFractionalPresent}
+            disableCollab={isFractionalPresent}
           />
 
           <PricingTierGrid

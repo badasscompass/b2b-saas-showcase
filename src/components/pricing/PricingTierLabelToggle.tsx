@@ -7,6 +7,7 @@ interface PricingTierLabelToggleProps {
   selected: TierLabelState;
   onChange: (state: TierLabelState) => void;
   disableDuo?: boolean;
+  disableCollab?: boolean;
 }
 
 const options: { value: TierLabelState; label: string; color: string }[] = [
@@ -18,7 +19,8 @@ const options: { value: TierLabelState; label: string; color: string }[] = [
 export const PricingTierLabelToggle = ({
   selected,
   onChange,
-  disableDuo = false
+  disableDuo = false,
+  disableCollab = false,
 }: PricingTierLabelToggleProps) => {
   // Explanatory notes
   const definition =
@@ -33,7 +35,8 @@ export const PricingTierLabelToggle = ({
       <div className="flex bg-white rounded-lg p-1 shadow-sm border border-gray-200">
         {options.map(({ value, label, color }) => {
           const isActive = selected === value;
-          const isDisabled = value === "Duo" && disableDuo;
+          const isDisabled =
+            (value === "Duo" && disableDuo) || (value === "Collab" && disableCollab);
           return (
             <button
               key={value}

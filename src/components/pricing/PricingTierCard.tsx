@@ -84,7 +84,7 @@ export const PricingTierCard = ({
             <Clock className="h-4 w-4 flex-shrink-0" />
             <span className="font-manrope">
               Duration: {tier.format}
-              {labelState === 'Collab' && ' (plus async work)'}
+              {labelState === 'Collab' && ' (async work)'}
             </span>
           </div>
         </div>
