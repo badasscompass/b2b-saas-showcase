@@ -24,7 +24,7 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
       <ScrollArea className="max-h-[calc(90vh-120px)] px-6">
         <div className="space-y-6 pb-6">
           <div className="flex flex-col md:flex-row gap-6">
-            <div className="w-48 h-48 mx-auto md:mx-0 rounded-lg overflow-hidden flex-shrink-0">
+            <div className="w-48 h-48 mx-auto md:mx-0 rounded-lg overflow-hidden flex-shrink-0 flex flex-col items-center">
               <OptimizedImage
                 source={{ type: 'upload', url: partner.image, alt: partner.name }}
                 config={{ width: 192, height: 192, quality: 80 }}
@@ -33,6 +33,18 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
                 lazy={false}
                 priority={true}
               />
+              {/* Expertise Tag Cloud now shown below image */}
+              <div className="mt-4 flex flex-wrap gap-2 justify-center">
+                {partner.expertise.map((skill, index) => (
+                  <Badge 
+                    key={index} 
+                    variant="outline" 
+                    className="border-[#F4A42C] text-[#F4A42C] font-manrope"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+              </div>
             </div>
             
             <div className="flex-1 space-y-4">
@@ -69,28 +81,14 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
             </div>
           </div>
           
+          {/* Moved PartnerPackageOffers section down */}
           <PartnerPackageOffers 
             packages={partner.packageOffers} 
             partnerName={partner.name}
           />
           
-          <div>
-            <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-3">
-              Expertise Areas
-            </h4>
-            <div className="flex flex-wrap gap-2">
-              {partner.expertise.map((skill, index) => (
-                <Badge 
-                  key={index} 
-                  variant="outline" 
-                  className="border-[#F4A42C] text-[#F4A42C]"
-                >
-                  {skill}
-                </Badge>
-              ))}
-            </div>
-          </div>
-          
+          {/* Removed duplicate expertise section as it is now under the image */}
+
           <div className="pt-4 border-t">
             <Button 
               className="w-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90"

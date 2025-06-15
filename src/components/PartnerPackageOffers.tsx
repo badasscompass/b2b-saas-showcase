@@ -14,6 +14,17 @@ interface PartnerPackageOffersProps {
 export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOffersProps) => {
   const navigate = useNavigate();
 
+  // Helper for LMN3 partners to map tier to lead name(s)
+  const getLeadForPackage = (offer: PackageOffer) => {
+    // Determine lead based on the offer and partner name (for Solo only)
+    if (offer.tier !== "Solo") return null;
+    // For Iva's bio, all Solo are Iva; for Anamarija's, Solo are Anamarija
+    // partnerName here is the display name, e.g. "Iva Rumora"
+    if (partnerName.toLowerCase().includes("iva")) return "Iva Rumora";
+    if (partnerName.toLowerCase().includes("anamarija")) return "Anamarija Ledic";
+    return null;
+  };
+
   const getTierColor = (tierType: string) => {
     switch (tierType) {
       case 'Solo':
@@ -62,6 +73,16 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
               <h5 className="font-manrope font-semibold text-gray-900 mb-1">
                 {packageOffer.packageName}
               </h5>
+              
+              {/* Show lead only for Solo packages */}
+              {packageOffer.tier === "Solo" && (
+                <div className="text-xs text-gray-500 font-manrope mb-2">
+                  Lead:&nbsp;
+                  <span className="font-semibold text-[#EA3E3A]">
+                    {getLeadForPackage(packageOffer)}
+                  </span>
+                </div>
+              )}
               
               <p className="text-sm text-gray-600 font-manrope mb-3">
                 Part of {packageOffer.serviceTitle}
