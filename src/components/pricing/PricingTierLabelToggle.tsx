@@ -41,16 +41,10 @@ export const PricingTierLabelToggle = ({
               aria-pressed={isActive}
               disabled={isDisabled}
               className={`font-manrope rounded-md px-6 py-2 transition-all text-sm font-semibold
-                ${isActive ? `${color} text-white ${value==="Collab" ? "border-0" : "border"} shadow-[0_2px_6px_rgba(234,62,58,.07)]` : "bg-transparent text-gray-700"}
-                ${isActive && value !== "Collab" ? "border" : ""}
-                ${isActive ? "" : !isDisabled ? "hover:bg-gray-100" : ""}
+                ${isActive ? `${color} text-white border shadow-[0_2px_6px_rgba(234,62,58,.07)]` : "bg-transparent text-gray-700"}
+                ${!isActive && !isDisabled ? "hover:bg-gray-100" : ""}
                 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}
                 focus:outline-none mx-1`}
-              style={value === "Collab" && isActive ? {
-                backgroundClip: "text",
-                color: "#fff",
-                border: "none"
-              } : {}}
               onClick={() => !isActive && !isDisabled && onChange(value)}
               title={isDisabled ? "Not available for Fractional tiers" : undefined}
             >

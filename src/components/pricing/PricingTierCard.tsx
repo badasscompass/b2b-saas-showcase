@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -81,7 +82,10 @@ export const PricingTierCard = ({
           
           <div className="flex items-center space-x-2 text-sm text-gray-600">
             <Clock className="h-4 w-4 flex-shrink-0" />
-            <span className="font-manrope">Duration: {tier.format}</span>
+            <span className="font-manrope">
+              Duration: {tier.format}
+              {labelState === 'Collab' && ' (plus async work)'}
+            </span>
           </div>
         </div>
 
