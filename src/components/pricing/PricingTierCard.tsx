@@ -1,45 +1,65 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Users, Clock, Euro } from "lucide-react";
 import { PricingTier } from "@/components/PricingTiers";
 import { PricingTierLead } from "./PricingTierLead";
+import type { TierLabelState } from "./PricingTierLabelToggle";
 
 interface PricingTierCardProps {
   tier: PricingTier;
   index: number;
   ctaText: string;
   onPartnerClick: (partnerName: string) => void;
+  labelState: TierLabelState;
 }
 
-export const PricingTierCard = ({ tier, index, ctaText, onPartnerClick }: PricingTierCardProps) => {
-  const getTierColor = (tierType: string) => {
-    switch (tierType) {
-      case 'Solo':
-        return 'bg-[#EA3E3A] text-white';
-      case 'Duo':
-        return 'bg-[#F4A42C] text-white';
-      case 'Collab':
-        return 'bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
+export const PricingTierCard = ({
+  tier,
+  index,
+  ctaText,
+  onPartnerClick,
+  labelState,
+}: PricingTierCardProps) => {
+  // Pick what to display based on labelState, but fallback to tier content if not available
+  const labelMap = {
+    Solo: {
+      lead: tier.lead === "Both" ? "Iva or Anamarija" : tier.lead,
+      team: "1 PM",
+      price: tier.pricing ?? "",
+      color: "bg-[#EA3E3A] text-white",
+    },
+    Duo: {
+      lead: "Iva & Anamarija",
+      team: "2 PMs",
+      price: "Custom",
+      color: "bg-[#F4A42C] text-white",
+    },
+    Collab: {
+      lead: "Iva & Anamarija",
+      team: "2 senior PMs",
+      price: "Custom",
+      color: "bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white",
+    },
   };
+
+  // Always use "Duo" and "Collab" if the state is set, but if the tier doesn't match, keep the original
+  // Best: only change the displayed label; leave card data as is (package name, description, etc)
+  const label = labelMap[labelState];
 
   return (
     <Card key={index} className="border-2 border-gray-200 hover:border-[#EA3E3A]/30 transition-colors duration-300 h-full flex flex-col">
       <CardHeader className="pb-4 flex-shrink-0">
         <div className="flex items-center justify-between mb-2">
-          <Badge className={`${getTierColor(tier.tier)} font-manrope text-xs`}>
-            {tier.tier}
+          <Badge className={`${label.color} font-manrope text-xs`}>
+            {labelState}
           </Badge>
-          {tier.pricing && (
-            <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
-              <Euro className="h-4 w-4" />
-              <span className="font-manrope">{tier.pricing}</span>
-            </div>
-          )}
+          <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
+            <Euro className="h-4 w-4" />
+            <span className="font-manrope">
+              {label.price}
+            </span>
+          </div>
         </div>
         <CardTitle className="text-lg lg:text-xl font-bold font-manrope text-gray-900 leading-tight">
           {tier.packageName}
@@ -48,11 +68,15 @@ export const PricingTierCard = ({ tier, index, ctaText, onPartnerClick }: Pricin
       
       <CardContent className="pt-0 flex flex-col flex-grow">
         <div className="space-y-3 mb-6 flex-shrink-0">
-          <PricingTierLead tier={tier} onPartnerClick={onPartnerClick} />
-          
+          <PricingTierLead
+            tier={tier}
+            onPartnerClick={onPartnerClick}
+            labelState={labelState}
+          />
+
           <div className="flex items-center space-x-2 text-sm text-gray-600">
             <Users className="h-4 w-4 flex-shrink-0" />
-            <span className="font-manrope">Team: {tier.teamSetup}</span>
+            <span className="font-manrope">Team: {label.team}</span>
           </div>
           
           <div className="flex items-center space-x-2 text-sm text-gray-600">
@@ -79,7 +103,7 @@ export const PricingTierCard = ({ tier, index, ctaText, onPartnerClick }: Pricin
           )}
         </div>
 
-        <Button 
+        <Button
           className="w-full bg-[#EA3E3A] hover:bg-[#EA3E3A]/90 text-white font-manrope mt-6 flex-shrink-0"
           asChild
         >

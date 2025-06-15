@@ -1,17 +1,23 @@
 
 import { PricingTier } from "@/components/PricingTiers";
 import { PricingTierCard } from "./PricingTierCard";
+import type { TierLabelState } from "./PricingTierLabelToggle";
 
 interface PricingTierGridProps {
   tiers: PricingTier[];
   ctaText: string;
   onPartnerClick: (partnerName: string) => void;
+  tierLabelState: TierLabelState;
 }
 
-export const PricingTierGrid = ({ tiers, ctaText, onPartnerClick }: PricingTierGridProps) => {
-  // Center two columns when there are exactly 2 tiers
-  const gridCols = tiers.length === 2 
-    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto' 
+export const PricingTierGrid = ({
+  tiers,
+  ctaText,
+  onPartnerClick,
+  tierLabelState,
+}: PricingTierGridProps) => {
+  const gridCols = tiers.length === 2
+    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto'
     : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 
   return (
@@ -23,6 +29,7 @@ export const PricingTierGrid = ({ tiers, ctaText, onPartnerClick }: PricingTierG
           index={index}
           ctaText={ctaText}
           onPartnerClick={onPartnerClick}
+          labelState={tierLabelState}
         />
       ))}
     </div>
