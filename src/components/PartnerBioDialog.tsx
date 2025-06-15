@@ -61,11 +61,13 @@ export const PartnerBioDialog = ({ partner }: PartnerBioDialogProps) => {
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => window.open(partner.linkedinUrl, '_blank')}
+                  asChild
                   className="border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white"
                 >
-                  <Linkedin className="w-4 h-4 mr-1" />
-                  Connect on LinkedIn
+                  <a href={partner.linkedinUrl} target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="w-4 h-4 mr-1" />
+                    Connect on LinkedIn
+                  </a>
                 </Button>
                 
                 <Button

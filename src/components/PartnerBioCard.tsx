@@ -45,14 +45,18 @@ export const PartnerBioCard = ({ partner, onClick }: PartnerBioCardProps) => {
           <Button
             variant="outline"
             size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(partner.linkedinUrl, '_blank');
-            }}
+            asChild
             className="border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white"
           >
-            <Linkedin className="w-4 h-4 mr-1" />
-            LinkedIn
+            <a
+              href={partner.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Linkedin className="w-4 h-4 mr-1" />
+              LinkedIn
+            </a>
           </Button>
           
           <Button
