@@ -69,11 +69,11 @@ export const PricingTiers = ({
     );
 
   // If Duo/Collab is selected but becomes disabled (e.g., on a page with fractional tiers), reset to Solo
-  useEffect(() => {
-    if (isFractionalPresent && (labelState === 'Duo' || labelState === 'Collab')) {
-      setLabelState('Solo');
-    }
-  }, [isFractionalPresent, labelState]);
+  // useEffect(() => {
+  //   if (isFractionalPresent && (labelState === 'Duo' || labelState === 'Collab')) {
+  //     setLabelState('Solo');
+  //   }
+  // }, [isFractionalPresent, labelState]);
 
   // Remove filter logic: all tiers are always shown
   return (
