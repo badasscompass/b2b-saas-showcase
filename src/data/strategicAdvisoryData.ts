@@ -20,7 +20,7 @@ export const strategicAdvisoryPricingTiers: PricingTier[] = [
     format: "Daily 2-6 hours",
     useCase: "Founders without a head of product, product teams needing interim support (3-6 months).",
     outcomes: "Executive-level product ownership, team coaching + mentoring, strategic + delivery alignment.",
-    pricing: "Starting at 40€/h"
+    pricing: "40€/h (starting rate)"
   },
   {
     packageName: "Product Reset & Re-Org",
@@ -30,6 +30,6 @@ export const strategicAdvisoryPricingTiers: PricingTier[] = [
     format: "8–12 weeks",
     useCase: "Post-reorg scaleups, PE/VC-backed orgs, or when nothing clicks anymore.",
     outcomes: "Operating model redesign, team + role clarity, strategic execution plan.",
-    pricing: "7000-9000 €"
+    pricing: "7000-9000"
   }
 ];
