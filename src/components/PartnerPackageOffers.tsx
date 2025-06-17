@@ -83,20 +83,21 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
                   </span>
                 </div>
               )}
-              
-              <p className="text-sm text-gray-600 font-manrope mb-3">
+                            <p className="text-sm text-gray-600 font-manrope mb-3">
                 Part of {packageOffer.serviceTitle}
               </p>
               
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => handlePackageClick(packageOffer)}
-                className="border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white text-xs"
-              >
-                View Service Page
-                <ExternalLink className="ml-1 h-3 w-3" />
-              </Button>
+              <div className="flex justify-end">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handlePackageClick(packageOffer)}
+                  className="border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white text-xs"
+                >
+                  View Service Page
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </Button>
+              </div>
             </CardContent>
           </Card>
         ))}
