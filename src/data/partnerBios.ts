@@ -55,7 +55,7 @@ export const partnerBios: PartnerBio[] = [
         serviceType: "product-development",
         servicePage: "/product-development",
         serviceTitle: "Product Development",
-        pricing: "40€/h (starting rate)"
+        pricing: "40/h (starting rate)"
       },
       {
         packageName: "Product Clarity Sprint",
@@ -63,7 +63,7 @@ export const partnerBios: PartnerBio[] = [
         serviceType: "product-development",
         servicePage: "/product-development",
         serviceTitle: "Product Development",
-       pricing: "2000-4000"
+       pricing: "2000 (starting at)"
       },
       {
         packageName: "Product Ops-in-a-Box",
@@ -71,7 +71,7 @@ export const partnerBios: PartnerBio[] = [
         serviceType: "product-development",
         servicePage: "/product-development",
         serviceTitle: "Product Development",
-        pricing: "3000-5000"
+        pricing: "3000 (starting at)"
       }
     ]
   },
@@ -116,7 +116,7 @@ export const partnerBios: PartnerBio[] = [
         serviceType: "strategic-advisory",
         servicePage: "/strategic-advisory",
         serviceTitle: "Strategic Advisory",
-        pricing: "7000-9000"
+        pricing: "7000 (starting at)"
       },
       // 3. GTM Monetisation and Alignment
       {

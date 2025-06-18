@@ -30,6 +30,6 @@ export const strategicAdvisoryPricingTiers: PricingTier[] = [
     format: "8–12 weeks",
     useCase: "Post-reorg scaleups, PE/VC-backed orgs, or when nothing clicks anymore.",
     outcomes: "Operating model redesign, team + role clarity, strategic execution plan.",
-    pricing: "7000-9000"
+    pricing: "7000 (starting at)"
   }
 ];
