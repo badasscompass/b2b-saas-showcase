@@ -10,7 +10,7 @@ export const productMarketingGTMPricingTiers: PricingTier[] = [
     format: "4-8 weeks",
     useCase: "Startups pre-launch, teams re-entering market, or shifting ICP.",
     outcomes: "Market messaging & segments, Monetization model audit, GTM activation checklist.",
-    pricing: "Custom"
+    pricing: "1800 (starting at)"
   },
   {
     packageName: "Fractional Product Marketing Specialist",
@@ -20,6 +20,6 @@ export const productMarketingGTMPricingTiers: PricingTier[] = [
     format: "Daily 2-4 hours",
     useCase: "Founders without a head of product marketing, teams needing interim PMM specialist support (3-6 months).",
     outcomes: "Senior-level product marketing support, team coaching + mentoring, strategic + delivery alignment.",
-    pricing: "Starting at 40€/h"
+    pricing: "Starting at 50€/h"
   }
 ];

@@ -33,7 +33,7 @@ const ProductDevelopment = () => {
       format: "6–8 weeks",
       useCase: "Founders/CPOs testing new product lines or repositioning to grow.",
       outcomes: "Prioritized opportunities, structured discovery docs, value hypotheses & next steps.",
-      pricing: "Custom"
+      pricing: "6000 (starting at)"
     },
     {
       packageName: "Product Ops-in-a-Box",

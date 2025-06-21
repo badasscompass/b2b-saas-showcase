@@ -10,7 +10,7 @@ export const strategicAdvisoryPricingTiers: PricingTier[] = [
     format: "4–6 weeks",
     useCase: "Product-led orgs prepping for scale or funding; early product hires in new orgs.",
     outcomes: "North star product strategy, portfolio positioning, executive-ready strategy pack.",
-    pricing: "Custom"
+    pricing: "4000 (starting at)"
   },
   {
     packageName: "Fractional Product Leadership",

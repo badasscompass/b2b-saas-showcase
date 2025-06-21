@@ -59,7 +59,7 @@ const ProductMarketingGTM = () => {
     "Messaging that converts — reducing CAC by x%",
     "Increased demo and trial conversion rates through clear positioning",
     "Sales-ready assets that reduce friction and align teams",
-    "Measurable, evolving GTM engine with performance dashboards",
+    "Measurable, evolving GTM engine with performance reports",
   ];
 
   const whyItWorks = [
