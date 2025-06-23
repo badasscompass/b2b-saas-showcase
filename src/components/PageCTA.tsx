@@ -24,9 +24,9 @@ export const PageCTA = ({ title, subtitle, ctaText, onCtaClick }: PageCTAProps) 
   className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4"
   asChild
 >
-  <a href="https://calendly.com/d/cssk-mv3-n33/product-services-discovery">
+  <a href="https://calendly.com/iva-lmn3/30min">
     <Calendar className="mr-2 h-5 w-5" />
-      Book GTM Discovery Call
+      Schedule a Discovery Call
             </a>
           </Button>
         </div>

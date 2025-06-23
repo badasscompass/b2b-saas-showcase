@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { PageLayout } from "./PageLayout";
 import { PageHero } from "@/components/PageHero";
@@ -19,7 +18,7 @@ export const ServicePageLayout = ({
   footerTagline 
 }: ServicePageLayoutProps) => {
   return (
-    <PageLayout footerTagline={footerTagline}>
+    <PageLayout footerTagline={footerTagline} showContactCTA={false}>
       <PageHero
         title={title}
         subtitle={subtitle}

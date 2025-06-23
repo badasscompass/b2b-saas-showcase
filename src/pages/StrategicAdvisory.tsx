@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { ServicePageLayout } from "@/components/layout/ServicePageLayout";
 import { StrategicAdvisoryServices } from "@/components/StrategicAdvisoryServices";
@@ -7,12 +6,9 @@ import { StrategicAdvisoryOutcomes } from "@/components/StrategicAdvisoryOutcome
 import { StrategicAdvisoryClientWork } from "@/components/StrategicAdvisoryClientWork";
 import { PricingTiers } from "@/components/PricingTiers";
 import { strategicAdvisoryPricingTiers } from "@/data/strategicAdvisoryData";
+import { PageCTA } from "@/components/PageCTA";
 
 const StrategicAdvisory = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <ServicePageLayout
       title="Strategic Advisory"
@@ -30,7 +26,12 @@ const StrategicAdvisory = () => {
         ctaText="Book a Strategy Discovery Call"
       />
       <StrategicAdvisoryClientWork />
-    </ServicePageLayout>
+      <PageCTA
+      title="Ready to stop guessing and start leading with clarity?"
+      subtitle= "We set the directions in the uncertainty and reframe product decisions so they align with your business, team, and growth goals."
+      ctaText="Book a Strategy Discovery Call"
+      />
+      </ServicePageLayout>
   );
 };
 

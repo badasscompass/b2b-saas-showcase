@@ -6,69 +6,10 @@ import { SuccessMetric } from "@/components/SuccessMetric";
 import { PageCTA } from "@/components/PageCTA";
 import { PricingTiers } from "@/components/PricingTiers";
 import { productMarketingGTMPricingTiers } from "@/data/productMarketingGTMData";
+import { whatWeDo, howItWorks, successMetrics, whyItWorks } from "@/data/productMarketingGTMData";
 import { Target, Users, Rocket, BarChart3 } from "lucide-react";
 
 const ProductMarketingGTM = () => {
-  const whatWeDo = [
-    {
-      icon: <Target className="h-8 w-8 text-[#EA3E3A]" />,
-      title: "Value Proposition & Messaging Frameworks",
-      description: "We craft clear, compelling messaging rooted in frameworks like JTBD and STP—ensuring your story resonates deeply with your ideal buyers.",
-    },
-    {
-      icon: <Users className="h-8 w-8 text-[#F4A42C]" />,
-      title: "Market Segmentation & Positioning",
-      description: "We break your market into high-opportunity segments, define buyer personas, and create positioning that clearly maps your unique value in context.",
-    },
-    {
-      icon: <Rocket className="h-8 w-8 text-[#EA3E3A]" />,
-      title: "Go-to-Market Planning & Launch Execution",
-      description: "From channel selection to pricing strategy and launch readiness, we build and execute GTM roadmaps—collaborating across product, sales, and marketing for maximum impact.",
-    },
-    {
-      icon: <BarChart3 className="h-8 w-8 text-[#F4A42C]" />,
-      title: "Sales Enablement & Performance Metrics",
-      description: "We design playbooks, demos, case studies, and enablement tools—and track key metrics like CAC, CLV, and close rate to continuously optimize performance.",
-    },
-  ];
-
-  const howItWorks = [
-    {
-      step: "01",
-      title: "Discovery & Benchmarking",
-      description: "Audit current positioning, messaging, and pipeline performance to find gaps and opportunities.",
-    },
-    {
-      step: "02",
-      title: "Segmentation & Messaging Sprint",
-      description: "Align on target segments, value propositions, and messaging frameworks to resonate with buyers.",
-    },
-    {
-      step: "03",
-      title: "GTM Roadmap & Asset Creation",
-      description: "Build launch assets, define pricing tiers, map channels, and prepare sales teams.",
-    },
-    {
-      step: "04",
-      title: "Launch & Optimize",
-      description: "Coordinate launch, calibrate messaging, and kick off early GTM initiatives with analytics support.",
-    },
-  ];
-
-  const successMetrics = [
-    "Messaging that converts — reducing CAC by x%",
-    "Increased demo and trial conversion rates through clear positioning",
-    "Sales-ready assets that reduce friction and align teams",
-    "Measurable, evolving GTM engine with performance reports",
-  ];
-
-  const whyItWorks = [
-    "Connects product and market through data-driven frameworks",
-    "Anchored in buyer language, not feature lists",
-    "Covers the full journey: messaging → launch → performance",
-    "Offers measurable value tied to real business outcomes",
-  ];
-
   return (
     <ServicePageLayout
       title="Product Marketing & GTM"
@@ -131,7 +72,6 @@ const ProductMarketingGTM = () => {
         tiers={productMarketingGTMPricingTiers}
         ctaText="Book a GTM Discovery Call"
       />
-
       <PageCTA
         title="Ready to Transform Your GTM Strategy?"
         subtitle="Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan."

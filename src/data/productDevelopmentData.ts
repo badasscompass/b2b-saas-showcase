@@ -1,4 +1,3 @@
-
 import { Target, Users, Zap, Clock } from "lucide-react";
 
 export const productServices = [
@@ -115,5 +114,38 @@ export const clientWork = [
     },
     sector: "B2B Hospitality",
     product: "Tourism & Transport Platform"
+  }
+];
+
+export const productDevelopmentPricingTiers = [
+  {
+    packageName: "Product Clarity Sprint",
+    tier: "Solo",
+    lead: "Both",
+    teamSetup: "1 PM",
+    format: "2-4 weeks",
+    useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",
+    outcomes: "Clear product roadmap, validated feature priorities, and strategic direction for scaling.",
+    pricing: "2000 (starting at)"
+  },
+  {
+    packageName: "Discovery-to-Strategy Accelerator",
+    tier: "Collab",
+    lead: "Both",
+    teamSetup: "2 senior PMs",
+    format: "6–8 weeks",
+    useCase: "Founders/CPOs testing new product lines or repositioning to grow.",
+    outcomes: "Prioritized opportunities, structured discovery docs, value hypotheses & next steps.",
+    pricing: "6000 (starting at)"
+  },
+  {
+    packageName: "Product Ops-in-a-Box",
+    tier: "Solo",
+    lead: "Iva",
+    teamSetup: "1 PM",
+    format: "4–6 weeks",
+    useCase: "Growing teams in need of structure, decision hygiene, and velocity.",
+    outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership.",
+    pricing: "3000 (starting at)"
   }
 ];
