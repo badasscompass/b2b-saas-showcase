@@ -1,4 +1,5 @@
 import { Target, Users, Zap, Clock } from "lucide-react";
+import type { PricingTier } from "@/components/PricingTiers";
 
 export const productServices = [
   {
@@ -117,7 +118,7 @@ export const clientWork = [
   }
 ];
 
-export const productDevelopmentPricingTiers = [
+export const productDevelopmentPricingTiers: PricingTier[] = [
   {
     packageName: "Product Clarity Sprint",
     tier: "Solo",
