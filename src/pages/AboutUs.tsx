@@ -8,9 +8,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const AboutUs = () => {
   useSEO({
-    title: "About Us - LMN3 Collective",
+    title: "About - LMN3 Collective",
     description: "Meet the strategic minds behind LMN3 Collective. Learn about our mission, values, and the expert partners who guide product development and growth.",
-    keywords: ["about us", "team", "partners", "product consultants", "company mission"],
+    keywords: ["about", "team", "partners", "product consultants", "company mission"],
     openGraph: {
       type: "website",
       url: "https://lmn3.digital/about-us"
@@ -27,12 +27,6 @@ const AboutUs = () => {
           "name": "Iva Rumora",
           "jobTitle": "Strategic Product Partner",
           "worksFor": "LMN3 Collective"
-        },
-        {
-          "@type": "Person",
-          "name": "Anamarija Ledic",
-          "jobTitle": "Product Growth Catalyst",
-          "worksFor": "LMN3 Collective"
         }
       ]
     }
@@ -41,7 +35,7 @@ const AboutUs = () => {
   return (
     <PageLayout footerTagline="Building the future, one product at a time.">
       <PageHero
-        title="About LMN3"
+        title="About"
         subtitle="LMN3 is a collaborative product collective built on three principles: emerge, engage, evolve. 
 We help ambitious product teams emerge with clarity, engage with confidence, and evolve with purpose."
         ctaText="Let's meet!"
