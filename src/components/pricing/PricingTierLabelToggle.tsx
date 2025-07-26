@@ -1,7 +1,7 @@
 
 import * as React from "react";
 
-export type TierLabelState = "Startups" | "Scaleups" | "Growth";
+export type TierLabelState = "Startup" | "Scaleup" | "Growth";
 
 interface PricingTierLabelToggleProps {
   selected: TierLabelState;
@@ -9,8 +9,8 @@ interface PricingTierLabelToggleProps {
 }
 
 const options: { value: TierLabelState; label: string; color: string }[] = [
-  { value: "Startups", label: "Startups", color: "bg-[#EA3E3A]"},
-  { value: "Scaleups", label: "Scaleups", color: "bg-[#F4A42C]"},
+  { value: "Startup", label: "Startup", color: "bg-[#EA3E3A]"},
+  { value: "Scaleup", label: "Scaleup", color: "bg-[#F4A42C]"},
   { value: "Growth", label: "Growth", color: "bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]"},
 ];
 
