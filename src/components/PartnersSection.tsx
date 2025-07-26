@@ -11,11 +11,10 @@ export const PartnersSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <SectionHeader 
-            title="Meet Our Partners"
-            subtitle="The strategic minds behind LMN3's success. Get to know the experts who will guide your product journey."
-          />
+            title="Meet the Product Lead"
+            subtitle="The product lead behind LMN3 collaborating with the cross-functional experts who will guide your product journey." />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-4xl mx-auto justify-items-center">
             {partnerBios.map((partner) => (
               <Dialog key={partner.id}>
                 <DialogTrigger asChild>

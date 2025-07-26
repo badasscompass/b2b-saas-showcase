@@ -36,8 +36,18 @@ const AboutUs = () => {
     <PageLayout footerTagline="Building the future, one product at a time.">
       <PageHero
         title="About"
-        subtitle="LMN3 is a collaborative product collective built on three principles: emerge, engage, evolve. 
-We help ambitious product teams emerge with clarity, engage with confidence, and evolve with purpose."
+        subtitle={
+          <>
+            LMN3 is a collaborative product collective built on three principles:
+            <br />
+            <span
+              className="font-bold text-3xl md:text-4xl tracking-wide bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent"
+            >
+              emerge, engage, evolve
+            </span>
+            .
+          </>
+        }
         ctaText="Let's meet!"
       />
 
@@ -46,8 +56,8 @@ We help ambitious product teams emerge with clarity, engage with confidence, and
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <SectionHeader 
-              title="Our Purpose"
-              subtitle="Why we exist and what drives us every day"
+              title="Our Driving Principles"
+              subtitle="We help ambitious product teams emerge with clarity, engage with confidence, and evolve with purpose."
             />
             
             <div className="grid md:grid-cols-3 gap-8">
