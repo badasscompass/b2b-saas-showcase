@@ -32,7 +32,7 @@ export const PricingTierCard = ({
     // Handle hourly rates (fractional packages)
     if (basePricing.includes('/h') || basePricing.includes('€/h')) {
       const baseRate = parseInt(basePricing.match(/\d+/)?.[0] || "0");
-      if (tierState === "Scaleups") {
+      if (tierState === "Scaleup") {
         const newRate = baseRate + 10; // Increase hourly rate by 10€ for Scaleups
         return basePricing.replace(/\d+/, newRate.toString());
       } else if (tierState === "Growth") {
@@ -44,7 +44,7 @@ export const PricingTierCard = ({
     
     // Handle fixed pricing packages
     const basePrice = parseInt(basePricing.match(/\d+/)?.[0] || "0");
-    if (tierState === "Scaleups") {
+    if (tierState === "Scaleup") {
       const newPrice = basePrice + 1000; // Increase by 1000 for Scaleups
       return basePricing.replace(/\d+/, newPrice.toString());
     } else if (tierState === "Growth") {
@@ -71,16 +71,16 @@ export const PricingTierCard = ({
 
   // Pick what to display based on labelState, but fallback to tier content if not available
   const labelMap = {
-    Startups: {
+    Startup {
       lead: tier.lead === "Both" ? "Iva" : tier.lead,
       format: getFormat(),
       price: tier.pricing ?? "",
       color: "bg-[#EA3E3A] text-white",
     },
-    Scaleups: {
+    Scaleup: {
       lead: tier.lead === "Both" ? "Iva" : tier.lead,
       format: getFormat(),
-      price: calculatePrice(tier.pricing ?? "", "Scaleups"),
+      price: calculatePrice(tier.pricing ?? "", "Scaleup"),
       color: "bg-[#F4A42C] text-white",
     },
     Growth: {
