@@ -6,12 +6,12 @@ export const productMarketingGTMPricingTiers: PricingTier[] = [
   {
     packageName: "GTM & Monetisation Alignment",
     tier: "Collab",
-    lead: "Anamarija",
-    teamSetup: "2 senior PMs",
+    lead: "Iva",
+    teamSetup: "1 senior PM",
     format: "4-8 weeks",
     useCase: "Startups pre-launch, teams re-entering market, or shifting ICP.",
     outcomes: "Market messaging & segments, Monetization model audit, GTM activation checklist.",
-    pricing: "1800 (starting at)"
+    pricing: "2800 (starting at)"
   },
   {
     packageName: "Fractional Product Marketing Specialist",
