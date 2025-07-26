@@ -20,17 +20,6 @@ export class DataService {
   // Strategic Advisory specific results content
   private getStrategicAdvisoryResultsContent(title: string) {
     switch (title) {
-      case "AI Trust & Adoption Strategy":
-        return {
-          timeframe: "Results in 45 days",
-          results: [
-            "• 3× increase in AI usage",
-            "• +22% time saved per session",
-            "• +47% boost in user satisfaction",
-            "• First enterprise deal closed, directly tied to improved UX"
-          ],
-          insight: "Insight: Trust, not tech, unlocks real adoption in AI-driven products."
-        };
       case "Product Positioning Clarity":
         return {
           timeframe: "Results in 3 months",
@@ -42,16 +31,6 @@ export class DataService {
             "• Website and messaging aligned with market fit"
           ],
           insight: "From MVP confusion to clear market positioning"
-        };
-      case "Onboarding Drop-Off Turned Into Activation Growth":
-        return {
-          timeframe: "Results in 3 weeks",
-          results: [
-            "• +24% onboarding completion",
-            "• +38% Day 1 activation",
-            "• 2× feature engagement"
-          ],
-          insight: "Lesson: Motivation gaps kill retention. Fixing them delivers compounding growth."
         };
       default:
         return undefined;

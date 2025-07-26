@@ -77,26 +77,6 @@ export const clientWork = [
     productUrl: "https://github.com/gbrian/codx-junior"
   },
   {
-    title: "Transforming a Classifieds Platform into a Scalable Digital Marketplace",
-    scope: "End-to-end Product Strategy & Delivery",
-    description: "Leading Classifieds Platform in Central Europe was experiencing slowed growth due to legacy infrastructure, fragmented user journeys, and misaligned internal processes. We started with in-depth user and stakeholder interviews to identify friction points and growth opportunities.",
-    lead: "Anamarija Ledic",
-    result: "+21% YoY growth in user engagement within 6 months post-launch. 2× increase in listing conversions through improved search, filtering, and onboarding flows. Introduced modular architecture, enabling faster development and feature rollout.",
-    metrics: "+21% YoY user engagement, 2× listing conversions",
-    image: {
-      type: 'unsplash' as const,
-      id: 'photo-1486312338219-ce68d2c6f44d',
-      alt: 'Digital marketplace interface',
-      fallback: {
-        type: 'unsplash' as const,
-        id: 'photo-1519389950473-47ba0277781c',
-        alt: 'People working with laptops'
-      }
-    },
-    sector: "Online Marketplaces",
-    product: "Central Europe Classifieds Platform"
-  },
-  {
     title: "Unblocking Remote Dev Team in 3 Weeks",
     scope: "B2B Hospitality (Tourism & Transport)", 
     description: "A client was stuck in legacy code refactoring—no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog and launched first sprint with release goals, focused on bug fixes to stabilise delivery. In Sprint 2, resolved a key contributor bottleneck causing conflicts and enabled smoother, aligned implementation across the team.",

@@ -21,7 +21,6 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
     // For Iva's bio, all Solo are Iva; for Anamarija's, Solo are Anamarija
     // partnerName here is the display name, e.g. "Iva Rumora"
     if (partnerName.toLowerCase().includes("iva")) return "Iva Rumora";
-    if (partnerName.toLowerCase().includes("anamarija")) return "Anamarija Ledic";
     return null;
   };
 

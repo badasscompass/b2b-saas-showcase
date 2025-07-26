@@ -1,7 +1,7 @@
 
 import * as React from "react";
 
-export type TierLabelState = "Solo" | "Duo" | "Collab";
+export type TierLabelState = "Solo";
 
 interface PricingTierLabelToggleProps {
   selected: TierLabelState;
@@ -10,8 +10,6 @@ interface PricingTierLabelToggleProps {
 
 const options: { value: TierLabelState; label: string; color: string }[] = [
   { value: "Solo", label: "Solo", color: "bg-[#EA3E3A]"},
-  { value: "Duo", label: "Duo", color: "bg-[#F4A42C]"},
-  { value: "Collab", label: "Collab", color: "bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]"},
 ];
 
 export const PricingTierLabelToggle = ({
@@ -20,10 +18,8 @@ export const PricingTierLabelToggle = ({
 }: PricingTierLabelToggleProps) => {
   // Explanatory notes
   const definition =
-    selected === "Duo"
-      ? "Duo: Both product partners are engaged on the product project, each dividing work based on their area of expertise."
-      : selected === "Collab"
-      ? "Collab: Product partners are jointly engaged on the product project as mutual advisors and interchanging operationally."
+    selected === "Solo"
+      ? "Solo: The product partner is solely engaged on the product project, taking full responsibility for its success."
       : null;
 
   return (

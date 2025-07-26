@@ -9,7 +9,7 @@ import { PricingTierLabelToggle, TierLabelState } from "./pricing/PricingTierLab
 export interface PricingTier {
   packageName: string;
   tier: 'Solo' | 'Duo' | 'Collab';
-  lead: 'Iva' | 'Anamarija' | 'Both';
+  lead: 'Iva' | 'Both';
   teamSetup: string;
   format: string;
   useCase: string;
@@ -89,10 +89,10 @@ export const PricingTiers = ({
             </p>
           </div>
 
-          <PricingTierLabelToggle
+          {/* <PricingTierLabelToggle
             selected={labelState}
             onChange={setLabelState}
-          />
+          /> */}
 
           <PricingTierGrid
             tiers={tiers}

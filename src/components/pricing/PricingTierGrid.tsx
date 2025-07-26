@@ -17,7 +17,7 @@ export const PricingTierGrid = ({
   tierLabelState,
 }: PricingTierGridProps) => {
   const gridCols = tiers.length === 2
-    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto'
+    ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto justify-items-center'
     : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3';
 
   return (

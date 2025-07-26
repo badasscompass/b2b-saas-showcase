@@ -28,28 +28,14 @@ export const PricingTierCard = ({
   // Pick what to display based on labelState, but fallback to tier content if not available
   const labelMap = {
     Solo: {
-      lead: tier.lead === "Both" ? "Iva or Anamarija" : tier.lead,
+      lead: tier.lead === "Both" ? "Iva" : tier.lead,
       team: "1 PM",
       price: tier.pricing ?? "",
       color: "bg-[#EA3E3A] text-white",
-    },
-    Duo: {
-      lead: "Iva & Anamarija",
-      team: "2 PMs",
-      price: "Custom",
-      color: "bg-[#F4A42C] text-white",
-    },
-    Collab: {
-      lead: "Iva & Anamarija",
-      team: "2 senior PMs",
-      price: "Custom",
-      color: "bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white",
-    },
+    }
   };
 
-  // Always use "Duo" and "Collab" if the state is set, but if the tier doesn't match, keep the original
-  // Best: only change the displayed label; leave card data as is (package name, description, etc)
-  const label = labelMap[currentLabelState];
+  const label = labelMap["Solo"];
 
   return (
     <Card key={index} className="border-2 border-gray-200 hover:border-[#EA3E3A]/30 transition-colors duration-300 h-full flex flex-col">
@@ -75,7 +61,7 @@ export const PricingTierCard = ({
           <PricingTierLead
             tier={tier}
             onPartnerClick={onPartnerClick}
-            labelState={currentLabelState}
+            labelState={"Solo"}
           />
 
           <div className="flex items-center space-x-2 text-sm text-gray-600">
@@ -87,7 +73,7 @@ export const PricingTierCard = ({
             <Clock className="h-4 w-4 flex-shrink-0" />
             <span className="font-manrope">
               Duration: {tier.format}
-              {currentLabelState === 'Collab' && ' (async work)'}
+              {/* Only Solo supported, so no async work note needed */}
             </span>
           </div>
         </div>
