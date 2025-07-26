@@ -59,14 +59,14 @@ export const PricingTierCard = ({
   const getFormat = (): string => {
     // Fractional packages (hourly rates or daily format)
     if (tier.pricing?.includes('/h') || tier.pricing?.includes('€/h') || tier.format?.toLowerCase().includes('daily')) {
-      return "Async+Advisory";
+      return "Embedded (Remote)";
     }
     // Collab packages (multiple team members)
     if (tier.tier === "Collab" || tier.teamSetup?.includes('2')) {
-      return "Embedded (hybrid)";
+      return "Embedded (Hybrid)";
     }
     // Solo packages (single person, fixed duration)
-    return "Embedded (Remote)";
+    return "Embedded+Async (Remote)";
   };
 
   // Pick what to display based on labelState, but fallback to tier content if not available
