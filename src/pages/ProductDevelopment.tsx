@@ -2,16 +2,12 @@ import { ServicePageLayout } from "@/components/layout/ServicePageLayout";
 import { ProductServicesSection } from "@/components/ProductServicesSection";
 import { ProductProcessSection } from "@/components/ProductProcessSection";
 import { ProductOutcomesSection } from "@/components/ProductOutcomesSection";
-import { ClientWorkShowcase } from "@/components/ClientWorkShowcase";
+import { ProductDevelopmentClientWork } from "@/components/ProductDevelopmentClientWork";
 import { PageCTA } from "@/components/PageCTA";
 import { PricingTiers, PricingTier } from "@/components/PricingTiers";
-import { clientWork } from "@/data/productDevelopmentData";
-import { mapGenericClientWork } from "@/utils/clientWorkMappers";
 import { productDevelopmentPricingTiers } from "@/data/productDevelopmentData";
 
 const ProductDevelopment = () => {
-  const mappedClientWork = clientWork.map(mapGenericClientWork);
-
   return (
     <ServicePageLayout
       title="Product Development"
@@ -30,11 +26,7 @@ const ProductDevelopment = () => {
         ctaText="Book a Product Audit Call"
       />
 
-      <ClientWorkShowcase 
-        title="Client Work Showcase"
-        subtitle="See how we've helped companies build and scale successful products from concept to launch."
-        clientWork={mappedClientWork}
-      />
+      <ProductDevelopmentClientWork />
 
       <PageCTA
         title="Ready to Build Your Product?"

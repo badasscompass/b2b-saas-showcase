@@ -38,7 +38,7 @@ const AboutUs = () => {
         title="About"
         subtitle={
           <>
-            LMN3 is a collaborative product collective built on three principles:
+            LMN3 is a collaborative product concept built on three foundational elements:
             <br />
             <span
               className="font-bold text-3xl md:text-4xl tracking-wide bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent"

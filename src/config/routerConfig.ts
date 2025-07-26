@@ -59,8 +59,8 @@ export const routeConfig: RouteConfig[] = [
   {
     path: '/about-us',
     component: createLazyComponentWithErrorHandler(() => import('../pages/AboutUs')),
-    title: 'About Us - LMN3 Collective',
-    description: 'Meet the strategic minds behind LMN3 Collective and learn about our mission to transform product visions into market success.',
+    title: 'About Us - LMN3 Partners',
+    description: 'Meet the behind LMN3 partnership concept and learn about our mission to transform product visions into market success.',
     keywords: ['about us', 'team', 'partners', 'product consultants', 'company mission']
   }
 ];

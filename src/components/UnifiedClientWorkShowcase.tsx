@@ -23,7 +23,7 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
               title={config.showcaseTitle}
               subtitle={config.showcaseSubtitle}
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-8 justify-items-center">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="h-[350px] bg-gray-200 animate-pulse rounded-lg"></div>
               ))}
@@ -60,7 +60,11 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
             subtitle={config.showcaseSubtitle}
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className={`grid gap-6 md:gap-8 justify-items-center ${
+            clientWorks.length === 1 
+              ? 'grid-cols-1 max-w-2xl mx-auto' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2'
+          }`}>
             {clientWorks.map((work) => (
               <Dialog key={work.id}>
                 <DialogTrigger asChild>

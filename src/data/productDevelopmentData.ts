@@ -60,6 +60,7 @@ export const clientWork = [
     scope: "AI Developer Tools",
     description: "Working in a lightweight advisory format with a solo founder. Initial challenge: An unstable beta MVP and unclear direction—at a time when the AI dev tool landscape was rapidly evolving.",
     lead: "Iva Rumora",
+    email: "iva@lmn3.digital",
     result: "Product moved from beta to functional state. Clearer edge in UX and value delivery. Founder equipped with direction for next growth phase. (Ongoing)",
     metrics: "Product stabilized and positioned for growth",
     image: {
@@ -81,6 +82,7 @@ export const clientWork = [
     scope: "B2B Hospitality (Tourism & Transport)", 
     description: "A client was stuck in legacy code refactoring—no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog and launched first sprint with release goals, focused on bug fixes to stabilise delivery. In Sprint 2, resolved a key contributor bottleneck causing conflicts and enabled smoother, aligned implementation across the team.",
     lead: "Iva Rumora",
+    email: "iva@lmn3.digital",
     result: "Functional delivery flow re-established in 2 sprints. Major bottleneck cleared. Delivery pace and team alignment restored.",
     metrics: "Team alignment and delivery flow restored",
     image: {

@@ -1,7 +1,7 @@
 
 import * as React from "react";
 
-export type TierLabelState = "Solo";
+export type TierLabelState = "Startups" | "Scaleups" | "Growth";
 
 interface PricingTierLabelToggleProps {
   selected: TierLabelState;
@@ -9,7 +9,9 @@ interface PricingTierLabelToggleProps {
 }
 
 const options: { value: TierLabelState; label: string; color: string }[] = [
-  { value: "Solo", label: "Solo", color: "bg-[#EA3E3A]"},
+  { value: "Startups", label: "Startups", color: "bg-[#EA3E3A]"},
+  { value: "Scaleups", label: "Scaleups", color: "bg-[#F4A42C]"},
+  { value: "Growth", label: "Growth", color: "bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]"},
 ];
 
 export const PricingTierLabelToggle = ({
@@ -18,8 +20,12 @@ export const PricingTierLabelToggle = ({
 }: PricingTierLabelToggleProps) => {
   // Explanatory notes
   const definition =
-    selected === "Solo"
-      ? "Solo: The product partner is solely engaged on the product project, taking full responsibility for its success."
+    selected === "Startup"
+      ? "Startups: Early stage and indie founders building their first product or MVP."
+      : selected === "Scaleup"
+      ? "Scaleups: Seed to Series B companies with product-market fit, scaling operations."
+      : selected === "Growth"
+      ? "Growth: SMB and PE-backed companies with established products, optimizing for growth."
       : null;
 
   return (

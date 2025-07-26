@@ -5,7 +5,7 @@ import { ServiceConfig } from "@/types/unified";
 const config: ServiceConfig = {
   title: "Product Development",
   subtitle: "From MVP to Launch",
-  showcaseTitle: "Development Portfolio",
+  showcaseTitle: "Client Work Showcase",
   showcaseSubtitle: "Explore our product development successes across various industries and technologies."
 };
 

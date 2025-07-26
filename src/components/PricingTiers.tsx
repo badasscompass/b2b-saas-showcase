@@ -31,7 +31,7 @@ export const PricingTiers = ({
   ctaText = "Get Started"
 }: PricingTiersProps) => {
   const [selectedPartner, setSelectedPartner] = useState<any>(null);
-  const [labelState, setLabelState] = useState<TierLabelState>("Solo");
+  const [labelState, setLabelState] = useState<TierLabelState>("Startups");
 
   // Error logging
   console.log('PricingTiers rendered with:', { title, subtitle, tiersLength: tiers.length, ctaText });
@@ -89,10 +89,10 @@ export const PricingTiers = ({
             </p>
           </div>
 
-          {/* <PricingTierLabelToggle
+          <PricingTierLabelToggle
             selected={labelState}
             onChange={setLabelState}
-          /> */}
+          />
 
           <PricingTierGrid
             tiers={tiers}

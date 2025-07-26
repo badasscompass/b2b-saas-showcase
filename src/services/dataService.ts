@@ -37,6 +37,36 @@ export class DataService {
     }
   }
 
+  // Product Development specific results content
+  private getProductDevelopmentResultsContent(title: string) {
+    switch (title) {
+      case "From Beta Instability to MVP in 1 Month":
+        return {
+          timeframe: "Results in 1 month",
+          results: [
+            "• Product moved from beta to functional state",
+            "• Clearer edge in UX and value delivery",
+            "• Founder equipped with direction for next growth phase",
+            "• Product stabilized and positioned for growth"
+          ],
+          insight: "Insight: Rapid iteration and clear direction can transform unstable betas into viable products."
+        };
+      case "Unblocking Remote Dev Team in 3 Weeks":
+        return {
+          timeframe: "Results in 3 weeks",
+          results: [
+            "• Functional delivery flow re-established in 2 sprints",
+            "• Major bottleneck cleared",
+            "• Delivery pace and team alignment restored",
+            "• Team alignment and delivery flow restored"
+          ],
+          insight: "Insight: Process and communication fixes can dramatically improve team velocity."
+        };
+      default:
+        return undefined;
+    }
+  }
+
   // Transform raw data to unified format
   private transformToUnified(work: any, serviceType: UnifiedClientWork['serviceType']): UnifiedClientWork {
     const baseWork: UnifiedClientWork = {
@@ -58,6 +88,8 @@ export class DataService {
     // Add service-specific results content
     if (serviceType === 'strategic-advisory') {
       baseWork.resultsContent = this.getStrategicAdvisoryResultsContent(work.title);
+    } else if (serviceType === 'product-development') {
+      baseWork.resultsContent = this.getProductDevelopmentResultsContent(work.title);
     }
 
     return baseWork;

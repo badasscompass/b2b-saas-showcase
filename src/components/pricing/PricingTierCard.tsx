@@ -25,24 +25,80 @@ export const PricingTierCard = ({
   const isFractional = tier.packageName.toLowerCase().includes('fractional');
   const currentLabelState = isFractional ? 'Solo' : labelState;
 
+  // Calculate pricing based on tier and labelState
+  const calculatePrice = (basePricing: string, tierState: TierLabelState): string => {
+    if (!basePricing) return "";
+    
+    // Handle hourly rates (fractional packages)
+    if (basePricing.includes('/h') || basePricing.includes('€/h')) {
+      const baseRate = parseInt(basePricing.match(/\d+/)?.[0] || "0");
+      if (tierState === "Scaleups") {
+        const newRate = baseRate + 10; // Increase hourly rate by 10€ for Scaleups
+        return basePricing.replace(/\d+/, newRate.toString());
+      } else if (tierState === "Growth") {
+        const newRate = baseRate + 20; // Increase hourly rate by 20€ for Growth (10€ more than Scaleups)
+        return basePricing.replace(/\d+/, newRate.toString());
+      }
+      return basePricing;
+    }
+    
+    // Handle fixed pricing packages
+    const basePrice = parseInt(basePricing.match(/\d+/)?.[0] || "0");
+    if (tierState === "Scaleups") {
+      const newPrice = basePrice + 1000; // Increase by 1000 for Scaleups
+      return basePricing.replace(/\d+/, newPrice.toString());
+    } else if (tierState === "Growth") {
+      const newPrice = basePrice + 2000; // Increase by 2000 for Growth (1000 more than Scaleups)
+      return basePricing.replace(/\d+/, newPrice.toString());
+    }
+    
+    return basePricing;
+  };
+
+  // Determine format based on package characteristics
+  const getFormat = (): string => {
+    // Fractional packages (hourly rates or daily format)
+    if (tier.pricing?.includes('/h') || tier.pricing?.includes('€/h') || tier.format?.toLowerCase().includes('daily')) {
+      return "Async+Advisory";
+    }
+    // Collab packages (multiple team members)
+    if (tier.tier === "Collab" || tier.teamSetup?.includes('2')) {
+      return "Embedded (hybrid)";
+    }
+    // Solo packages (single person, fixed duration)
+    return "Embedded (Remote)";
+  };
+
   // Pick what to display based on labelState, but fallback to tier content if not available
   const labelMap = {
-    Solo: {
+    Startups: {
       lead: tier.lead === "Both" ? "Iva" : tier.lead,
-      team: "1 PM",
+      format: getFormat(),
       price: tier.pricing ?? "",
       color: "bg-[#EA3E3A] text-white",
+    },
+    Scaleups: {
+      lead: tier.lead === "Both" ? "Iva" : tier.lead,
+      format: getFormat(),
+      price: calculatePrice(tier.pricing ?? "", "Scaleups"),
+      color: "bg-[#F4A42C] text-white",
+    },
+    Growth: {
+      lead: tier.lead === "Both" ? "Iva" : tier.lead,
+      format: getFormat(),
+      price: calculatePrice(tier.pricing ?? "", "Growth"),
+      color: "bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white",
     }
   };
 
-  const label = labelMap["Solo"];
+  const label = labelMap[labelState];
 
   return (
     <Card key={index} className="border-2 border-gray-200 hover:border-[#EA3E3A]/30 transition-colors duration-300 h-full flex flex-col">
       <CardHeader className="pb-4 flex-shrink-0">
         <div className="flex items-center justify-between mb-2">
           <Badge className={`${label.color} font-manrope text-xs`}>
-            {currentLabelState}
+            {labelState}
           </Badge>
           <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
             <Euro className="h-4 w-4" />
@@ -61,12 +117,12 @@ export const PricingTierCard = ({
           <PricingTierLead
             tier={tier}
             onPartnerClick={onPartnerClick}
-            labelState={"Solo"}
+            labelState={labelState}
           />
 
           <div className="flex items-center space-x-2 text-sm text-gray-600">
             <Users className="h-4 w-4 flex-shrink-0" />
-            <span className="font-manrope">Team: {label.team}</span>
+            <span className="font-manrope">Format: {label.format}</span>
           </div>
           
           <div className="flex items-center space-x-2 text-sm text-gray-600">

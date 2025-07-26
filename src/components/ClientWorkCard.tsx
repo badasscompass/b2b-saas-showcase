@@ -34,7 +34,7 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
 
   return (
     <Card 
-      className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50 h-[350px] flex flex-col"
+      className="cursor-pointer border-2 border-[#EA3E3A]/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group bg-gradient-to-br from-white to-gray-50 h-[350px] flex flex-col w-full"
       onClick={onClick}
     >
       <CardHeader className="p-4 md:p-6 flex-1 flex flex-col relative h-full">
@@ -65,7 +65,7 @@ export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
               </button>
             </div>
           )}
-          <CardDescription className="text-gray-600 font-manrope leading-snug text-sm flex-1 overflow-hidden">
+          <CardDescription className="text-gray-600 font-manrope leading-snug text-sm flex-1 line-clamp-3">
             {getFirstSentence(work.description)}
           </CardDescription>
         </div>

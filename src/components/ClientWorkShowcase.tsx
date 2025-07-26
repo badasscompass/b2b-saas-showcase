@@ -21,7 +21,11 @@ export const ClientWorkShowcase = ({ title, subtitle, clientWork }: ClientWorkSh
             subtitle={subtitle}
           />
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className={`grid gap-6 md:gap-8 justify-items-center ${
+            clientWork.length === 1 
+              ? 'grid-cols-1 max-w-2xl mx-auto' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2'
+          }`}>
             {clientWork.map((work, index) => (
               <Dialog key={work.id}>
                 <DialogTrigger asChild>

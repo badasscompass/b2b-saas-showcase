@@ -81,6 +81,35 @@ export const mapUnifiedToGeneric = (work: UnifiedClientWork): GenericClientWork 
 
 // Generic mapper for other client work types (like Product Development)
 export const mapGenericClientWork = (work: any): GenericClientWork => {
+  const getResultsContent = (title: string) => {
+    switch (title) {
+      case "From Beta Instability to MVP in 1 Month":
+        return {
+          timeframe: "Results in 1 month",
+          results: [
+            "• Product moved from beta to functional state",
+            "• Clearer edge in UX and value delivery",
+            "• Founder equipped with direction for next growth phase",
+            "• Product stabilized and positioned for growth"
+          ],
+          insight: "Insight: Rapid iteration and clear direction can transform unstable betas into viable products."
+        };
+      case "Unblocking Remote Dev Team in 3 Weeks":
+        return {
+          timeframe: "Results in 3 weeks",
+          results: [
+            "• Functional delivery flow re-established in 2 sprints",
+            "• Major bottleneck cleared",
+            "• Delivery pace and team alignment restored",
+            "• Team alignment and delivery flow restored"
+          ],
+          insight: "Insight: Process and communication fixes can dramatically improve team velocity."
+        };
+      default:
+        return undefined;
+    }
+  };
+
   return {
     id: work.id || `generic-${work.title.toLowerCase().replace(/\s+/g, '-')}`,
     title: work.title,
@@ -93,6 +122,7 @@ export const mapGenericClientWork = (work: any): GenericClientWork => {
     product: work.product,
     productUrl: work.productUrl,
     result: work.result,
-    metrics: work.metrics
+    metrics: work.metrics,
+    resultsContent: getResultsContent(work.title)
   };
 };
