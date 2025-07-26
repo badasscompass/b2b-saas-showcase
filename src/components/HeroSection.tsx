@@ -43,22 +43,22 @@ export const HeroSection = () => {
 
           {/* Description */}
           <p className="mb-8 text-gray-600 font-manrope max-w-2xl mx-auto px-4">
-            A collective of senior PMs, growth specialists, and product marketers delivering product velocity, strategic alignment, and go-to-market readiness.
+          
           </p>
 
           {/* Feature Bullets */}
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center mb-10 px-4">
             <div className="flex items-center gap-2 text-gray-700 font-manrope">
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#F4A42C] flex-shrink-0" />
-              <span className="text-sm sm:text-base">Embedded teams</span>
+              <span className="text-sm sm:text-base">PM on-the-go</span>
             </div>
             <div className="flex items-center gap-2 text-gray-700 font-manrope">
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#F4A42C] flex-shrink-0" />
-              <span className="text-sm sm:text-base">Fractional leaders</span>
+              <span className="text-sm sm:text-base">Fractional leadership</span>
             </div>
             <div className="flex items-center gap-2 text-gray-700 font-manrope">
               <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-[#F4A42C] flex-shrink-0" />
-              <span className="text-sm sm:text-base">Ready in weeks, not months</span>
+              <span className="text-sm sm:text-base">Immediate impact</span>
             </div>
           </div>
 
