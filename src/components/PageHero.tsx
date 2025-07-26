@@ -4,7 +4,7 @@ import { Calendar } from "lucide-react";
 
 interface PageHeroProps {
   title: string;
-  subtitle: string;
+  subtitle: string | React.ReactNode;
   ctaText: string;
   onCtaClick?: () => void;
 }

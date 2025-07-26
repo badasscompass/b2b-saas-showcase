@@ -31,7 +31,7 @@ export const PricingTiers = ({
   ctaText = "Get Started"
 }: PricingTiersProps) => {
   const [selectedPartner, setSelectedPartner] = useState<any>(null);
-  const [labelState, setLabelState] = useState<TierLabelState>("Startups");
+  const [labelState, setLabelState] = useState<TierLabelState>("Startup");
 
   // Error logging
   console.log('PricingTiers rendered with:', { title, subtitle, tiersLength: tiers.length, ctaText });

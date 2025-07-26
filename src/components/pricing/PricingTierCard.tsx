@@ -71,7 +71,7 @@ export const PricingTierCard = ({
 
   // Pick what to display based on labelState, but fallback to tier content if not available
   const labelMap = {
-    Startup {
+    Startup: {
       lead: tier.lead === "Both" ? "Iva" : tier.lead,
       format: getFormat(),
       price: tier.pricing ?? "",
