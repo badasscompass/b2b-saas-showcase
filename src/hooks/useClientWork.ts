@@ -1,20 +1,24 @@
 
 import { useState, useEffect } from 'react';
 import { UnifiedClientWork } from '@/types/unified';
-import { clientWorkService } from '@/services/clientWorkService';
+import { dataService } from '@/services/dataService';
 
 export const useClientWork = (serviceType: string) => {
   const [clientWorks, setClientWorks] = useState<UnifiedClientWork[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchClientWorks = async () => {
       setLoading(true);
+      setError(null);
+      
       try {
-        const works = clientWorkService.getClientWorksByService(serviceType);
+        const works = dataService.getClientWorksByService(serviceType);
         setClientWorks(works);
-      } catch (error) {
-        console.error('Error fetching client works:', error);
+      } catch (err) {
+        console.error('Error fetching client works:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -23,21 +27,29 @@ export const useClientWork = (serviceType: string) => {
     fetchClientWorks();
   }, [serviceType]);
 
-  return { clientWorks, loading };
+  return { 
+    clientWorks, 
+    loading, 
+    error
+  };
 };
 
 export const useClientWorkById = (id: string) => {
   const [clientWork, setClientWork] = useState<UnifiedClientWork | undefined>();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchClientWork = async () => {
       setLoading(true);
+      setError(null);
+      
       try {
-        const work = clientWorkService.getClientWorkById(id);
+        const work = dataService.getClientWorkById(id);
         setClientWork(work);
-      } catch (error) {
-        console.error('Error fetching client work:', error);
+      } catch (err) {
+        console.error('Error fetching client work:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
       } finally {
         setLoading(false);
       }
@@ -46,5 +58,5 @@ export const useClientWorkById = (id: string) => {
     fetchClientWork();
   }, [id]);
 
-  return { clientWork, loading };
+  return { clientWork, loading, error };
 };

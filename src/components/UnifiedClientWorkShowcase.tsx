@@ -3,7 +3,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { SectionHeader } from "@/components/SectionHeader";
 import { UnifiedClientWorkCard } from "@/components/UnifiedClientWorkCard";
 import { ClientWorkDialog } from "@/components/ClientWorkDialog";
-import { useOptimizedClientWork } from "@/hooks/useOptimizedClientWork";
+import { useClientWork } from "@/hooks/useClientWork";
 import { ServiceConfig } from "@/types/unified";
 
 interface UnifiedClientWorkShowcaseProps {
@@ -12,7 +12,7 @@ interface UnifiedClientWorkShowcaseProps {
 }
 
 export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClientWorkShowcaseProps) => {
-  const { clientWorks, loading, error, cacheStats } = useOptimizedClientWork(serviceType);
+  const { clientWorks, loading, error } = useClientWork(serviceType);
 
   if (loading) {
     return (
@@ -46,9 +46,9 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
     );
   }
 
-  // Development logging for cache performance
+  // Development logging
   if (process.env.NODE_ENV === 'development') {
-    console.log(`Cache stats for ${serviceType}:`, cacheStats);
+    console.log(`Loaded ${clientWorks.length} client works for ${serviceType}`);
   }
 
   return (

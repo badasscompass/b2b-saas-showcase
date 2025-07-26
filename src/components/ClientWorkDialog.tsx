@@ -5,14 +5,14 @@ import { Calendar, Mail, User } from "lucide-react";
 import { FlexibleImage } from "@/components/FlexibleImage";
 import { GenericClientWork } from "@/types/clientWork";
 import { getPartnerByName } from "@/data/partnerBios";
-import { useAdvancedNavigation } from "@/hooks/useAdvancedNavigation";
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface ClientWorkDialogProps {
   work: GenericClientWork;
 }
 
 export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
-  const { navigate } = useAdvancedNavigation();
+  const { navigate } = useNavigation();
   
   const handlePartnerClick = () => {
     if (work.lead) {

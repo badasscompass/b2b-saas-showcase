@@ -33,7 +33,7 @@
 ### Caching Strategy
 - Implement service worker caching
 - Use React Query for API response caching
-- Implement image caching with OptimizedImageService
+- Use ImageService for image handling
 
 ## Accessibility Guidelines
 
@@ -85,6 +85,6 @@
 - API response times
 
 ### Tools
-- Use PerformanceMonitor utility
+- Performance monitoring has been simplified
 - Implement error boundary logging
 - Monitor console errors

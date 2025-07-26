@@ -5,7 +5,7 @@ import { FlexibleImage } from "@/components/FlexibleImage";
 import { GenericClientWork } from "@/types/clientWork";
 import { UnifiedClientWork } from "@/types/unified";
 import { getPartnerByName } from "@/data/partnerBios";
-import { useAdvancedNavigation } from "@/hooks/useAdvancedNavigation";
+import { useNavigation } from "@/hooks/useNavigation";
 
 interface ClientWorkCardProps {
   work: GenericClientWork | UnifiedClientWork;
@@ -13,7 +13,7 @@ interface ClientWorkCardProps {
 }
 
 export const ClientWorkCard = ({ work, onClick }: ClientWorkCardProps) => {
-  const { navigate } = useAdvancedNavigation();
+  const { navigate } = useNavigation();
   
   // Function to extract first sentence and add ellipsis
   const getFirstSentence = (text: string) => {

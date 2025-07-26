@@ -1,7 +1,7 @@
 
 import { useState, memo } from 'react';
 import { ImageSource, ImageConfig } from '@/types/image';
-import { OptimizedImageService } from '@/services/optimizedImageService';
+import { ImageService } from '@/services/imageService';
 import { useLazyLoad } from '@/hooks/useLazyLoad';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -31,7 +31,7 @@ export const OptimizedImage = memo(({
   });
 
   const shouldLoad = !lazy || isIntersecting || priority;
-  const { url, alt } = OptimizedImageService.getWithFallback(source, config);
+  const { url, alt } = ImageService.getWithFallback(source, config);
 
   const handleLoad = () => {
     setIsLoading(false);

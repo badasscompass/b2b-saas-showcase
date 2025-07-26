@@ -6,8 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useEffect, Suspense } from 'react';
-import { PerformanceMonitor } from '@/utils/performanceMonitor';
-import { useAdvancedNavigation } from '@/hooks/useAdvancedNavigation';
+import { useNavigation } from '@/hooks/useNavigation';
 import { routeConfig } from '@/config/routerConfig';
 import { CookieConsent } from "@/components/CookieConsent";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -27,7 +26,7 @@ const LoadingSpinner = () => (
 // Create a new component to house the routing logic and hooks that depend on BrowserRouter
 const AppContent = () => {
   const location = useLocation();
-  const { navigate } = useAdvancedNavigation();
+  const { navigate } = useNavigation();
 
   // Add debugging for route changes
   useEffect(() => {
@@ -35,7 +34,7 @@ const AppContent = () => {
     console.log('Current location:', location);
     
     // Start performance monitoring for route changes
-    PerformanceMonitor.startMeasure(`route-${location.pathname}`);
+    // Route measurement removed for performance
 
     if (location.hash) {
       const element = document.getElementById(location.hash.substring(1));
@@ -50,7 +49,7 @@ const AppContent = () => {
 
     // End performance monitoring
     return () => {
-      PerformanceMonitor.endMeasure(`route-${location.pathname}`);
+      // Route measurement removed for performance
     };
   }, [location]);
 
