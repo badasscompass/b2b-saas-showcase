@@ -6,8 +6,29 @@ import { ProductDevelopmentClientWork } from "@/components/ProductDevelopmentCli
 import { PageCTA } from "@/components/PageCTA";
 import { PricingTiers, PricingTier } from "@/components/PricingTiers";
 import { productDevelopmentPricingTiers } from "@/data/productDevelopmentData";
+import { useSEO } from "@/hooks/useSEO";
 
 const ProductDevelopment = () => {
+  useSEO({
+    title: "Product Development Services by Iva Rumora | LMN3 Collective",
+    description: "Transform your vision into ready-to-launch products with Iva Rumora's proven development processes and senior product expertise. MVP to scale solutions.",
+    keywords: ["product development", "MVP development", "product strategy", "Iva Rumora", "LMN3 Collective", "startup product development"],
+    canonicalUrl: "https://lmn3collective.com/product-development",
+    openGraph: {
+      type: "service",
+      url: "https://lmn3collective.com/product-development"
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Product Development Services",
+      "provider": {
+        "@type": "Organization",
+        "name": "LMN3 Collective"
+      },
+      "description": "Comprehensive product development services from MVP to scale"
+    }
+  });
   return (
     <ServicePageLayout
       title="Product Development"

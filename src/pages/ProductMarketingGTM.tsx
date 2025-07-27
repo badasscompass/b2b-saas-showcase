@@ -8,8 +8,29 @@ import { PricingTiers } from "@/components/PricingTiers";
 import { productMarketingGTMPricingTiers } from "@/data/productMarketingGTMData";
 import { whatWeDo, howItWorks, successMetrics, whyItWorks } from "@/data/productMarketingGTMData";
 import { Target, Users, Rocket, BarChart3 } from "lucide-react";
+import { useSEO } from "@/hooks/useSEO";
 
 const ProductMarketingGTM = () => {
+  useSEO({
+    title: "Product Marketing & GTM Services by Iva Rumora | LMN3 Collective",
+    description: "Launch smarter with Iva Rumora's data-driven go-to-market strategies. Product marketing expertise to reach buyers faster and scale effectively.",
+    keywords: ["product marketing", "go-to-market", "GTM strategy", "launch strategy", "Iva Rumora", "LMN3 Collective"],
+    canonicalUrl: "https://lmn3collective.com/product-marketing-gtm",
+    openGraph: {
+      type: "service",
+      url: "https://lmn3collective.com/product-marketing-gtm"
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Product Marketing & Go-to-Market Services",
+      "provider": {
+        "@type": "Organization",
+        "name": "LMN3 Collective"
+      },
+      "description": "Data-driven go-to-market strategies and product marketing"
+    }
+  });
   return (
     <ServicePageLayout
       title="Product Marketing & GTM"

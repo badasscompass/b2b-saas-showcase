@@ -30,9 +30,9 @@ export const routeConfig: RouteConfig[] = [
   {
     path: '/',
     component: React.lazy(() => import('../pages/Index')),
-    title: 'LMN3 Collective - Fractional Product Leadership & Consulting',
-    description: 'Transform your vision into ready-to-launch products with proven development processes and senior product expertise.',
-    keywords: ['product development', 'strategic advisory', 'consulting', 'MVP', 'go-to-market'],
+    title: 'Iva Rumora & LMN3 Collective | Strategic Product Development & Advisory',
+    description: 'Iva Rumora leads LMN3 Collective, providing strategic product development, advisory services, and go-to-market expertise for startups and enterprises.',
+    keywords: ['Iva Rumora', 'LMN3 Collective', 'product development', 'strategic advisory', 'product consultant', 'startup advisor'],
     preload: true
   },
   {
@@ -59,8 +59,8 @@ export const routeConfig: RouteConfig[] = [
   {
     path: '/about-us',
     component: createLazyComponentWithErrorHandler(() => import('../pages/AboutUs')),
-    title: 'About Us - LMN3 Partners',
-    description: 'Meet the behind LMN3 partnership concept and learn about our mission to transform product visions into market success.',
-    keywords: ['about us', 'team', 'partners', 'product consultants', 'company mission']
+    title: 'About Iva Rumora & LMN3 Collective | Strategic Product Leadership',
+    description: 'Meet Iva Rumora and the strategic minds behind LMN3 Collective. Expert product development consultants helping startups and enterprises build products that scale.',
+    keywords: ['Iva Rumora', 'LMN3 Collective', 'about', 'team', 'product consultant', 'strategic advisory']
   }
 ];

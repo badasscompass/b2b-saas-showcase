@@ -7,8 +7,29 @@ import { StrategicAdvisoryClientWork } from "@/components/StrategicAdvisoryClien
 import { PricingTiers } from "@/components/PricingTiers";
 import { strategicAdvisoryPricingTiers } from "@/data/strategicAdvisoryData";
 import { PageCTA } from "@/components/PageCTA";
+import { useSEO } from "@/hooks/useSEO";
 
 const StrategicAdvisory = () => {
+  useSEO({
+    title: "Strategic Advisory Services by Iva Rumora | LMN3 Collective",
+    description: "Get strategic guidance from Iva Rumora for product teams and founders. Define value proposition, market positioning, and go-to-market strategy with 9+ years experience.",
+    keywords: ["strategic advisory", "product strategy", "market positioning", "Iva Rumora", "LMN3 Collective", "startup advisor"],
+    canonicalUrl: "https://lmn3collective.com/strategic-advisory",
+    openGraph: {
+      type: "service",
+      url: "https://lmn3collective.com/strategic-advisory"
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "name": "Strategic Advisory Services",
+      "provider": {
+        "@type": "Organization",
+        "name": "LMN3 Collective"
+      },
+      "description": "Strategic guidance for product teams and founders"
+    }
+  });
   return (
     <ServicePageLayout
       title="Strategic Advisory"
