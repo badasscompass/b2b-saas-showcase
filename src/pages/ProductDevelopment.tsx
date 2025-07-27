@@ -12,7 +12,7 @@ const ProductDevelopment = () => {
   useSEO({
     title: "Product Development Services by Iva Rumora | LMN3 Collective",
     description: "Transform your vision into ready-to-launch products with Iva Rumora's proven development processes and senior product expertise. MVP to scale solutions.",
-    keywords: ["product development", "MVP development", "product strategy", "Iva Rumora", "LMN3 Collective", "startup product development"],
+    keywords: ["product development", "MVP development", "product strategy", "Iva Rumora", "LMN3 Collective", "startup product development", "product manager", "product management", "senior product manager", "product management services"],
     canonicalUrl: "https://lmn3collective.com/product-development",
     openGraph: {
       type: "service",

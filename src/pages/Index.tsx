@@ -11,7 +11,7 @@ const Index = () => {
   useSEO({
     title: "Iva Rumora & LMN3 Collective | Strategic Product Development & Advisory",
     description: "Iva Rumora leads LMN3 Collective, providing strategic product development, advisory services, and go-to-market expertise for startups and enterprises. 9+ years of product leadership experience.",
-    keywords: ["Iva Rumora", "LMN3 Collective", "product development", "strategic advisory", "product consultant", "startup advisor", "product management", "go-to-market strategy"],
+    keywords: ["Iva Rumora", "LMN3 Collective", "product development", "strategic advisory", "product consultant", "startup advisor", "product management", "product manager", "senior product manager", "product management consultant", "product leadership", "go-to-market strategy"],
     canonicalUrl: "https://lmn3collective.com",
     openGraph: {
       type: "website",

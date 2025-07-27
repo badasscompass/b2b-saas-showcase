@@ -13,7 +13,7 @@ const StrategicAdvisory = () => {
   useSEO({
     title: "Strategic Advisory Services by Iva Rumora | LMN3 Collective",
     description: "Get strategic guidance from Iva Rumora for product teams and founders. Define value proposition, market positioning, and go-to-market strategy with 9+ years experience.",
-    keywords: ["strategic advisory", "product strategy", "market positioning", "Iva Rumora", "LMN3 Collective", "startup advisor"],
+    keywords: ["strategic advisory", "product strategy", "market positioning", "Iva Rumora", "LMN3 Collective", "startup advisor", "product manager", "product management", "product leadership"],
     canonicalUrl: "https://lmn3collective.com/strategic-advisory",
     openGraph: {
       type: "service",
