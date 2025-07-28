@@ -4,7 +4,6 @@ import { HeroSection } from "@/components/HeroSection";
 import { WhoWeServeSection } from "@/components/WhoWeServeSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
-import { BlogSection } from "@/components/BlogSection";
 import { PageCTA } from "@/components/PageCTA";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -58,7 +57,6 @@ const Index = () => {
       <WhoWeServeSection />
       <ServicesSection />
       <WhyChooseUs />
-      <BlogSection />
     </PageLayout>
   );
 };

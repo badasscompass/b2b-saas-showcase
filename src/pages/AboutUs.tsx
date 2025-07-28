@@ -2,6 +2,7 @@
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageHero } from "@/components/PageHero";
 import { PartnersSection } from "@/components/PartnersSection";
+import { BlogSection } from "@/components/BlogSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSEO } from "@/hooks/useSEO";
@@ -174,6 +175,9 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Blog Section */}
+      <BlogSection />
     </PageLayout>
   );
 };
