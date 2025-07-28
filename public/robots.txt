@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://lmn3collective.com/sitemap.xml
+Sitemap: https://lmn3.digital/sitemap.xml
 
 # Block common bot paths
 Disallow: /api/

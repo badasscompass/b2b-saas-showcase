@@ -11,11 +11,11 @@ const AboutUs = () => {
     title: "About Iva Rumora & LMN3 Collective | Strategic Product Leadership",
     description: "Meet Iva Rumora and the strategic minds behind LMN3 Collective. Expert product development consultants with 9+ years experience helping startups and enterprises build products that scale.",
     keywords: ["Iva Rumora", "LMN3 Collective", "product consultant", "strategic advisory", "product development", "startup advisor", "product management consultant"],
-    canonicalUrl: "https://lmn3collective.com/about-us",
+    canonicalUrl: "https://lmn3.digital/about-us",
     openGraph: {
       type: "website",
-      url: "https://lmn3collective.com/about-us",
-      image: "https://lmn3collective.com/lovable-uploads/lmn3_logo_white.jpg"
+      url: "https://lmn3.digital/about-us",
+      image: "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg"
     },
     twitter: {
       card: "summary_large_image",
@@ -26,14 +26,14 @@ const AboutUs = () => {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LMN3 Collective",
-      "url": "https://lmn3collective.com",
-      "logo": "https://lmn3collective.com/lovable-uploads/lmn3_logo_white.jpg",
+      "url": "https://lmn3.digital",
+      "logo": "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg",
       "description": "Strategic product development and advisory consulting collective led by Iva Rumora",
       "founder": {
         "@type": "Person",
         "name": "Iva Rumora",
         "jobTitle": "Strategic Product Partner & Founder",
-        "url": "https://lmn3collective.com/about-us",
+        "url": "https://lmn3.digital/about-us",
         "sameAs": [
           "https://www.linkedin.com/in/ivarumora"
         ]

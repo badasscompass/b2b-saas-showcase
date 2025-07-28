@@ -16,7 +16,7 @@ export const PageHero = ({ title, subtitle, ctaText, onCtaClick }: PageHeroProps
         <div className="max-w-4xl mx-auto text-center">
         <img
   src="/lovable-uploads/lmn3_logo_bullet.png"
-  alt="LMN3 Logo"
+  alt="LMN3 Logo - Iva Rumora Product Development Services"
   className="mx-auto mb-8 w-40 h-40 md:w-48 md:h-48 object-contain"
   style={{ maxWidth: "100%", height: "auto" }}
 />

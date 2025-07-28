@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { WhoWeServeSection } from "@/components/WhoWeServeSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
+import { BlogSection } from "@/components/BlogSection";
 import { PageCTA } from "@/components/PageCTA";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -12,11 +13,11 @@ const Index = () => {
     title: "Iva Rumora & LMN3 Collective | Strategic Product Development & Advisory",
     description: "Iva Rumora leads LMN3 Collective, providing strategic product development, advisory services, and go-to-market expertise for startups and enterprises. 9+ years of product leadership experience.",
     keywords: ["Iva Rumora", "LMN3 Collective", "product development", "strategic advisory", "product consultant", "startup advisor", "product management", "product manager", "senior product manager", "product management consultant", "product leadership", "go-to-market strategy"],
-    canonicalUrl: "https://lmn3collective.com",
+    canonicalUrl: "https://lmn3.digital",
     openGraph: {
       type: "website",
-      url: "https://lmn3collective.com",
-      image: "https://lmn3collective.com/lovable-uploads/lmn3_logo_white.jpg"
+      url: "https://lmn3.digital",
+      image: "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg"
     },
     twitter: {
       card: "summary_large_image",
@@ -27,8 +28,8 @@ const Index = () => {
       "@context": "https://schema.org",
       "@type": "Organization",
       "name": "LMN3 Collective",
-      "url": "https://lmn3collective.com",
-      "logo": "https://lmn3collective.com/lovable-uploads/lmn3_logo_white.jpg",
+      "url": "https://lmn3.digital",
+      "logo": "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg",
       "description": "Strategic product development and advisory consulting led by Iva Rumora",
       "founder": {
         "@type": "Person",
@@ -54,10 +55,11 @@ const Index = () => {
   return (
     <PageLayout footerTagline="Building products that scale.">
     <HeroSection />
-    <WhoWeServeSection />
-    <ServicesSection />
-    <WhyChooseUs />
-  </PageLayout>
+      <WhoWeServeSection />
+      <ServicesSection />
+      <WhyChooseUs />
+      <BlogSection />
+    </PageLayout>
   );
 };
 

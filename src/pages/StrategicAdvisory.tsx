@@ -4,6 +4,7 @@ import { StrategicAdvisoryServices } from "@/components/StrategicAdvisoryService
 import { StrategicAdvisoryProcess } from "@/components/StrategicAdvisoryProcess";
 import { StrategicAdvisoryOutcomes } from "@/components/StrategicAdvisoryOutcomes";
 import { StrategicAdvisoryClientWork } from "@/components/StrategicAdvisoryClientWork";
+import { RelatedServices } from "@/components/RelatedServices";
 import { PricingTiers } from "@/components/PricingTiers";
 import { strategicAdvisoryPricingTiers } from "@/data/strategicAdvisoryData";
 import { PageCTA } from "@/components/PageCTA";
@@ -14,10 +15,10 @@ const StrategicAdvisory = () => {
     title: "Strategic Advisory Services by Iva Rumora | LMN3 Collective",
     description: "Get strategic guidance from Iva Rumora for product teams and founders. Define value proposition, market positioning, and go-to-market strategy with 9+ years experience.",
     keywords: ["strategic advisory", "product strategy", "market positioning", "Iva Rumora", "LMN3 Collective", "startup advisor", "product manager", "product management", "product leadership"],
-    canonicalUrl: "https://lmn3collective.com/strategic-advisory",
+    canonicalUrl: "https://lmn3.digital/strategic-advisory",
     openGraph: {
       type: "service",
-      url: "https://lmn3collective.com/strategic-advisory"
+      url: "https://lmn3.digital/strategic-advisory"
     },
     structuredData: {
       "@context": "https://schema.org",
@@ -47,6 +48,9 @@ const StrategicAdvisory = () => {
         ctaText="Book a Strategy Discovery Call"
       />
       <StrategicAdvisoryClientWork />
+      
+      <RelatedServices currentService="strategic-advisory" />
+      
       <PageCTA
       title="Ready to stop guessing and start leading with clarity?"
       subtitle= "We set the directions in the uncertainty and reframe product decisions so they align with your business, team, and growth goals."

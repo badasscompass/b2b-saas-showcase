@@ -8,56 +8,48 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://lmn3collective.com/</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://lmn3.digital/</loc>
+    <lastmod>2025-01-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- About Us -->
   <url>
-    <loc>https://lmn3collective.com/about-us</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://lmn3.digital/about-us</loc>
+    <lastmod>2025-01-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Services -->
   <url>
-    <loc>https://lmn3collective.com/product-development</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://lmn3.digital/product-development</loc>
+    <lastmod>2025-01-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://lmn3collective.com/product-marketing-gtm</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://lmn3.digital/product-marketing-gtm</loc>
+    <lastmod>2025-01-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://lmn3collective.com/strategic-advisory</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://lmn3.digital/strategic-advisory</loc>
+    <lastmod>2025-01-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Partners -->
+  <!-- External Blog -->
   <url>
-    <loc>https://lmn3collective.com/partners</loc>
-    <lastmod>2025-01-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Pricing -->
-  <url>
-    <loc>https://lmn3collective.com/pricing</loc>
-    <lastmod>2025-01-27</lastmod>
+    <loc>https://irumora.substack.com/</loc>
+    <lastmod>2025-01-28</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

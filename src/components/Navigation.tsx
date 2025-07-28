@@ -14,7 +14,7 @@ export const Navigation = () => {
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
             <img 
               src="/lovable-uploads/ac928757-746d-4571-b2f0-de32e4c5470e.png"
-              alt="LMN3 Logo"
+              alt="LMN3 Logo - Iva Rumora Strategic Product Consulting"
               className="w-8 h-8"
             />
             <span className="text-xl font-bold font-manrope text-[#EA3E3A]">LMN3</span>
@@ -26,6 +26,7 @@ export const Navigation = () => {
             <Link to="/#who-we-serve" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
             <Link to="/#why-choose-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
             <Link to="/about-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
+            <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -70,6 +71,15 @@ export const Navigation = () => {
               >
                 About
               </Link>
+              <a 
+                href="https://irumora.substack.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
+              </a>
             </div>
           </div>
         )}

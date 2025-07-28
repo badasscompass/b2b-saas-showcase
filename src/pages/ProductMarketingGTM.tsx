@@ -4,6 +4,7 @@ import { ServiceCard } from "@/components/ServiceCard";
 import { ProcessStep } from "@/components/ProcessStep";
 import { SuccessMetric } from "@/components/SuccessMetric";
 import { PageCTA } from "@/components/PageCTA";
+import { RelatedServices } from "@/components/RelatedServices";
 import { PricingTiers } from "@/components/PricingTiers";
 import { productMarketingGTMPricingTiers } from "@/data/productMarketingGTMData";
 import { whatWeDo, howItWorks, successMetrics, whyItWorks } from "@/data/productMarketingGTMData";
@@ -15,10 +16,10 @@ const ProductMarketingGTM = () => {
     title: "Product Marketing & GTM Services by Iva Rumora | LMN3 Collective",
     description: "Launch smarter with Iva Rumora's data-driven go-to-market strategies. Product marketing expertise to reach buyers faster and scale effectively.",
     keywords: ["product marketing", "go-to-market", "GTM strategy", "launch strategy", "Iva Rumora", "LMN3 Collective"],
-    canonicalUrl: "https://lmn3collective.com/product-marketing-gtm",
+    canonicalUrl: "https://lmn3.digital/product-marketing-gtm",
     openGraph: {
       type: "service",
-      url: "https://lmn3collective.com/product-marketing-gtm"
+      url: "https://lmn3.digital/product-marketing-gtm"
     },
     structuredData: {
       "@context": "https://schema.org",
@@ -93,6 +94,9 @@ const ProductMarketingGTM = () => {
         tiers={productMarketingGTMPricingTiers}
         ctaText="Book a GTM Discovery Call"
       />
+      
+      <RelatedServices currentService="product-marketing-gtm" />
+      
       <PageCTA
         title="Ready to Transform Your GTM Strategy?"
         subtitle="Looking to launch with precision and scale efficiently? Let's book a call to design your tailored GTM strategy and activation plan."
