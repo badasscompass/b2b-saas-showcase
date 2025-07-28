@@ -21,15 +21,10 @@ export const BlogSection = () => {
             <CardHeader className="p-8">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <img src="/lovable-uploads/lmn3_logo_bullet.png" alt="LMN3 Logo - Iva Rumora Blog" className="w-8 h-8" />
-                <CardTitle className="font-manrope text-xl text-gray-900">
-                  Product Leadership Weekly
-                </CardTitle>
+                <CardTitle className="font-manrope text-xl text-gray-900">Product Leadership Monthly</CardTitle>
               </div>
               
-              <CardDescription className="text-gray-600 font-manrope mb-6 text-base">
-                Weekly insights on product strategy, leadership, and building products that scale. 
-                Join hundreds of product professionals getting practical advice they can implement immediately.
-              </CardDescription>
+              <CardDescription className="text-gray-600 font-manrope mb-6 text-base">Monthly newsletter on product strategy, UX, and building products that scale. </CardDescription>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope" asChild>
