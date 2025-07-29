@@ -48,7 +48,7 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
   return (
     <div className="space-y-4">
       <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-3">
-        {partnerName.split(' ')[0]}'s Package Offers
+        {partnerName.split(' ')[0]}'s Signature Sprints
       </h4>
       
       <div className="grid gap-3">
