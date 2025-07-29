@@ -55,13 +55,13 @@ export const WhoWeServeSection = () => {
           {sections.map((section, index) => (
             <Card key={index} className="border-none shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white">
               <CardHeader className="text-center p-8">
-                <div className="mb-6 flex justify-center">
+                <div className="mb-3 flex justify-center">
                   {section.icon}
                 </div>
-                <CardTitle className="mb-2 font-manrope text-xl text-gray-900">
+                <CardTitle className="mb-1 font-manrope text-xl text-gray-900">
                   {section.title}
                 </CardTitle>
-                <p className="text-sm text-gray-500 font-manrope mb-6">
+                <p className="text-sm text-gray-500 font-manrope mb-8">
                   {section.subtitle}
                 </p>
                 <CardDescription className="text-left space-y-4 font-manrope">
