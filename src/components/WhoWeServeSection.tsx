@@ -7,7 +7,7 @@ export const WhoWeServeSection = () => {
     {
       icon: <Target className="h-8 w-8 text-[#EA3E3A]" />,
       title: "Startups",
-      subtitle: "Seed to Series A",
+      subtitle: "Bootstrapped, Seed to Series A",
       items: [
         "Product strategy blueprints and north star definition",
         "MVP validation and product-market fit optimization",
@@ -28,13 +28,13 @@ export const WhoWeServeSection = () => {
     },
     {
       icon: <Building2 className="h-8 w-8 text-[#EA3E3A]" />,
-      title: "Established Teams", 
+      title: "Empowered Product Teams", 
       subtitle: "SMBs, in-house teams & dev agencies",
       items: [
         "Product audit and optimization consulting",
         "Team structure and workflow consulting",
         "Agency partnership and white-label services",
-        "Custom training and product leadership workshops"
+        "Custom sprints and product leadership"
       ]
     }
   ];
@@ -44,7 +44,7 @@ export const WhoWeServeSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">
-            Built for Growing B2B Teams
+            Built for Ambitious B2B Teams
           </h2>
           <p className="text-xl text-gray-600 font-manrope max-w-3xl mx-auto">
             We understand the unique challenges of leading product teams and provide tailored solutions for your growth stage.
