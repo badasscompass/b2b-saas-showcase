@@ -4,7 +4,7 @@ interface PageFooterProps {
   tagline?: string;
 }
 
-export const PageFooter = ({ companyName = "LMN3 Collective", tagline = "Building products that scale." }: PageFooterProps) => {
+export const PageFooter = ({ companyName = "LMN3", tagline = "Building products that scale." }: PageFooterProps) => {
   return (
     <footer className="py-8 bg-gray-100 border-t border-gray-200">
       <div className="container mx-auto px-4">

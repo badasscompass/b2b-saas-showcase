@@ -14,7 +14,7 @@ export const PricingTierLead = ({
   onPartnerClick,
   labelState,
 }: PricingTierLeadProps) => {
-  // Remove Anamarija logic, only keep Iva
+  // Remove AML logic, only keep Iva
   if (tier.lead === "Both") {
     return (
       <div className="flex items-center space-x-2 text-sm text-gray-600">

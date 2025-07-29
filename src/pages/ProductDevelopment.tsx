@@ -25,7 +25,7 @@ const ProductDevelopment = () => {
       "name": "Product Development Services",
       "provider": {
         "@type": "Organization",
-        "name": "LMN3 Collective"
+        "name": "LMN3"
       },
       "description": "Comprehensive product development services from MVP to scale"
     }

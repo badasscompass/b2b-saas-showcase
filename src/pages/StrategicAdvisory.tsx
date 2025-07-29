@@ -12,9 +12,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const StrategicAdvisory = () => {
   useSEO({
-    title: "Strategic Advisory Services by Iva Rumora | LMN3 Collective",
+    title: "Strategic Advisory Services by Iva Rumora | LMN3",
     description: "Get strategic guidance from Iva Rumora for product teams and founders. Define value proposition, market positioning, and go-to-market strategy with 9+ years experience.",
-    keywords: ["strategic advisory", "product strategy", "market positioning", "Iva Rumora", "LMN3 Collective", "startup advisor", "product manager", "product management", "product leadership"],
+    keywords: ["strategic advisory", "product strategy", "market positioning", "Iva Rumora", "LMN3", "startup advisor", "product manager", "product management", "product leadership"],
     canonicalUrl: "https://lmn3.digital/strategic-advisory",
     openGraph: {
       type: "service",
@@ -26,7 +26,7 @@ const StrategicAdvisory = () => {
       "name": "Strategic Advisory Services",
       "provider": {
         "@type": "Organization",
-        "name": "LMN3 Collective"
+        "name": "LMN3"
       },
       "description": "Strategic guidance for product teams and founders"
     }

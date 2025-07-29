@@ -13,9 +13,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const ProductMarketingGTM = () => {
   useSEO({
-    title: "Product Marketing & GTM Services by Iva Rumora | LMN3 Collective",
+    title: "Product Marketing & GTM Services by Iva Rumora | LMN3",
     description: "Launch smarter with Iva Rumora's data-driven go-to-market strategies. Product marketing expertise to reach buyers faster and scale effectively.",
-    keywords: ["product marketing", "go-to-market", "GTM strategy", "launch strategy", "Iva Rumora", "LMN3 Collective"],
+    keywords: ["product marketing", "go-to-market", "GTM strategy", "launch strategy", "Iva Rumora", "LMN3"],
     canonicalUrl: "https://lmn3.digital/product-marketing-gtm",
     openGraph: {
       type: "service",
@@ -27,7 +27,7 @@ const ProductMarketingGTM = () => {
       "name": "Product Marketing & Go-to-Market Services",
       "provider": {
         "@type": "Organization",
-        "name": "LMN3 Collective"
+        "name": "LMN3"
       },
       "description": "Data-driven go-to-market strategies and product marketing"
     }

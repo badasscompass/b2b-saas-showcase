@@ -9,9 +9,9 @@ import { useSEO } from "@/hooks/useSEO";
 
 const AboutUs = () => {
   useSEO({
-    title: "About Iva Rumora & LMN3 Collective | Strategic Product Leadership",
-    description: "Meet Iva Rumora and the strategic minds behind LMN3 Collective. Expert product development consultants with 9+ years experience helping startups and enterprises build products that scale.",
-    keywords: ["Iva Rumora", "LMN3 Collective", "product consultant", "strategic advisory", "product development", "startup advisor", "product management consultant"],
+    title: "About Iva Rumora & LMN3 | Strategic Product Leadership",
+    description: "Meet Iva Rumora and the strategic minds behind LMN3. Expert product development consultants with 9+ years experience helping startups and enterprises build products that scale.",
+    keywords: ["Iva Rumora", "LMN3", "product consultant", "strategic advisory", "product development", "startup advisor", "product management consultant"],
     canonicalUrl: "https://lmn3.digital/about-us",
     openGraph: {
       type: "website",
@@ -20,16 +20,16 @@ const AboutUs = () => {
     },
     twitter: {
       card: "summary_large_image",
-      site: "@LMN3Collective",
+      site: "@LMN3",
       creator: "@IvaRumora"
     },
     structuredData: {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "LMN3 Collective",
+      "name": "LMN3",
       "url": "https://lmn3.digital",
       "logo": "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg",
-      "description": "Strategic product development and advisory consulting collective led by Iva Rumora",
+      "description": "Strategic product development and advisory led by Iva Rumora",
       "founder": {
         "@type": "Person",
         "name": "Iva Rumora",
