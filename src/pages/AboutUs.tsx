@@ -6,6 +6,7 @@ import { BlogSection } from "@/components/BlogSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSEO } from "@/hooks/useSEO";
+import { Target, Eye, Heart } from "lucide-react";
 
 const AboutUs = () => {
   useSEO({
@@ -83,7 +84,7 @@ const AboutUs = () => {
               <Card className="border-2 border-[#EA3E3A]/20 shadow-lg">
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-xl">M</span>
+                    <Target className="text-white w-8 h-8" />
                   </div>
                   <h3 className="font-manrope text-xl font-bold text-gray-900 mb-3">Mission</h3>
                   <p className="text-gray-600 font-manrope leading-relaxed">
@@ -95,7 +96,7 @@ const AboutUs = () => {
               <Card className="border-2 border-[#EA3E3A]/20 shadow-lg">
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-xl">V</span>
+                    <Eye className="text-white w-8 h-8" />
                   </div>
                   <h3 className="font-manrope text-xl font-bold text-gray-900 mb-3">Vision</h3>
                   <p className="text-gray-600 font-manrope leading-relaxed">
@@ -107,7 +108,7 @@ const AboutUs = () => {
               <Card className="border-2 border-[#EA3E3A]/20 shadow-lg">
                 <CardContent className="p-6 text-center">
                   <div className="w-16 h-16 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white font-bold text-xl">V</span>
+                    <Heart className="text-white w-8 h-8" />
                   </div>
                   <h3 className="font-manrope text-xl font-bold text-gray-900 mb-3">Values</h3>
                   <p className="text-gray-600 font-manrope leading-relaxed">
