@@ -1,6 +1,6 @@
 
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Target, Gift, Star } from "lucide-react";
+import { Target, Gift, Building2 } from "lucide-react";
 
 export const WhoWeServeSection = () => {
   const sections = [
@@ -27,14 +27,14 @@ export const WhoWeServeSection = () => {
       ]
     },
     {
-      icon: <Star className="h-8 w-8 text-[#EA3E3A]" />,
-      title: "Growth", 
-      subtitle: "Series B and beyond",
+      icon: <Building2 className="h-8 w-8 text-[#EA3E3A]" />,
+      title: "Established Teams", 
+      subtitle: "SMBs, in-house teams & dev agencies",
       items: [
-        "Portfolio product strategy and platform thinking",
-        "Advanced growth experimentation and data-driven optimization",
-        "Product leadership coaching and organizational design",
-        "Market expansion and competitive positioning"
+        "Product audit and optimization consulting",
+        "Team structure and workflow consulting",
+        "Agency partnership and white-label services",
+        "Custom training and product leadership workshops"
       ]
     }
   ];
