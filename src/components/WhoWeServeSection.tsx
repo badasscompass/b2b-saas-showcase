@@ -6,29 +6,35 @@ export const WhoWeServeSection = () => {
   const sections = [
     {
       icon: <Target className="h-8 w-8 text-[#EA3E3A]" />,
-      title: "Who we help",
+      title: "Startups",
+      subtitle: "Seed to Series A",
       items: [
-        "Funded startups and scaleups (Seed → Series B)",
-        "In-house B2B SaaS teams with 5–20 engineers", 
-        "Technical or commercial founders needing product guidance or leadership"
+        "Product strategy blueprints and north star definition",
+        "MVP validation and product-market fit optimization",
+        "Fractional product leadership for founding teams",
+        "Go-to-market strategy and messaging refinement"
       ]
     },
     {
       icon: <Gift className="h-8 w-8 text-[#F4A42C]" />,
-      title: "What we offer",
+      title: "Scaleups",
+      subtitle: "Series A to Series B",
       items: [
-        "Embedded product leadership",
-        "Flexible, fractional involvement across delivery, growth, and GTM",
-        "Structured product ops, growth loops, and messaging refinement"
+        "Embedded product leadership and team scaling",
+        "Growth loop optimization and retention strategies", 
+        "Product operations and delivery process refinement",
+        "Cross-functional alignment between product, sales, and marketing"
       ]
     },
     {
       icon: <Star className="h-8 w-8 text-[#EA3E3A]" />,
-      title: "Why we're different", 
+      title: "Growth", 
+      subtitle: "Series B and beyond",
       items: [
-        "Senior experience: 9+ years in product, diverse backgrounds",
-        "Cross-functional by design: delivery + growth + marketing",
-        "Adaptable pricing: retainers, SOW-based, or project bundles"
+        "Portfolio product strategy and platform thinking",
+        "Advanced growth experimentation and data-driven optimization",
+        "Product leadership coaching and organizational design",
+        "Market expansion and competitive positioning"
       ]
     }
   ];
@@ -52,9 +58,12 @@ export const WhoWeServeSection = () => {
                 <div className="mb-6 flex justify-center">
                   {section.icon}
                 </div>
-                <CardTitle className="mb-6 font-manrope text-xl text-gray-900">
+                <CardTitle className="mb-2 font-manrope text-xl text-gray-900">
                   {section.title}
                 </CardTitle>
+                <p className="text-sm text-gray-500 font-manrope mb-6">
+                  {section.subtitle}
+                </p>
                 <CardDescription className="text-left space-y-4 font-manrope">
                   {section.items.map((item, itemIndex) => (
                     <div key={itemIndex} className="flex items-start space-x-3">
