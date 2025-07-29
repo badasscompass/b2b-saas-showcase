@@ -64,7 +64,7 @@ export const WhoWeServeSection = () => {
                 <p className="text-sm text-gray-500 font-manrope mb-8">
                   {section.subtitle}
                 </p>
-                <CardDescription className="text-left space-y-4 font-manrope mb-1.5">
+                <CardDescription className="text-left space-y-4 font-manrope">
                   {section.items.map((item, itemIndex) => (
                     <div key={itemIndex} className="flex items-start space-x-3">
                       <div className="w-2 h-2 bg-[#F4A42C] rounded-full mt-2 flex-shrink-0"></div>
