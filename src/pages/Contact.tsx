@@ -7,9 +7,9 @@ import { useSEO } from '@/hooks/useSEO'
 
 export const Contact: React.FC = () => {
   useSEO({
-    title: 'Contact Us - LMN3 Collective',
-    description: 'Get in touch with LMN3 Collective. Send us your questions, project inquiries, or RFPs. We\'re here to help transform your product business.',
-    keywords: ['contact', 'contact form', 'get in touch', 'RFP', 'project inquiry', 'LMN3 Collective'],
+    title: 'Contact Us - LMN3',
+    description: 'Get in touch with LMN3. Send us your questions, project inquiries, or RFPs. We\'re here to help transform your product business.',
+    keywords: ['contact', 'contact form', 'get in touch', 'RFP', 'project inquiry', 'LMN3'],
     canonicalUrl: '/contact',
   })
 
