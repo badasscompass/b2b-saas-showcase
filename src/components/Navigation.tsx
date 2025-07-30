@@ -27,6 +27,7 @@ export const Navigation = () => {
             <Link to="/#why-choose-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
             <Link to="/about-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
             <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
+            <Link to="/contact" className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity">Contact</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -80,6 +81,13 @@ export const Navigation = () => {
               >
                 Blog
               </a>
+              <Link 
+                to="/contact" 
+                className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity text-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
             </div>
           </div>
         )}

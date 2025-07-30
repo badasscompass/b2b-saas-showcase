@@ -62,5 +62,12 @@ export const routeConfig: RouteConfig[] = [
     title: 'About Iva Rumora & LMN3 | Strategic Product Leadership',
     description: 'Meet Iva Rumora and the strategic minds behind LMN3. Expert product development consultants helping startups and enterprises build products that scale.',
     keywords: ['Iva Rumora', 'LMN3', 'about', 'team', 'product consultant', 'strategic advisory', 'product manager', 'product management', 'senior product manager', 'product leadership']
+  },
+  {
+    path: '/contact',
+    component: createLazyComponentWithErrorHandler(() => import('../pages/Contact')),
+    title: 'Contact LMN3 | Get in Touch with Our Product Development Team',
+    description: 'Contact LMN3 for product development, strategic advisory, and go-to-market services. Send RFPs and project inquiries directly to our team.',
+    keywords: ['contact', 'contact form', 'get in touch', 'RFP', 'project inquiry', 'product development', 'strategic advisory', 'LMN3']
   }
 ];
