@@ -63,7 +63,7 @@ export const partnerBios: PartnerBio[] = [
         serviceType: "product-development",
         servicePage: "/product-development",
         serviceTitle: "Product Development",
-       pricing: "2000 (starting at)"
+       pricing: "2500 (starting at)"
       },
       {
         packageName: "Product Ops-in-a-Box",

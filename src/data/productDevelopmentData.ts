@@ -109,7 +109,7 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
     format: "2-4 weeks",
     useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",
     outcomes: "Clear product roadmap, validated feature priorities, and strategic direction for scaling.",
-    pricing: "2000 (starting at)"
+    pricing: "2500 (starting at)"
   },
   {
     packageName: "Discovery-to-Strategy Accelerator",
