@@ -102,24 +102,34 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       setUploadProgress(75)
 
       console.log('Storing submission in database...')
+      console.log('Supabase client configured')
       
-      const { data: result, error } = await supabase
-        .from('contact_submissions')
-        .insert({
-          name: data.name,
-          email: data.email,
-          title: data.title,
-          body: data.body,
-          file_path: filePath,
-          file_name: fileName,
-          file_size: fileSize,
-          anti_robot_answer: data.antiRobot,
-        })
-        .select()
+      let result;
+      try {
+        const response = await supabase
+          .from('contact_submissions')
+          .insert({
+            name: data.name,
+            email: data.email,
+            title: data.title,
+            body: data.body,
+            file_path: filePath,
+            file_name: fileName,
+            file_size: fileSize,
+            anti_robot_answer: data.antiRobot,
+          })
+          .select()
 
-      if (error) {
-        console.error('Database error:', error)
-        throw new Error(`Failed to submit contact form: ${error.message}`)
+        console.log('Database operation result:', response)
+        result = response.data;
+
+        if (response.error) {
+          console.error('Database error details:', response.error)
+          throw new Error(`Database operation failed: ${response.error.message}`)
+        }
+      } catch (fetchError) {
+        console.error('Network/fetch error:', fetchError)
+        throw new Error(`Network error: ${fetchError.message}`)
       }
 
       console.log('Successfully stored submission:', result)
