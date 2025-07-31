@@ -102,7 +102,29 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       setUploadProgress(75)
 
       console.log('Storing submission in database...')
-      console.log('Supabase client configured')
+      console.log('Supabase URL being used:', 'https://dpn2140q3ivasprojects2641e339.supabase.co')
+      
+      // Test basic connectivity first
+      try {
+        console.log('Testing basic Supabase connectivity...')
+        const response = await fetch('https://dpn2140q3ivasprojects2641e339.supabase.co/rest/v1/', {
+          headers: {
+            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwbjIxNDBxM2l2YXNwcm9qZWN0czI2NDFlMzM5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI1MTAzNjAsImV4cCI6MjAzODA4NjM2MH0.6mkmPiPZNVP9PGO2YjVU-8aqJWNdKlE_FVKUOaH5YK0'
+          }
+        })
+        console.log('Basic fetch response status:', response.status)
+        console.log('Basic fetch response ok:', response.ok)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
+      } catch (fetchError) {
+        console.error('Basic connectivity test failed:', fetchError)
+        if (fetchError.name === 'TypeError' && fetchError.message.includes('Failed to fetch')) {
+          throw new Error('Cannot connect to Supabase. This might be a CORS issue or network connectivity problem.')
+        }
+        throw new Error(`Network connectivity issue: ${fetchError.message}`)
+      }
       
       // First, test the connection by checking if we can read from any table
       console.log('Testing Supabase connection...')
