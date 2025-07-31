@@ -66,6 +66,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
     setUploadProgress(0)
 
     try {
+      // Validate anti-robot answer
+      if (data.antiRobot !== '10') {
+        throw new Error('Incorrect answer to anti-robot question')
+      }
+
       let filePath = null
       let fileName = null
       let fileSize = null
@@ -93,13 +98,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
         setUploadProgress(50)
       }
 
-      // Submit form data via Edge Function
+      // Store submission directly in database
       setUploadProgress(75)
 
-      console.log('Attempting to invoke Edge Function...')
+      console.log('Storing submission in database...')
       
-      const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
+      const { data: result, error } = await supabase
+        .from('contact_submissions')
+        .insert({
           name: data.name,
           email: data.email,
           title: data.title,
@@ -108,16 +114,15 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           file_name: fileName,
           file_size: fileSize,
           anti_robot_answer: data.antiRobot,
-        },
-      })
-
-      console.log('Edge Function response:', { result, error })
+        })
+        .select()
 
       if (error) {
-        console.error('Edge Function error details:', error)
-        throw new Error(`Failed to send a request to the Edge Function: ${error.message}`)
+        console.error('Database error:', error)
+        throw new Error(`Failed to submit contact form: ${error.message}`)
       }
 
+      console.log('Successfully stored submission:', result)
       setUploadProgress(100)
 
       toast({
