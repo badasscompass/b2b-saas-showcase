@@ -104,8 +104,32 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       console.log('Storing submission in database...')
       console.log('Supabase client configured')
       
+      // First, test the connection by checking if we can read from any table
+      console.log('Testing Supabase connection...')
+      try {
+        const { data: testData, error: testError } = await supabase
+          .from('contact_submissions')
+          .select('count', { count: 'exact', head: true })
+        
+        console.log('Connection test result:', { testData, testError })
+        
+        if (testError) {
+          console.error('Connection test failed:', testError)
+          if (testError.message.includes('relation "contact_submissions" does not exist')) {
+            throw new Error('The contact_submissions table does not exist. Please create it in your Supabase dashboard.')
+          }
+          if (testError.message.includes('permission denied') || testError.code === 'PGRST301') {
+            throw new Error('Permission denied: Please disable RLS on the contact_submissions table or create a policy that allows anonymous inserts.')
+          }
+        }
+      } catch (connectionError) {
+        console.error('Supabase connection error:', connectionError)
+        throw new Error(`Database connection failed: ${connectionError.message}`)
+      }
+
       let result;
       try {
+        console.log('Attempting to insert submission...')
         const response = await supabase
           .from('contact_submissions')
           .insert({
@@ -125,10 +149,16 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
 
         if (response.error) {
           console.error('Database error details:', response.error)
+          if (response.error.code === 'PGRST301') {
+            throw new Error('Permission denied: Please disable RLS on the contact_submissions table or create a policy for anonymous inserts.')
+          }
           throw new Error(`Database operation failed: ${response.error.message}`)
         }
       } catch (fetchError) {
         console.error('Network/fetch error:', fetchError)
+        if (fetchError.message.includes('Failed to fetch')) {
+          throw new Error('Network connection failed. Please check your internet connection and Supabase configuration.')
+        }
         throw new Error(`Network error: ${fetchError.message}`)
       }
 
