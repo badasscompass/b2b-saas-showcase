@@ -96,6 +96,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       // Submit form data via Edge Function
       setUploadProgress(75)
 
+      console.log('Attempting to invoke Edge Function...')
+      
       const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           name: data.name,
@@ -109,8 +111,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
         },
       })
 
+      console.log('Edge Function response:', { result, error })
+
       if (error) {
-        throw new Error(error.message)
+        console.error('Edge Function error details:', error)
+        throw new Error(`Failed to send a request to the Edge Function: ${error.message}`)
       }
 
       setUploadProgress(100)
