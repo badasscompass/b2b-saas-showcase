@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -50,7 +50,22 @@ interface ContactFormProps {
 export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [antiRobotQuestion, setAntiRobotQuestion] = useState({ question: '', answer: '' })
   const { toast } = useToast()
+
+  // Generate random anti-robot question
+  useEffect(() => {
+    const generateQuestion = () => {
+      const num1 = Math.floor(Math.random() * 10) + 1 // 1-10
+      const num2 = Math.floor(Math.random() * 10) + 1 // 1-10
+      const answer = num1 + num2
+      setAntiRobotQuestion({
+        question: `What is ${num1} + ${num2}?`,
+        answer: answer.toString()
+      })
+    }
+    generateQuestion()
+  }, [])
 
   const {
     register,
@@ -67,7 +82,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
 
     try {
       // Validate anti-robot answer
-      if (data.antiRobot !== '10') {
+      if (data.antiRobot !== antiRobotQuestion.answer) {
         throw new Error('Incorrect answer to anti-robot question')
       }
 
@@ -208,13 +223,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           <div>
             <Label htmlFor="file">Attachment (Optional)</Label>
             <div className="mt-1">
-              <Input
+              <input
                 id="file"
                 type="file"
                 {...register('file')}
                 accept={ACCEPTED_FILE_TYPES.join(',')}
                 disabled={isSubmitting}
-                className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm file:mr-4 file:py-1 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               />
               <p className="text-sm text-muted-foreground mt-1">
                 <FileText className="inline w-4 h-4 mr-1" />
@@ -229,7 +244,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           <div>
             <Label htmlFor="antiRobot">Anti-Robot Question *</Label>
             <p className="text-sm text-muted-foreground mb-2">
-              What is 7 + 3? (Enter the number)
+              {antiRobotQuestion.question} (Enter the number)
             </p>
             <Input
               id="antiRobot"
