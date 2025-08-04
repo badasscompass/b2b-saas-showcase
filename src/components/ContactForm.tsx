@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Progress } from '@/components/ui/progress'
 import { Upload, Send, FileText, AlertCircle } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/integrations/supabase/client'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 const ACCEPTED_FILE_TYPES = [
@@ -101,90 +101,23 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       // Store submission directly in database
       setUploadProgress(75)
 
-      console.log('Storing submission in database...')
-      console.log('Supabase URL being used:', 'https://dpn2140q3ivasprojects2641e339.supabase.co')
-      
-      // Test basic connectivity first
-      try {
-        console.log('Testing basic Supabase connectivity...')
-        const response = await fetch('https://dpn2140q3ivasprojects2641e339.supabase.co/rest/v1/', {
-          headers: {
-            'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRwbjIxNDBxM2l2YXNwcm9qZWN0czI2NDFlMzM5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjI1MTAzNjAsImV4cCI6MjAzODA4NjM2MH0.6mkmPiPZNVP9PGO2YjVU-8aqJWNdKlE_FVKUOaH5YK0'
-          }
+      const { data: result, error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: data.name,
+          email: data.email,
+          title: data.title,
+          body: data.body,
+          file_path: filePath,
+          file_name: fileName,
+          file_size: fileSize,
+          anti_robot_answer: data.antiRobot,
         })
-        console.log('Basic fetch response status:', response.status)
-        console.log('Basic fetch response ok:', response.ok)
-        
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-        }
-      } catch (fetchError) {
-        console.error('Basic connectivity test failed:', fetchError)
-        if (fetchError.name === 'TypeError' && fetchError.message.includes('Failed to fetch')) {
-          throw new Error('Cannot connect to Supabase. This might be a CORS issue or network connectivity problem.')
-        }
-        throw new Error(`Network connectivity issue: ${fetchError.message}`)
+        .select()
+
+      if (error) {
+        throw new Error(`Failed to save submission: ${error.message}`)
       }
-      
-      // First, test the connection by checking if we can read from any table
-      console.log('Testing Supabase connection...')
-      try {
-        const { data: testData, error: testError } = await supabase
-          .from('contact_submissions')
-          .select('count', { count: 'exact', head: true })
-        
-        console.log('Connection test result:', { testData, testError })
-        
-        if (testError) {
-          console.error('Connection test failed:', testError)
-          if (testError.message.includes('relation "contact_submissions" does not exist')) {
-            throw new Error('The contact_submissions table does not exist. Please create it in your Supabase dashboard.')
-          }
-          if (testError.message.includes('permission denied') || testError.code === 'PGRST301') {
-            throw new Error('Permission denied: Please disable RLS on the contact_submissions table or create a policy that allows anonymous inserts.')
-          }
-        }
-      } catch (connectionError) {
-        console.error('Supabase connection error:', connectionError)
-        throw new Error(`Database connection failed: ${connectionError.message}`)
-      }
-
-      let result;
-      try {
-        console.log('Attempting to insert submission...')
-        const response = await supabase
-          .from('contact_submissions')
-          .insert({
-            name: data.name,
-            email: data.email,
-            title: data.title,
-            body: data.body,
-            file_path: filePath,
-            file_name: fileName,
-            file_size: fileSize,
-            anti_robot_answer: data.antiRobot,
-          })
-          .select()
-
-        console.log('Database operation result:', response)
-        result = response.data;
-
-        if (response.error) {
-          console.error('Database error details:', response.error)
-          if (response.error.code === 'PGRST301') {
-            throw new Error('Permission denied: Please disable RLS on the contact_submissions table or create a policy for anonymous inserts.')
-          }
-          throw new Error(`Database operation failed: ${response.error.message}`)
-        }
-      } catch (fetchError) {
-        console.error('Network/fetch error:', fetchError)
-        if (fetchError.message.includes('Failed to fetch')) {
-          throw new Error('Network connection failed. Please check your internet connection and Supabase configuration.')
-        }
-        throw new Error(`Network error: ${fetchError.message}`)
-      }
-
-      console.log('Successfully stored submission:', result)
       setUploadProgress(100)
 
       toast({
