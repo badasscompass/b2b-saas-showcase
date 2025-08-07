@@ -1,12 +1,18 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { Resend } from "npm:resend@2.0.0"
+import { SmtpClient } from "https://deno.land/x/smtp@v0.7.0/mod.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
+// SMTP Configuration
+const SMTP_CONFIG = {
+  hostname: Deno.env.get('SMTP_HOST') || '',
+  port: parseInt(Deno.env.get('SMTP_PORT') || '587'),
+  username: Deno.env.get('SMTP_USERNAME') || '',
+  password: Deno.env.get('SMTP_PASSWORD') || '',
+}
 
 interface ContactRequest {
   name: string
@@ -153,10 +159,24 @@ serve(async (req) => {
       console.log('Successfully stored submission:', data)
     }
 
-    // Send email notification to hello@lmn3.digital
-    console.log('Sending email notification...')
+    // Send email notification via SMTP
+    console.log('Sending email notification via SMTP...')
     
     try {
+      // Validate SMTP configuration
+      if (!SMTP_CONFIG.hostname || !SMTP_CONFIG.username || !SMTP_CONFIG.password) {
+        throw new Error('SMTP configuration is incomplete. Please check SMTP_HOST, SMTP_USERNAME, and SMTP_PASSWORD environment variables.')
+      }
+
+      const client = new SmtpClient()
+      
+      await client.connectTLS({
+        hostname: SMTP_CONFIG.hostname,
+        port: SMTP_CONFIG.port,
+        username: SMTP_CONFIG.username,
+        password: SMTP_CONFIG.password,
+      })
+
       let emailBody = `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
@@ -182,18 +202,22 @@ serve(async (req) => {
         <p><small>Submitted at: ${new Date().toISOString()}</small></p>
       `
 
-      const emailResponse = await resend.emails.send({
-        from: 'LMN3 Contact Form <noreply@lmn3.digital>',
-        to: ['hello@lmn3.digital'],
+      await client.send({
+        from: SMTP_CONFIG.username, // Use the SMTP username as the from address
+        to: "hello@lmn3.digital",
         subject: `New Contact: ${title}`,
+        content: emailBody,
         html: emailBody,
-        reply_to: email
+        headers: {
+          "Reply-To": email,
+        },
       })
 
-      console.log('Email sent successfully:', emailResponse)
+      await client.close()
+      console.log('Email sent successfully via SMTP')
     } catch (emailError) {
-      console.error('Failed to send email:', emailError)
-      // Don't fail the entire request if email fails
+      console.error('Failed to send email via SMTP:', emailError)
+      // Don't fail the entire request if email fails - just log the error
     }
 
     return new Response(
