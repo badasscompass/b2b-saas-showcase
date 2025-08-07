@@ -113,12 +113,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
         setUploadProgress(50)
       }
 
-      // Store submission directly in database
+      // Call the edge function to send email and store submission
       setUploadProgress(75)
 
-      const { data: result, error } = await supabase
-        .from('contact_submissions')
-        .insert({
+      const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
+        body: {
           name: data.name,
           email: data.email,
           title: data.title,
@@ -127,11 +126,11 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           file_name: fileName,
           file_size: fileSize,
           anti_robot_answer: data.antiRobot,
-        })
-        .select()
+        }
+      })
 
       if (error) {
-        throw new Error(`Failed to save submission: ${error.message}`)
+        throw new Error(`Failed to send message: ${error.message}`)
       }
       setUploadProgress(100)
 

@@ -1,9 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { Resend } from "npm:resend@2.0.0"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
+
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'))
 
 interface ContactRequest {
   name: string
@@ -39,17 +42,7 @@ serve(async (req) => {
 
     const { name, email, title, body, file_path, file_name, file_size, anti_robot_answer }: ContactRequest = requestData
 
-    // Anti-robot validation
-    if (anti_robot_answer !== '10') {
-      console.log('Anti-robot validation failed:', anti_robot_answer)
-      return new Response(
-        JSON.stringify({ error: 'Anti-robot validation failed' }),
-        { 
-          status: 400, 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-        }
-      )
-    }
+    // Note: Anti-robot validation is handled on the frontend
 
     // Validate required fields
     if (!name || !email || !title || !body) {
@@ -160,14 +153,48 @@ serve(async (req) => {
       console.log('Successfully stored submission:', data)
     }
 
-    // Send email notification (using a simple console log for now)
-    console.log('New contact form submission:', {
-      name,
-      email,
-      title,
-      body: body.substring(0, 100) + '...',
-      has_file: !!file_path
-    })
+    // Send email notification to hello@lmn3.digital
+    console.log('Sending email notification...')
+    
+    try {
+      let emailBody = `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Subject:</strong> ${title}</p>
+        <p><strong>Message:</strong></p>
+        <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
+          ${body.replace(/\n/g, '<br>')}
+        </div>
+      `
+      
+      if (file_path) {
+        emailBody += `
+          <p><strong>Attachment:</strong> ${file_name} (${Math.round(file_size / 1024)} KB)</p>
+          <p><em>File stored at: ${file_path}</em></p>
+        `
+      }
+      
+      emailBody += `
+        <hr style="margin: 20px 0;">
+        <p><small>Submission ID: ${data?.[0]?.id || 'unknown'}</small></p>
+        <p><small>User IP: ${userIP}</small></p>
+        <p><small>Submitted at: ${new Date().toISOString()}</small></p>
+      `
+
+      const emailResponse = await resend.emails.send({
+        from: 'LMN3 Contact Form <noreply@lmn3.digital>',
+        to: ['hello@lmn3.digital'],
+        subject: `New Contact: ${title}`,
+        html: emailBody,
+        reply_to: email
+      })
+
+      console.log('Email sent successfully:', emailResponse)
+    } catch (emailError) {
+      console.error('Failed to send email:', emailError)
+      // Don't fail the entire request if email fails
+    }
 
     return new Response(
       JSON.stringify({ 
