@@ -48,7 +48,17 @@ serve(async (req) => {
 
     const { name, email, title, body, file_path, file_name, file_size, anti_robot_answer }: ContactRequest = requestData
 
-    // Note: Anti-robot validation is handled on the frontend
+    // Validate anti-robot answer
+    if (!anti_robot_answer) {
+      console.log('Missing anti-robot answer')
+      return new Response(
+        JSON.stringify({ error: 'Anti-robot verification required' }),
+        { 
+          status: 400, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
+    }
 
     // Validate required fields
     if (!name || !email || !title || !body) {
