@@ -96,32 +96,9 @@ serve(async (req) => {
     const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2')
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    // First, ensure the table exists by trying to create it
-    console.log('Ensuring contact_submissions table exists...')
+    // Store the contact submission in the database
+    console.log('Storing contact submission in database...')
     
-    const createTableQuery = `
-      CREATE TABLE IF NOT EXISTS contact_submissions (
-        id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL,
-        title VARCHAR(500) NOT NULL,
-        body TEXT NOT NULL,
-        file_path VARCHAR(500),
-        file_name VARCHAR(255),
-        file_size INTEGER,
-        user_ip VARCHAR(45),
-        anti_robot_answer VARCHAR(10),
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-      );
-    `
-    
-    const { error: tableError } = await supabase.rpc('exec_sql', { query: createTableQuery })
-    if (tableError) {
-      console.log('Table creation result (may be expected if table exists):', tableError)
-    }
-
-    // Store submission in database
-    console.log('Inserting submission into database...')
     const { data, error: dbError } = await supabase
       .from('contact_submissions')
       .insert({
@@ -139,35 +116,19 @@ serve(async (req) => {
 
     if (dbError) {
       console.error('Database error:', dbError)
-      
-      // If the table doesn't exist, try to create it manually
-      if (dbError.message?.includes('relation "contact_submissions" does not exist')) {
-        console.log('Table does not exist, creating manually...')
-        
-        // Create table using raw SQL
-        const { error: createError } = await supabase
-          .from('_realtime_schema')
-          .select('*')
-          .limit(1)
-        
-        // For now, just return success and log the data
-        console.log('Would store submission:', {
-          name,
-          email,
-          title,
-          body: body.substring(0, 100) + '...',
-          file_path,
-          file_name,
-          file_size,
-          user_ip: userIP,
-          anti_robot_answer
-        })
-      } else {
-        throw new Error(`Database error: ${dbError.message}`)
-      }
-    } else {
-      console.log('Successfully stored submission:', data)
+      return new Response(
+        JSON.stringify({ 
+          error: 'Failed to store submission',
+          details: dbError.message
+        }),
+        { 
+          status: 500, 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        }
+      )
     }
+    
+    console.log('Successfully stored submission:', data)
 
     // Send email notification via SMTP
     console.log('Sending email notification via SMTP...')
@@ -175,8 +136,19 @@ serve(async (req) => {
     try {
       // Validate SMTP configuration
       if (!SMTP_CONFIG.hostname || !SMTP_CONFIG.username || !SMTP_CONFIG.password) {
+        console.error('SMTP configuration missing:', { 
+          hostname: !!SMTP_CONFIG.hostname, 
+          username: !!SMTP_CONFIG.username, 
+          password: !!SMTP_CONFIG.password 
+        })
         throw new Error('SMTP configuration is incomplete. Please check SMTP_HOST, SMTP_USERNAME, and SMTP_PASSWORD environment variables.')
       }
+
+      console.log('Connecting to SMTP server:', { 
+        hostname: SMTP_CONFIG.hostname, 
+        port: SMTP_CONFIG.port,
+        username: SMTP_CONFIG.username 
+      })
 
       const client = new SmtpClient()
       
@@ -200,7 +172,7 @@ serve(async (req) => {
       
       if (file_path) {
         emailBody += `
-          <p><strong>Attachment:</strong> ${file_name} (${Math.round(file_size / 1024)} KB)</p>
+          <p><strong>Attachment:</strong> ${file_name} (${Math.round((file_size || 0) / 1024)} KB)</p>
           <p><em>File stored at: ${file_path}</em></p>
         `
       }
@@ -213,11 +185,10 @@ serve(async (req) => {
       `
 
       await client.send({
-        from: SMTP_CONFIG.username, // Use the SMTP username as the from address
+        from: SMTP_CONFIG.username,
         to: "hello@lmn3.digital",
         subject: `New Contact: ${title}`,
         content: emailBody,
-        html: emailBody,
         headers: {
           "Reply-To": email,
         },
@@ -228,6 +199,7 @@ serve(async (req) => {
     } catch (emailError) {
       console.error('Failed to send email via SMTP:', emailError)
       // Don't fail the entire request if email fails - just log the error
+      console.log('Continuing despite email error...')
     }
 
     return new Response(
