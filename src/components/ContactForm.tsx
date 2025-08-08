@@ -91,30 +91,49 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       let fileSize = null
 
       // Handle file upload if present
+      console.log('File data check:', { file: data.file, hasFile: !!(data.file && data.file[0]) })
+      
       if (data.file && data.file[0]) {
         const file = data.file[0]
         fileName = file.name
         fileSize = file.size
 
+        console.log('Starting file upload:', { fileName, fileSize, type: file.type })
         setUploadProgress(25)
 
         const fileExt = file.name.split('.').pop()
         const timestamp = Date.now()
         filePath = `contact-files/${timestamp}-${file.name}`
 
+        console.log('Uploading to path:', filePath)
         const { error: uploadError } = await supabase.storage
           .from('contact-files')
           .upload(filePath, file)
 
         if (uploadError) {
+          console.error('File upload error:', uploadError)
           throw new Error(`File upload failed: ${uploadError.message}`)
         }
 
+        console.log('File uploaded successfully')
         setUploadProgress(50)
+      } else {
+        console.log('No file to upload')
       }
 
       // Call the edge function to send email and store submission
       setUploadProgress(75)
+      
+      console.log('Calling edge function with data:', {
+        name: data.name,
+        email: data.email,
+        title: data.title,
+        body: data.body.substring(0, 50) + '...',
+        file_path: filePath,
+        file_name: fileName,
+        file_size: fileSize,
+        anti_robot_answer: data.antiRobot,
+      })
 
       const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
         body: {
@@ -129,7 +148,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
         }
       })
 
+      console.log('Edge function result:', { result, error })
+
       if (error) {
+        console.error('Edge function error details:', error)
         throw new Error(`Failed to send message: ${error.message}`)
       }
       setUploadProgress(100)
