@@ -80,11 +80,31 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
     setIsSubmitting(true)
     setUploadProgress(0)
 
+    console.log('=== CONTACT FORM SUBMISSION START ===')
+    console.log('Form data:', { 
+      name: data.name, 
+      email: data.email, 
+      title: data.title, 
+      hasFile: !!(data.file && data.file[0]),
+      antiRobot: data.antiRobot,
+      expectedAnswer: antiRobotQuestion.answer
+    })
+
     try {
       // Validate anti-robot answer
       if (data.antiRobot !== antiRobotQuestion.answer) {
-        throw new Error('Incorrect answer to anti-robot question')
+        console.log('Anti-robot validation failed:', { 
+          provided: data.antiRobot, 
+          expected: antiRobotQuestion.answer 
+        })
+        toast({
+          title: "Incorrect Answer",
+          description: "Please answer the anti-robot question correctly.",
+          variant: "destructive",
+        })
+        return
       }
+      console.log('Anti-robot validation passed')
 
       let filePath = null
       let fileName = null
