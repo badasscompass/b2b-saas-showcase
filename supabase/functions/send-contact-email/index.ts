@@ -109,7 +109,6 @@ serve(async (req) => {
         file_path,
         file_name,
         file_size,
-        user_ip: userIP,
         anti_robot_answer
       })
       .select()
