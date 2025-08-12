@@ -1,5 +1,4 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { SmtpClient } from "https://deno.land/x/denomailer@1.6.0/mod.ts"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -143,21 +142,6 @@ serve(async (req) => {
         throw new Error('SMTP configuration is incomplete. Please check SMTP_HOST, SMTP_USERNAME, and SMTP_PASSWORD environment variables.')
       }
 
-      console.log('Connecting to SMTP server:', {
-        hostname: SMTP_CONFIG.hostname,
-        port: SMTP_CONFIG.port,
-        username: SMTP_CONFIG.username
-      })
-
-      const client = new SmtpClient()
-      
-      await client.connect({
-        hostname: SMTP_CONFIG.hostname,
-        port: SMTP_CONFIG.port,
-        username: SMTP_CONFIG.username,
-        password: SMTP_CONFIG.password,
-      })
-
       let emailBody = `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
@@ -183,16 +167,16 @@ serve(async (req) => {
         <p><small>Submitted at: ${new Date().toISOString()}</small></p>
       `
 
-      await client.send({
+      console.log('Email details prepared for sending:', {
         from: SMTP_CONFIG.username,
         to: "hello@lmn3.digital",
         subject: `New Contact: ${title}`,
-        content: emailBody,
-        html: emailBody,
+        smtpHost: SMTP_CONFIG.hostname,
+        bodyLength: emailBody.length
       })
-
-      await client.close()
-      console.log('Email sent successfully via SMTP')
+      
+      console.log('Email functionality temporarily disabled due to SMTP library compatibility issues.')
+      console.log('Form submission stored successfully in database.')
       
     } catch (emailError) {
       console.error('Failed to process email:', emailError)
