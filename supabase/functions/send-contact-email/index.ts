@@ -1,17 +1,12 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { Resend } from "npm:resend@2.0.0"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-// SMTP Configuration
-const SMTP_CONFIG = {
-  hostname: Deno.env.get('SMTP_HOST') || '',
-  port: parseInt(Deno.env.get('SMTP_PORT') || '587'),
-  username: Deno.env.get('SMTP_USERNAME') || '',
-  password: Deno.env.get('SMTP_PASSWORD') || '',
-}
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"))
 
 interface ContactRequest {
   name: string
@@ -128,18 +123,15 @@ serve(async (req) => {
     
     console.log('Successfully stored submission:', data)
 
-    // Send email notification 
+    // Send email notification using Resend
     console.log('Sending email notification...')
     
     try {
-      // Validate SMTP configuration
-      if (!SMTP_CONFIG.hostname || !SMTP_CONFIG.username || !SMTP_CONFIG.password) {
-        console.error('SMTP configuration missing:', { 
-          hostname: !!SMTP_CONFIG.hostname, 
-          username: !!SMTP_CONFIG.username, 
-          password: !!SMTP_CONFIG.password 
-        })
-        throw new Error('SMTP configuration is incomplete. Please check SMTP_HOST, SMTP_USERNAME, and SMTP_PASSWORD environment variables.')
+      // Check if Resend API key is configured
+      const resendApiKey = Deno.env.get("RESEND_API_KEY")
+      if (!resendApiKey) {
+        console.error('RESEND_API_KEY not configured')
+        throw new Error('RESEND_API_KEY environment variable is missing.')
       }
 
       let emailBody = `
@@ -167,19 +159,19 @@ serve(async (req) => {
         <p><small>Submitted at: ${new Date().toISOString()}</small></p>
       `
 
-      console.log('Email details prepared for sending:', {
-        from: SMTP_CONFIG.username,
-        to: "hello@lmn3.digital",
-        subject: `New Contact: ${title}`,
-        smtpHost: SMTP_CONFIG.hostname,
-        bodyLength: emailBody.length
-      })
+      console.log('Sending email via Resend...')
       
-      console.log('Email functionality temporarily disabled due to SMTP library compatibility issues.')
-      console.log('Form submission stored successfully in database.')
+      const emailResponse = await resend.emails.send({
+        from: "LMN3 Contact <onboarding@resend.dev>",
+        to: ["hello@lmn3.digital"],
+        subject: `New Contact: ${title}`,
+        html: emailBody,
+      })
+
+      console.log('Email sent successfully:', emailResponse)
       
     } catch (emailError) {
-      console.error('Failed to process email:', emailError)
+      console.error('Failed to send email:', emailError)
       // Don't fail the entire request if email fails - just log the error
       console.log('Continuing despite email error...')
     }
