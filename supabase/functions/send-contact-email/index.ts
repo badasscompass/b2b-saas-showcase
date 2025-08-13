@@ -162,7 +162,7 @@ serve(async (req) => {
       console.log('Sending email via Resend...')
       
       const emailResponse = await resend.emails.send({
-        from: "LMN3 Contact <noreply@lmn3.digital>",
+        from: "LMN3 Contact <hello@lmn3.digital>",
         to: ["hello@lmn3.digital"],
         subject: `New Contact: ${title}`,
         html: emailBody,
