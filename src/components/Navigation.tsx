@@ -29,24 +29,36 @@ export const Navigation = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors focus:outline-none">
+              <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-[#EA3E3A] font-manrope transition-all duration-200 focus:outline-none group">
                 <span>Services</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
-                <DropdownMenuItem asChild>
-                  <Link to="/product-development" className="w-full text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">
-                    Product Development
+              <DropdownMenuContent className="bg-white border-0 shadow-2xl z-50 min-w-[280px] p-2 rounded-lg bg-gradient-to-br from-white to-gray-50">
+                <DropdownMenuItem asChild className="rounded-md p-0 focus:bg-transparent">
+                  <Link 
+                    to="/product-development" 
+                    className="flex flex-col px-4 py-3 rounded-md hover:bg-gradient-to-r hover:from-[#EA3E3A]/5 hover:to-[#F4A42C]/5 transition-all duration-200 group"
+                  >
+                    <span className="text-gray-800 font-manrope font-semibold group-hover:text-[#EA3E3A] transition-colors">Product Development</span>
+                    <span className="text-sm text-gray-500 mt-1">From MVP to launch</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/strategic-advisory" className="w-full text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">
-                    Strategic Advisory
+                <DropdownMenuItem asChild className="rounded-md p-0 focus:bg-transparent">
+                  <Link 
+                    to="/strategic-advisory" 
+                    className="flex flex-col px-4 py-3 rounded-md hover:bg-gradient-to-r hover:from-[#EA3E3A]/5 hover:to-[#F4A42C]/5 transition-all duration-200 group"
+                  >
+                    <span className="text-gray-800 font-manrope font-semibold group-hover:text-[#EA3E3A] transition-colors">Strategic Advisory</span>
+                    <span className="text-sm text-gray-500 mt-1">Clear direction & positioning</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to="/product-marketing-gtm" className="w-full text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">
-                    Product Marketing & GTM
+                <DropdownMenuItem asChild className="rounded-md p-0 focus:bg-transparent">
+                  <Link 
+                    to="/product-marketing-gtm" 
+                    className="flex flex-col px-4 py-3 rounded-md hover:bg-gradient-to-r hover:from-[#EA3E3A]/5 hover:to-[#F4A42C]/5 transition-all duration-200 group"
+                  >
+                    <span className="text-gray-800 font-manrope font-semibold group-hover:text-[#EA3E3A] transition-colors">Product Marketing & GTM</span>
+                    <span className="text-sm text-gray-500 mt-1">Launch smarter, reach faster</span>
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
