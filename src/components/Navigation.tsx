@@ -1,8 +1,14 @@
 
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,7 +28,29 @@ export const Navigation = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/#services" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Services</Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors focus:outline-none">
+                <span>Services</span>
+                <ChevronDown className="w-4 h-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-white border border-gray-200 shadow-lg z-50">
+                <DropdownMenuItem asChild>
+                  <Link to="/product-development" className="w-full text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">
+                    Product Development
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/strategic-advisory" className="w-full text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">
+                    Strategic Advisory
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/product-marketing-gtm" className="w-full text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">
+                    Product Marketing & GTM
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
             <Link to="/#who-we-serve" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
             <Link to="/#why-choose-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
             <Link to="/about-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
@@ -44,13 +72,32 @@ export const Navigation = () => {
         {isMenuOpen && (
           <div className="md:hidden mt-4 py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
-              <Link 
-                to="/#services" 
-                className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Services
-              </Link>
+              <div className="space-y-2">
+                <div className="text-gray-700 font-manrope font-semibold py-2">Services</div>
+                <div className="pl-4 space-y-2">
+                  <Link 
+                    to="/product-development" 
+                    className="block text-gray-600 hover:text-[#EA3E3A] font-manrope transition-colors py-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Product Development
+                  </Link>
+                  <Link 
+                    to="/strategic-advisory" 
+                    className="block text-gray-600 hover:text-[#EA3E3A] font-manrope transition-colors py-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Strategic Advisory
+                  </Link>
+                  <Link 
+                    to="/product-marketing-gtm" 
+                    className="block text-gray-600 hover:text-[#EA3E3A] font-manrope transition-colors py-1"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Product Marketing & GTM
+                  </Link>
+                </div>
+              </div>
               <Link 
                 to="/#who-we-serve" 
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
