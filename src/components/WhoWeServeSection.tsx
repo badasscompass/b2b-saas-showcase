@@ -58,58 +58,61 @@ export const WhoWeServeSection = () => {
           subtitle="We understand the unique challenges of leading product teams and provide tailored solutions for all your growth stages."
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6">
-          {sections.map((section, index) => {
-            const IconComponent = section.icon;
-            return (
-              <Card 
-                key={index} 
-                className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-gradient-to-br ${section.gradient} backdrop-blur-sm overflow-hidden relative`}
-              >
-                {/* Subtle background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <CardHeader className="relative p-8 text-center">
-                  {/* Enhanced icon treatment */}
-                  <div className="mb-6 flex justify-center">
-                    <div className={`w-16 h-16 rounded-2xl ${section.iconBg} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                      <IconComponent className="h-8 w-8 text-white" />
-                    </div>
-                  </div>
+<div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 lg:items-stretch">
+  {sections.map((section, index) => {
+    const IconComponent = section.icon;
+    return (
+      <Card 
+        key={index} 
+        className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-gradient-to-br ${section.gradient} backdrop-blur-sm overflow-hidden relative flex flex-col h-full`}
+      >
+  {/* Background pattern stays the same */}
+  <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+  
+  <CardHeader className="relative p-8 text-center flex flex-col h-full">
+    {/* Icon section - stays the same */}
+    <div className="mb-6 flex justify-center">
+      <div className={`w-16 h-16 rounded-2xl ${section.iconBg} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+        <IconComponent className="h-8 w-8 text-white" />
+      </div>
+    </div>
 
-                  <CardTitle className="mb-2 font-manrope text-xl text-gray-900 group-hover:text-gray-800 transition-colors">
-                    {section.title}
-                  </CardTitle>
-                  
-                  <p className="text-sm text-gray-600 font-manrope mb-8 font-medium">
-                    {section.subtitle}
-                  </p>
+    {/* Title and subtitle - stays the same */}
+    <CardTitle className="mb-2 font-manrope text-xl text-gray-900 group-hover:text-gray-800 transition-colors">
+      {section.title}
+    </CardTitle>
+    
+    <p className="text-base text-gray-600 font-manrope mb-12 font-medium">
+      {section.subtitle}
+    </p>
 
-                  {/* Enhanced list items */}
-                  <CardDescription className="text-left space-y-4 font-manrope mb-8">
-                    {section.items.map((item, itemIndex) => (
-                      <div key={itemIndex} className="flex items-start space-x-3 group-hover:translate-x-1 transition-transform duration-300" style={{ transitionDelay: `${itemIndex * 50}ms` }}>
-                        <div className="w-2 h-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform duration-300" />
-                        <span className="text-gray-700 leading-relaxed text-sm">{item}</span>
-                      </div>
-                    ))}
-                  </CardDescription>
+    {/* Content area that grows to fill space */}
+    <div className="flex-1 flex flex-col">
+      <CardDescription className="text-left space-y-4 font-manrope mb-8 flex-1">
+        {section.items.map((item, itemIndex) => (
+          <div key={itemIndex} className="flex items-start space-x-3 group-hover:translate-x-1 transition-transform duration-300" style={{ transitionDelay: `${itemIndex * 50}ms` }}>
+            <div className="w-2 h-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform duration-300" />
+            <span className="text-gray-700 leading-relaxed text-base">{item}</span>
+          </div>
+        ))}
+      </CardDescription>
 
-                  {/* Call-to-action button */}
-                  <Button 
-                    variant="outline" 
-                    className="w-full group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-orange-500 group-hover:text-white group-hover:border-transparent transition-all duration-300 font-manrope"
-                    asChild
-                  >
-                    <a href="https://calendly.com/iva-lmn3/30min" className="flex items-center justify-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {section.cta}
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                    </a>
-                  </Button>
-                </CardHeader>
-              </Card>
-            );
+      {/* CTA button - now at bottom */}
+      <Button 
+        variant="outline" 
+        className="w-full group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-orange-500 group-hover:text-white group-hover:border-transparent transition-all duration-300 font-manrope mt-auto"
+        asChild
+      >
+        <a href="https://calendly.com/iva-lmn3/30min" className="flex items-center justify-center gap-2">
+          <Calendar className="w-4 h-4" />
+          {section.cta}
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+        </a>
+      </Button>
+    </div>
+  </CardHeader>
+</Card>
+           );
           })}
         </div>
       </div>
