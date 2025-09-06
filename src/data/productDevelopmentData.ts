@@ -57,7 +57,7 @@ export const productOutcomes = [
 export const clientWork = [
   {
     title: "From Beta Instability to MVP in 1 Month",
-    scope: "AI Developer Tools",
+    scope: "Discovery-to-Strategy Accelerator founder advisory focused (remote)",
     description: "Working in a lightweight advisory format with a solo founder. Initial challenge: An unstable beta MVP and unclear direction—at a time when the AI dev tool landscape was rapidly evolving.",
     lead: "Iva Rumora",
     email: "iva@lmn3.digital",
@@ -79,7 +79,7 @@ export const clientWork = [
   },
   {
     title: "Unblocking Remote Dev Team in 3 Weeks",
-    scope: "B2B Hospitality (Tourism & Transport)", 
+    scope: "Product Operations in a Box sprint execution (remote)", 
     description: "A client was stuck in legacy code refactoring—no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog and launched first sprint with release goals, focused on bug fixes to stabilise delivery. In Sprint 2, resolved a key contributor bottleneck causing conflicts and enabled smoother, aligned implementation across the team.",
     lead: "Iva Rumora",
     email: "iva@lmn3.digital",
