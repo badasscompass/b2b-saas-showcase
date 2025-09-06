@@ -52,6 +52,13 @@ const ProductMarketingGTM = () => {
         </div>
       </ServiceSection>
 
+      <PricingTiers 
+        title="Product Marketing & GTM Packages"
+        subtitle="Choose the right marketing engagement to accelerate your go-to-market success"
+        tiers={productMarketingGTMPricingTiers}
+        ctaText="Book a GTM Discovery Call"
+      />
+
       <ServiceSection title="How It Works" background="gray">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {howItWorks.map((step, index) => (
@@ -87,13 +94,6 @@ const ProductMarketingGTM = () => {
           </div>
         </div>
       </ServiceSection>
-
-      <PricingTiers 
-        title="Product Marketing & GTM Packages"
-        subtitle="Choose the right marketing engagement to accelerate your go-to-market success"
-        tiers={productMarketingGTMPricingTiers}
-        ctaText="Book a GTM Discovery Call"
-      />
       
       <RelatedServices currentService="product-marketing-gtm" />
       
