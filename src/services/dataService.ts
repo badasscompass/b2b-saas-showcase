@@ -32,6 +32,18 @@ export class DataService {
           ],
           insight: "From MVP confusion to clear market positioning"
         };
+      case "Product Clarity Sprint & Fractional Product Leadership":
+        return {
+          timeframe: "Results in 1 month",
+          results: [
+            "• Clearer onboarding flow reducing early drop-off risk",
+            "• Role and permission model better aligned with target market segments",
+            "• Revised product architecture enabling scalable roadmap planning",
+            "• Landing page messaging aligned with updated positioning and ICP",
+            "• Strategic foundation for next development sprints and client feedback integration"
+          ],
+          insight: "Product shifted from unclear onboarding to strategic clarity"
+        };
       default:
         return undefined;
     }
