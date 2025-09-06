@@ -42,5 +42,24 @@ export const clientWorkData: ClientWork[] = [
     product: "contendo.io",
     productUrl: "https://contendo.io",
     email: "iva@lmn3.digital"
+  },
+  {
+    title: "Product Clarity Sprint & Fractional Product Leadership",
+    scope: "Product Clarity Sprint & Fractional Product Leadership",
+    description: "A bootstrapped CEE startup building a platform for resident community and facility management needed help refining its product direction and onboarding experience. Over 4 weeks, working fractionally (~45 hours), we re-evaluated product architecture, refined onboarding UX, and opened the door to broader role definitions and market segments in the proptech space. Deliverables included updated landing page messaging, a revised product onboarding flow, role-based product architecture, and a prioritised implementation roadmap aligned with founder vision and resource constraints.",
+    lead: "Iva Rumora",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1560518883-ce09059eeffa',
+      alt: 'Modern apartment building with community spaces',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1582407947304-fd86f028f716',
+        alt: 'Property management dashboard on laptop'
+      }
+    },
+    sector: "PropTech / Community & Facility Management Platform",
+    product: "Habiq Community / Habiq Rent",
+    email: "iva@lmn3.digital"
   }
 ];
