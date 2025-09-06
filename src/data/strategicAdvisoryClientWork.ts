@@ -60,6 +60,7 @@ export const clientWorkData: ClientWork[] = [
     },
     sector: "PropTech / Community & Facility Management Platform",
     product: "Habiq Community / Habiq Rent",
+    productUrl: "https://www.habiq.com/en",
     email: "iva@lmn3.digital"
   }
 ];
