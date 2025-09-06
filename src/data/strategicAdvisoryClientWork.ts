@@ -44,8 +44,8 @@ export const clientWorkData: ClientWork[] = [
     email: "iva@lmn3.digital"
   },
   {
-    title: "Product Clarity Sprint & Fractional Product Leadership",
-    scope: "Product Clarity Sprint & Fractional Product Leadership",
+    title: "Fractional Product Leadership in proptech SaaS space",
+    scope: "Fractional Product Leadership with Product Clarity Sprint",
     description: "A bootstrapped CEE startup building a platform for resident community and facility management needed help refining its product direction and onboarding experience. Over 4 weeks, working fractionally (~45 hours), we re-evaluated product architecture, refined onboarding UX, and opened the door to broader role definitions and market segments in the proptech space. Deliverables included updated landing page messaging, a revised product onboarding flow, role-based product architecture, and a prioritised implementation roadmap aligned with founder vision and resource constraints.",
     lead: "Iva Rumora",
     image: {
@@ -59,7 +59,7 @@ export const clientWorkData: ClientWork[] = [
       }
     },
     sector: "PropTech / Community & Facility Management Platform",
-    product: "Habiq Community / Habiq Rent",
+    product: "Habiq Community | Habiq Rent",
     productUrl: "https://www.habiq.com/en",
     email: "iva@lmn3.digital"
   }
