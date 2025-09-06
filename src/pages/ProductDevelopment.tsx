@@ -38,8 +38,6 @@ const ProductDevelopment = () => {
       footerTagline="Building products that scale."
     >
       <ProductServicesSection />
-      <ProductProcessSection />
-      <ProductOutcomesSection />
       
       <PricingTiers 
         title="Product Development Packages"
@@ -47,6 +45,9 @@ const ProductDevelopment = () => {
         tiers={productDevelopmentPricingTiers}
         ctaText="Book a Product Audit Call"
       />
+      
+      <ProductProcessSection />
+      <ProductOutcomesSection />
 
       <ProductDevelopmentClientWork />
       

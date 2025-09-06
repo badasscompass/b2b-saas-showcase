@@ -39,14 +39,16 @@ const StrategicAdvisory = () => {
       footerTagline="Strategic clarity for product success."
     >
       <StrategicAdvisoryServices />
-      <StrategicAdvisoryProcess />
-      <StrategicAdvisoryOutcomes />
+      
       <PricingTiers 
         title="Strategic Advisory Packages"
         subtitle="Choose the right strategic engagement to accelerate your product vision"
         tiers={strategicAdvisoryPricingTiers}
         ctaText="Book a Strategy Discovery Call"
       />
+      
+      <StrategicAdvisoryProcess />
+      <StrategicAdvisoryOutcomes />
       <StrategicAdvisoryClientWork />
       
       <RelatedServices currentService="strategic-advisory" />
