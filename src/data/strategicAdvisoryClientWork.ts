@@ -45,7 +45,7 @@ export const clientWorkData: ClientWork[] = [
   },
   {
     title: "Fractional Product Leadership in Proptech SaaS space",
-    scope: "Product Clarity Sprint & Fractional Product Leadership",
+    scope: "Fractional Product Leadership with Product Clarity Sprint",
     description: "A bootstrapped CEE startup building a platform for resident community and facility management needed help refining its product direction and onboarding experience. Over 4 weeks, working fractionally (~45 hours), we re-evaluated product architecture, refined onboarding UX, and opened the door to broader role definitions and market segments in the proptech space. Deliverables included updated landing page messaging, a revised product onboarding flow, role-based product architecture, and a prioritised implementation roadmap aligned with founder vision and resource constraints.",
     lead: "Iva Rumora",
     image: {
