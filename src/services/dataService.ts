@@ -36,13 +36,13 @@ export class DataService {
         return {
           timeframe: "Results in 1 month",
           results: [
-            "• Clearer onboarding flow reducing early drop-off risk",
-            "• Role and permission model better aligned with target market segments",
-            "• Revised product architecture enabling scalable roadmap planning",
-            "• Landing page messaging aligned with updated positioning and ICP",
-            "• Strategic foundation for next development sprints and client feedback integration"
+            "• Streamlined onboarding flow with early activation points reducing early drop-off risk",
+            "• User and facility model closer aligned with target market segments",
+            "• Product development efforts supporting scalable roadmap planning",
+            "• Landing page messaging aligned with updated positioning and product vision",
+            "• Strategic foundation for continuous development sprints"
           ],
-          insight: "Product shifted from unclear onboarding to strategic clarity"
+          insight: "Product shifted from unclear  to improved strategic clarity"
         };
       default:
         return undefined;
