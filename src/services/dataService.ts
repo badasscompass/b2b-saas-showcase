@@ -36,13 +36,13 @@ export class DataService {
         return {
           timeframe: "Results in 1 month",
           results: [
-            "• Streamlined onboarding flow with early activation points reducing early drop-off risk",
+            "• Streamlined onboarding flow with initial activation points reducing early drop-off risk",
             "• User and facility model closer aligned with target market segments",
             "• Product development efforts supporting scalable roadmap planning",
             "• Landing page messaging aligned with updated positioning and product vision",
             "• Strategic foundation for continuous development sprints"
           ],
-          insight: "Product shifted from unclear  to improved strategic clarity"
+          insight: "Product shifted from unclear direction with extended pauses to improved strategic clarity and established cadence of delivery"
         };
       default:
         return undefined;
