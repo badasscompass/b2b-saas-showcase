@@ -32,7 +32,7 @@ export class DataService {
           ],
           insight: "From MVP confusion to clear market positioning"
         };
-      case "Product Clarity Sprint & Fractional Product Leadership":
+      case "Fractional Product Leadership in Proptech SaaS space":
         return {
           timeframe: "Results in 1 month",
           results: [
