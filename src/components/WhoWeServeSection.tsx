@@ -88,14 +88,14 @@ export const WhoWeServeSection = () => {
 
     {/* Content area that grows to fill space */}
     <div className="flex-1 flex flex-col">
-      <CardDescription className="text-left space-y-4 font-manrope mb-8 flex-1">
+      <div className="text-left space-y-4 font-manrope mb-8 flex-1 text-sm text-muted-foreground">
         {section.items.map((item, itemIndex) => (
           <div key={itemIndex} className="flex items-start space-x-3 group-hover:translate-x-1 transition-transform duration-300" style={{ transitionDelay: `${itemIndex * 50}ms` }}>
             <div className="w-2 h-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-full mt-2.5 flex-shrink-0 group-hover:scale-125 transition-transform duration-300" />
             <span className="text-gray-700 leading-relaxed text-base">{item}</span>
           </div>
         ))}
-      </CardDescription>
+      </div>
 
       {/* CTA button - now at bottom */}
       <Button 
