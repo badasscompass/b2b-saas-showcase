@@ -10,6 +10,7 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { routeConfig } from '@/config/routerConfig';
 import { CookieConsent } from "@/components/CookieConsent";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { analyticsService } from '@/services/analyticsService';
 
 const queryClient = new QueryClient();
 
@@ -33,8 +34,9 @@ const AppContent = () => {
     console.log('Route changed to:', location.pathname);
     console.log('Current location:', location);
     
-    // Start performance monitoring for route changes
-    // Route measurement removed for performance
+    // Track page view with Google Analytics
+    const route = routeConfig.find(r => r.path === location.pathname);
+    analyticsService.trackPageView(location.pathname, route?.title);
 
     if (location.hash) {
       const element = document.getElementById(location.hash.substring(1));
@@ -46,11 +48,6 @@ const AppContent = () => {
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    // End performance monitoring
-    return () => {
-      // Route measurement removed for performance
-    };
   }, [location]);
 
   // Preload routes on app start

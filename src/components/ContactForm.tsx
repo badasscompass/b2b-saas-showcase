@@ -11,6 +11,7 @@ import { Progress } from '@/components/ui/progress'
 import { Upload, Send, FileText, AlertCircle } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { supabase } from '@/integrations/supabase/client'
+import { analyticsService } from '@/services/analyticsService'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 const ACCEPTED_FILE_TYPES = [
@@ -181,10 +182,17 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
         description: 'Thank you for your message. We\'ll get back to you soon.',
       })
 
+      // Track successful form submission
+      analyticsService.trackFormSubmission('contact_form', true)
+
       reset()
       onSuccess?.()
     } catch (error) {
       console.error('Contact form submission error:', error)
+      
+      // Track failed form submission
+      analyticsService.trackFormSubmission('contact_form', false)
+      
       toast({
         title: 'Error sending message',
         description: error instanceof Error ? error.message : 'Please try again later.',

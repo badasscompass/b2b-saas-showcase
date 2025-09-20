@@ -9,9 +9,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { analyticsService } from "@/services/analyticsService";
 
 export const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleNavClick = (linkName: string, isExternal: boolean = false) => {
+    analyticsService.trackButtonClick(`nav_${linkName}`, 'navigation');
+    if (isExternal) {
+      analyticsService.trackExternalLink(`https://irumora.substack.com/`, 'Blog');
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
@@ -63,11 +71,11 @@ export const Navigation = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to="/#who-we-serve" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
-            <Link to="/#why-choose-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
-            <Link to="/about-us" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
-            <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
-            <Link to="/contact" className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity">Contact</Link>
+            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
+            <Link to="/#why-choose-us" onClick={() => handleNavClick('why_choose_us')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
+            <Link to="/about-us" onClick={() => handleNavClick('about')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
+            <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" onClick={() => handleNavClick('blog', true)} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
+            <Link to="/contact" onClick={() => handleNavClick('contact')} className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity">Contact</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,21 +121,21 @@ export const Navigation = () => {
               <Link 
                 to="/#who-we-serve" 
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); handleNavClick('who_we_serve'); }}
               >
                 Who We Serve
               </Link>
               <Link 
                 to="/#why-choose-us" 
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); handleNavClick('why_choose_us'); }}
               >
                 Why Us
               </Link>
               <Link 
                 to="/about-us" 
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); handleNavClick('about'); }}
               >
                 About
               </Link>
@@ -136,14 +144,14 @@ export const Navigation = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); handleNavClick('blog', true); }}
               >
                 Blog
               </a>
               <Link 
                 to="/contact" 
                 className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity text-center"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => { setIsMenuOpen(false); handleNavClick('contact'); }}
               >
                 Contact
               </Link>

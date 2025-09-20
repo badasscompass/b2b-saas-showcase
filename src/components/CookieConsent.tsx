@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"; // Assuming you have this Butto
 declare global {
   interface Window {
     _hsp: any[];
+    gtag: (...args: any[]) => void;
+    dataLayer: any[];
   }
 }
 
@@ -15,7 +17,30 @@ export const CookieConsent = () => {
     // Check if user has already consented
     const hasConsented = localStorage.getItem('cookieConsentAccepted');
 
-    if (!hasConsented) {
+    if (hasConsented === 'true') {
+      // User previously accepted, enable analytics
+      if (window.gtag) {
+        window.gtag('consent', 'update', {
+          'analytics_storage': 'granted',
+          'ad_storage': 'granted',
+          'ad_user_data': 'granted',
+          'ad_personalization': 'granted'
+        });
+        console.log('Google Analytics: Consent restored from localStorage');
+      }
+    } else if (hasConsented === 'false') {
+      // User previously declined, keep analytics disabled
+      if (window.gtag) {
+        window.gtag('consent', 'update', {
+          'analytics_storage': 'denied',
+          'ad_storage': 'denied',
+          'ad_user_data': 'denied',
+          'ad_personalization': 'denied'
+        });
+        console.log('Google Analytics: Consent denied from localStorage');
+      }
+    } else {
+      // First time visitor, show banner
       setShowBanner(true);
     }
 
@@ -33,6 +58,17 @@ export const CookieConsent = () => {
     localStorage.setItem('cookieConsentAccepted', 'true');
     setShowBanner(false);
 
+    // Enable Google Analytics
+    if (window.gtag) {
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'granted',
+        'ad_storage': 'granted',
+        'ad_user_data': 'granted',
+        'ad_personalization': 'granted'
+      });
+      console.log('Google Analytics: Consent granted');
+    }
+
     // Communicate consent to HubSpot
     if (window._hsp) {
       window._hsp.push(['setPrivacyConsent', {
@@ -48,6 +84,17 @@ export const CookieConsent = () => {
   const handleDecline = () => {
     localStorage.setItem('cookieConsentAccepted', 'false');
     setShowBanner(false);
+
+    // Disable Google Analytics
+    if (window.gtag) {
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'denied',
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied'
+      });
+      console.log('Google Analytics: Consent denied');
+    }
 
     // Communicate declined consent to HubSpot
     if (window._hsp) {
