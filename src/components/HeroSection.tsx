@@ -1,11 +1,13 @@
 
 import { ArrowRight, Calendar, Check, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ConferenceRibbon } from "@/components/ConferenceRibbon";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-white overflow-hidden">
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="relative min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-white overflow-hidden">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="container mx-auto px-4 relative z-10 w-full">
         <div className="max-w-5xl mx-auto text-center">
           {/* LMN3 Logo */}
           <a href="/" aria-label="LMN3 Home">
@@ -39,11 +41,6 @@ export const HeroSection = () => {
           {/* Subheading */}
           <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 font-manrope leading-relaxed max-w-3xl mx-auto px-4">
             We help you ship faster, scale smarter, and launch with clarity — without hiring full-time.
-          </p>
-
-          {/* Description */}
-          <p className="mb-8 text-gray-600 font-manrope max-w-2xl mx-auto px-4">
-          
           </p>
 
           {/* Feature Bullets */}
@@ -87,7 +84,9 @@ export const HeroSection = () => {
             </Button>
           </div>
         </div>
+        </div>
       </div>
+      <ConferenceRibbon />
     </section>
   );
 };

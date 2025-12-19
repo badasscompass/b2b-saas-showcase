@@ -38,12 +38,21 @@ const AppContent = () => {
     const route = routeConfig.find(r => r.path === location.pathname);
     analyticsService.trackPageView(location.pathname, route?.title);
 
+    // Handle smooth scroll for anchor links
     if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
+      const hash = location.hash.substring(1);
+      const element = document.getElementById(hash);
       if (element) {
-        requestAnimationFrame(() => {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
+        // Small delay to ensure DOM is ready
+        setTimeout(() => {
+          const offset = 80; // Account for fixed navigation
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - offset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }, 100);
       }
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });

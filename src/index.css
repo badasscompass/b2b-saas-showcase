@@ -43,6 +43,13 @@
     scroll-behavior: smooth;
   }
 
+  /* Enhanced smooth scroll for anchor links */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-padding-top: 80px; /* Account for fixed navigation */
+    }
+  }
+
   h1, h2, h3, h4, h5, h6 {
     line-height: 1.2;
   }

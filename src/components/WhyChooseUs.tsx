@@ -21,8 +21,8 @@ export const WhyChooseUs = () => {
     title: "Continuous Partnership",
     description: "Ongoing support and strategic partnership throughout your entire growth journey."
   }];
-  return <section id="why-choose-us" className="py-24 bg-gradient-to-r from-gray-50 to-white">
-      <div className="container mx-auto px-4">
+  return <section id="why-choose-us" className="section-padding bg-gradient-to-r from-gray-50 to-white">
+      <div className="container mx-auto container-padding">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">Why Choose LMN3?</h2>

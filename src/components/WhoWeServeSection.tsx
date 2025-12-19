@@ -64,7 +64,7 @@ export const WhoWeServeSection = () => {
     return (
       <Card 
         key={index} 
-        className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-gradient-to-br ${section.gradient} backdrop-blur-sm overflow-hidden relative flex flex-col h-full`}
+        className={`group border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-gradient-to-br ${section.gradient} overflow-hidden relative flex flex-col h-full`}
       >
   {/* Background pattern stays the same */}
   <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
