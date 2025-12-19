@@ -34,15 +34,16 @@ export class DataService {
         };
       case "Fractional Product Leadership in Proptech SaaS space":
         return {
-          timeframe: "Results in 1 month",
+          timeframe: "Results",
           results: [
-            "• Streamlined onboarding flow with initial activation points reducing early drop-off risk",
-            "• User and facility model closer aligned with target market segments",
-            "• Product development efforts supporting scalable roadmap planning",
-            "• Landing page messaging aligned with updated positioning and product vision",
-            "• Strategic foundation for continuous development sprints"
+            "• Clearer product positioning and strategic narrative",
+            "• Streamlined onboarding with defined roles and earlier activation",
+            "• Community and facility model aligned with scalable B2B use cases",
+            "• Collaboration features enabling multi-stakeholder participation",
+            "• Defined pilot scope, buyer segments, and revenue logic",
+            "• Focused POC-to-MVP scope for engineering"
           ],
-          insight: "Product shifted from unclear direction with extended pauses to improved strategic clarity and established cadence of delivery"
+          outcome: "The product moved from prolonged pauses and unclear direction to improved strategic clarity, delivery cadence, and a defensible path toward scale—without restarting from scratch."
         };
       default:
         return undefined;

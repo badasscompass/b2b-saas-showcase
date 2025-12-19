@@ -16,7 +16,7 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
 
   if (loading) {
     return (
-      <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
+      <section id="client-showcase" className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <SectionHeader 
@@ -36,7 +36,7 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
 
   if (error) {
     return (
-      <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
+      <section id="client-showcase" className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto text-center">
             <p className="text-red-600">Error loading client work: {error}</p>
@@ -52,7 +52,7 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
   }
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
+    <section id="client-showcase" className="py-16 md:py-20 bg-gradient-to-r from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <SectionHeader 

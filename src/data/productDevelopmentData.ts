@@ -112,14 +112,14 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
     pricing: "2500 (starting at)"
   },
   {
-    packageName: "Discovery-to-Strategy Accelerator",
-    tier: "Collab",
+    packageName: "Fractional Product Leadership",
+    tier: "Solo", 
     lead: "Both",
-    teamSetup: "2 senior PMs",
-    format: "4–8 weeks",
-    useCase: "Founders/CPOs testing new product lines or repositioning to grow.",
-    outcomes: "Prioritized opportunities, structured discovery docs, value hypotheses & next steps.",
-    pricing: "6000 (starting at)"
+    teamSetup: "1 senior PM",
+    format: "Daily 4-6 hours",
+    useCase: "Founders without a head of product, product teams needing interim PM support (3-6 months).",
+    outcomes: "Executive-level product ownership, team leadership with operational support, strategic + delivery alignment.",
+    pricing: "40€/h (starting rate)"
   },
   {
     packageName: "Product Ops-in-a-Box",

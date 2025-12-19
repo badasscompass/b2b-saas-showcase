@@ -25,6 +25,7 @@ export interface GenericClientWork {
   resultsContent?: {
     timeframe: string;
     results: string[];
-    insight: string;
+    insight?: string;
+    outcome?: string;
   };
 }

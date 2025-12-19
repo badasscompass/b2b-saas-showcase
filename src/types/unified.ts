@@ -26,7 +26,8 @@ export interface UnifiedClientWork {
   resultsContent?: {
     timeframe: string;
     results: string[];
-    insight: string;
+    insight?: string;
+    outcome?: string;
   };
   // Legacy fields for backward compatibility
   result?: string;

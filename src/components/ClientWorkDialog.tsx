@@ -99,9 +99,19 @@ export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
                   {work.resultsContent.results.map((result, index) => (
                     <p key={index}>{result}</p>
                   ))}
-                  <br />
-                  <p className="font-semibold text-[#F4A42C]">{work.resultsContent.insight}</p>
+                  {work.resultsContent.insight && (
+                    <>
+                      <br />
+                      <p className="font-semibold text-[#F4A42C]">{work.resultsContent.insight}</p>
+                    </>
+                  )}
                 </div>
+              </div>
+            )}
+            {work.resultsContent?.outcome && (
+              <div>
+                <h4 className="font-manrope font-semibold text-[#EA3E3A] mb-1">Outcome</h4>
+                <p className="text-gray-700 font-manrope leading-relaxed">{work.resultsContent.outcome}</p>
               </div>
             )}
             {work.result && (
