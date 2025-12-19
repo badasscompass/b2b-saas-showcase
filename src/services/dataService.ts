@@ -83,7 +83,7 @@ export class DataService {
   // Transform raw data to unified format
   private transformToUnified(work: any, serviceType: UnifiedClientWork['serviceType']): UnifiedClientWork {
     const baseWork: UnifiedClientWork = {
-      id: `${serviceType}-${work.title.toLowerCase().replace(/\s+/g, '-')}`,
+      id: work.id || `${serviceType}-${work.title.toLowerCase().replace(/\s+/g, '-')}`,
       title: work.title,
       scope: work.scope,
       description: work.description,
