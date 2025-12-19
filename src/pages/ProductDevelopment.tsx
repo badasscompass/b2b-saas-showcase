@@ -46,10 +46,10 @@ const ProductDevelopment = () => {
         ctaText="Book a Product Audit Call"
       />
       
+      <ProductDevelopmentClientWork />
+      
       <ProductProcessSection />
       <ProductOutcomesSection />
-
-      <ProductDevelopmentClientWork />
       
       <RelatedServices currentService="product-development" />
 

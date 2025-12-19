@@ -47,9 +47,10 @@ const StrategicAdvisory = () => {
         ctaText="Book a Strategy Discovery Call"
       />
       
+      <StrategicAdvisoryClientWork />
+      
       <StrategicAdvisoryProcess />
       <StrategicAdvisoryOutcomes />
-      <StrategicAdvisoryClientWork />
       
       <RelatedServices currentService="strategic-advisory" />
       
