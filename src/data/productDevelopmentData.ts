@@ -117,8 +117,8 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
     lead: "Both",
     teamSetup: "1 senior PM",
     format: "Daily 4-6 hours",
-    useCase: "Founders without a head of product, product teams needing interim PM support (3-6 months).",
-    outcomes: "Executive-level product ownership, team leadership with operational support, strategic + delivery alignment.",
+    useCase: "Founders without a prouduct lead, product teams needing interim PM support (3-6 months).",
+    outcomes: "Executive-level product ownership, team leadership with operational support, delivery execution and roadmap implementation.",
     pricing: "40€/h (starting rate)"
   },
   {

@@ -21,5 +21,15 @@ export const strategicAdvisoryPricingTiers: PricingTier[] = [
     useCase: "Founders/CPOs testing new product lines or repositioning to grow.",
     outcomes: "Prioritized opportunities, structured discovery docs, value hypotheses & next steps.",
     pricing: "6000 (starting at)"
+  },
+  {
+    packageName: "Fractional Product Leadership",
+    tier: "Solo", 
+    lead: "Both",
+    teamSetup: "1 senior PM",
+    format: "Daily 4-6 hours",
+    useCase: "Founders without a head of product, product teams needing interim PM support (3-6 months).",
+    outcomes: "Executive-level product ownership, team leadership with operational support, strategic + delivery alignment.",
+    pricing: "60€/h (starting rate)"
   }
 ];
