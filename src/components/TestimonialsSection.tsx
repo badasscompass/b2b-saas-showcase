@@ -23,8 +23,8 @@ const clientShowcases: ClientShowcase[] = [
       "Major bottleneck identified and cleared",
       "Defined and designed a new expanded scope for the platform"
     ],
-    sector: "B2B Hospitality | Traveltech",
-    product: "Platform for Booking and Travel Management",
+    sector: "TravelTech | B2B Hospitality",
+    product: "Platform for Booking and Travel Management, (Portugal/Spain)",
     link: "/product-development"
   },
   {
@@ -38,8 +38,8 @@ const clientShowcases: ClientShowcase[] = [
       "Core platform model aligned with new scalable B2B use case",
   
     ],
-    sector: "PropTech / Community & Facility Management Platform",
-    product: "Habiq",
+    sector: "PropTech | B2B Property Management",
+    product: "Community & Facility Management Platform (Slovenia/EU)",
     link: "/strategic-advisory"
   }
 ];
