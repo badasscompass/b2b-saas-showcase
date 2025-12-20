@@ -31,10 +31,10 @@ export const productServices = [
 export const productProcess = [
   {
     title: "Discovery Kickoff",
-    description: "1–2-hour sprint to align on vision, success metrics, and current maturity"
+    description: "1–2-day sprint to align on vision, success metrics, and current maturity"
   },
   {
-    title: "MVP Design Sprint", 
+    title: "MVP Development Sprint", 
     description: "2–4-week cycle: prototype, test, iterate"
   },
   {
@@ -95,8 +95,8 @@ export const clientWork = [
         alt: 'People working with computers'
       }
     },
-    sector: "B2B Hospitality",
-    product: "Tourism & Transport Platform"
+    sector: "B2B Hospitality | Traveltech",
+    product: "Platform for Booking and Travel Management"
   }
 ];
 
