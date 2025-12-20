@@ -16,26 +16,27 @@ interface ClientShowcase {
 const clientShowcases: ClientShowcase[] = [
   {
     title: "Unblocking Remote Dev Team in 3 Weeks",
-    serviceLabel: "Product Operations in a Box",
-    snippet: "A client was stuck in legacy code refactoring—no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog and launched first sprint with release goals, focused on bug fixes to stabilise delivery.",
+    serviceLabel: "Product Ops in a Box",
+    snippet: "A startup was stuck in legacy code refactoring—no dev processes, no guidelines, and async workflow bottlenecks slowing progress.",
     results: [
       "Functional delivery flow re-established in 2 sprints",
-      "Major bottleneck cleared",
-      "Delivery pace and team alignment restored"
+      "Major bottleneck identified and cleared",
+      "Defined and designed a new expanded scope for the platform"
     ],
-    sector: "B2B Hospitality",
-    product: "Tourism & Transport Platform",
+    sector: "B2B Hospitality | Traveltech",
+    product: "Platform for Booking and Travel Management",
     link: "/product-development"
   },
   {
-    title: "Fractional Product Leadership in Proptech SaaS space",
+    title: "Strategic Use Case Pivot within 1 month",
     serviceLabel: "Fractional Product Leadership & Product Clarity Sprints",
-    snippet: "A bootstrapped CEE proptech startup building a platform for resident communities engaged fractional product leadership to resolve unclear product direction, onboarding friction, and stalled momentum.",
+    snippet: "A bootstrapped CEE proptech startup building a platform for resident communities needed to resolve unclear product direction, onboarding friction, and stalled momentum.",
     results: [
       "Clearer product positioning and strategic narrative",
       "Streamlined onboarding with defined roles",
-      "Community and facility model aligned with scalable B2B use cases",
-      "Collaboration features enabling multi-stakeholder participation"
+      "Introduced features enabling multi-stakeholder participation",
+      "Core platform model aligned with new scalable B2B use case",
+  
     ],
     sector: "PropTech / Community & Facility Management Platform",
     product: "Habiq",
