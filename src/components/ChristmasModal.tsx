@@ -67,13 +67,14 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
   const [isHovering, setIsHovering] = useState(false);
 
   // Generate floating items on mount - 5 total (3 ornaments + 2 green snowflakes)
+  // Positioned at edges and corners to avoid overlapping with centered text content
   useEffect(() => {
     const items: FloatingItem[] = [
-      { id: 1, type: 'snowflake', x: 12, y: 18, size: 28, delay: 0, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
-      { id: 2, type: 'ornament', x: 78, y: 22, size: 24, delay: 0.2, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
-      { id: 3, type: 'ornament', x: 25, y: 60, size: 22, delay: 0.4, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
-      { id: 4, type: 'snowflake', x: 72, y: 45, size: 26, delay: 0.6, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
-      { id: 5, type: 'ornament', x: 55, y: 20, size: 20, delay: 0.8, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 1, type: 'snowflake', x: 10, y: 15, size: 28, delay: 0, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 2, type: 'ornament', x: 88, y: 18, size: 24, delay: 0.2, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
+      { id: 3, type: 'ornament', x: 12, y: 70, size: 22, delay: 0.4, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 4, type: 'snowflake', x: 85, y: 65, size: 26, delay: 0.6, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
+      { id: 5, type: 'ornament', x: 90, y: 50, size: 20, delay: 0.8, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
     ];
     setFloatingItems(items);
   }, []);
@@ -321,7 +322,7 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
 
             {/* Progress indicator */}
             {!discountRevealed && (
-              <div className="absolute top-2 right-2 z-30 bg-[#EA3E3A]/90 text-white text-xs px-2 py-1 rounded-full font-manrope">
+              <div className="absolute bottom-4 right-4 z-30 bg-[#EA3E3A]/90 text-white text-xs px-2 py-1 rounded-full font-manrope">
                 {clickCount}/{CLICK_TARGET} ✨
               </div>
             )}
