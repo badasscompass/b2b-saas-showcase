@@ -3,6 +3,33 @@ import { Sparkles, Star, Snowflake, Gift, Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
+const EXPIRY_DATE = new Date('2025-01-31T23:59:59');
+
+const useCountdown = () => {
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const now = new Date();
+      const difference = EXPIRY_DATE.getTime() - now.getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 60000); // Update every minute
+    return () => clearInterval(timer);
+  }, []);
+
+  return timeLeft;
+};
+
 interface ChristmasModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -22,6 +49,7 @@ const PROMO_CODE = "LMN3HOLIDAY25";
 const CLICK_TARGET = 5;
 
 export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
+  const timeLeft = useCountdown();
   const [clickCount, setClickCount] = useState(0);
   const [discountRevealed, setDiscountRevealed] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -207,7 +235,7 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                       )}
                     </button>
                     <p className="text-gray-500 text-xs font-manrope">
-                      Valid until January 31, 2025
+                      ⏰ Expires in {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m
                     </p>
                   </div>
                 </div>
