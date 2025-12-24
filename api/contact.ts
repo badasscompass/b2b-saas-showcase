@@ -17,10 +17,25 @@ interface ContactRequest {
   anti_robot_answer: string;
 }
 
+// Helper function to escape HTML to prevent XSS
+function escapeHtml(text: string): string {
+  const map: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+  };
+  return text.replace(/[&<>"']/g, (m) => map[m]);
+}
+
 export default async function handler(
   req: VercelRequest,
   res: VercelResponse
 ) {
+  // Set JSON content type for all responses
+  res.setHeader('Content-Type', 'application/json');
+
   // Handle CORS
   if (req.method === 'OPTIONS') {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -71,29 +86,35 @@ export default async function handler(
       return res.status(500).json({ error: 'Server configuration error' });
     }
 
-    // Build email body
+    // Build email body with HTML escaping to prevent XSS
+    const escapedName = escapeHtml(name);
+    const escapedEmail = escapeHtml(email);
+    const escapedTitle = escapeHtml(title);
+    const escapedBody = escapeHtml(body).replace(/\n/g, '<br>');
+    
     let emailBody = `
       <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Subject:</strong> ${title}</p>
+      <p><strong>Name:</strong> ${escapedName}</p>
+      <p><strong>Email:</strong> ${escapedEmail}</p>
+      <p><strong>Subject:</strong> ${escapedTitle}</p>
       <p><strong>Message:</strong></p>
       <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
-        ${body.replace(/\n/g, '<br>')}
+        ${escapedBody}
       </div>
     `;
 
     // Prepare email attachments if file is present
     const attachments = [];
     if (file && file.content) {
+      const escapedFileName = escapeHtml(file.name);
       emailBody += `
-        <p><strong>Attachment:</strong> ${file.name} (${Math.round(file.size / 1024)} KB)</p>
+        <p><strong>Attachment:</strong> ${escapedFileName} (${Math.round(file.size / 1024)} KB)</p>
       `;
 
       // Convert base64 to buffer for Resend attachment
       const fileBuffer = Buffer.from(file.content, 'base64');
       attachments.push({
-        filename: file.name,
+        filename: file.name, // Keep original filename for attachment
         content: fileBuffer,
       });
     }
@@ -123,10 +144,23 @@ export default async function handler(
     });
   } catch (error) {
     console.error('Error processing contact form:', error);
-    return res.status(500).json({
+    
+    // Ensure we always return JSON, even on errors
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorDetails = {
       error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error',
-    });
+      message: errorMessage,
+    };
+
+    // Log more details for debugging
+    if (error instanceof Error) {
+      console.error('Error stack:', error.stack);
+      if (error.message.includes('RESEND')) {
+        errorDetails.error = 'Email service configuration error';
+      }
+    }
+
+    return res.status(500).json(errorDetails);
   }
 }
 

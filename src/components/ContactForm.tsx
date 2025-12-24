@@ -157,12 +157,41 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
         }),
       })
 
-      const result = await response.json()
-
+      // Check if response is OK before parsing JSON
       if (!response.ok) {
-        console.error('API error:', result)
-        throw new Error(result.error || 'Failed to send message')
+        // Try to parse JSON error response, but handle HTML/plain text errors
+        let errorMessage = 'Failed to send message'
+        const contentType = response.headers.get('content-type')
+        
+        if (contentType && contentType.includes('application/json')) {
+          try {
+            const errorData = await response.json()
+            errorMessage = errorData.error || errorData.message || errorMessage
+          } catch (parseError) {
+            console.error('Failed to parse error response:', parseError)
+          }
+        } else {
+          // If it's not JSON, read as text to get the error message
+          try {
+            const textError = await response.text()
+            console.error('Non-JSON error response:', textError)
+            // Try to extract meaningful error from HTML/text
+            if (textError.includes('RESEND_API_KEY')) {
+              errorMessage = 'Server configuration error. Please contact support.'
+            } else if (textError.includes('Internal Server Error')) {
+              errorMessage = 'Server error occurred. Please try again later.'
+            }
+          } catch (textError) {
+            console.error('Failed to read error response:', textError)
+          }
+        }
+        
+        console.error('API error:', { status: response.status, message: errorMessage })
+        throw new Error(errorMessage)
       }
+
+      // Parse JSON only if response is OK
+      const result = await response.json()
 
       console.log('Form submitted successfully:', result)
 
