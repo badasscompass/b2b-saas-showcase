@@ -154,7 +154,8 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                     }}
                   >
                     {/* Partial logo peek */}
-                    <div className="flex justify-center opacity-60 transition-opacity duration-500"
+                    <div
+                      className="flex justify-center transition-opacity duration-500"
                       style={{ opacity: isHovering ? 0.8 : 0.6 }}
                     >
                       <img
@@ -164,7 +165,8 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                       />
                     </div>
                     {/* Subtle decorative elements peeking */}
-                    <div className="flex items-center justify-center gap-2 mt-4 transition-opacity duration-500"
+                    <div
+                      className="flex items-center justify-center gap-2 mt-4 transition-opacity duration-500"
                       style={{ opacity: isHovering ? 0.6 : 0.4 }}
                     >
                       <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#FFF33B]"></div>
@@ -373,7 +375,7 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                   </p>
                 </div>
               ) : (
-                <div className="space-y-4 animate-fade-in">
+                <div className="space-y-4 animate-in fade-in duration-500">
                   <h2 className="text-2xl md:text-3xl font-bold font-manrope bg-gradient-to-r from-[#EA3E3A] via-[#F49040] to-[#FFF33B] bg-clip-text text-transparent">
                     🎁 Holiday Special! 🎁
                   </h2>
