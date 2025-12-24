@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Sparkles, Star, Snowflake, Gift, Copy, Check } from "lucide-react";
+import { Sparkles, Snowflake, Gift, Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -68,11 +68,11 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
   // Generate floating items on mount - 5 total (3 ornaments + 2 green snowflakes)
   useEffect(() => {
     const items: FloatingItem[] = [
-      { id: 1, type: 'snowflake', x: 8, y: 15, size: 28, delay: 0, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
-      { id: 2, type: 'ornament', x: 85, y: 20, size: 24, delay: 0.2, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
-      { id: 3, type: 'ornament', x:30, y: 75, size: 22, delay: 0.4, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
-      { id: 4, type: 'snowflake', x: 68, y: 38, size: 26, delay: 0.6, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
-      { id: 5, type: 'ornament', x: 60, y: 18, size: 20, delay: 0.8, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 1, type: 'snowflake', x: 12, y: 18, size: 28, delay: 0, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 2, type: 'ornament', x: 78, y: 22, size: 24, delay: 0.2, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
+      { id: 3, type: 'ornament', x: 25, y: 60, size: 22, delay: 0.4, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 4, type: 'snowflake', x: 72, y: 45, size: 26, delay: 0.6, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
+      { id: 5, type: 'ornament', x: 55, y: 20, size: 20, delay: 0.8, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
     ];
     setFloatingItems(items);
   }, []);
@@ -97,6 +97,11 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
 
   const handleItemClick = (id: number) => {
     if (discountRevealed) return;
+
+    if (!cardOpened) return;
+
+    const clickedItem = floatingItems.find(item => item.id === id);
+    if (clickedItem?.clicked) return;
 
     setFloatingItems(items =>
       items.map(item =>
@@ -230,9 +235,81 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                 ></div>
               )}
 
+              {/* Interactive Floating Items - Outside content div to ensure clickability */}
+              {floatingItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="absolute z-20 group"
+                  style={{
+                    left: `${item.x}%`,
+                    top: `${item.y}%`,
+                    transform: 'translate(-50%, -50%)',
+                    pointerEvents: cardOpened ? 'auto' : 'none',
+                    opacity: cardOpened ? 1 : 0,
+                    transition: 'opacity 0.3s ease-in 0.3s',
+                  }}
+                >
+                  <div className="flex flex-col items-center">
+                    {/* Package Info Label - Visible on Hover Only */}
+                    {!item.clicked && !discountRevealed && item.packageName && (
+                      <div className="mb-2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div className="bg-white rounded-lg shadow-lg border-2 border-[#F49040] px-2 py-1.5 min-w-[180px] max-w-[220px]">
+                          <div className="text-center space-y-0.5">
+                            <p className="text-[#EA3E3A] font-bold text-xs font-manrope leading-tight">
+                              {item.discount} OFF
+                            </p>
+                            <p className="text-gray-700 text-[10px] font-medium font-manrope leading-tight">
+                              {item.packageName}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <button
+                      onClick={() => handleItemClick(item.id)}
+                      disabled={item.clicked || discountRevealed || !cardOpened}
+                      className={`transition-all duration-300 focus:outline-none relative ${
+                        item.clicked 
+                          ? 'opacity-100 scale-100 cursor-default' 
+                          : cardOpened
+                          ? 'animate-bounce hover:animate-none hover:scale-125 cursor-pointer'
+                          : 'opacity-50 cursor-not-allowed'
+                      }`}
+                      style={{
+                        animationDelay: `${item.delay}s`,
+                        animationDuration: '2s',
+                      }}
+                      aria-label={`Click ${item.type} to reveal discount`}
+                    >
+                      {item.type === 'snowflake' ? (
+                        <Snowflake 
+                          className={`drop-shadow-lg ${item.clicked ? 'text-[#228B22]/60' : 'text-[#228B22]'}`}
+                          style={{ width: item.size, height: item.size }}
+                        />
+                      ) : (
+                        <div 
+                          className={`rounded-full bg-gradient-to-br from-[#EA3E3A] to-[#8B0000] shadow-lg flex items-center justify-center relative ${
+                            item.clicked ? 'ring-2 ring-[#228B22] ring-offset-2' : ''
+                          }`}
+                          style={{ width: item.size, height: item.size }}
+                        >
+                          <Gift className="text-white" style={{ width: item.size * 0.6, height: item.size * 0.6 }} />
+                          {item.clicked && (
+                            <div className="absolute -top-1 -right-1 bg-[#228B22] rounded-full w-5 h-5 flex items-center justify-center">
+                              <Check className="text-white w-3 h-3" />
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              ))}
+
               {/* Greeting Card Content - Fades in when envelope opens */}
               <div
-                className="p-8 md:p-10"
+                className="p-8 md:p-10 relative z-10"
                 style={{
                   opacity: cardOpened ? 1 : 0,
                   visibility: cardOpened ? 'visible' : 'hidden',
@@ -240,71 +317,6 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                   pointerEvents: cardOpened ? 'auto' : 'none',
                 }}
               >
-              {/* Interactive Floating Items */}
-            {floatingItems.map((item) => (
-              <div
-                key={item.id}
-                className="absolute z-20 group"
-                style={{
-                  left: `${item.x}%`,
-                  top: `${item.y}%`,
-                }}
-              >
-                <div className="flex flex-col items-center">
-                  {/* Package Info Label - Visible on Hover Only */}
-                  {!item.clicked && !discountRevealed && item.packageName && (
-                    <div className="mb-2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                      <div className="bg-white rounded-lg shadow-lg border-2 border-[#F49040] px-2 py-1.5 min-w-[180px] max-w-[220px]">
-                        <div className="text-center space-y-0.5">
-                          <p className="text-[#EA3E3A] font-bold text-xs font-manrope leading-tight">
-                            {item.discount} OFF
-                          </p>
-                          <p className="text-gray-700 text-[10px] font-medium font-manrope leading-tight">
-                            {item.packageName}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <button
-                    onClick={() => handleItemClick(item.id)}
-                    disabled={item.clicked || discountRevealed}
-                    className={`transition-all duration-300 cursor-pointer focus:outline-none relative ${
-                      item.clicked 
-                        ? 'opacity-100 scale-100' 
-                        : 'animate-bounce hover:animate-none hover:scale-125'
-                    }`}
-                    style={{
-                      animationDelay: `${item.delay}s`,
-                      animationDuration: '2s',
-                    }}
-                    aria-label={`Click ${item.type} to reveal discount`}
-                  >
-                    {item.type === 'snowflake' ? (
-                      <Snowflake 
-                        className={`drop-shadow-lg ${item.clicked ? 'text-[#228B22]/60' : 'text-[#228B22]'}`}
-                        style={{ width: item.size, height: item.size }}
-                      />
-                    ) : (
-                      <div 
-                        className={`rounded-full bg-gradient-to-br from-[#EA3E3A] to-[#8B0000] shadow-lg flex items-center justify-center relative ${
-                          item.clicked ? 'ring-2 ring-[#228B22] ring-offset-2' : ''
-                        }`}
-                        style={{ width: item.size, height: item.size }}
-                      >
-                        <Gift className="text-white" style={{ width: item.size * 0.6, height: item.size * 0.6 }} />
-                        {item.clicked && (
-                          <div className="absolute -top-1 -right-1 bg-[#228B22] rounded-full w-5 h-5 flex items-center justify-center">
-                            <Check className="text-white w-3 h-3" />
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </button>
-                </div>
-              </div>
-            ))}
 
             {/* Progress indicator */}
             {!discountRevealed && (
