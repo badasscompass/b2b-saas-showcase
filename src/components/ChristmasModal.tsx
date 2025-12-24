@@ -62,6 +62,8 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
   const [discountRevealed, setDiscountRevealed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [floatingItems, setFloatingItems] = useState<FloatingItem[]>([]);
+  const [cardOpened, setCardOpened] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   // Generate floating items on mount - 5 total (3 ornaments + 2 green snowflakes)
   useEffect(() => {
@@ -81,9 +83,17 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
       setClickCount(0);
       setDiscountRevealed(false);
       setCopied(false);
+      setCardOpened(false);
+      setIsHovering(false);
       setFloatingItems(items => items.map(item => ({ ...item, clicked: false })));
     }
   }, [open]);
+
+  const handleEnvelopeClick = () => {
+    if (!cardOpened) {
+      setCardOpened(true);
+    }
+  };
 
   const handleItemClick = (id: number) => {
     if (discountRevealed) return;
@@ -117,11 +127,118 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg p-0 border-0 overflow-hidden bg-transparent shadow-none">
-        {/* Greeting Card */}
-        <div className="relative bg-gradient-to-br from-[#EA3E3A] via-[#F49040] to-[#FFF33B] p-1 rounded-2xl">
-          <div className="bg-white rounded-xl p-8 md:p-10 relative overflow-hidden min-h-[480px]">
-            
-            {/* Interactive Floating Items */}
+        {/* Envelope Container - Back View */}
+        <div className="relative" style={{ perspective: '1500px' }}>
+          {/* Envelope Body with gradient border */}
+          <div
+            className="relative bg-gradient-to-br from-[#EA3E3A] via-[#F49040] to-[#FFF33B] p-1 rounded-2xl shadow-2xl"
+            style={{
+              boxShadow: '0 20px 60px rgba(234, 62, 58, 0.4), 0 10px 30px rgba(0, 0, 0, 0.2)',
+            }}
+          >
+
+            {/* Greeting Card Container - Always visible to show flap */}
+            <div
+              className="bg-white rounded-xl relative overflow-hidden min-h-[480px]"
+              style={{
+                boxShadow: cardOpened ? 'inset 0 2px 8px rgba(0,0,0,0.06)' : 'none',
+              }}
+            >
+              {/* Content Peeking from Inside Envelope */}
+              {!cardOpened && (
+                <div className="absolute top-0 left-0 right-0 h-[52%] z-20 overflow-hidden pointer-events-none">
+                  <div
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white to-transparent px-10 pb-8 pt-12 transition-transform duration-500"
+                    style={{
+                      transform: isHovering ? 'translateY(-8px)' : 'translateY(0)',
+                    }}
+                  >
+                    {/* Partial logo peek */}
+                    <div className="flex justify-center opacity-60 transition-opacity duration-500"
+                      style={{ opacity: isHovering ? 0.8 : 0.6 }}
+                    >
+                      <img
+                        src="/lovable-uploads/lmn3_logo_white.jpg"
+                        alt="LMN3"
+                        className="h-10 w-auto rounded"
+                      />
+                    </div>
+                    {/* Subtle decorative elements peeking */}
+                    <div className="flex items-center justify-center gap-2 mt-4 transition-opacity duration-500"
+                      style={{ opacity: isHovering ? 0.6 : 0.4 }}
+                    >
+                      <div className="h-px w-8 bg-gradient-to-r from-transparent to-[#FFF33B]"></div>
+                      <Sparkles className="w-4 h-4 text-[#FFF33B]" />
+                      <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#FFF33B]"></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Envelope Flap - Back view, opens downward */}
+              {!cardOpened && (
+                <div
+                  onClick={handleEnvelopeClick}
+                  onMouseEnter={() => setIsHovering(true)}
+                  onMouseLeave={() => setIsHovering(false)}
+                  className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-br from-[#EA3E3A] via-[#F49040] to-[#FFF33B] rounded-b-xl overflow-visible cursor-pointer transition-all duration-500 group"
+                  style={{
+                    height: '50%',
+                    transform: isHovering ? 'rotateX(-5deg) translateY(-4px)' : 'rotateX(0deg) translateY(0)',
+                    transformOrigin: 'bottom center',
+                    transformStyle: 'preserve-3d',
+                    boxShadow: isHovering
+                      ? '0 -4px 15px rgba(0,0,0,0.15), 0 12px 35px rgba(0,0,0,0.3), 0 0 30px rgba(255, 243, 59, 0.3)'
+                      : '0 -2px 10px rgba(0,0,0,0.1), 0 8px 25px rgba(0,0,0,0.25)',
+                  }}
+                >
+
+                  {/* Decorative Wax Seal with hover glow */}
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-gradient-to-br from-[#FFF33B] to-[#F49040] flex items-center justify-center border-2 border-white/40 pointer-events-none transition-all duration-500 group-hover:scale-110 group-hover:shadow-2xl"
+                    style={{
+                      boxShadow: '0 4px 20px rgba(255, 243, 59, 0.4), 0 0 40px rgba(244, 144, 64, 0.3)',
+                    }}
+                  >
+                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent"></div>
+                    <div className="absolute inset-0 rounded-full bg-[#FFF33B] opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500"></div>
+                    <Sparkles className="w-8 h-8 text-white drop-shadow-md group-hover:rotate-12 transition-transform duration-500" />
+                  </div>
+
+                  <div className="h-full w-full flex flex-col items-center justify-end pb-6 gap-2 pointer-events-none">
+                    <p className="text-white font-manrope text-sm font-medium drop-shadow-md group-hover:scale-105 transition-transform duration-300">
+                      Click to open
+                    </p>
+                  </div>
+                </div>
+              )}
+              
+              {/* Envelope Flap - Opening animation */}
+              {cardOpened && (
+                <div
+                  className="absolute bottom-0 left-0 right-0 z-30 bg-gradient-to-br from-[#EA3E3A] via-[#F49040] to-[#FFF33B] rounded-b-xl overflow-visible pointer-events-none"
+                  style={{
+                    height: '50%',
+                    transform: 'rotateX(180deg) translateY(100%)',
+                    transformOrigin: 'bottom center',
+                    transformStyle: 'preserve-3d',
+                    transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    backfaceVisibility: 'hidden',
+                    boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
+                  }}
+                ></div>
+              )}
+
+              {/* Greeting Card Content - Fades in when envelope opens */}
+              <div
+                className="p-8 md:p-10"
+                style={{
+                  opacity: cardOpened ? 1 : 0,
+                  visibility: cardOpened ? 'visible' : 'hidden',
+                  transition: 'opacity 0.3s ease-in 0.3s, visibility 0s linear 0.3s',
+                  pointerEvents: cardOpened ? 'auto' : 'none',
+                }}
+              >
+              {/* Interactive Floating Items */}
             {floatingItems.map((item) => (
               <div
                 key={item.id}
@@ -303,18 +420,25 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
               <p className="text-gray-600 text-sm font-manrope">
                 Iva, LMN3 Founder
               </p>
-            </div>
 
-            {/* Countdown Timer Footnote */}
-            {discountRevealed && (
-              <div className="absolute bottom-4 left-0 right-0 text-center">
-                <p className="text-gray-400 text-xs font-manrope">
-                  Claim expires January 31, 2026 ( {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m )
-                </p>
-              </div>
-            )}
+              {/* Countdown Timer Footnote */}
+              {discountRevealed && (
+                <div className="absolute bottom-4 left-0 right-0 text-center">
+                  <p className="text-gray-400 text-xs font-manrope">
+                    Claim expires January 31, 2026 ( {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m )
+                  </p>
+                </div>
+              )}
+            </div>
+            {/* Close Content div */}
+            </div>
+            {/* Close Greeting Card Content wrapper */}
+            </div>
+            {/* Close Greeting Card Container */}
           </div>
+          {/* Close Envelope Body div */}
         </div>
+        {/* Close Envelope Container div */}
       </DialogContent>
     </Dialog>
   );
