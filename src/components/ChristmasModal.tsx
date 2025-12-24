@@ -2,6 +2,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Sparkles, Snowflake, Gift, Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 const EXPIRY_DATE = new Date('2026-01-31T23:59:59');
 
@@ -419,6 +420,18 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                         <Copy className="w-5 h-5" />
                       )}
                     </button>
+                  </div>
+
+                  {/* Contact Form Link */}
+                  <div className="pt-4">
+                    <Link
+                      to="/contact"
+                      onClick={() => onOpenChange(false)}
+                      className="inline-flex items-center justify-center gap-2 text-gray-700 bg-white px-6 py-3 rounded-lg font-semibold font-manrope text-base hover:from-[#d02e2a] hover:to-[#e08030] transition-colors shadow-lg hover:shadow-md"
+                    >
+                      Get your present here
+                      <Gift className="w-5 h-5" />
+                    </Link>
                   </div>
                 </div>
               )}
