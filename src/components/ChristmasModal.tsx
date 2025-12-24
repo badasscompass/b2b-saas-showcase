@@ -309,7 +309,7 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
             {discountRevealed && (
               <div className="absolute bottom-4 left-0 right-0 text-center">
                 <p className="text-gray-400 text-xs font-manrope">
-                  Expires in {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m
+                  Claim expires January 31, 2026 ( {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m )
                 </p>
               </div>
             )}
