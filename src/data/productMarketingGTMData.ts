@@ -72,7 +72,7 @@ export const howItWorks = [
 ];
 
 export const successMetrics = [
-  "Messaging that converts — reducing CAC by x%",
+  "Messaging that resonates with buyers — reducing CAC",
   "Increased demo and trial conversion rates through clear positioning",
   "Sales-ready assets that reduce friction and align teams",
   "Measurable, evolving GTM engine with performance reports",

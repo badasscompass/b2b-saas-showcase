@@ -7,10 +7,8 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Progress } from '@/components/ui/progress'
-import { Upload, Send, FileText, AlertCircle } from 'lucide-react'
+import { Upload, Send, FileText } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
-import { supabase } from '@/integrations/supabase/client'
 import { analyticsService } from '@/services/analyticsService'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
@@ -50,7 +48,6 @@ interface ContactFormProps {
 
 export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [uploadProgress, setUploadProgress] = useState(0)
   const [antiRobotQuestion, setAntiRobotQuestion] = useState({ question: '', answer: '' })
   const { toast } = useToast()
 
@@ -77,9 +74,23 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
     resolver: zodResolver(contactFormSchema),
   })
 
+  // Helper function to convert file to base64
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        const result = reader.result as string
+        // Remove data URL prefix (e.g., "data:image/png;base64,")
+        const base64 = result.split(',')[1]
+        resolve(base64)
+      }
+      reader.onerror = (error) => reject(error)
+    })
+  }
+
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true)
-    setUploadProgress(0)
 
     console.log('=== CONTACT FORM SUBMISSION START ===')
     console.log('Form data:', { 
@@ -103,79 +114,57 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           description: "Please answer the anti-robot question correctly.",
           variant: "destructive",
         })
+        setIsSubmitting(false)
         return
       }
       console.log('Anti-robot validation passed')
 
-      let filePath = null
-      let fileName = null
-      let fileSize = null
-
-      // Handle file upload if present
-      console.log('File data check:', { file: data.file, hasFile: !!(data.file && data.file[0]) })
-      
+      // Prepare file data if present
+      let fileData = undefined
       if (data.file && data.file[0]) {
         const file = data.file[0]
-        fileName = file.name
-        fileSize = file.size
-
-        console.log('Starting file upload:', { fileName, fileSize, type: file.type })
-        setUploadProgress(25)
-
-        const fileExt = file.name.split('.').pop()
-        const timestamp = Date.now()
-        filePath = `contact-files/${timestamp}-${file.name}`
-
-        console.log('Uploading to path:', filePath)
-        const { error: uploadError } = await supabase.storage
-          .from('contact-files')
-          .upload(filePath, file)
-
-        if (uploadError) {
-          console.error('File upload error:', uploadError)
-          throw new Error(`File upload failed: ${uploadError.message}`)
+        console.log('Processing file:', { name: file.name, size: file.size, type: file.type })
+        
+        try {
+          const base64Content = await fileToBase64(file)
+          fileData = {
+            name: file.name,
+            content: base64Content,
+            size: file.size,
+            type: file.type,
+          }
+          console.log('File converted to base64 successfully')
+        } catch (fileError) {
+          console.error('File conversion error:', fileError)
+          throw new Error('Failed to process file. Please try again.')
         }
-
-        console.log('File uploaded successfully')
-        setUploadProgress(50)
-      } else {
-        console.log('No file to upload')
       }
 
-      // Call the edge function to send email and store submission
-      setUploadProgress(75)
-      
-      console.log('Calling edge function with data:', {
-        name: data.name,
-        email: data.email,
-        title: data.title,
-        body: data.body.substring(0, 50) + '...',
-        file_path: filePath,
-        file_name: fileName,
-        file_size: fileSize,
-        anti_robot_answer: data.antiRobot,
-      })
-
-      const { data: result, error } = await supabase.functions.invoke('send-contact-email', {
-        body: {
+      // Call Vercel API endpoint
+      console.log('Calling Vercel API endpoint...')
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
           name: data.name,
           email: data.email,
           title: data.title,
           body: data.body,
-          file_path: filePath,
-          file_name: fileName,
-          file_size: fileSize,
+          file: fileData,
           anti_robot_answer: data.antiRobot,
-        }
+        }),
       })
 
-      console.log('Edge function result:', { result, error })
+      const result = await response.json()
 
-      if (error) {
-        console.error('Edge function error details:', error)
-        throw new Error(`Failed to send message: ${error.message}`)
+      if (!response.ok) {
+        console.error('API error:', result)
+        throw new Error(result.error || 'Failed to send message')
       }
-      setUploadProgress(100)
+
+      console.log('Form submitted successfully:', result)
 
       toast({
         title: 'Message sent successfully!',
@@ -200,7 +189,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       })
     } finally {
       setIsSubmitting(false)
-      setUploadProgress(0)
     }
   }
 
@@ -307,12 +295,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
             )}
           </div>
 
-          {uploadProgress > 0 && uploadProgress < 100 && (
-            <div className="space-y-2">
-              <Label>Upload Progress</Label>
-              <Progress value={uploadProgress} className="w-full" />
-            </div>
-          )}
 
           <Button
             type="submit"
