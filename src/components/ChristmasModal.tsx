@@ -3,7 +3,7 @@ import { Sparkles, Star, Snowflake, Gift, Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
 
-const EXPIRY_DATE = new Date('2025-01-31T23:59:59');
+const EXPIRY_DATE = new Date('2026-01-31T23:59:59');
 
 const useCountdown = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
@@ -43,10 +43,18 @@ interface FloatingItem {
   size: number;
   delay: number;
   clicked: boolean;
+  packageName?: string;
+  discount?: string;
 }
 
 const PROMO_CODE = "LMN3HOLIDAY25";
 const CLICK_TARGET = 5;
+const DISCOUNT_PERCENT = "15%";
+
+const PACKAGES = [
+  { name: "Product Clarity Sprint", discount: DISCOUNT_PERCENT },
+  { name: "Discovery-to-Strategy Accelerator", discount: DISCOUNT_PERCENT },
+];
 
 export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
   const timeLeft = useCountdown();
@@ -55,14 +63,14 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
   const [copied, setCopied] = useState(false);
   const [floatingItems, setFloatingItems] = useState<FloatingItem[]>([]);
 
-  // Generate floating items on mount
+  // Generate floating items on mount - 5 total (3 ornaments + 2 green snowflakes)
   useEffect(() => {
     const items: FloatingItem[] = [
-      { id: 1, type: 'snowflake', x: 8, y: 15, size: 28, delay: 0, clicked: false },
-      { id: 2, type: 'ornament', x: 85, y: 20, size: 24, delay: 0.2, clicked: false },
-      { id: 3, type: 'snowflake', x: 12, y: 75, size: 22, delay: 0.4, clicked: false },
-      { id: 4, type: 'ornament', x: 88, y: 70, size: 26, delay: 0.6, clicked: false },
-      { id: 5, type: 'snowflake', x: 50, y: 8, size: 20, delay: 0.8, clicked: false },
+      { id: 1, type: 'snowflake', x: 8, y: 15, size: 28, delay: 0, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 2, type: 'ornament', x: 85, y: 20, size: 24, delay: 0.2, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
+      { id: 3, type: 'ornament', x:30, y: 75, size: 22, delay: 0.4, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
+      { id: 4, type: 'snowflake', x: 68, y: 38, size: 26, delay: 0.6, clicked: false, packageName: PACKAGES[1].name, discount: PACKAGES[1].discount },
+      { id: 5, type: 'ornament', x: 60, y: 18, size: 20, delay: 0.8, clicked: false, packageName: PACKAGES[0].name, discount: PACKAGES[0].discount },
     ];
     setFloatingItems(items);
   }, []);
@@ -110,63 +118,109 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-lg p-0 border-0 overflow-hidden bg-transparent shadow-none">
         {/* Greeting Card */}
-        <div className="relative bg-gradient-to-r from-[#C41E3A] via-[#228B22] to-[#C41E3A] p-1 rounded-2xl">
+        <div className="relative bg-gradient-to-br from-[#EA3E3A] via-[#F49040] to-[#FFF33B] p-1 rounded-2xl">
           <div className="bg-white rounded-xl p-8 md:p-10 relative overflow-hidden min-h-[480px]">
             
             {/* Interactive Floating Items */}
             {floatingItems.map((item) => (
-              <button
+              <div
                 key={item.id}
-                onClick={() => handleItemClick(item.id)}
-                disabled={item.clicked || discountRevealed}
-                className={`absolute z-20 transition-all duration-500 cursor-pointer hover:scale-125 focus:outline-none ${
-                  item.clicked 
-                    ? 'opacity-20 scale-75 pointer-events-none' 
-                    : 'animate-bounce hover:animate-none'
-                }`}
+                className="absolute z-20 group"
                 style={{
                   left: `${item.x}%`,
                   top: `${item.y}%`,
-                  animationDelay: `${item.delay}s`,
-                  animationDuration: '2s',
                 }}
-                aria-label={`Click ${item.type} to reveal discount`}
               >
-                {item.type === 'snowflake' ? (
-                  <Snowflake 
-                    className="text-[#228B22] drop-shadow-lg" 
-                    style={{ width: item.size, height: item.size }}
-                  />
-                ) : (
-                  <div 
-                    className="rounded-full bg-gradient-to-br from-[#C41E3A] to-[#8B0000] shadow-lg flex items-center justify-center"
-                    style={{ width: item.size, height: item.size }}
+                <div className="flex flex-col items-center">
+                  {/* Package Info Label - Visible on Hover Only */}
+                  {!item.clicked && !discountRevealed && item.packageName && (
+                    <div className="mb-2 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                      <div className="bg-white rounded-lg shadow-lg border-2 border-[#F49040] px-2 py-1.5 min-w-[180px] max-w-[220px]">
+                        <div className="text-center space-y-0.5">
+                          <p className="text-[#EA3E3A] font-bold text-xs font-manrope leading-tight">
+                            {item.discount} OFF
+                          </p>
+                          <p className="text-gray-700 text-[10px] font-medium font-manrope leading-tight">
+                            {item.packageName}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  
+                  <button
+                    onClick={() => handleItemClick(item.id)}
+                    disabled={item.clicked || discountRevealed}
+                    className={`transition-all duration-300 cursor-pointer focus:outline-none relative ${
+                      item.clicked 
+                        ? 'opacity-100 scale-100' 
+                        : 'animate-bounce hover:animate-none hover:scale-125'
+                    }`}
+                    style={{
+                      animationDelay: `${item.delay}s`,
+                      animationDuration: '2s',
+                    }}
+                    aria-label={`Click ${item.type} to reveal discount`}
                   >
-                    <Gift className="text-white" style={{ width: item.size * 0.6, height: item.size * 0.6 }} />
-                  </div>
-                )}
-              </button>
+                    {item.type === 'snowflake' ? (
+                      <Snowflake 
+                        className={`drop-shadow-lg ${item.clicked ? 'text-[#228B22]/60' : 'text-[#228B22]'}`}
+                        style={{ width: item.size, height: item.size }}
+                      />
+                    ) : (
+                      <div 
+                        className={`rounded-full bg-gradient-to-br from-[#EA3E3A] to-[#8B0000] shadow-lg flex items-center justify-center relative ${
+                          item.clicked ? 'ring-2 ring-[#228B22] ring-offset-2' : ''
+                        }`}
+                        style={{ width: item.size, height: item.size }}
+                      >
+                        <Gift className="text-white" style={{ width: item.size * 0.6, height: item.size * 0.6 }} />
+                        {item.clicked && (
+                          <div className="absolute -top-1 -right-1 bg-[#228B22] rounded-full w-5 h-5 flex items-center justify-center">
+                            <Check className="text-white w-3 h-3" />
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </button>
+                </div>
+              </div>
             ))}
 
             {/* Progress indicator */}
             {!discountRevealed && (
-              <div className="absolute top-2 right-2 z-30 bg-[#228B22]/90 text-white text-xs px-2 py-1 rounded-full font-manrope">
+              <div className="absolute top-2 right-2 z-30 bg-[#EA3E3A]/90 text-white text-xs px-2 py-1 rounded-full font-manrope">
                 {clickCount}/{CLICK_TARGET} ✨
               </div>
             )}
 
-            {/* Static Decorative elements */}
-            <div className="absolute top-4 left-4 text-yellow-300/30 pointer-events-none">
+            {/* Scattered Snowflakes across modal */}
+            <div className="absolute top-4 left-4 text-[#FFF33B]/40 pointer-events-none">
               <Snowflake className="w-8 h-8 animate-pulse" />
             </div>
-            <div className="absolute top-6 right-6 text-[#C41E3A]/30 pointer-events-none">
-              <Star className="w-6 h-6 animate-pulse" style={{ animationDelay: '0.3s' }} />
+            <div className="absolute top-12 right-12 text-[#EA3E3A]/30 pointer-events-none">
+              <Snowflake className="w-6 h-6 animate-pulse" style={{ animationDelay: '0.2s' }} />
             </div>
-            <div className="absolute bottom-6 left-6 text-[#228B22]/30 pointer-events-none">
-              <Star className="w-5 h-5 animate-pulse" style={{ animationDelay: '0.6s' }} />
+            <div className="absolute top-1/3 left-1/4 text-[#F49040]/30 pointer-events-none">
+              <Snowflake className="w-7 h-7 animate-pulse" style={{ animationDelay: '0.4s' }} />
             </div>
-            <div className="absolute bottom-4 right-4 text-yellow-300/30 pointer-events-none">
-              <Snowflake className="w-7 h-7 animate-pulse" style={{ animationDelay: '0.9s' }} />
+            <div className="absolute top-1/2 right-1/4 text-[#FFF33B]/35 pointer-events-none">
+              <Snowflake className="w-5 h-5 animate-pulse" style={{ animationDelay: '0.6s' }} />
+            </div>
+            <div className="absolute bottom-1/3 left-1/3 text-[#EA3E3A]/30 pointer-events-none">
+              <Snowflake className="w-6 h-6 animate-pulse" style={{ animationDelay: '0.8s' }} />
+            </div>
+            <div className="absolute bottom-6 left-6 text-[#F49040]/30 pointer-events-none">
+              <Snowflake className="w-7 h-7 animate-pulse" style={{ animationDelay: '0.3s' }} />
+            </div>
+            <div className="absolute bottom-4 right-4 text-[#FFF33B]/40 pointer-events-none">
+              <Snowflake className="w-8 h-8 animate-pulse" style={{ animationDelay: '0.9s' }} />
+            </div>
+            <div className="absolute top-1/4 right-1/3 text-[#EA3E3A]/25 pointer-events-none">
+              <Snowflake className="w-5 h-5 animate-pulse" style={{ animationDelay: '0.5s' }} />
+            </div>
+            <div className="absolute bottom-1/4 left-1/5 text-[#FFF33B]/30 pointer-events-none">
+              <Snowflake className="w-6 h-6 animate-pulse" style={{ animationDelay: '0.7s' }} />
             </div>
 
             {/* Content */}
@@ -182,15 +236,15 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
 
               {/* Decorative line */}
               <div className="flex items-center justify-center gap-3">
-                <div className="h-px w-12 bg-gradient-to-r from-transparent to-yellow-300"></div>
-                <Sparkles className="w-5 h-5 text-yellow-300" />
-                <div className="h-px w-12 bg-gradient-to-l from-transparent to-yellow-300"></div>
+                <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#FFF33B]"></div>
+                <Sparkles className="w-5 h-5 text-[#FFF33B]" />
+                <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#FFF33B]"></div>
               </div>
 
               {/* Greeting or Discount */}
               {!discountRevealed ? (
                 <div className="space-y-4">
-                  <h2 className="text-3xl md:text-4xl font-bold font-manrope bg-gradient-to-r from-[#C41E3A] via-[#228B22] to-[#C41E3A] bg-clip-text text-transparent">
+                  <h2 className="text-3xl md:text-4xl font-bold font-manrope bg-gradient-to-r from-[#EA3E3A] via-[#F49040] to-[#FFF33B] bg-clip-text text-transparent">
                     Happy Holidays
                   </h2>
                   <p className="text-gray-700 text-lg md:text-xl font-medium font-manrope leading-relaxed">
@@ -198,16 +252,16 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                     prosperity this holiday season
                   </p>
                   <p className="text-gray-500 text-sm font-manrope animate-pulse">
-                    ✨ Click the snowflakes & ornaments for a surprise! ✨
+                    ✨ Click the ornaments for a surprise! ✨
                   </p>
                 </div>
               ) : (
                 <div className="space-y-4 animate-fade-in">
-                  <h2 className="text-2xl md:text-3xl font-bold font-manrope bg-gradient-to-r from-[#C41E3A] via-[#228B22] to-[#C41E3A] bg-clip-text text-transparent">
+                  <h2 className="text-2xl md:text-3xl font-bold font-manrope bg-gradient-to-r from-[#EA3E3A] via-[#F49040] to-[#FFF33B] bg-clip-text text-transparent">
                     🎁 Holiday Special! 🎁
                   </h2>
-                  <div className="bg-gradient-to-r from-[#C41E3A]/10 via-[#228B22]/10 to-[#C41E3A]/10 rounded-lg p-4 border border-[#228B22]/20">
-                    <p className="text-[#C41E3A] text-4xl font-bold font-manrope">
+                  <div className="bg-gradient-to-r from-[#EA3E3A]/10 via-[#F49040]/10 to-[#FFF33B]/10 rounded-lg p-4 border border-[#F49040]/20">
+                    <p className="text-[#EA3E3A] text-4xl font-bold font-manrope">
                       15% OFF
                     </p>
                     <div className="mt-3 space-y-1">
@@ -225,7 +279,7 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                     <p className="text-gray-600 text-sm font-manrope">Use code:</p>
                     <button
                       onClick={handleCopyCode}
-                      className="inline-flex items-center gap-2 bg-[#228B22] text-white px-4 py-2 rounded-lg font-bold font-manrope text-lg hover:bg-[#1a6b1a] transition-colors"
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#EA3E3A] to-[#F49040] text-white px-4 py-2 rounded-lg font-bold font-manrope text-lg hover:from-[#d02e2a] hover:to-[#e08030] transition-colors"
                     >
                       {PROMO_CODE}
                       {copied ? (
@@ -234,16 +288,13 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                         <Copy className="w-5 h-5" />
                       )}
                     </button>
-                    <p className="text-gray-500 text-xs font-manrope">
-                      ⏰ Expires in {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m
-                    </p>
                   </div>
                 </div>
               )}
 
               {/* Year */}
               <div className="pt-2">
-                <p className="text-[#C41E3A] font-semibold text-xl font-manrope">
+                <p className="text-[#EA3E3A] font-semibold text-xl font-manrope">
                   See you in 2026!
                 </p>
               </div>
@@ -253,6 +304,15 @@ export const ChristmasModal = ({ open, onOpenChange }: ChristmasModalProps) => {
                 Iva, LMN3 Founder
               </p>
             </div>
+
+            {/* Countdown Timer Footnote */}
+            {discountRevealed && (
+              <div className="absolute bottom-4 left-0 right-0 text-center">
+                <p className="text-gray-400 text-xs font-manrope">
+                  Expires in {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </DialogContent>
