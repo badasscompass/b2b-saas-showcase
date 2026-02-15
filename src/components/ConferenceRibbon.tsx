@@ -5,6 +5,13 @@ import { ChristmasModal } from "./ChristmasModal";
 export const ConferenceRibbon = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Show ribbon only from December 6 through January 31
+  const now = new Date();
+  const month = now.getMonth(); // 0-indexed: 11 = December, 0 = January
+  const day = now.getDate();
+  const isVisible = (month === 11 && day >= 6) || month === 0;
+
+  if (!isVisible) return null;
   return (
     <>
       <div 
