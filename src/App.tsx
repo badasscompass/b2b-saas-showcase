@@ -31,9 +31,6 @@ const AppContent = () => {
 
   // Add debugging for route changes
   useEffect(() => {
-    console.log('Route changed to:', location.pathname);
-    console.log('Current location:', location);
-    
     // Track page view with Google Analytics
     const route = routeConfig.find(r => r.path === location.pathname);
     analyticsService.trackPageView(location.pathname, route?.title);
@@ -66,9 +63,8 @@ const AppContent = () => {
       for (const route of routesToPreload) {
         try {
           await route.component;
-          console.log(`Preloaded: ${route.path}`);
         } catch (error) {
-          console.warn(`Failed to preload: ${route.path}`, error);
+          // Silently handle preload failures
         }
       }
     };
@@ -80,9 +76,8 @@ const AppContent = () => {
     <ErrorBoundary>
       <Suspense fallback={<LoadingSpinner />}>
         <Routes>
-          {routeConfig.map((route) => {
+        {routeConfig.map((route) => {
             const Component = route.component;
-            console.log(`Rendering route: ${route.path}`, Component);
             return (
               <Route 
                 key={route.path} 
@@ -103,13 +98,6 @@ const AppContent = () => {
 };
 
 const App = () => {
-  // Add debugging for app initialization
-  useEffect(() => {
-    console.log('App initialized');
-    console.log('Current URL:', window.location.href);
-    console.log('Base URL:', window.location.origin);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
