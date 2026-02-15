@@ -15,7 +15,10 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = 3001;
 
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:3001'],
+  credentials: true
+}));
 app.use(express.json({ limit: '10mb' }));
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -76,15 +79,26 @@ app.post('/api/contact', async (req, res) => {
       return res.status(500).json({ error: 'Unable to send message. Please try again later.' });
     }
 
+    // HTML escape helper
+    const escapeHtml = (text) => {
+      const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+      return String(text).replace(/[&<>"']/g, (m) => map[m]);
+    };
+
+    const escapedName = escapeHtml(name);
+    const escapedEmail = escapeHtml(email);
+    const escapedTitle = escapeHtml(title);
+    const escapedBody = escapeHtml(body).replace(/\n/g, '<br>');
+
     // Build email body
     let emailBody = `
       <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Subject:</strong> ${title}</p>
+      <p><strong>Name:</strong> ${escapedName}</p>
+      <p><strong>Email:</strong> ${escapedEmail}</p>
+      <p><strong>Subject:</strong> ${escapedTitle}</p>
       <p><strong>Message:</strong></p>
       <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
-        ${body.replace(/\n/g, '<br>')}
+        ${escapedBody}
       </div>
     `;
 
@@ -92,7 +106,7 @@ app.post('/api/contact', async (req, res) => {
     const attachments = [];
     if (file && file.content) {
       emailBody += `
-        <p><strong>Attachment:</strong> ${file.name} (${Math.round(file.size / 1024)} KB)</p>
+        <p><strong>Attachment:</strong> ${escapeHtml(file.name)} (${Math.round(file.size / 1024)} KB)</p>
       `;
 
       // Convert base64 to buffer for Resend attachment
@@ -105,7 +119,6 @@ app.post('/api/contact', async (req, res) => {
 
     emailBody += `
       <hr style="margin: 20px 0;">
-      <p><small>User IP: ${Array.isArray(userIP) ? userIP[0] : userIP}</small></p>
       <p><small>Submitted at: ${new Date().toISOString()}</small></p>
     `;
 
