@@ -20,6 +20,22 @@ app.use(express.json({ limit: '10mb' }));
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// In-memory rate limiting
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 15 * 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const entry = rateLimitMap.get(ip);
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  entry.count++;
+  return entry.count <= RATE_LIMIT_MAX;
+}
+
 app.post('/api/contact', async (req, res) => {
   try {
     const {
@@ -36,23 +52,28 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
+    const userIP =
+      req.headers['x-forwarded-for'] ||
+      req.headers['x-real-ip'] ||
+      req.ip ||
+      'unknown';
+    const ip = Array.isArray(userIP) ? userIP[0] : userIP;
+
+    // Rate limiting
+    if (!checkRateLimit(ip)) {
+      return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    }
+
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({ error: 'Invalid email address' });
     }
 
-    // Get user IP for logging
-    const userIP =
-      req.headers['x-forwarded-for'] ||
-      req.headers['x-real-ip'] ||
-      req.ip ||
-      'unknown';
-
     // Check if Resend API key is configured
     if (!process.env.RESEND_API_KEY) {
       console.error('RESEND_API_KEY not configured');
-      return res.status(500).json({ error: 'Server configuration error' });
+      return res.status(500).json({ error: 'Unable to send message. Please try again later.' });
     }
 
     // Build email body
@@ -108,8 +129,7 @@ app.post('/api/contact', async (req, res) => {
   } catch (error) {
     console.error('Error processing contact form:', error);
     return res.status(500).json({
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error',
+      error: 'Unable to send message. Please try again later.',
     });
   }
 });
