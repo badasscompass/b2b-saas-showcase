@@ -110,14 +110,29 @@ export default async function handler(
     // Set JSON content type for all responses
     res.setHeader('Content-Type', 'application/json');
 
-    // Handle CORS
+    // Handle CORS - restrict to known origins
+    const ALLOWED_ORIGINS = [
+      'https://lmn3.digital',
+      'https://www.lmn3.digital',
+      'https://lmn3-collective.lovable.app',
+    ];
+    const requestOrigin = req.headers.origin as string | undefined;
+    const corsOrigin = requestOrigin && ALLOWED_ORIGINS.includes(requestOrigin)
+      ? requestOrigin
+      : ALLOWED_ORIGINS[0];
+
     if (req.method === 'OPTIONS') {
-      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Origin', corsOrigin);
       res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
       responseSent = true;
       return res.status(200).end();
     }
+
+    // Set CORS header for all responses
+    res.setHeader('Access-Control-Allow-Origin', corsOrigin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
 
     // Only accept POST requests
     if (req.method !== 'POST') {
