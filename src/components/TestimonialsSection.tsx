@@ -2,6 +2,7 @@ import { CheckCircle, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Link } from "react-router-dom";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 interface ClientShowcase {
   title: string;
@@ -46,13 +47,16 @@ const clientShowcases: ClientShowcase[] = [
 
 export const TestimonialsSection = () => {
   return (
-    <section id="testimonials" className="section-padding bg-white">
+    <section id="testimonials" className="py-20 md:py-32 bg-white">
       <div className="container mx-auto container-padding">
+        <ScrollReveal>
         <SectionHeader 
           title="Featured Case Studies"
           subtitle="Real results from product teams we've worked with"
         />
+        </ScrollReveal>
         
+        <ScrollReveal delay={0.15}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
           {clientShowcases.map((showcase, index) => (
             <Card 
@@ -111,6 +115,7 @@ export const TestimonialsSection = () => {
             </Card>
           ))}
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

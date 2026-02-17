@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Target, Rocket, Users, ArrowRight, Calendar } from "lucide-react";
+import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const WhoWeServeSection = () => {
   const sections = [
@@ -51,13 +52,16 @@ export const WhoWeServeSection = () => {
   ];
 
   return (
-    <section id="who-we-serve" className="section-padding bg-gradient-to-b from-white via-gray-50/30 to-white">
+    <section id="who-we-serve" className="py-20 md:py-32 bg-gradient-to-b from-white via-gray-50/30 to-white">
       <div className="container mx-auto container-padding">
+        <ScrollReveal>
         <SectionHeader 
           title="Designed for Ambitious B2B Teams"
           subtitle="We understand the unique challenges of leading product teams and provide tailored solutions for all your growth stages."
         />
+        </ScrollReveal>
 
+<ScrollReveal delay={0.15}>
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 lg:items-stretch">
   {sections.map((section, index) => {
     const IconComponent = section.icon;
@@ -115,6 +119,7 @@ export const WhoWeServeSection = () => {
            );
           })}
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );
