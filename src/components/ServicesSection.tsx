@@ -2,7 +2,6 @@ import { Rocket, Users, Cog, ArrowRight, Target } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ScrollReveal } from "@/components/ScrollReveal";
 
 export const ServicesSection = () => {
   const services = [
@@ -41,9 +40,8 @@ export const ServicesSection = () => {
   
 
   return (
-    <section id="services" className="py-20 md:py-32 bg-white">
+    <section id="services" className="section-padding bg-white">
       <div className="container mx-auto container-padding">
-        <ScrollReveal>
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 font-manrope text-gray-900">
             Our Expertise
@@ -52,9 +50,7 @@ export const ServicesSection = () => {
             Comprehensive product leadership across every stage of your growth journey.
           </p>
         </div>
-        </ScrollReveal>
 
-        <ScrollReveal delay={0.15}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {services.map((service, index) => (
             <Card key={index} className={`relative overflow-hidden border-2 ${service.borderColor} shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group bg-white`}>
@@ -97,7 +93,6 @@ export const ServicesSection = () => {
             </Card>
           ))}
         </div>
-        </ScrollReveal>
       </div>
     </section>
   );
