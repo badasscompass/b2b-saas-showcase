@@ -75,24 +75,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KW5L5SNP');</script>
 <!-- End Google Tag Manager -->
 
-     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FQVXJN10TZ"></script>
+     <!-- Consent Mode v2 defaults (must run before GTM) -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  
-  // Initialize consent mode with default denied state
+  // Set denied defaults BEFORE GTM loads to comply with consent mode v2
   gtag('consent', 'default', {
     'analytics_storage': 'denied',
     'ad_storage': 'denied',
     'ad_user_data': 'denied',
-    'ad_personalization': 'denied'
-  });
-  
-  gtag('js', new Date());
-  gtag('config', 'G-FQVXJN10TZ', {
-    'anonymize_ip': true,
-    'allow_google_signals': false
+    'ad_personalization': 'denied',
+    'wait_for_update': 500
   });
 </script>
     <link rel="icon" type="image/png" href="/lovable-uploads/lmn3_logo_bullet.png" />

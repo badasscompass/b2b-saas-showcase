@@ -24,11 +24,31 @@ const StrategicAdvisory = () => {
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Strategic Advisory Services",
+      "url": "https://lmn3.digital/strategic-advisory",
       "provider": {
         "@type": "Organization",
-        "name": "LMN3"
+        "name": "LMN3",
+        "url": "https://lmn3.digital",
+        "founder": { "@type": "Person", "name": "Iva Rumora" }
       },
-      "description": "Strategic guidance for product teams and founders"
+      "description": "Expert strategic advisory for product founders and executives — value proposition, market positioning, and product-led growth strategy.",
+      "serviceType": "Strategic Business Advisory",
+      "areaServed": "Worldwide",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "url": "https://lmn3.digital/strategic-advisory"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Strategic Advisory Packages",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Strategy Workshop" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Chief Product Officer" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Investor-Ready Product Narrative" } }
+        ]
+      }
     }
   });
   return (

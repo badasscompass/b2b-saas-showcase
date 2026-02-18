@@ -1,6 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "lucide-react";
+import { analyticsService } from "@/services/analyticsService";
 
 interface PageCTAProps {
   title: string;
@@ -21,12 +22,15 @@ export const PageCTA = ({ title, subtitle, ctaText, onCtaClick }: PageCTAProps) 
             {subtitle}
           </p>
           <Button
-  className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4"
-  asChild
->
-  <a href="https://calendly.com/iva-lmn3/30min">
-    <Calendar className="mr-2 h-5 w-5" />
-      Schedule a Discovery Call
+            className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope text-lg px-8 py-4"
+            asChild
+          >
+            <a
+              href="https://calendly.com/iva-lmn3/30min"
+              onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: ctaText, location: typeof window !== 'undefined' ? window.location.pathname : '' })}
+            >
+              <Calendar className="mr-2 h-5 w-5" />
+              {ctaText}
             </a>
           </Button>
         </div>
