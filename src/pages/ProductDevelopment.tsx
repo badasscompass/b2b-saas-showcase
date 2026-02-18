@@ -23,11 +23,31 @@ const ProductDevelopment = () => {
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Product Development Services",
+      "url": "https://lmn3.digital/product-development",
       "provider": {
         "@type": "Organization",
-        "name": "LMN3"
+        "name": "LMN3",
+        "url": "https://lmn3.digital",
+        "founder": { "@type": "Person", "name": "Iva Rumora" }
       },
-      "description": "Comprehensive product development services from MVP to scale"
+      "description": "Senior fractional product management and development services — from MVP scoping to full product launches for B2B startups and SMBs.",
+      "serviceType": "Product Development Consulting",
+      "areaServed": "Worldwide",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "url": "https://lmn3.digital/product-development"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Product Development Packages",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "MVP Scoping & Roadmap" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Sprint Leadership" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Product Manager" } }
+        ]
+      }
     }
   });
   return (

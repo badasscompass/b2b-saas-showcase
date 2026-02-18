@@ -25,11 +25,31 @@ const ProductMarketingGTM = () => {
       "@context": "https://schema.org",
       "@type": "Service",
       "name": "Product Marketing & Go-to-Market Services",
+      "url": "https://lmn3.digital/product-marketing-gtm",
       "provider": {
         "@type": "Organization",
-        "name": "LMN3"
+        "name": "LMN3",
+        "url": "https://lmn3.digital",
+        "founder": { "@type": "Person", "name": "Iva Rumora" }
       },
-      "description": "Data-driven go-to-market strategies and product marketing"
+      "description": "Data-driven product marketing and go-to-market strategy services for B2B SaaS and product-led companies — positioning, launch, and growth.",
+      "serviceType": "Product Marketing Consulting",
+      "areaServed": "Worldwide",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "availability": "https://schema.org/InStock",
+        "url": "https://lmn3.digital/product-marketing-gtm"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Product Marketing & GTM Packages",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Strategy Sprint" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Launch Playbook" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Product Marketer" } }
+        ]
+      }
     }
   });
   return (

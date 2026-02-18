@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { Button } from "@/components/ui/button"; // Assuming you have this Button component
+import { Button } from "@/components/ui/button";
 
 declare global {
   interface Window {
@@ -10,113 +10,74 @@ declare global {
   }
 }
 
+const grantConsent = () => {
+  if (window.gtag) {
+    window.gtag('consent', 'update', {
+      'analytics_storage': 'granted',
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted'
+    });
+  }
+  // Enable HubSpot tracking
+  if (window._hsp) {
+    window._hsp.push(['setPrivacyConsent', {
+      necessary: true,
+      marketing: true,
+      preferences: true,
+      statistics: true
+    }]);
+  }
+};
+
+const denyConsent = () => {
+  if (window.gtag) {
+    window.gtag('consent', 'update', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied'
+    });
+  }
+  if (window._hsp) {
+    window._hsp.push(['setPrivacyConsent', {
+      necessary: true,
+      marketing: false,
+      preferences: false,
+      statistics: false
+    }]);
+  }
+};
+
 export const CookieConsent = () => {
   const [showBanner, setShowBanner] = useState(false);
 
   useEffect(() => {
-    // Check if user has already consented
+    // Initialize HubSpot _hsp queue
+    window._hsp = window._hsp || [];
+
     const hasConsented = localStorage.getItem('cookieConsentAccepted');
 
     if (hasConsented === 'true') {
-      // User previously accepted, enable analytics
-      if (window.gtag) {
-        window.gtag('consent', 'update', {
-          'analytics_storage': 'granted',
-          'ad_storage': 'granted',
-          'ad_user_data': 'granted',
-          'ad_personalization': 'granted'
-        });
-        console.log('Google Analytics: Consent restored from localStorage');
-      }
+      grantConsent();
     } else if (hasConsented === 'false') {
-      // User previously declined, keep analytics disabled
-      if (window.gtag) {
-        window.gtag('consent', 'update', {
-          'analytics_storage': 'denied',
-          'ad_storage': 'denied',
-          'ad_user_data': 'denied',
-          'ad_personalization': 'denied'
-        });
-        console.log('Google Analytics: Consent denied from localStorage');
-      }
+      denyConsent();
     } else {
-      // First time visitor, show banner
+      // First-time visitor: show banner
       setShowBanner(true);
     }
-
-    // Initialize HubSpot's _hsp array if it doesn't exist
-    window._hsp = window._hsp || [];
-
-    // Optional: Add listeners for debugging, if desired
-    window._hsp.push(['onReady', () => {
-      console.log('HubSpot core script is ready for consent communication.');
-    }]);
-
   }, []);
 
   const handleAcceptAll = () => {
     localStorage.setItem('cookieConsentAccepted', 'true');
     setShowBanner(false);
-
-    // Enable Google Analytics
-    if (window.gtag) {
-      window.gtag('consent', 'update', {
-        'analytics_storage': 'granted',
-        'ad_storage': 'granted',
-        'ad_user_data': 'granted',
-        'ad_personalization': 'granted'
-      });
-      console.log('Google Analytics: Consent granted');
-    }
-
-    // Communicate consent to HubSpot
-    if (window._hsp) {
-      window._hsp.push(['setPrivacyConsent', {
-        necessary: true,
-        marketing: true, // Assuming you want to enable marketing cookies on "Accept All"
-        preferences: true,
-        statistics: true
-      }]);
-      console.log('HubSpot: Consent accepted and communicated.');
-    }
+    grantConsent();
   };
 
   const handleDecline = () => {
     localStorage.setItem('cookieConsentAccepted', 'false');
     setShowBanner(false);
-
-    // Disable Google Analytics
-    if (window.gtag) {
-      window.gtag('consent', 'update', {
-        'analytics_storage': 'denied',
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied'
-      });
-      console.log('Google Analytics: Consent denied');
-    }
-
-    // Communicate declined consent to HubSpot
-    if (window._hsp) {
-      window._hsp.push(['setPrivacyConsent', {
-        necessary: true, // Necessary cookies are often still allowed
-        marketing: false,
-        preferences: false,
-        statistics: false
-      }]);
-      console.log('HubSpot: Consent declined and communicated.');
-    }
-  };
-
-  const handleCookieSettings = () => {
-    // For now, this will trigger the HubSpot banner if it ever works,
-    // or you can add a modal here for granular settings later.
-    if (window._hsp) {
-      window._hsp.push(['showBanner']);
-      console.log('HubSpot: Attempting to show native settings banner.');
-    }
-    // Alternatively, you could open a custom modal for settings here
-    // alert('Custom cookie settings would open here.');
+    denyConsent();
   };
 
   if (!showBanner) {
@@ -128,24 +89,23 @@ export const CookieConsent = () => {
       <div className="container mx-auto max-w-7xl">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Cookie Consent</h3>
-            <p className="text-gray-600">
-              We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic. 
+            <h3 className="text-lg font-semibold text-gray-900 mb-2 font-manrope">Cookie Consent</h3>
+            <p className="text-gray-600 font-manrope text-sm">
+              We use cookies to enhance your browsing experience, serve personalized content, and analyze our traffic.
               By clicking "Accept All", you consent to our use of cookies.
             </p>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
             <Button
               variant="outline"
               onClick={handleDecline}
-              className="border-gray-300 hover:bg-gray-100"
+              className="border-gray-300 hover:bg-gray-100 font-manrope"
             >
               Decline
             </Button>
-            
             <Button
               onClick={handleAcceptAll}
-              className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white"
+              className="bg-[#EA3E3A] hover:bg-[#F4A42C] text-white font-manrope"
             >
               Accept All
             </Button>

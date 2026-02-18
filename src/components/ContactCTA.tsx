@@ -1,6 +1,7 @@
 
 import { ArrowRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { analyticsService } from "@/services/analyticsService";
 
 export const ContactCTA = () => {
   return (
@@ -19,7 +20,10 @@ export const ContactCTA = () => {
               className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope font-semibold text-lg px-8 py-4 h-auto"
               asChild
             >
-              <a href="https://calendly.com/iva-lmn3/30min">
+              <a
+                href="https://calendly.com/iva-lmn3/30min"
+                onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: 'Schedule Discovery Call', location: 'contact_cta' })}
+              >
                 <Calendar className="mr-2 h-5 w-5" />
                 Schedule a Discovery Call
               </a>
