@@ -8,8 +8,18 @@ import { PageCTA } from "@/components/PageCTA";
 import { PricingTiers, PricingTier } from "@/components/PricingTiers";
 import { productDevelopmentPricingTiers } from "@/data/productDevelopmentData";
 import { useSEO } from "@/hooks/useSEO";
+import { useEffect } from "react";
+import { analyticsService } from "@/services/analyticsService";
 
 const ProductDevelopment = () => {
+  useEffect(() => {
+    analyticsService.trackEvent('view_item', {
+      item_id: 'product-development',
+      item_name: 'Product Development Services',
+      item_category: 'Service',
+    });
+  }, []);
+
   useSEO({
     title: "Product Development Services by Iva Rumora | LMN3",
     description: "Transform your vision into ready-to-launch products with Iva Rumora's proven development processes and senior product expertise. MVP to scale solutions.",

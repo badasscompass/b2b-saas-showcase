@@ -203,6 +203,13 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       // Track successful form submission
       analyticsService.trackFormSubmission('contact_form', true)
 
+      // Fire GA4 generate_lead event
+      analyticsService.trackEvent('generate_lead', {
+        currency: 'EUR',
+        lead_source: 'contact_form',
+        form_name: 'contact_form',
+      })
+
       reset()
       onSuccess?.()
     } catch (error) {
