@@ -1,5 +1,4 @@
-
-import { FlexibleImage } from "@/components/FlexibleImage";
+import type { ImageSource } from "@/types/image";
 
 export interface ClientWork {
   id: string;
@@ -8,16 +7,7 @@ export interface ClientWork {
   description: string;
   lead: string;
   engagementDuration?: string;
-  image: {
-    type: 'unsplash';
-    id: string;
-    alt: string;
-    fallback: {
-      type: 'unsplash';
-      id: string;
-      alt: string;
-    };
-  };
+  image: ImageSource;
   sector: string;
   product: string;
   productUrl?: string;

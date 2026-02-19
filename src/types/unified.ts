@@ -1,3 +1,4 @@
+import type { ImageSource } from '@/types/image';
 
 // Unified data types for the entire application
 export interface UnifiedClientWork {
@@ -7,16 +8,7 @@ export interface UnifiedClientWork {
   description: string;
   lead: string;
   email: string;
-  image: {
-    type: 'unsplash';
-    id: string;
-    alt: string;
-    fallback: {
-      type: 'unsplash';
-      id: string;
-      alt: string;
-    };
-  };
+  image: ImageSource;
   sector: string;
   product: string;
   productUrl?: string;

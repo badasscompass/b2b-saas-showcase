@@ -1,4 +1,3 @@
-
 export interface ImageSource {
   type: 'unsplash' | 'upload' | 'external';
   id?: string; // For Unsplash
@@ -6,6 +5,11 @@ export interface ImageSource {
   alt: string;
   fallback?: ImageSource;
 }
+
+/** Case study image: ImageSource with optional Unsplash fallback recommended for screenshots. */
+export type CaseStudyImage = ImageSource & {
+  fallback?: ImageSource & { type: 'unsplash'; id: string; alt: string };
+};
 
 export interface ImageConfig {
   width?: number;

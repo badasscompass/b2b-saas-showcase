@@ -1,3 +1,4 @@
+import type { ImageSource } from "@/types/image";
 
 export interface ProductDevelopmentWork {
   id: string;
@@ -7,16 +8,7 @@ export interface ProductDevelopmentWork {
   lead: string;
   email: string;
   engagementDuration?: string;
-  image: {
-    type: 'unsplash';
-    id: string;
-    alt: string;
-    fallback: {
-      type: 'unsplash';
-      id: string;
-      alt: string;
-    };
-  };
+  image: ImageSource;
   sector: string;
   product: string;
   productUrl?: string;
