@@ -70,6 +70,8 @@ const ProductMarketingGTM = () => {
       subtitle="Launch smarter, reach buyers faster, and drive growth with a data-driven go-to-market engine."
       ctaText="Book a GTM Discovery Call"
       footerTagline="Launching products that win markets."
+      serviceKey="product-marketing-gtm"
+      serviceTitle="Product Marketing & GTM"
     >
       <ServiceSection title="What We Do" background="white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

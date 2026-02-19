@@ -1,15 +1,16 @@
-
+import { useState } from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { HeroSection } from "@/components/HeroSection";
 import { WhoWeServeSection } from "@/components/WhoWeServeSection";
 import { ServicesSection } from "@/components/ServicesSection";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
-import { PageCTA } from "@/components/PageCTA";
+import { HomeGuideWizard } from "@/components/HomeGuideWizard";
 import { useSEO } from "@/hooks/useSEO";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const Index = () => {
+  const [homeWizardOpen, setHomeWizardOpen] = useState(false);
   useScrollDepth("homepage");
   useSEO({
     title: "Iva Rumora & LMN3 | Strategic Product Development & Advisory",
@@ -56,7 +57,8 @@ const Index = () => {
 
   return (
     <PageLayout footerTagline="Building products that scale.">
-      <HeroSection />
+      <HeroSection onGuideMeClick={() => setHomeWizardOpen(true)} />
+      <HomeGuideWizard open={homeWizardOpen} onOpenChange={setHomeWizardOpen} />
       <WhoWeServeSection />
       <ServicesSection />
       <WhyChooseUs />

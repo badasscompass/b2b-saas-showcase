@@ -1,10 +1,13 @@
-
-import { ArrowRight, Calendar, Check, CheckCircle } from "lucide-react";
+import { ArrowRight, Calendar, Check, CheckCircle, Compass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConferenceRibbon } from "@/components/ConferenceRibbon";
 import { analyticsService } from "@/services/analyticsService";
 
-export const HeroSection = () => {
+interface HeroSectionProps {
+  onGuideMeClick?: () => void;
+}
+
+export const HeroSection = ({ onGuideMeClick }: HeroSectionProps) => {
   return (
     <section className="relative min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-white overflow-hidden">
       <div className="flex-1 flex items-center justify-center">
@@ -61,7 +64,7 @@ export const HeroSection = () => {
           </div>
 
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center px-4">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 flex-wrap">
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:from-[#EA3E3A]/90 hover:to-[#F4A42C]/90 font-manrope font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto w-full sm:w-auto"
@@ -75,11 +78,25 @@ export const HeroSection = () => {
                 Book Discovery Call
               </a>
             </Button>
-            
+            {onGuideMeClick && (
+              <Button 
+                type="button"
+                variant="outline" 
+                size="lg" 
+                className="border-2 border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A]/10 hover:text-primary font-manrope font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto w-full sm:w-auto"
+                onClick={() => {
+                  analyticsService.trackEvent('home_guide_wizard_open', { category: 'conversion', label: 'Guide me', location: 'hero' });
+                  onGuideMeClick();
+                }}
+              >
+                <Compass className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                Guide me
+              </Button>
+            )}
             <Button 
               variant="outline" 
               size="lg" 
-              className="border-2 border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A] hover:text-white font-manrope font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto w-full sm:w-auto"
+              className="border-2 border-gray-300 text-gray-700 hover:bg-gray-100 font-manrope font-semibold text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto w-full sm:w-auto"
               asChild
             >
               <a href="#services">

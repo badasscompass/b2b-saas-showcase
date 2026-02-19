@@ -68,6 +68,8 @@ const StrategicAdvisory = () => {
       subtitle="Guidance for product teams and founders in defining their value proposition, market positioning, and go-to-market strategy."
       ctaText="Book a Strategy Discovery Call"
       footerTagline="Strategic clarity for product success."
+      serviceKey="strategic-advisory"
+      serviceTitle="Strategic Advisory"
     >
       <StrategicAdvisoryServices />
       

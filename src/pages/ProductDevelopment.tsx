@@ -68,6 +68,8 @@ const ProductDevelopment = () => {
       subtitle="Transform your vision into ready-to-launch products with proven development processes and senior product expertise."
       ctaText="Book a Product Audit Call"
       footerTagline="Building products that scale."
+      serviceKey="product-development"
+      serviceTitle="Product Development"
     >
       <ProductServicesSection />
       
