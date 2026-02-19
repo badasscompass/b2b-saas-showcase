@@ -28,13 +28,13 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     result: "Product moved from beta to functional state. Clearer edge in UX and value delivery. Founder equipped with direction for next growth phase. (Ongoing)",
     metrics: "Product stabilized and positioned for growth",
     image: {
-      type: 'unsplash' as const,
-      id: 'photo-1488590528505-98d2b5aba04b',
+      type: 'external' as const,
+      url: '/case-studies/codx-junior-kanban.png',
       alt: 'AI developer tools MVP development - transforming unstable beta to functional product',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1498050108023-c5249f4df085',
-        alt: 'Product development workspace with code and development tools'
+        id: 'photo-1488590528505-98d2b5aba04b',
+        alt: 'AI developer tools MVP development - transforming unstable beta to functional product'
       }
     },
     sector: "AI Developer Tools",
@@ -52,13 +52,13 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     result: "Functional delivery flow re-established in 2 sprints. Major bottleneck cleared. Delivery pace and team alignment restored.",
     metrics: "Team alignment and delivery flow restored",
     image: {
-      type: 'unsplash' as const,
-      id: 'photo-1605810230434-7631ac76ec81',
-      alt: 'Remote development team collaboration and product operations optimization case study',
+      type: 'external' as const,
+      url: '/case-studies/FlightER%20-%20Hotel%20-%20Availability.png',
+      alt: 'Hotel availability screen - Tourism & Transport Platform, B2B Hospitality',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1519389950473-47ba0277781c',
-        alt: 'Remote team collaboration and agile development process'
+        id: 'photo-1605810230434-7631ac76ec81',
+        alt: 'Remote development team collaboration and product operations optimization case study'
       }
     },
     sector: "B2B Hospitality",
