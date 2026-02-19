@@ -61,8 +61,8 @@ const Index = () => {
       <HomeGuideWizard open={homeWizardOpen} onOpenChange={setHomeWizardOpen} />
       <WhoWeServeSection />
       <ServicesSection />
-      <WhyChooseUs />
       <TestimonialsSection />
+      <WhyChooseUs />
     </PageLayout>
   );
 };
