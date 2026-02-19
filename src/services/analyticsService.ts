@@ -1,4 +1,6 @@
-// Analytics service for Google Analytics tracking
+// Analytics service for Google Analytics tracking (GA4 via GTM dataLayer)
+const isDev = typeof import.meta !== 'undefined' && import.meta.env?.DEV === true;
+
 export class AnalyticsService {
   private static instance: AnalyticsService;
   private measurementId: string = 'G-FQVXJN10TZ';
@@ -29,7 +31,7 @@ export class AnalyticsService {
       page_title: title || document.title
     });
 
-    console.log(`GA Page View: ${path}`);
+    if (isDev) console.log(`GA Page View: ${path}`);
   }
 
   // Track custom events
@@ -46,7 +48,7 @@ export class AnalyticsService {
       ...parameters
     });
 
-    console.log(`GA Event: ${eventName}`, parameters);
+    if (isDev) console.log(`GA Event: ${eventName}`, parameters);
   }
 
   // Track button clicks

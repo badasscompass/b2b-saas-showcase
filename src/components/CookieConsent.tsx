@@ -10,6 +10,22 @@ declare global {
   }
 }
 
+const CLARITY_PROJECT_ID = 'vjammzrjqv';
+const PRODUCTION_HOSTS = ['lmn3.digital', 'www.lmn3.digital'];
+
+const loadClarity = () => {
+  if (typeof window === 'undefined' || (window as unknown as { clarity?: unknown }).clarity) return;
+  if (!PRODUCTION_HOSTS.includes(window.location.hostname)) return;
+  (function (c: Window & Record<string, unknown>, l: Document, a: string, r: string, i: string) {
+    c[a] = (c[a] as (...args: unknown[]) => void) || function (...args: unknown[]) { ((c[a] as { q?: unknown[] }).q = (c[a] as { q?: unknown[] }).q || []).push(args); };
+    const t = l.createElement(r) as HTMLScriptElement;
+    t.async = true;
+    t.src = 'https://www.clarity.ms/tag/' + i;
+    const y = l.getElementsByTagName(r)[0];
+    y.parentNode?.insertBefore(t, y);
+  })(window as Window & Record<string, unknown>, document, 'clarity', 'script', CLARITY_PROJECT_ID);
+};
+
 const grantConsent = () => {
   if (window.gtag) {
     window.gtag('consent', 'update', {
@@ -19,6 +35,7 @@ const grantConsent = () => {
       'ad_personalization': 'granted'
     });
   }
+  loadClarity();
   // Enable HubSpot tracking
   if (window._hsp) {
     window._hsp.push(['setPrivacyConsent', {
