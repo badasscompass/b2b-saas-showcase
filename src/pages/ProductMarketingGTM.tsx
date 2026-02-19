@@ -10,8 +10,18 @@ import { productMarketingGTMPricingTiers } from "@/data/productMarketingGTMData"
 import { whatWeDo, howItWorks, successMetrics, whyItWorks } from "@/data/productMarketingGTMData";
 import { Target, Users, Rocket, BarChart3 } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
+import { useEffect } from "react";
+import { analyticsService } from "@/services/analyticsService";
 
 const ProductMarketingGTM = () => {
+  useEffect(() => {
+    analyticsService.trackEvent('view_item', {
+      item_id: 'product-marketing-gtm',
+      item_name: 'Product Marketing & GTM Services',
+      item_category: 'Service',
+    });
+  }, []);
+
   useSEO({
     title: "Product Marketing & GTM Services by Iva Rumora | LMN3",
     description: "Launch smarter with Iva Rumora's data-driven go-to-market strategies. Product marketing expertise to reach buyers faster and scale effectively.",

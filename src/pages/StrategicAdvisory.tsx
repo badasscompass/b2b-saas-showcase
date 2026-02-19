@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { analyticsService } from "@/services/analyticsService";
 import { ServicePageLayout } from "@/components/layout/ServicePageLayout";
 import { StrategicAdvisoryServices } from "@/components/StrategicAdvisoryServices";
 import { StrategicAdvisoryProcess } from "@/components/StrategicAdvisoryProcess";
@@ -11,6 +12,14 @@ import { PageCTA } from "@/components/PageCTA";
 import { useSEO } from "@/hooks/useSEO";
 
 const StrategicAdvisory = () => {
+  useEffect(() => {
+    analyticsService.trackEvent('view_item', {
+      item_id: 'strategic-advisory',
+      item_name: 'Strategic Advisory Services',
+      item_category: 'Service',
+    });
+  }, []);
+
   useSEO({
     title: "Strategic Advisory Services by Iva Rumora | LMN3",
     description: "Get strategic guidance from Iva Rumora for product teams and founders. Define value proposition, market positioning, and go-to-market strategy with 9+ years experience.",
