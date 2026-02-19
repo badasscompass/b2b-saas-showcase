@@ -46,11 +46,12 @@ export const ServiceGuideWizard: React.FC<ServiceGuideWizardProps> = ({
         category: 'conversion',
         label: 'Guide me',
         service_key: serviceKey,
+        location: typeof window !== 'undefined' ? window.location.pathname : '',
       })
     }
   }, [open, serviceKey])
 
-  const handleSelectOption = (stepId: string, optionId: string) => {
+  const handleSelectOption = (stepId: string, optionId: string, optionLabel?: string) => {
     const newAnswers = { ...answers, [stepId]: optionId }
     setAnswers(newAnswers)
     analyticsService.trackEvent('guide_wizard_step', {
@@ -58,7 +59,9 @@ export const ServiceGuideWizard: React.FC<ServiceGuideWizardProps> = ({
       label: stepId,
       step_index: stepIndex + 1,
       option_id: optionId,
+      option_label: optionLabel,
       service_key: serviceKey,
+      location: typeof window !== 'undefined' ? window.location.pathname : '',
     })
     if (stepIndex + 1 < totalSteps) {
       setStepIndex(stepIndex + 1)
@@ -70,15 +73,32 @@ export const ServiceGuideWizard: React.FC<ServiceGuideWizardProps> = ({
         label: wizardResult.packageName || 'general',
         package_name: wizardResult.packageName,
         service_key: serviceKey,
+        location: typeof window !== 'undefined' ? window.location.pathname : '',
       })
     }
   }
 
   const handleBack = () => {
-    if (stepIndex > 0) setStepIndex(stepIndex - 1)
+    if (stepIndex > 0) {
+      analyticsService.trackEvent('guide_wizard_back', {
+        category: 'conversion',
+        label: 'Back',
+        step_index: stepIndex + 1,
+        service_key: serviceKey,
+        location: typeof window !== 'undefined' ? window.location.pathname : '',
+      })
+      setStepIndex(stepIndex - 1)
+    }
   }
 
   const handleRequestPackageInfo = () => {
+    analyticsService.trackEvent('guide_wizard_request_package_info', {
+      category: 'conversion',
+      label: result?.packageName || 'general',
+      package_name: result?.packageName,
+      service_key: serviceKey,
+      location: typeof window !== 'undefined' ? window.location.pathname : '',
+    })
     if (result?.packageName) {
       onRequestPackageInfo({
         interest: serviceKey,
@@ -96,6 +116,13 @@ export const ServiceGuideWizard: React.FC<ServiceGuideWizardProps> = ({
   }
 
   const handleSkip = () => {
+    analyticsService.trackEvent('guide_wizard_skip', {
+      category: 'conversion',
+      label: 'Skip and explore the page',
+      step_index: stepIndex + 1,
+      service_key: serviceKey,
+      location: typeof window !== 'undefined' ? window.location.pathname : '',
+    })
     onOpenChange(false)
   }
 
@@ -123,7 +150,7 @@ export const ServiceGuideWizard: React.FC<ServiceGuideWizardProps> = ({
                   type="button"
                   variant="outline"
                   className="w-full justify-start border-[#EA3E3A]/30 hover:bg-[#EA3E3A]/10 hover:border-[#EA3E3A]/50 hover:text-primary text-left font-normal break-words whitespace-normal h-auto py-3"
-                  onClick={() => handleSelectOption(currentStep.id, opt.id)}
+                  onClick={() => handleSelectOption(currentStep.id, opt.id, opt.label)}
                 >
                   {opt.label}
                 </Button>

@@ -48,7 +48,7 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
     }
   }, [open])
 
-  const handleSelectOption = (stepId: string, optionId: string) => {
+  const handleSelectOption = (stepId: string, optionId: string, optionLabel?: string) => {
     const newAnswers = { ...answers, [stepId]: optionId }
     setAnswers(newAnswers)
 
@@ -57,6 +57,7 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
       label: stepId,
       step_index: stepIndex + 1,
       option_id: optionId,
+      option_label: optionLabel,
       location: 'homepage',
     })
 
@@ -69,6 +70,7 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
         category: 'conversion',
         label: wizardResult.serviceKey,
         service_key: wizardResult.serviceKey,
+        step_index: stepIndex + 1,
         location: 'homepage',
       })
     }
@@ -76,6 +78,12 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
 
   const handleBack = () => {
     if (stepIndex > 0) {
+      analyticsService.trackEvent('home_guide_wizard_back', {
+        category: 'conversion',
+        label: 'Back',
+        step_index: stepIndex + 1,
+        location: 'homepage',
+      })
       setStepIndex(0)
       setAnswers((prev) => ({ goal: prev.goal }))
     }
@@ -87,6 +95,8 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
       category: 'conversion',
       label: result.serviceKey,
       service_key: result.serviceKey,
+      service_path: result.servicePath,
+      location: 'homepage',
     })
     onOpenChange(false)
     navigate(result.servicePath)
@@ -97,12 +107,20 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
     analyticsService.trackEvent('home_guide_wizard_request_info', {
       category: 'conversion',
       label: result.serviceKey,
+      service_key: result.serviceKey,
+      location: 'homepage',
     })
     onOpenChange(false)
     navigate(`/contact?interest=${result.serviceKey}`)
   }
 
   const handleSkip = () => {
+    analyticsService.trackEvent('home_guide_wizard_skip', {
+      category: 'conversion',
+      label: 'Skip and explore',
+      step_index: stepIndex + 1,
+      location: 'homepage',
+    })
     onOpenChange(false)
   }
 
@@ -133,7 +151,7 @@ export const HomeGuideWizard: React.FC<HomeGuideWizardProps> = ({
                   type="button"
                   variant="outline"
                   className="w-full justify-start border-[#EA3E3A]/30 hover:bg-[#EA3E3A]/10 hover:border-[#EA3E3A]/50 hover:text-primary text-left font-normal break-words whitespace-normal h-auto py-3"
-                  onClick={() => handleSelectOption(currentStep.id, opt.id)}
+                  onClick={() => handleSelectOption(currentStep.id, opt.id, opt.label)}
                 >
                   {opt.label}
                 </Button>
