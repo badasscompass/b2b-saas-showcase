@@ -1,12 +1,16 @@
 import React from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { PageLayout } from '@/components/layout/PageLayout'
 import { ContactForm } from '@/components/ContactForm'
-import { ContactCTA } from '@/components/ContactCTA'
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import { useSEO } from '@/hooks/useSEO'
 import { analyticsService } from '@/services/analyticsService'
 
 export const Contact: React.FC = () => {
+  const [searchParams] = useSearchParams()
+  const interest = searchParams.get('interest') ?? undefined
+  const packageName = searchParams.get('package') ?? undefined
+
   useSEO({
     title: 'Contact Us - LMN3',
     description: 'Get in touch with LMN3. Send us your questions, project inquiries, or RFPs. We\'re here to help transform your product business.',
@@ -67,9 +71,9 @@ export const Contact: React.FC = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
+          {/* Contact Form: dropdown selects package and pre-fills subject; URL params can preselect */}
           <div className="mb-16">
-            <ContactForm />
+            <ContactForm interest={interest} packageName={packageName} />
           </div>
 
           {/* Additional Information */}

@@ -1,10 +1,11 @@
 import { Dialog } from "@/components/ui/dialog";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PartnerBioDialog } from "@/components/PartnerBioDialog";
 import { getPartnerByName } from "@/data/partnerBios";
 import { PricingTierGrid } from "./pricing/PricingTierGrid";
 import { PricingDisclaimer } from "./pricing/PricingDisclaimer";
 import { PricingTierLabelToggle, TierLabelState } from "./pricing/PricingTierLabelToggle";
+import { InquiryModal, type InquiryModalContext } from "./InquiryModal";
 
 export interface PricingTier {
   packageName: string;
@@ -22,15 +23,22 @@ interface PricingTiersProps {
   subtitle?: string;
   tiers: PricingTier[];
   ctaText?: string;
+  /** Service slug for inquiry context (e.g. product-development) */
+  interest?: string;
+  /** Display name for inquiry context (e.g. Product Development) */
+  serviceTitle?: string;
 }
 
 export const PricingTiers = ({
   title = "Service Packages",
   subtitle = "Choose the right engagement model for your needs",
   tiers = [],
-  ctaText = "Get Started"
+  ctaText = "Get Started",
+  interest,
+  serviceTitle,
 }: PricingTiersProps) => {
   const [selectedPartner, setSelectedPartner] = useState<any>(null);
+  const [inquiryContext, setInquiryContext] = useState<InquiryModalContext | null>(null);
   const [labelState, setLabelState] = useState<TierLabelState>("Startup");
 
   // Error logging
@@ -99,6 +107,12 @@ export const PricingTiers = ({
             ctaText={ctaText}
             onPartnerClick={handlePartnerClick}
             tierLabelState={labelState}
+            interest={interest}
+            serviceTitle={serviceTitle}
+            onRequestPackage={interest && serviceTitle
+              ? (tier) => setInquiryContext({ interest, serviceTitle, packageName: tier.packageName })
+              : undefined
+            }
           />
 
           <PricingDisclaimer />
@@ -110,6 +124,12 @@ export const PricingTiers = ({
           <PartnerBioDialog partner={selectedPartner} />
         )}
       </Dialog>
+
+      <InquiryModal
+        open={!!inquiryContext}
+        onOpenChange={(open) => !open && setInquiryContext(null)}
+        context={inquiryContext}
+      />
     </section>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -7,9 +7,22 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { Upload, Send, FileText } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { analyticsService } from '@/services/analyticsService'
+import {
+  contactPackageOptions,
+  getContactPackageByValue,
+  getContactPackageByInterestAndPackage,
+  CONTACT_GENERAL_VALUE,
+} from '@/data/contactPackageOptions'
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
 const ACCEPTED_FILE_TYPES = [
@@ -42,20 +55,68 @@ const contactFormSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactFormSchema>
 
-interface ContactFormProps {
-  onSuccess?: () => void
+export interface ContactFormContext {
+  interest?: string
+  packageName?: string
 }
 
-export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
+interface ContactFormProps {
+  onSuccess?: () => void
+  /** Optional initial selection from URL (e.g. ?interest=...&package=...) */
+  interest?: string
+  packageName?: string
+}
+
+export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess, interest, packageName }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [antiRobotQuestion, setAntiRobotQuestion] = useState({ question: '', answer: '' })
   const { toast } = useToast()
 
+  const initialRegardingValue = useMemo(() => {
+    if (interest && packageName) {
+      const option = getContactPackageByInterestAndPackage(interest, packageName)
+      return option?.value ?? CONTACT_GENERAL_VALUE
+    }
+    return CONTACT_GENERAL_VALUE
+  }, [interest, packageName])
+
+  const [selectedRegardingValue, setSelectedRegardingValue] = useState(initialRegardingValue)
+
+  useEffect(() => {
+    setSelectedRegardingValue(initialRegardingValue)
+  }, [initialRegardingValue])
+
+  const initialTitle = useMemo(() => {
+    if (packageName) return `Inquiry: ${packageName}`
+    return ''
+  }, [packageName])
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setValue,
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: { title: initialTitle },
+  })
+
+  useEffect(() => {
+    if (initialTitle) setValue('title', initialTitle)
+  }, [initialTitle, setValue])
+
+  const handleRegardingChange = (value: string) => {
+    setSelectedRegardingValue(value)
+    const pkg = getContactPackageByValue(value)
+    setValue('title', pkg?.packageName ? `Inquiry: ${pkg.packageName}` : '')
+  }
+
   // Generate random anti-robot question
   useEffect(() => {
     const generateQuestion = () => {
-      const num1 = Math.floor(Math.random() * 10) + 1 // 1-10
-      const num2 = Math.floor(Math.random() * 10) + 1 // 1-10
+      const num1 = Math.floor(Math.random() * 10) + 1
+      const num2 = Math.floor(Math.random() * 10) + 1
       const answer = num1 + num2
       setAntiRobotQuestion({
         question: `What is ${num1} + ${num2}?`,
@@ -64,15 +125,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
     }
     generateQuestion()
   }, [])
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
-  })
 
   // Helper function to convert file to base64
   const fileToBase64 = (file: File): Promise<string> => {
@@ -142,6 +194,10 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
 
       // Call Vercel API endpoint
       console.log('Calling Vercel API endpoint...')
+      const selectedPackage = getContactPackageByValue(selectedRegardingValue)
+      const payloadInterest = selectedPackage?.interest
+      const payloadPackage = selectedPackage?.packageName
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
@@ -154,6 +210,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
           body: data.body,
           file: fileData,
           anti_robot_answer: data.antiRobot,
+          ...(payloadInterest && { interest: payloadInterest }),
+          ...(payloadPackage && { package: payloadPackage }),
         }),
       })
 
@@ -211,6 +269,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       })
 
       reset()
+      setSelectedRegardingValue(CONTACT_GENERAL_VALUE)
+      setValue('title', '')
       onSuccess?.()
     } catch (error) {
       console.error('Contact form submission error:', error)
@@ -233,11 +293,34 @@ export const ContactForm: React.FC<ContactFormProps> = ({ onSuccess }) => {
       <CardHeader>
         <CardTitle className="text-2xl font-manrope">Get in Touch</CardTitle>
         <CardDescription>
-          Send us a message and we'll get back to you as soon as possible.
+          Choose a package or general inquiry, then send your message. You can edit the subject and other fields before sending.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <div>
+            <Label htmlFor="regarding">Regarding *</Label>
+            <Select
+              value={selectedRegardingValue}
+              onValueChange={handleRegardingChange}
+              disabled={isSubmitting}
+            >
+              <SelectTrigger id="regarding" className="mt-1 font-manrope">
+                <SelectValue placeholder="Select inquiry type" />
+              </SelectTrigger>
+              <SelectContent>
+                {contactPackageOptions.map((opt) => (
+                  <SelectItem key={opt.value} value={opt.value} className="font-manrope">
+                    {opt.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-sm text-muted-foreground mt-1">
+              Selecting a package pre-fills the subject; you can edit it below.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <Label htmlFor="name">Name *</Label>

@@ -76,6 +76,8 @@ const ProductDevelopment = () => {
         subtitle="Structured engagements designed to move your product forward efficiently"
         tiers={productDevelopmentPricingTiers}
         ctaText="Book a Product Audit Call"
+        interest="product-development"
+        serviceTitle="Product Development"
       />
       
       <ProductDevelopmentClientWork />

@@ -75,6 +75,10 @@ interface ContactRequest {
     type: string;
   };
   anti_robot_answer: string;
+  /** Service interest slug (e.g. product-development) */
+  interest?: string;
+  /** Package name (e.g. Product Clarity Sprint) */
+  package?: string;
 }
 
 // Helper function to escape HTML to prevent XSS
@@ -165,6 +169,8 @@ export default async function handler(
       body,
       file,
       anti_robot_answer,
+      interest,
+      package: packageName,
     }: ContactRequest = req.body;
 
     // Validate required fields
@@ -193,8 +199,14 @@ export default async function handler(
     const escapedTitle = escapeHtml(title);
     const escapedBody = escapeHtml(body).replace(/\n/g, '<br>');
     
+    const regardingHtml =
+      interest || packageName
+        ? `<p><strong>Regarding:</strong> ${[interest || '', packageName || ''].filter(Boolean).map((s) => escapeHtml(s)).join(' → ')}</p>`
+        : '';
+
     let emailBody = `
       <h2>New Contact Form Submission</h2>
+      ${regardingHtml}
       <p><strong>Name:</strong> ${escapedName}</p>
       <p><strong>Email:</strong> ${escapedEmail}</p>
       <p><strong>Subject:</strong> ${escapedTitle}</p>
@@ -261,7 +273,9 @@ export default async function handler(
         from: 'LMN3 Contact <hello@lmn3.digital>',
         to: ['hello@lmn3.digital'],
         replyTo: email,
-        subject: `New Contact: ${title.substring(0, 100)}`,
+        subject: packageName
+          ? `[${packageName}] ${title.substring(0, 80)}`
+          : `New Contact: ${title.substring(0, 100)}`,
         html: emailBody,
         ...(attachments.length > 0 && { attachments }),
       };

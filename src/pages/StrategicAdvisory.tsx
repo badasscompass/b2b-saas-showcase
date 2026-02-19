@@ -76,6 +76,8 @@ const StrategicAdvisory = () => {
         subtitle="Choose the right strategic engagement to accelerate your product vision"
         tiers={strategicAdvisoryPricingTiers}
         ctaText="Book a Strategy Discovery Call"
+        interest="strategic-advisory"
+        serviceTitle="Strategic Advisory"
       />
       
       <StrategicAdvisoryClientWork />

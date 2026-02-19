@@ -89,6 +89,8 @@ const ProductMarketingGTM = () => {
         subtitle="Choose the right marketing engagement to accelerate your go-to-market success"
         tiers={productMarketingGTMPricingTiers}
         ctaText="Book a GTM Discovery Call"
+        interest="product-marketing-gtm"
+        serviceTitle="Product Marketing & GTM"
       />
 
       <ServiceSection title="How It Works" background="gray">

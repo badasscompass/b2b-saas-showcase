@@ -1,10 +1,12 @@
-
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { ExternalLink, Euro } from "lucide-react";
+import { ExternalLink, Euro, Send } from "lucide-react";
 import { PackageOffer } from "@/data/partnerBios";
 import { useNavigate } from "react-router-dom";
+import { InquiryModal, type InquiryModalContext } from "@/components/InquiryModal";
+import { analyticsService } from "@/services/analyticsService";
 
 interface PartnerPackageOffersProps {
   packages: PackageOffer[];
@@ -13,6 +15,7 @@ interface PartnerPackageOffersProps {
 
 export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOffersProps) => {
   const navigate = useNavigate();
+  const [inquiryContext, setInquiryContext] = useState<InquiryModalContext | null>(null);
 
   // Helper for LMN3 partners to map tier to lead name(s)
   const getLeadForPackage = (offer: PackageOffer) => {
@@ -39,6 +42,21 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
 
   const handlePackageClick = (packageOffer: PackageOffer) => {
     navigate(packageOffer.servicePage);
+  };
+
+  const handleRequestPackage = (packageOffer: PackageOffer) => {
+    const interest = packageOffer.servicePage.replace(/^\//, "");
+    setInquiryContext({
+      interest,
+      serviceTitle: packageOffer.serviceTitle,
+      packageName: packageOffer.packageName,
+    });
+    analyticsService.trackEvent("inquiry_modal_open", {
+      category: "conversion",
+      label: "Request package info",
+      package_name: packageOffer.packageName,
+      location: "partner_package_offers",
+    });
   };
 
   if (packages.length === 0) {
@@ -86,7 +104,16 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
                 Part of {packageOffer.serviceTitle}
               </p>
               
-              <div className="flex justify-end">
+              <div className="flex flex-wrap gap-2 justify-end">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => handleRequestPackage(packageOffer)}
+                  className="border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A]/10 hover:text-primary text-xs"
+                >
+                  <Send className="mr-1 h-3 w-3" />
+                  Request package info
+                </Button>
                 <Button
                   size="sm"
                   variant="outline"
@@ -101,6 +128,12 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
           </Card>
         ))}
       </div>
+
+      <InquiryModal
+        open={!!inquiryContext}
+        onOpenChange={(open) => !open && setInquiryContext(null)}
+        context={inquiryContext}
+      />
     </div>
   );
 };

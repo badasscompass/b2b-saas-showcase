@@ -14,6 +14,9 @@ interface PricingTierCardProps {
   ctaText: string;
   onPartnerClick: (partnerName: string) => void;
   labelState: TierLabelState;
+  interest?: string;
+  serviceTitle?: string;
+  onRequestPackage?: (tier: PricingTier) => void;
 }
 
 export const PricingTierCard = ({
@@ -22,6 +25,9 @@ export const PricingTierCard = ({
   ctaText,
   onPartnerClick,
   labelState,
+  interest,
+  serviceTitle,
+  onRequestPackage,
 }: PricingTierCardProps) => {
   const isFractional = tier.packageName.toLowerCase().includes('fractional');
   const currentLabelState = isFractional ? 'Solo' : labelState;
@@ -153,17 +159,32 @@ export const PricingTierCard = ({
           )}
         </div>
 
-        <Button
-          className="w-full bg-[#EA3E3A] hover:bg-[#EA3E3A]/90 text-white font-manrope mt-6 flex-shrink-0"
-          asChild
-        >
-          <a
-            href="https://calendly.com/iva-lmn3/30min"
-            onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: ctaText, location: 'pricing_tier' })}
+        <div className="flex flex-col gap-2 mt-6 flex-shrink-0">
+          <Button
+            className="w-full bg-[#EA3E3A] hover:bg-[#EA3E3A]/90 text-white font-manrope"
+            asChild
           >
-            {ctaText}
-          </a>
-        </Button>
+            <a
+              href="https://calendly.com/iva-lmn3/30min"
+              onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: ctaText, location: 'pricing_tier' })}
+            >
+              {ctaText}
+            </a>
+          </Button>
+          {onRequestPackage && interest && serviceTitle && (
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full border-[#EA3E3A] text-[#EA3E3A] hover:bg-[#EA3E3A]/10 hover:text-primary font-manrope"
+              onClick={() => {
+                onRequestPackage(tier);
+                analyticsService.trackEvent('inquiry_modal_open', { category: 'conversion', label: 'Request package info', package_name: tier.packageName });
+              }}
+            >
+              Request package info
+            </Button>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

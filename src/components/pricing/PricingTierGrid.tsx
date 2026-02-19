@@ -8,6 +8,9 @@ interface PricingTierGridProps {
   ctaText: string;
   onPartnerClick: (partnerName: string) => void;
   tierLabelState: TierLabelState;
+  interest?: string;
+  serviceTitle?: string;
+  onRequestPackage?: (tier: PricingTier) => void;
 }
 
 export const PricingTierGrid = ({
@@ -15,6 +18,9 @@ export const PricingTierGrid = ({
   ctaText,
   onPartnerClick,
   tierLabelState,
+  interest,
+  serviceTitle,
+  onRequestPackage,
 }: PricingTierGridProps) => {
   const gridCols = tiers.length === 2
     ? 'grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto justify-items-center'
@@ -30,6 +36,9 @@ export const PricingTierGrid = ({
           ctaText={ctaText}
           onPartnerClick={onPartnerClick}
           labelState={tierLabelState}
+          interest={interest}
+          serviceTitle={serviceTitle}
+          onRequestPackage={onRequestPackage}
         />
       ))}
     </div>
