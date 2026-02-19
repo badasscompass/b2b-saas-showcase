@@ -23,13 +23,13 @@ export const clientWorkData: ClientWork[] = [
     lead: "Iva Rumora",
     engagementDuration: "12 weeks",
     image: {
-      type: 'unsplash' as const,
-      id: 'photo-1531297484001-80022131f5a1',
-      alt: 'Strategic product positioning and market alignment consulting for B2B SaaS platform',
+      type: 'external' as const,
+      url: '/case-studies/contendo.png',
+      alt: 'Strategic product positioning and market alignment - contendo.io B2B SaaS / CMS',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1487058792275-0ad4aaf24ca7',
-        alt: 'Product strategy and development workspace with code and design elements'
+        id: 'photo-1531297484001-80022131f5a1',
+        alt: 'Strategic product positioning and market alignment consulting for B2B SaaS platform'
       }
     },
     sector: "B2B SaaS / CMS/DMS",
@@ -45,13 +45,13 @@ export const clientWorkData: ClientWork[] = [
     lead: "Iva Rumora",
     engagementDuration: "5 months",
     image: {
-      type: 'unsplash' as const,
-      id: 'photo-1560518883-ce09059eeffa',
-      alt: 'Proptech platform for residential community and facility management - fractional product leadership case study',
+      type: 'external' as const,
+      url: '/case-studies/habiq.png',
+      alt: 'Proptech platform for residential community and facility management - Habiq',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1582407947304-fd86f028f716',
-        alt: 'Property management software dashboard and community platform interface'
+        id: 'photo-1560518883-ce09059eeffa',
+        alt: 'Proptech platform for residential community and facility management - fractional product leadership case study'
       }
     },
     sector: "PropTech / Community & Facility Management Platform",
