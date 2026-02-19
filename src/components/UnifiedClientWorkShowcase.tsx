@@ -5,6 +5,7 @@ import { UnifiedClientWorkCard } from "@/components/UnifiedClientWorkCard";
 import { ClientWorkDialog } from "@/components/ClientWorkDialog";
 import { useClientWork } from "@/hooks/useClientWork";
 import { ServiceConfig } from "@/types/unified";
+import { analyticsService } from "@/services/analyticsService";
 
 interface UnifiedClientWorkShowcaseProps {
   serviceType: string;
@@ -66,7 +67,16 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
               : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2'
           }`}>
             {clientWorks.map((work) => (
-              <Dialog key={work.id}>
+              <Dialog key={work.id} onOpenChange={(open) => {
+                if (open) {
+                  analyticsService.trackEvent('select_content', {
+                    content_type: 'case_study',
+                    content_id: work.id,
+                    item_name: work.title,
+                    service_type: serviceType,
+                  });
+                }
+              }}>
                 <DialogTrigger asChild>
                   <div>
                     <UnifiedClientWorkCard work={work} onClick={() => {}} />
