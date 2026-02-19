@@ -6,6 +6,7 @@ import { Users, Clock, Euro } from "lucide-react";
 import { PricingTier } from "@/components/PricingTiers";
 import { PricingTierLead } from "./PricingTierLead";
 import type { TierLabelState } from "./PricingTierLabelToggle";
+import { analyticsService } from "@/services/analyticsService";
 
 interface PricingTierCardProps {
   tier: PricingTier;
@@ -156,7 +157,10 @@ export const PricingTierCard = ({
           className="w-full bg-[#EA3E3A] hover:bg-[#EA3E3A]/90 text-white font-manrope mt-6 flex-shrink-0"
           asChild
         >
-          <a href="https://calendly.com/iva-lmn3/30min">
+          <a
+            href="https://calendly.com/iva-lmn3/30min"
+            onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: ctaText, location: 'pricing_tier' })}
+          >
             {ctaText}
           </a>
         </Button>
