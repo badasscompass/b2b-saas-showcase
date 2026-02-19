@@ -4,6 +4,7 @@ import { ContactForm } from '@/components/ContactForm'
 import { ContactCTA } from '@/components/ContactCTA'
 import { Mail, Phone, MapPin, Clock } from 'lucide-react'
 import { useSEO } from '@/hooks/useSEO'
+import { analyticsService } from '@/services/analyticsService'
 
 export const Contact: React.FC = () => {
   useSEO({
@@ -32,13 +33,25 @@ export const Contact: React.FC = () => {
             <div className="text-center p-6 rounded-lg border bg-card">
               <Mail className="w-8 h-8 mx-auto mb-4 text-primary" />
               <h3 className="font-semibold font-manrope mb-2">Email</h3>
-              <p className="text-muted-foreground">hello@lmn3.digital</p>
+              <a
+                href="mailto:hello@lmn3.digital"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                onClick={() => analyticsService.trackEvent('contact', { category: 'engagement', method: 'email', label: 'hello@lmn3.digital', location: 'contact_page' })}
+              >
+                hello@lmn3.digital
+              </a>
             </div>
             
             <div className="text-center p-6 rounded-lg border bg-card">
               <Phone className="w-8 h-8 mx-auto mb-4 text-primary" />
               <h3 className="font-semibold font-manrope mb-2">Phone</h3>
-              <p className="text-muted-foreground">Schedule a call</p>
+              <a
+                href="https://calendly.com/iva-lmn3/30min"
+                className="text-muted-foreground hover:text-primary transition-colors"
+                onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: 'Schedule a call', location: 'contact_page_phone_card' })}
+              >
+                Schedule a call
+              </a>
             </div>
             
             <div className="text-center p-6 rounded-lg border bg-card">

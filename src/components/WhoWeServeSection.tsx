@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/ca
 import { Button } from "@/components/ui/button";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Target, Rocket, Users, ArrowRight, Calendar } from "lucide-react";
+import { analyticsService } from "@/services/analyticsService";
 
 export const WhoWeServeSection = () => {
   const sections = [
@@ -103,7 +104,11 @@ export const WhoWeServeSection = () => {
         className="w-full group-hover:bg-gradient-to-r group-hover:from-red-500 group-hover:to-orange-500 group-hover:text-white group-hover:border-transparent transition-all duration-300 font-manrope mt-auto"
         asChild
       >
-        <a href="https://calendly.com/iva-lmn3/30min" className="flex items-center justify-center gap-2">
+        <a
+          href="https://calendly.com/iva-lmn3/30min"
+          className="flex items-center justify-center gap-2"
+          onClick={() => analyticsService.trackEvent('calendly_click', { category: 'conversion', label: section.cta, location: 'who_we_serve' })}
+        >
           <Calendar className="w-4 h-4" />
           {section.cta}
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
