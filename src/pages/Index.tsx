@@ -7,8 +7,10 @@ import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { PageCTA } from "@/components/PageCTA";
 import { useSEO } from "@/hooks/useSEO";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 
 const Index = () => {
+  useScrollDepth("homepage");
   useSEO({
     title: "Iva Rumora & LMN3 | Strategic Product Development & Advisory",
     description: "Iva Rumora leads LMN3, providing strategic product development, advisory services, and go-to-market expertise for startups and enterprises. 9+ years of product leadership experience.",

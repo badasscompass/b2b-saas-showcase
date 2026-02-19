@@ -9,9 +9,11 @@ import { PricingTiers, PricingTier } from "@/components/PricingTiers";
 import { productDevelopmentPricingTiers } from "@/data/productDevelopmentData";
 import { useSEO } from "@/hooks/useSEO";
 import { useEffect } from "react";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { analyticsService } from "@/services/analyticsService";
 
 const ProductDevelopment = () => {
+  useScrollDepth("product-development");
   useEffect(() => {
     analyticsService.trackEvent('view_item', {
       item_id: 'product-development',

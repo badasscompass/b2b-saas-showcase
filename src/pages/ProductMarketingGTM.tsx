@@ -11,9 +11,11 @@ import { whatWeDo, howItWorks, successMetrics, whyItWorks } from "@/data/product
 import { Target, Users, Rocket, BarChart3 } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 import { useEffect } from "react";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { analyticsService } from "@/services/analyticsService";
 
 const ProductMarketingGTM = () => {
+  useScrollDepth("product-marketing-gtm");
   useEffect(() => {
     analyticsService.trackEvent('view_item', {
       item_id: 'product-marketing-gtm',

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { analyticsService } from "@/services/analyticsService";
 import { ServicePageLayout } from "@/components/layout/ServicePageLayout";
 import { StrategicAdvisoryServices } from "@/components/StrategicAdvisoryServices";
@@ -12,6 +13,7 @@ import { PageCTA } from "@/components/PageCTA";
 import { useSEO } from "@/hooks/useSEO";
 
 const StrategicAdvisory = () => {
+  useScrollDepth("strategic-advisory");
   useEffect(() => {
     analyticsService.trackEvent('view_item', {
       item_id: 'strategic-advisory',
