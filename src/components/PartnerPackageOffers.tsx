@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { ExternalLink, Euro, Send } from "lucide-react";
 import { PackageOffer } from "@/data/partnerBios";
@@ -27,17 +26,9 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
     return null;
   };
 
-  const getTierColor = (tierType: string) => {
-    switch (tierType) {
-      case 'Solo':
-        return 'bg-[#EA3E3A] text-white';
-      case 'Duo':
-        return 'bg-[#F4A42C] text-white';
-      case 'Collab':
-        return 'bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
+  const getDisplayPackageName = (packageName: string) => {
+    if (packageName === "Discovery-to-Strategy Accelerator") return "Discovery to Strategy accelerator";
+    return packageName;
   };
 
   const handlePackageClick = (packageOffer: PackageOffer) => {
@@ -75,9 +66,6 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
             <CardContent className="p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex items-center space-x-2">
-                  <Badge className={`${getTierColor(packageOffer.tier)} font-manrope text-xs`}>
-                    {packageOffer.tier}
-                  </Badge>
                   {packageOffer.pricing && (
                     <div className="flex items-center space-x-1 text-sm font-semibold text-[#EA3E3A]">
                       <Euro className="h-3 w-3" />
@@ -88,7 +76,7 @@ export const PartnerPackageOffers = ({ packages, partnerName }: PartnerPackageOf
               </div>
               
               <h5 className="font-manrope font-semibold text-gray-900 mb-1">
-                {packageOffer.packageName}
+                {getDisplayPackageName(packageOffer.packageName)}
               </h5>
               
               {/* Show lead only for Solo packages */}

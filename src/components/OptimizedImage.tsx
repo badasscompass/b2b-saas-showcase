@@ -24,6 +24,7 @@ export const OptimizedImage = memo(({
 }: OptimizedImageProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
   const { elementRef, isIntersecting } = useLazyLoad<HTMLDivElement>({
     threshold: 0.1,
     rootMargin: '100px',
@@ -31,7 +32,8 @@ export const OptimizedImage = memo(({
   });
 
   const shouldLoad = !lazy || isIntersecting || priority;
-  const { url, alt } = ImageService.getWithFallback(source, config);
+  const currentSource = useFallback && source.fallback ? source.fallback : source;
+  const { url, alt } = ImageService.getWithFallback(currentSource, config);
 
   const handleLoad = () => {
     setIsLoading(false);
@@ -39,8 +41,14 @@ export const OptimizedImage = memo(({
   };
 
   const handleError = () => {
-    setIsLoading(false);
-    setHasError(true);
+    if (source.fallback && !useFallback) {
+      setUseFallback(true);
+      setHasError(false);
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+      setHasError(true);
+    }
   };
 
   if (hasError) {

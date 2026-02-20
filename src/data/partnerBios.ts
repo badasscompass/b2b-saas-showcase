@@ -66,12 +66,12 @@ export const partnerBios: PartnerBio[] = [
        pricing: "2500 (starting at)"
       },
       {
-        packageName: "Product Ops-in-a-Box",
-        tier: "Solo",
-        serviceType: "product-development",
-        servicePage: "/product-development",
-        serviceTitle: "Product Development",
-        pricing: "3000 (starting at)"
+        packageName: "Discovery-to-Strategy Accelerator",
+        tier: "Collab",
+        serviceType: "strategic-advisory",
+        servicePage: "/strategic-advisory",
+        serviceTitle: "Strategic Advisory",
+        pricing: "6000 (starting at)"
       }
     ]
   }

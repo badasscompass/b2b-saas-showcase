@@ -22,6 +22,15 @@ export class ImageService {
   static getWithFallback(source: ImageSource, config?: ImageConfig): { url: string; alt: string } {
     try {
       const url = this.buildUrl(source, config);
+      if (!url && source.fallback) {
+        return this.getWithFallback(source.fallback, config);
+      }
+      if (!url) {
+        return {
+          url: `https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&h=200&q=80`,
+          alt: source.alt || 'Default placeholder image'
+        };
+      }
       return { url, alt: source.alt };
     } catch (error) {
       console.log('Error building image URL:', error);

@@ -112,16 +112,6 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
     pricing: "2500 (starting at)"
   },
   {
-    packageName: "Fractional Product Leadership",
-    tier: "Solo", 
-    lead: "Both",
-    teamSetup: "1 senior PM",
-    format: "Daily 4-6 hours",
-    useCase: "Founders without a prouduct lead, product teams needing interim PM support (3-6 months).",
-    outcomes: "Executive-level product ownership, team leadership with operational support, delivery execution and roadmap implementation.",
-    pricing: "40€/h (starting rate)"
-  },
-  {
     packageName: "Product Ops-in-a-Box",
     tier: "Solo",
     lead: "Iva",
@@ -130,5 +120,15 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
     useCase: "Growing teams in need of structure, decision hygiene, and velocity.",
     outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership.",
     pricing: "3000 (starting at)"
+  },
+  {
+    packageName: "Fractional Product Leadership",
+    tier: "Solo",
+    lead: "Both",
+    teamSetup: "1 senior PM",
+    format: "Daily 4-6 hours",
+    useCase: "Founders without a prouduct lead, product teams needing interim PM support (3-6 months).",
+    outcomes: "Executive-level product ownership, team leadership with operational support, delivery execution and roadmap implementation.",
+    pricing: "40€/h (starting rate)"
   }
 ];

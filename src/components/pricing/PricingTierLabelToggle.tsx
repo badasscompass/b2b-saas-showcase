@@ -21,7 +21,7 @@ export const PricingTierLabelToggle = ({
   // Explanatory notes
   const definition =
     selected === "Startup"
-      ? "Startup: Early stage and indie founders building their first product or MVP."
+      ? "Startup: Bootstrapped early stage, pre-seed startups and indie founders building their first product or MVP."
       : selected === "Scaleup"
       ? "Scaleup: Seed to Series B companies with product-market fit, scaling operations."
       : selected === "Growth"
