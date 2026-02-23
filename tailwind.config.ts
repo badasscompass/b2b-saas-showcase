@@ -3,10 +3,14 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./index.html",
+    "./src/**/*.{ts,tsx,js,jsx,css}",
+  ],
+  safelist: [
+    "section-padding",
+    "container-padding",
+    "gradient-text",
+    "animate-fade-up",
   ],
   prefix: "",
   theme: {
