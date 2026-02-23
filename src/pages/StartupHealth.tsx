@@ -33,7 +33,7 @@ const healthMetrics: HealthMetric[] = [
     description: "Lifetime Value reflects endurance capacity. The longer customers stay and the more value they generate, the stronger and more resilient the system becomes.",
     insight: "Short LTV businesses lack endurance — they exhaust customer value faster than they can build sustained performance.",
     pulsePosition: { cx: 200, cy: 58 },
-    calculationMethod: "LTV = (ARR × margin%) ÷ (12 × monthly churn%)",
+    calculationMethod: "LTV = (Monthly ARPU × margin%) ÷ monthly churn%",
   },
   {
     id: "nrr",
@@ -99,7 +99,7 @@ const healthMetrics: HealthMetric[] = [
     description: "If you sprint (acquire customers) but need 24 months to recover your energy, you better have serious reserves.",
     insight: "If recovery is 6–9 months, you can train repeatedly without cardiac arrest.",
     pulsePosition: { cx: 218, cy: 420 },
-    calculationMethod: "Payback (months) = CAC ÷ (ARR ÷ 12 × margin%)",
+    calculationMethod: "Payback (months) = CAC ÷ (Monthly ARPU × margin%)",
   },
 ];
 
@@ -232,7 +232,7 @@ const MetricCard = ({ metric, isActive, onClick }: { metric: HealthMetric; isAct
       </div>
       <div className="min-w-0">
         <div className="flex items-baseline gap-2 mb-1">
-          <span className="font-bold text-foreground font-manrope">{metric.kpi}</span>
+          <span className="font-bold text-foreground font-manrope tracking-tight">{metric.kpi}</span>
           <Tooltip>
             <TooltipTrigger asChild>
               <span className="inline-flex cursor-help text-muted-foreground hover:text-foreground focus:outline-none" aria-label="Calculation method">
@@ -253,7 +253,7 @@ const MetricCard = ({ metric, isActive, onClick }: { metric: HealthMetric; isAct
         </div>
         {isActive && (
           <div className="animate-fade-up">
-            <p className="text-sm text-foreground/80 leading-relaxed mb-2">{metric.description}</p>
+            <p className="text-sm text-foreground leading-relaxed mb-2">{metric.description}</p>
             <p className="text-xs text-muted-foreground italic leading-relaxed">{metric.insight}</p>
           </div>
         )}
@@ -265,7 +265,7 @@ const MetricCard = ({ metric, isActive, onClick }: { metric: HealthMetric; isAct
 /* ── KPI Calculator ── */
 
 interface CalculatorInputs {
-  arr: string;
+  arpu: string;
   margin: string;
   churn: string;
   cac: string;
@@ -279,15 +279,43 @@ interface DiagnosisResult {
   details: string[];
 }
 
-function computeLTV(arr: number, marginPct: number, churnPct: number): number | null {
-  if (!arr || !marginPct || !churnPct || churnPct <= 0) return null;
-  return (arr * (marginPct / 100)) / (12 * (churnPct / 100));
+/** LTV = (monthly ARPU × margin%) ÷ monthly churn% */
+function computeLTV(arpu: number, marginPct: number, churnPct: number): number | null {
+  if (!arpu || !marginPct || !churnPct || churnPct <= 0) return null;
+  return (arpu * (marginPct / 100)) / (churnPct / 100);
 }
 
-function computePaybackMonths(cac: number, arr: number, marginPct: number): number | null {
-  if (!cac || !arr || !marginPct || marginPct <= 0) return null;
-  const monthlyMarginPerCustomer = (arr / 12) * (marginPct / 100);
+/** Payback (months) = CAC ÷ (ARPU × margin%) */
+function computePaybackMonths(cac: number, arpu: number, marginPct: number): number | null {
+  if (!cac || !arpu || !marginPct || marginPct <= 0) return null;
+  const monthlyMarginPerCustomer = arpu * (marginPct / 100);
   return monthlyMarginPerCustomer > 0 ? cac / monthlyMarginPerCustomer : null;
+}
+
+function getThresholdIndicators(
+  ltvCac: number,
+  payback: number,
+  churnPct: number
+): string[] {
+  const ltvCacLine =
+    ltvCac >= 5
+      ? `LTV:CAC ${ltvCac.toFixed(1)}x (≥5x strong)`
+      : ltvCac >= 3
+        ? `LTV:CAC ${ltvCac.toFixed(1)}x (3–5x healthy)`
+        : `LTV:CAC ${ltvCac.toFixed(1)}x (<3x needs work)`;
+  const paybackLine =
+    payback <= 9
+      ? `Payback ${payback.toFixed(1)} mo (≤9 mo fast)`
+      : payback <= 18
+        ? `Payback ${payback.toFixed(1)} mo (9–18 mo manageable)`
+        : `Payback ${payback.toFixed(1)} mo (>18 mo long)`;
+  const churnLine =
+    churnPct <= 2
+      ? `Churn ${churnPct}% (≤2% strong)`
+      : churnPct <= 5
+        ? `Churn ${churnPct}% (2–5% moderate)`
+        : `Churn ${churnPct}% (>5% high)`;
+  return [ltvCacLine, paybackLine, churnLine];
 }
 
 function getFitnessInterpretation(
@@ -298,52 +326,146 @@ function getFitnessInterpretation(
 ): DiagnosisResult | null {
   if (ltv == null || ltvCac == null || payback == null) return null;
   let score = 0;
-  const details: string[] = [];
 
-  // LTV:CAC (unit economics)
-  if (ltvCac >= 5) { score += 2; details.push("🏋️ LTV:CAC of " + ltvCac.toFixed(1) + "x — strong unit economics; product can fund its own growth."); }
-  else if (ltvCac >= 3) { score += 1; details.push("🔥 LTV:CAC of " + ltvCac.toFixed(1) + "x — healthy unit economics for sustainable product growth."); }
-  else { score -= 1; details.push("⚠️ LTV:CAC of " + ltvCac.toFixed(1) + "x — acquisition cost outweighs value delivered; product economics need work."); }
+  if (ltvCac >= 5) score += 2;
+  else if (ltvCac >= 3) score += 1;
+  else score -= 1;
 
-  // Payback (reinvestment speed)
-  if (payback <= 9) { score += 1; details.push("⚡ Payback under 9 months — you can reinvest in product and growth quickly."); }
-  else if (payback <= 18) { details.push("🕐 Payback 9–18 months — manageable; watch margin and reinvestment capacity."); }
-  else { score -= 1; details.push("🛑 Payback over 18 months — capital-intensive; improve product margin or efficiency to scale sustainably."); }
+  if (payback <= 9) score += 1;
+  else if (payback > 18) score -= 1;
 
-  // Churn (retention / stickiness)
-  if (churnPct <= 2) { score += 1; details.push("💪 Churn under 2% — strong retention; product is sticky."); }
-  else if (churnPct <= 5) { details.push("📉 Churn 2–5% — retention needs attention; focus on value and adoption."); }
-  else { score -= 1; details.push("⚠️ Churn above 5% — high leak; product-market fit or onboarding likely need work."); }
+  if (churnPct <= 2) score += 1;
+  else if (churnPct > 5) score -= 1;
 
-  if (score >= 4) return { label: "Endurance Athlete", emoji: "🏃", color: "#22c55e", overall: "Your product economics are strong — unit economics, payback, and retention support sustainable product-led growth.", details };
-  if (score >= 2) return { label: "Fit & Improving", emoji: "💪", color: "#F4A42C", overall: "Solid product fundamentals; sharpen unit economics or retention to strengthen product-led growth.", details };
-  if (score >= 0) return { label: "Needs Attention", emoji: "🩺", color: "#F07A35", overall: "Product economics need work — improve LTV:CAC, payback, or churn to build a sustainable product business.", details };
-  return { label: "Critical Condition", emoji: "🚑", color: "#EA3E3A", overall: "Product economics are at risk; address unit economics, payback, and retention before scaling.", details };
+  const indicators = getThresholdIndicators(ltvCac, payback, churnPct);
+
+  if (score >= 4) {
+    return {
+      label: "Endurance Athlete",
+      emoji: "🏃",
+      color: "#22c55e",
+      overall: "Your vitals support sustainable, product-led growth. Focus on execution and where to invest the upside.",
+      details: [
+        ...indicators,
+        "Use strong retention to test pricing or expansion without risking the base.",
+        "Reinvestment speed means you can fund growth without over-dilution.",
+      ],
+    };
+  }
+  if (score >= 2) {
+    return {
+      label: "Fit & Improving",
+      emoji: "💪",
+      color: "#F4A42C",
+      overall: "You're in good shape with clear levers. Improve one area from the readout before scaling spend.",
+      details: [
+        ...indicators,
+        "Improving retention (churn) lifts LTV and payback together.",
+        "If metabolic efficiency is the weak spot, focus on conversion or pricing before adding channels.",
+      ],
+    };
+  }
+  if (score >= 0) {
+    return {
+      label: "Needs Attention",
+      emoji: "🩺",
+      color: "#F07A35",
+      overall: "Address the red or yellow vitals above before scaling. Fix one core lever first.",
+      details: [
+        ...indicators,
+        "Often retention improvements improve resilience and recovery in one go.",
+        "Avoid new acquisition spend until at least two readout columns are in the green.",
+      ],
+    };
+  }
+  return {
+    label: "Critical Condition",
+    emoji: "🚑",
+    color: "#EA3E3A",
+    overall: "Get economics to a sustainable level before growth. Use the readout to see which lever to fix first.",
+    details: [
+      ...indicators,
+      "Tackle resilience (LTV), metabolic efficiency (LTV:CAC), or recovery (payback) in that order of impact.",
+      "Don't scale acquisition until vitals improve — it will deepen the hole.",
+    ],
+  };
+}
+
+type ReadoutStatus = "good" | "caution" | "bad";
+
+interface ReadoutCard {
+  text: string;
+  status: ReadoutStatus;
+}
+
+interface ReadoutConclusions {
+  resilience: ReadoutCard;
+  metabolic: ReadoutCard;
+  recovery: ReadoutCard;
+}
+
+const READOUT_CARD_CLASSES: Record<ReadoutStatus, { card: string; label: string }> = {
+  good: { card: "border-green-500/20 bg-green-500/5", label: "text-green-600" },
+  caution: { card: "border-amber-500/20 bg-amber-500/5", label: "text-amber-600" },
+  bad: { card: "border-destructive/20 bg-destructive/5", label: "text-destructive" },
+};
+
+function getReadoutConclusions(
+  ltv: number | null,
+  ltvCac: number | null,
+  payback: number | null,
+  _churnPct: number
+): ReadoutConclusions | null {
+  if (ltv == null || ltvCac == null || payback == null) return null;
+  const resilience: ReadoutCard =
+    ltv >= 10000
+      ? { text: "Strong long-term value per customer; resilience potential is high.", status: "good" }
+      : ltv >= 5000
+        ? { text: "Solid LTV; room to improve via margin or retention.", status: "caution" }
+        : { text: "Improve retention or margin to increase resilience (LTV).", status: "bad" };
+  const metabolic: ReadoutCard =
+    ltvCac >= 5
+      ? { text: "Strong unit economics; product can fund its own growth.", status: "good" }
+      : ltvCac >= 3
+        ? { text: "Healthy unit economics for sustainable product growth.", status: "caution" }
+        : { text: "Acquisition cost outweighs value; product economics need work.", status: "bad" };
+  const recovery: ReadoutCard =
+    payback <= 9
+      ? { text: "Fast payback — you can reinvest in product and growth quickly.", status: "good" }
+      : payback <= 18
+        ? { text: "Manageable payback; watch margin and reinvestment capacity.", status: "caution" }
+        : { text: "Long payback — improve margin or efficiency to scale sustainably.", status: "bad" };
+  return { resilience, metabolic, recovery };
 }
 
 const KPICalculator = () => {
   const [inputs, setInputs] = useState<CalculatorInputs>({
-    arr: "",
+    arpu: "",
     margin: "",
     churn: "",
     cac: "",
   });
 
-  const { ltv, payback, ltvCac, interpretation } = useMemo(() => {
-    const arr = parseFloat(inputs.arr);
+  const { ltv, payback, ltvCac, interpretation, conclusions } = useMemo(() => {
+    const arpu = parseFloat(inputs.arpu);
     const margin = parseFloat(inputs.margin);
     const churn = parseFloat(inputs.churn);
     const cac = parseFloat(inputs.cac);
-    const ltvVal = !isNaN(arr) && !isNaN(margin) && !isNaN(churn) ? computeLTV(arr, margin, churn) : null;
-    const paybackVal = !isNaN(cac) && !isNaN(arr) && !isNaN(margin) ? computePaybackMonths(cac, arr, margin) : null;
+    const ltvVal = !isNaN(arpu) && !isNaN(margin) && !isNaN(churn) ? computeLTV(arpu, margin, churn) : null;
+    const paybackVal = !isNaN(cac) && !isNaN(arpu) && !isNaN(margin) ? computePaybackMonths(cac, arpu, margin) : null;
     const ltvCacVal = ltvVal != null && cac > 0 && !isNaN(cac) ? ltvVal / cac : null;
     const canInterpret = ltvVal != null && ltvCacVal != null && paybackVal != null && !isNaN(churn);
     const interpretationVal = canInterpret ? getFitnessInterpretation(ltvVal, ltvCacVal, paybackVal, churn) : null;
+    const conclusionsVal =
+      ltvVal != null && ltvCacVal != null && paybackVal != null && !isNaN(churn)
+        ? getReadoutConclusions(ltvVal, ltvCacVal, paybackVal, churn)
+        : null;
     return {
       ltv: ltvVal,
       payback: paybackVal,
       ltvCac: ltvCacVal,
       interpretation: interpretationVal,
+      conclusions: conclusionsVal,
     };
   }, [inputs]);
 
@@ -373,10 +495,10 @@ const KPICalculator = () => {
             <Calculator className="w-3.5 h-3.5" />
             Fitness Readout
           </div>
-          <h2 className="text-2xl md:text-3xl font-bold text-foreground font-manrope mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground font-manrope mb-3 tracking-tight">
             Check Your <span className="gradient-text">Vital Signs</span>
           </h2>
-          <p className="text-muted-foreground font-manrope text-sm max-w-xl mx-auto">
+          <p className="text-muted-foreground font-manrope text-sm max-w-xl mx-auto leading-relaxed">
             Enter your numbers once — see resilience (LTV), recovery speed, and fitness level.
           </p>
         </div>
@@ -384,25 +506,38 @@ const KPICalculator = () => {
         <div className="space-y-6">
           {/* Single input block */}
           <div className="p-6 rounded-2xl border border-border/60 bg-background">
-            <h3 className="text-lg font-bold text-foreground font-manrope mb-2">
+            <h3 className="text-lg font-bold text-foreground font-manrope mb-2 tracking-tight">
               Your vital inputs
             </h3>
             <Tooltip>
               <TooltipTrigger asChild>
-                <p className="text-sm text-muted-foreground font-manrope mb-4 cursor-help inline-flex items-center gap-1.5">
-                  ARR, margin, churn & CAC → resilience (LTV) & recovery (payback)
+                <p className="text-sm text-muted-foreground font-manrope mb-4 cursor-help inline-flex items-center gap-1.5 leading-relaxed">
+                  Monthly ARPU, margin, churn & CAC → resilience (LTV) & recovery (payback)
                   <Info className="w-3.5 h-3.5 shrink-0" />
                 </p>
               </TooltipTrigger>
               <TooltipContent side="top" className="max-w-sm font-manrope">
-                <span className="block mb-1">LTV = (ARR × margin%) ÷ (12 × monthly churn%)</span>
-                <span className="block">Payback (mo) = CAC ÷ (ARR ÷ 12 × margin%)</span>
+                <span className="block mb-1">LTV = (ARPU × margin%) ÷ monthly churn%</span>
+                <span className="block">Payback (mo) = CAC ÷ (ARPU × margin%)</span>
               </TooltipContent>
             </Tooltip>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div>
-                <Label className="text-xs font-semibold text-muted-foreground font-manrope mb-1.5 block">ARR ($)</Label>
-                <Input type="number" placeholder="60000" value={inputs.arr} onChange={handleChange("arr")} className="font-manrope" />
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Label className="text-xs font-semibold text-muted-foreground font-manrope block">Monthly ARPU ($)</Label>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span className="inline-flex cursor-help text-muted-foreground hover:text-foreground focus:outline-none" aria-label="What is ARPU?">
+                        <Info className="w-3.5 h-3.5 shrink-0" />
+                      </span>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="max-w-xs font-manrope">
+                      <span className="font-semibold block mb-1">Average Revenue Per User (per month)</span>
+                      Total MRR ÷ paying customers, or revenue per seat per month. Using monthly ARPU keeps LTV and payback math simple and comparable.
+                    </TooltipContent>
+                  </Tooltip>
+                </div>
+                <Input type="number" placeholder="5000" value={inputs.arpu} onChange={handleChange("arpu")} className="font-manrope" />
               </div>
               <div>
                 <Label className="text-xs font-semibold text-muted-foreground font-manrope mb-1.5 block">Margin (%)</Label>
@@ -421,31 +556,44 @@ const KPICalculator = () => {
 
           {/* Output block */}
           <div className="p-6 md:p-8 rounded-2xl border border-border/60 bg-background">
-            <h3 className="text-lg font-bold text-foreground font-manrope mb-2">Your readout</h3>
+            <h3 className="text-lg font-bold text-foreground font-manrope mb-2 tracking-tight">Your readout</h3>
             <div className="pt-6 pb-1 border-t border-border/50 mt-1">
             {hasOutput ? (
               <div className="space-y-6 animate-fade-up">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <div className="p-5 rounded-xl border border-border/40 bg-foreground/[0.02]">
+                  <div
+                    className={`p-5 rounded-xl border flex flex-col ${conclusions ? READOUT_CARD_CLASSES[conclusions.resilience.status].card : "border-border/40 bg-foreground/[0.02]"}`}
+                  >
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <p className="text-xs font-semibold text-muted-foreground font-manrope mb-2 cursor-help inline-flex items-center gap-1">
+                        <p
+                          className={`text-xs font-semibold font-manrope mb-2 cursor-help inline-flex items-center gap-1 tracking-wide ${conclusions ? READOUT_CARD_CLASSES[conclusions.resilience.status].label : "text-muted-foreground"}`}
+                        >
                           Resilience (LTV)
                           <Info className="w-3 h-3 shrink-0" />
                         </p>
                       </TooltipTrigger>
                       <TooltipContent side="top" className="max-w-sm font-manrope">
-                        LTV = (ARR × margin%) ÷ (12 × monthly churn%)
+                        LTV = (Monthly ARPU × margin%) ÷ monthly churn%
                       </TooltipContent>
                     </Tooltip>
-                    <p className="text-xl font-bold text-foreground font-manrope">
+                    <p className="text-xl font-bold text-foreground font-manrope mb-3 tracking-tight tabular-nums">
                       {ltv != null ? `$${Math.round(ltv).toLocaleString()}` : "—"}
                     </p>
+                    {conclusions?.resilience && (
+                      <p className="text-sm text-muted-foreground font-manrope leading-relaxed mt-auto">
+                        {conclusions.resilience.text}
+                      </p>
+                    )}
                   </div>
-                  <div className="p-5 rounded-xl border border-border/40 bg-foreground/[0.02]">
+                  <div
+                    className={`p-5 rounded-xl border flex flex-col ${conclusions ? READOUT_CARD_CLASSES[conclusions.metabolic.status].card : "border-border/40 bg-foreground/[0.02]"}`}
+                  >
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <p className="text-xs font-semibold text-muted-foreground font-manrope mb-2 cursor-help inline-flex items-center gap-1">
+                        <p
+                          className={`text-xs font-semibold font-manrope mb-2 cursor-help inline-flex items-center gap-1 tracking-wide ${conclusions ? READOUT_CARD_CLASSES[conclusions.metabolic.status].label : "text-muted-foreground"}`}
+                        >
                           Metabolic efficiency (LTV:CAC)
                           <Info className="w-3 h-3 shrink-0" />
                         </p>
@@ -454,50 +602,78 @@ const KPICalculator = () => {
                         LTV:CAC = LTV ÷ CAC
                       </TooltipContent>
                     </Tooltip>
-                    <p className="text-xl font-bold text-foreground font-manrope">
+                    <p className="text-xl font-bold text-foreground font-manrope mb-3 tracking-tight tabular-nums">
                       {ltvCac != null ? ltvCac.toFixed(1) + "x" : "—"}
                     </p>
+                    {conclusions?.metabolic && (
+                      <p className="text-sm text-muted-foreground font-manrope leading-relaxed mt-auto">
+                        {conclusions.metabolic.text}
+                      </p>
+                    )}
                   </div>
-                  <div className="p-5 rounded-xl border border-border/40 bg-foreground/[0.02]">
+                  <div
+                    className={`p-5 rounded-xl border flex flex-col ${conclusions ? READOUT_CARD_CLASSES[conclusions.recovery.status].card : "border-border/40 bg-foreground/[0.02]"}`}
+                  >
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <p className="text-xs font-semibold text-muted-foreground font-manrope mb-2 cursor-help inline-flex items-center gap-1">
+                        <p
+                          className={`text-xs font-semibold font-manrope mb-2 cursor-help inline-flex items-center gap-1 tracking-wide ${conclusions ? READOUT_CARD_CLASSES[conclusions.recovery.status].label : "text-muted-foreground"}`}
+                        >
                           Recovery (Payback)
                           <Info className="w-3 h-3 shrink-0" />
                         </p>
                       </TooltipTrigger>
                       <TooltipContent side="top" className="max-w-sm font-manrope">
-                        Payback (months) = CAC ÷ (ARR ÷ 12 × margin%)
+                        Payback (months) = CAC ÷ (Monthly ARPU × margin%)
                       </TooltipContent>
                     </Tooltip>
-                    <p className="text-xl font-bold text-foreground font-manrope">
+                    <p className="text-xl font-bold text-foreground font-manrope mb-3 tracking-tight tabular-nums">
                       {payback != null ? payback.toFixed(1) + " mo" : "—"}
                     </p>
+                    {conclusions?.recovery && (
+                      <p className="text-sm text-muted-foreground font-manrope leading-relaxed mt-auto">
+                        {conclusions.recovery.text}
+                      </p>
+                    )}
                   </div>
                 </div>
                 {interpretation && (
                   <div className="pt-6 border-t border-border/40">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-3xl">{interpretation.emoji}</span>
-                      <div>
-                        <h4 className="text-lg font-bold font-manrope" style={{ color: interpretation.color }}>
+                    <div className="flex items-start gap-3 mb-4">
+                      <span className="text-3xl leading-none" aria-hidden>{interpretation.emoji}</span>
+                      <div className="min-w-0">
+                        <h4 className="text-lg font-bold font-manrope tracking-tight mb-1" style={{ color: interpretation.color }}>
                           {interpretation.label}
                         </h4>
-                        <p className="text-sm text-muted-foreground font-manrope">{interpretation.overall}</p>
+                        <p className="text-sm text-muted-foreground font-manrope leading-relaxed">{interpretation.overall}</p>
                       </div>
                     </div>
-                    <div className="space-y-2 mt-2">
-                      {interpretation.details.map((d, i) => (
-                        <p key={i} className="text-sm text-foreground/80 font-manrope leading-relaxed">{d}</p>
-                      ))}
+                    <div className="pl-10 space-y-3">
+                      <div className="flex flex-wrap gap-2">
+                        {interpretation.details.slice(0, 3).map((d, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium font-manrope bg-muted/60 text-foreground/90 border border-border/60"
+                          >
+                            {d}
+                          </span>
+                        ))}
+                      </div>
+                      <div className="space-y-1.5">
+                        {interpretation.details.slice(3).map((d, i) => (
+                          <p key={i} className="text-sm text-foreground font-manrope leading-relaxed">
+                            {d}
+                          </p>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="text-center text-muted-foreground/50 py-8">
-                <Activity className="w-10 h-10 mx-auto mb-3 opacity-30" />
-                <p className="text-sm font-manrope">Fill in ARR, margin, churn, and CAC to see your readout and fitness level.</p>
+              <div className="text-center text-muted-foreground py-8">
+                <Activity className="w-10 h-10 mx-auto mb-3 opacity-40" />
+                <p className="text-sm font-manrope leading-relaxed">Fill in monthly ARPU, margin, churn, and CAC to see your readout and fitness level.</p>
               </div>
             )}
             </div>
@@ -554,14 +730,14 @@ export default function StartupHealth() {
             <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-primary/10 text-primary mb-6 font-manrope">
               Free Diagnostic Framework
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 font-manrope leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-foreground mb-6 font-manrope leading-tight tracking-tight">
               Is Your Startup{" "}
               <span className="gradient-text">Healthy?</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4 font-manrope leading-relaxed">
               The real signal isn't one KPI — it's whether the organism recovers faster than it exhausts itself.
             </p>
-            <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto font-manrope">
+            <p className="text-sm text-muted-foreground max-w-xl mx-auto font-manrope leading-relaxed">
               Seven metrics. One body. Tap each organ to diagnose your startup.
             </p>
           </div>
@@ -581,7 +757,7 @@ export default function StartupHealth() {
 
               {/* Metric cards */}
               <div className="space-y-3">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 font-manrope">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 font-manrope tracking-tight">
                   The Diagnostic
                 </h2>
                 {healthMetrics.map((metric) => (
@@ -600,18 +776,18 @@ export default function StartupHealth() {
         {/* Synthesis / Key Insight (quote) */}
         <section className="section-padding container-padding bg-foreground/[0.02]">
           <div className="container mx-auto max-w-3xl text-center">
-            <blockquote className="text-xl md:text-2xl font-bold text-foreground font-manrope leading-relaxed mb-8">
+            <blockquote className="text-xl md:text-2xl font-bold text-foreground font-manrope leading-relaxed mb-8 tracking-tight">
               "A startup can look big (high MRR) and still be{" "}
               <span className="gradient-text">metabolically unhealthy</span>."
             </blockquote>
             <div className="grid sm:grid-cols-2 gap-4 mb-10">
-              <div className="p-5 rounded-xl border border-destructive/20 bg-destructive/5">
-                <p className="text-sm font-bold text-destructive mb-1 font-manrope">⚠ Warning Signal</p>
-                <p className="text-sm text-foreground/80 font-manrope">High MRR + Low NRR = Obesity</p>
+              <div className="p-5 rounded-xl border border-destructive/20 bg-destructive/5 text-left">
+                <p className="text-sm font-bold text-destructive mb-1.5 font-manrope tracking-tight">⚠ Warning Signal</p>
+                <p className="text-sm text-foreground font-manrope leading-relaxed">High MRR + Low NRR = Obesity</p>
               </div>
-              <div className="p-5 rounded-xl border border-green-500/20 bg-green-500/5">
-                <p className="text-sm font-bold text-green-600 mb-1 font-manrope">✓ Healthy Signal</p>
-                <p className="text-sm text-foreground/80 font-manrope">High NRR + Controlled CAC = Endurance Athlete</p>
+              <div className="p-5 rounded-xl border border-green-500/20 bg-green-500/5 text-left">
+                <p className="text-sm font-bold text-green-600 mb-1.5 font-manrope tracking-tight">✓ Healthy Signal</p>
+                <p className="text-sm text-foreground font-manrope leading-relaxed">High NRR + Controlled CAC = Endurance Athlete</p>
               </div>
             </div>
           </div>
@@ -623,11 +799,11 @@ export default function StartupHealth() {
         {/* CTA */}
         <section className="section-padding container-padding">
           <div className="container mx-auto max-w-3xl text-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 font-manrope">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4 font-manrope tracking-tight">
               Ready to get back in shape?
             </h2>
-            <p className="text-muted-foreground mb-8 font-manrope">
-              We help founders and product teams build the habits and systems that keep the business fit — so you can grow without burning out.
+            <p className="text-muted-foreground mb-8 font-manrope leading-relaxed max-w-xl mx-auto">
+              We help founders and product teams build the habits and systems that keep the business fit — so you can grow without burning your runway out.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
@@ -646,7 +822,7 @@ export default function StartupHealth() {
                   window.open("https://calendly.com/iva-lmn3/30min", "_blank");
                 }}
               >
-                Book a Free Strategy Call
+                Get a Free Fit-Check Call
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button
@@ -666,7 +842,7 @@ export default function StartupHealth() {
                   window.location.href = "/contact";
                 }}
               >
-                Get in Touch
+                Send Your Fitness Notes
               </Button>
             </div>
           </div>
