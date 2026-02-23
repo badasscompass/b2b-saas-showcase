@@ -69,5 +69,12 @@ export const routeConfig: RouteConfig[] = [
     title: 'Contact LMN3 | Get in Touch with Our Product Development Team',
     description: 'Contact LMN3 for product development, strategic advisory, and go-to-market services. Send RFPs and project inquiries directly to our team.',
     keywords: ['contact', 'contact form', 'get in touch', 'RFP', 'project inquiry', 'product development', 'strategic advisory', 'LMN3']
+  },
+  {
+    path: '/startup-health',
+    component: createLazyComponentWithErrorHandler(() => import('../pages/StartupHealth')),
+    title: 'Is Your Startup Healthy? | The Body Analogy for SaaS Metrics — LMN3',
+    description: 'MRR is weight. NRR is cardiovascular health. CAC is metabolic cost. LTV is lifespan. Discover whether your startup is an endurance athlete or headed for cardiac arrest.',
+    keywords: ['startup health', 'SaaS metrics', 'MRR', 'NRR', 'CAC', 'LTV', 'churn', 'startup KPIs', 'LMN3']
   }
 ];

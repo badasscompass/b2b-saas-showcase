@@ -23,7 +23,7 @@ const loadClarity = () => {
     t.src = 'https://www.clarity.ms/tag/' + i;
     const y = l.getElementsByTagName(r)[0];
     y.parentNode?.insertBefore(t, y);
-  })(window as Window & Record<string, unknown>, document, 'clarity', 'script', CLARITY_PROJECT_ID);
+  })(window as unknown as Window & Record<string, unknown>, document, 'clarity', 'script', CLARITY_PROJECT_ID);
 };
 
 const grantConsent = () => {
