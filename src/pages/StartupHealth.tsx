@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useSEO } from "@/hooks/useSEO";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { analyticsService } from "@/services/analyticsService";
-import { ArrowRight, Heart, Scale, Flame, Clock, Droplets, Activity, Calculator, Info } from "lucide-react";
+import { ArrowRight, Heart, Clock, Activity, Calculator, Info, UserMinus, UserPlus, CircleDollarSign } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface HealthMetric {
@@ -50,7 +50,7 @@ const healthMetrics: HealthMetric[] = [
     id: "mrr",
     kpi: "MRR",
     analogy: "Body Mass",
-    icon: <Scale className="w-6 h-6" />,
+    icon: <CircleDollarSign className="w-6 h-6" />,
     color: "#EA3E3A",
     description: "Monthly Recurring Revenue is like body mass. You can be heavy and unhealthy. You can be lean and powerful.",
     insight: "Big MRR doesn't tell you if the organism is viable — just that it's large.",
@@ -61,7 +61,7 @@ const healthMetrics: HealthMetric[] = [
     id: "cac",
     kpi: "CAC",
     analogy: "Metabolic Cost",
-    icon: <Flame className="w-6 h-6" />,
+    icon: <UserPlus className="w-6 h-6" />,
     color: "#F4A42C",
     description: "Customer Acquisition Cost is metabolic cost. If it takes 3,000 calories to build 500 calories of muscle, your body collapses.",
     insight: "If LTV doesn't significantly exceed CAC, you're overtraining and under-recovering.",
@@ -72,7 +72,7 @@ const healthMetrics: HealthMetric[] = [
     id: "churn",
     kpi: "Churn",
     analogy: "Muscle Loss",
-    icon: <Droplets className="w-6 h-6" />,
+    icon: <UserMinus className="w-6 h-6" />,
     color: "#EA3E3A",
     description: "Churn is muscle loss. Every customer who leaves is strength you're not rebuilding — you shrink instead of grow.",
     insight: "High MRR + high churn = obesity. High NRR + controlled CAC = endurance athlete.",
