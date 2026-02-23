@@ -52,7 +52,7 @@ const healthMetrics: HealthMetric[] = [
     analogy: "Lung Capacity",
     icon: <Wind className="w-6 h-6" />,
     color: "#E87B50",
-    description: "Gross margin is your oxygen efficiency: how much oxygen (profit) you get from each breath (revenue) after deducting service delivery costs (infrastructure and implementation costs, 3rd partyfees, licences, etc.). High margin means you run efficiently; low margin means you're gasping for air.",
+    description: "Margin reflects how effectively your lungs supply oxygen to your muscles during training — and how much strength (profit) remains after the effort (delivery costs). High margin means you can run a marathon; low margin means you're gasping for air.",
     insight: "You can have high MRR and still suffocate if margin is thin. Strong margins give you room to invest in growth.",
     pulsePosition: { cx: 182, cy: 208 },
     calculationMethod: "Gross Margin (%) = (Revenue − service delivery costs) ÷ Revenue × 100%",
