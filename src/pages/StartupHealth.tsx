@@ -545,7 +545,7 @@ export default function StartupHealth() {
 
   return (
     <>
-      <Navigation />
+      <Navigation logoOnly />
       <main className="min-h-screen pt-20 bg-background">
         {/* Hero */}
         <section className="section-padding container-padding relative overflow-hidden">

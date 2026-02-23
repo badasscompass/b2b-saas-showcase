@@ -27,8 +27,12 @@ export class AnalyticsService {
 
   /** Push event to dataLayer for GTM triggers (e.g. GA4 Event tags, conversion tags) */
   private pushToDataLayer(eventName: string, eventParams?: Record<string, unknown>): void {
-    if (typeof window === 'undefined' || !window.dataLayer) return;
-    window.dataLayer = window.dataLayer || [];
+    if (typeof window === 'undefined') return;
+    try {
+      window.dataLayer = window.dataLayer || [];
+    } catch {
+      return;
+    }
     window.dataLayer.push({
       event: eventName,
       ...eventParams,

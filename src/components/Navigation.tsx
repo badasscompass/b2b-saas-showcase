@@ -11,7 +11,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { analyticsService } from "@/services/analyticsService";
 
-export const Navigation = () => {
+interface NavigationProps {
+  logoOnly?: boolean;
+}
+
+export const Navigation = ({ logoOnly = false }: NavigationProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleNavClick = (linkName: string, isExternal: boolean = false) => {
@@ -35,6 +39,7 @@ export const Navigation = () => {
           </Link>
 
           {/* Desktop Navigation */}
+          {!logoOnly && (
           <div className="hidden md:flex items-center space-x-8">
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-[#EA3E3A] font-manrope transition-all duration-200 focus:outline-none group">
@@ -77,8 +82,10 @@ export const Navigation = () => {
             <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" onClick={() => handleNavClick('blog', true)} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
             <Link to="/contact" onClick={() => handleNavClick('contact')} className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity">Contact</Link>
           </div>
+          )}
 
           {/* Mobile Menu Button */}
+          {!logoOnly && (
           <button
             className="md:hidden p-2 text-gray-700 hover:text-[#EA3E3A] transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -86,10 +93,11 @@ export const Navigation = () => {
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
+          )}
         </div>
 
         {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
+        {!logoOnly && isMenuOpen && (
           <div className="md:hidden mt-4 py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
               <div className="space-y-2">
