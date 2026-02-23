@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useSEO } from "@/hooks/useSEO";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 import { analyticsService } from "@/services/analyticsService";
-import { ArrowRight, Heart, Clock, Activity, Calculator, Info, Flame, Scale, TrendingDown } from "lucide-react";
+import { ArrowRight, Heart, Clock, Activity, Calculator, Info, Flame, Scale, TrendingDown, Wind } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface HealthMetric {
@@ -45,6 +45,17 @@ const healthMetrics: HealthMetric[] = [
     insight: "If it's 85%, you're constantly losing internal capacity and must compensate by acquiring more customers.",
     pulsePosition: { cx: 195, cy: 178 },
     calculationMethod: "NRR = (Beginning revenue + expansions − contractions − churn) ÷ Beginning revenue × 100%",
+  },
+  {
+    id: "margin",
+    kpi: "Gross Margin",
+    analogy: "Lung Capacity",
+    icon: <Wind className="w-6 h-6" />,
+    color: "#E87B50",
+    description: "Gross margin is your oxygen efficiency: how much oxygen (profit) you get from each breath (revenue) after deducting service delivery costs (infrastructure, fees, licences, etc.). High margin means you run efficiently; low margin means you're gasping for air.",
+    insight: "You can have high MRR and still suffocate if margin is thin. Strong margins give you room to invest in growth.",
+    pulsePosition: { cx: 182, cy: 208 },
+    calculationMethod: "Gross Margin (%) = (Revenue − service delivery costs) ÷ Revenue × 100%",
   },
   {
     id: "mrr",
@@ -551,7 +562,7 @@ export default function StartupHealth() {
               The real signal isn't one KPI — it's whether the organism recovers faster than it exhausts itself.
             </p>
             <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto font-manrope">
-              Six metrics. One body. Tap each organ to diagnose your startup.
+              Seven metrics. One body. Tap each organ to diagnose your startup.
             </p>
           </div>
         </section>
