@@ -300,25 +300,25 @@ function getFitnessInterpretation(
   let score = 0;
   const details: string[] = [];
 
-  // LTV:CAC
-  if (ltvCac >= 5) { score += 2; details.push("🏋️ LTV:CAC of " + ltvCac.toFixed(1) + "x — elite metabolic efficiency."); }
-  else if (ltvCac >= 3) { score += 1; details.push("🔥 LTV:CAC of " + ltvCac.toFixed(1) + "x — healthy metabolism."); }
-  else { score -= 1; details.push("⚠️ LTV:CAC of " + ltvCac.toFixed(1) + "x — overtraining, under-recovering."); }
+  // LTV:CAC (unit economics)
+  if (ltvCac >= 5) { score += 2; details.push("🏋️ LTV:CAC of " + ltvCac.toFixed(1) + "x — strong unit economics; product can fund its own growth."); }
+  else if (ltvCac >= 3) { score += 1; details.push("🔥 LTV:CAC of " + ltvCac.toFixed(1) + "x — healthy unit economics for sustainable product growth."); }
+  else { score -= 1; details.push("⚠️ LTV:CAC of " + ltvCac.toFixed(1) + "x — acquisition cost outweighs value delivered; product economics need work."); }
 
-  // Payback
-  if (payback <= 9) { score += 1; details.push("⚡ Payback under 9 months — you can sprint again."); }
-  else if (payback <= 18) { details.push("🕐 Payback 9–18 months — manageable but watch reserves."); }
-  else { score -= 1; details.push("🛑 Payback over 18 months — cardiac arrest risk."); }
+  // Payback (reinvestment speed)
+  if (payback <= 9) { score += 1; details.push("⚡ Payback under 9 months — you can reinvest in product and growth quickly."); }
+  else if (payback <= 18) { details.push("🕐 Payback 9–18 months — manageable; watch margin and reinvestment capacity."); }
+  else { score -= 1; details.push("🛑 Payback over 18 months — capital-intensive; improve product margin or efficiency to scale sustainably."); }
 
-  // Churn (muscle loss)
-  if (churnPct <= 2) { score += 1; details.push("💪 Churn under 2% — minimal muscle loss."); }
-  else if (churnPct <= 5) { details.push("📉 Churn 2–5% — some muscle loss to address."); }
-  else { score -= 1; details.push("⚠️ Churn above 5% — severe muscle loss."); }
+  // Churn (retention / stickiness)
+  if (churnPct <= 2) { score += 1; details.push("💪 Churn under 2% — strong retention; product is sticky."); }
+  else if (churnPct <= 5) { details.push("📉 Churn 2–5% — retention needs attention; focus on value and adoption."); }
+  else { score -= 1; details.push("⚠️ Churn above 5% — high leak; product-market fit or onboarding likely need work."); }
 
-  if (score >= 4) return { label: "Endurance Athlete", emoji: "🏃", color: "#22c55e", overall: "Your startup is in peak condition.", details };
-  if (score >= 2) return { label: "Fit & Improving", emoji: "💪", color: "#F4A42C", overall: "Healthy foundation with room to strengthen.", details };
-  if (score >= 0) return { label: "Needs Attention", emoji: "🩺", color: "#F07A35", overall: "Several warning signs — time for a check-up.", details };
-  return { label: "Critical Condition", emoji: "🚑", color: "#EA3E3A", overall: "Multiple red flags — intervention needed.", details };
+  if (score >= 4) return { label: "Endurance Athlete", emoji: "🏃", color: "#22c55e", overall: "Your product economics are strong — unit economics, payback, and retention support sustainable product-led growth.", details };
+  if (score >= 2) return { label: "Fit & Improving", emoji: "💪", color: "#F4A42C", overall: "Solid product fundamentals; sharpen unit economics or retention to strengthen product-led growth.", details };
+  if (score >= 0) return { label: "Needs Attention", emoji: "🩺", color: "#F07A35", overall: "Product economics need work — improve LTV:CAC, payback, or churn to build a sustainable product business.", details };
+  return { label: "Critical Condition", emoji: "🚑", color: "#EA3E3A", overall: "Product economics are at risk; address unit economics, payback, and retention before scaling.", details };
 }
 
 const KPICalculator = () => {
@@ -377,7 +377,7 @@ const KPICalculator = () => {
             Check Your <span className="gradient-text">Vital Signs</span>
           </h2>
           <p className="text-muted-foreground font-manrope text-sm max-w-xl mx-auto">
-            Enter your numbers once — see lifespan potential, recovery speed, and fitness level.
+            Enter your numbers once — see resilience (LTV), recovery speed, and fitness level.
           </p>
         </div>
 
@@ -390,7 +390,7 @@ const KPICalculator = () => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <p className="text-sm text-muted-foreground font-manrope mb-4 cursor-help inline-flex items-center gap-1.5">
-                  ARR, margin, churn & CAC → lifespan (LTV) & recovery (payback)
+                  ARR, margin, churn & CAC → resilience (LTV) & recovery (payback)
                   <Info className="w-3.5 h-3.5 shrink-0" />
                 </p>
               </TooltipTrigger>
@@ -430,7 +430,7 @@ const KPICalculator = () => {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <p className="text-xs font-semibold text-muted-foreground font-manrope mb-2 cursor-help inline-flex items-center gap-1">
-                          Lifespan (LTV)
+                          Resilience (LTV)
                           <Info className="w-3 h-3 shrink-0" />
                         </p>
                       </TooltipTrigger>
@@ -446,7 +446,7 @@ const KPICalculator = () => {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <p className="text-xs font-semibold text-muted-foreground font-manrope mb-2 cursor-help inline-flex items-center gap-1">
-                          Efficiency (LTV:CAC)
+                          Metabolic efficiency (LTV:CAC)
                           <Info className="w-3 h-3 shrink-0" />
                         </p>
                       </TooltipTrigger>
@@ -515,7 +515,7 @@ export default function StartupHealth() {
 
   useSEO({
     title: "Is Your Startup Healthy? | The Body Analogy for SaaS Metrics — LMN3",
-    description: "MRR is weight. NRR is cardiovascular health. CAC is metabolic cost. LTV is lifespan. Discover whether your startup is an endurance athlete or headed for cardiac arrest.",
+    description: "MRR is body mass. NRR is cardiovascular health. Gross margin is lung capacity. CAC is metabolic cost. Churn is muscle loss. LTV is resilience potential. Discover whether your startup is an endurance athlete or headed for cardiac arrest.",
     keywords: ["startup health", "SaaS metrics", "MRR", "NRR", "CAC", "LTV", "churn", "startup KPIs", "product metrics", "LMN3"],
   });
 
