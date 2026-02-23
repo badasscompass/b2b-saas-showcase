@@ -427,7 +427,7 @@ function getReadoutConclusions(
     ltvCac >= 5
       ? { text: "Strong unit economics; product can fund its own growth.", status: "good" }
       : ltvCac >= 3
-        ? { text: "Healthy unit economics for sustainable product growth.", status: "caution" }
+        ? { text: "In the healthy range of unit economics for sustainable product growth.", status: "caution" }
         : { text: "Acquisition cost outweighs value; product economics need work.", status: "bad" };
   const recovery: ReadoutCard =
     payback <= 9

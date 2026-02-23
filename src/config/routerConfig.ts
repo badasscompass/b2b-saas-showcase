@@ -30,8 +30,8 @@ export const routeConfig: RouteConfig[] = [
   {
     path: '/',
     component: React.lazy(() => import('../pages/Index')),
-    title: 'Iva Rumora & LMN3 | Strategic Product Development & Advisory',
-    description: 'Iva Rumora leads LMN3, providing strategic product development, advisory services, and go-to-market expertise for startups and enterprises.',
+    title: 'Iva Rumora & LMN3 | Product Leadership & Advisory',
+    description: 'Iva Rumora leads LMN3, providing strategic product development, advisory services, and go-to-market expertise for startups and product teams.',
     keywords: ['Iva Rumora', 'LMN3', 'product development', 'strategic advisory', 'product consultant', 'startup advisor', 'product manager', 'product management', 'product leadership'],
     preload: true
   },
@@ -59,22 +59,22 @@ export const routeConfig: RouteConfig[] = [
   {
     path: '/about-us',
     component: createLazyComponentWithErrorHandler(() => import('../pages/AboutUs')),
-    title: 'About Iva Rumora & LMN3 | Strategic Product Leadership',
+    title: 'About Iva Rumora & LMN3 | Product Leadership & Advisory for Startups',
     description: 'Meet Iva Rumora and the strategic minds behind LMN3. Expert product development consultants helping startups and enterprises build products that scale.',
-    keywords: ['Iva Rumora', 'LMN3', 'about', 'team', 'product consultant', 'strategic advisory', 'product manager', 'product management', 'senior product manager', 'product leadership']
+    keywords: ['Iva Rumora', 'LMN3', 'about', 'team', 'product consultant', 'strategic advisory', 'product manager', 'product management', 'senior product manager', 'product leadership', 'startup advisor']
   },
   {
     path: '/contact',
     component: createLazyComponentWithErrorHandler(() => import('../pages/Contact')),
-    title: 'Contact LMN3 | Get in Touch with Our Product Development Team',
+    title: 'Contact LMN3 | Get in Touch with Our Product Leadership',
     description: 'Contact LMN3 for product development, strategic advisory, and go-to-market services. Send RFPs and project inquiries directly to our team.',
     keywords: ['contact', 'contact form', 'get in touch', 'RFP', 'project inquiry', 'product development', 'strategic advisory', 'LMN3']
   },
   {
     path: '/startup-health',
     component: createLazyComponentWithErrorHandler(() => import('../pages/StartupHealth')),
-    title: 'Is Your Startup Healthy? | The Body Analogy for SaaS Metrics — LMN3',
+    title: 'Is Your Startup Healthy? | The Fitness Checklist for SaaS Metrics — LMN3',
     description: 'MRR is weight. NRR is cardiovascular health. CAC is metabolic cost. LTV is lifespan. Discover whether your startup is an endurance athlete or headed for cardiac arrest.',
-    keywords: ['startup health', 'SaaS metrics', 'MRR', 'NRR', 'CAC', 'LTV', 'churn', 'startup KPIs', 'LMN3']
+    keywords: ['startup health', 'SaaS metrics', 'unit economics', 'MRR', 'NRR', 'CAC', 'LTV', 'churn', 'startup KPIs', 'LMN3']
   }
 ];
