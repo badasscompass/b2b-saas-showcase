@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { PageFooter } from "@/components/PageFooter";
 import { Button } from "@/components/ui/button";
@@ -336,6 +336,18 @@ const KPICalculator = () => {
     };
   }, [inputs]);
 
+  const calculatorConversionFired = useRef(false);
+  useEffect(() => {
+    if (interpretation && !calculatorConversionFired.current) {
+      calculatorConversionFired.current = true;
+      analyticsService.trackConversion("startup_health_calculator_complete", {
+        conversion_type: "micro",
+        fitness_label: interpretation.label,
+        location: "startup_health_calculator",
+      });
+    }
+  }, [interpretation]);
+
   const handleChange = (field: keyof CalculatorInputs) => (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [field]: e.target.value }));
   };
@@ -504,6 +516,10 @@ export default function StartupHealth() {
       item_name: "Startup Health Body Analogy",
       item_category: "lead_magnet",
     });
+    analyticsService.trackConversion("startup_health_guide_view", {
+      conversion_type: "micro",
+      location: "startup_health_page",
+    });
   }, []);
 
   const handleMetricClick = (id: string | null) => {
@@ -570,10 +586,7 @@ export default function StartupHealth() {
           </div>
         </section>
 
-        {/* KPI Calculator */}
-        <KPICalculator />
-
-        {/* Synthesis / Key Insight */}
+        {/* Synthesis / Key Insight (quote) */}
         <section className="section-padding container-padding bg-foreground/[0.02]">
           <div className="container mx-auto max-w-3xl text-center">
             <blockquote className="text-xl md:text-2xl font-bold text-foreground font-manrope leading-relaxed mb-8">
@@ -593,6 +606,9 @@ export default function StartupHealth() {
           </div>
         </section>
 
+        {/* KPI Calculator */}
+        <KPICalculator />
+
         {/* CTA */}
         <section className="section-padding container-padding">
           <div className="container mx-auto max-w-3xl text-center">
@@ -607,7 +623,15 @@ export default function StartupHealth() {
                 size="lg"
                 className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] hover:from-[#d63531] hover:to-[#e09425] text-white font-manrope font-semibold group"
                 onClick={() => {
-                  analyticsService.trackEvent("calendly_click", { location: "startup_health_cta" });
+                  analyticsService.trackEvent("calendly_click", {
+                    location: "startup_health_cta",
+                    label: "Book a Free Strategy Call",
+                    category: "conversion",
+                  });
+                  analyticsService.trackConversion("startup_health_book_strategy_call", {
+                    conversion_type: "primary",
+                    location: "startup_health_cta",
+                  });
                   window.open("https://calendly.com/iva-lmn3/30min", "_blank");
                 }}
               >
@@ -618,7 +642,18 @@ export default function StartupHealth() {
                 size="lg"
                 variant="outline"
                 className="font-manrope font-semibold"
-                onClick={() => window.location.href = "/contact"}
+                onClick={() => {
+                  analyticsService.trackEvent("contact_click", {
+                    location: "startup_health_cta",
+                    label: "Get in Touch",
+                    category: "conversion",
+                  });
+                  analyticsService.trackConversion("startup_health_get_in_touch", {
+                    conversion_type: "secondary",
+                    location: "startup_health_cta",
+                  });
+                  window.location.href = "/contact";
+                }}
               >
                 Get in Touch
               </Button>

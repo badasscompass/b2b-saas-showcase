@@ -68,7 +68,7 @@
      }
      </script>
 
-     <!-- Analytics only on production (exclude Vercel/Lovable previews) -->
+     <!-- GTM + GA4 conversion tracking (production only). dataLayer receives events from app; in GTM add GA4 Event tag on Custom Event "conversion" and mark as conversion in GA4. -->
 <script>
 (function(){
   var allowedHosts = ['lmn3.digital','www.lmn3.digital'];
@@ -76,6 +76,7 @@
   if (!host || allowedHosts.indexOf(host) === -1) return;
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  window.gtag = gtag;
   gtag('consent', 'default', {
     'analytics_storage': 'denied',
     'ad_storage': 'denied',
