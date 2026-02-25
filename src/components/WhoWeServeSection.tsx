@@ -10,7 +10,7 @@ export const WhoWeServeSection = () => {
     {
       icon: Target,
       title: "Startups",
-      subtitle: "Bootstrapped, Seed to Series A",
+      subtitle: "Bootstrapped, Preseed to Seed",
       gradient: "from-red-50 to-red-100",
       iconBg: "bg-gradient-to-br from-red-500 to-red-600",
       items: [
