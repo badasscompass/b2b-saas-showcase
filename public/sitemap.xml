@@ -47,4 +47,12 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Startup Health Diagnostic -->
+  <url>
+    <loc>https://lmn3.digital/startup-health</loc>
+    <lastmod>2026-02-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

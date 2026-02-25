@@ -5,8 +5,6 @@ import { Button } from "@/components/ui/button";
 declare global {
   interface Window {
     _hsp: any[];
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
   }
 }
 

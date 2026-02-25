@@ -105,12 +105,14 @@ export const useSEO = (options: SEOOptions) => {
       }
     }
 
-    // Structured Data
+    // Structured Data — use a dedicated script tag so we don't overwrite the global Organization schema
     if (options.structuredData) {
-      let structuredDataScript = document.querySelector('script[type="application/ld+json"]') as HTMLScriptElement;
+      const id = 'ld-json-page';
+      let structuredDataScript = document.getElementById(id) as HTMLScriptElement | null;
       if (!structuredDataScript) {
         structuredDataScript = document.createElement('script');
         structuredDataScript.type = 'application/ld+json';
+        structuredDataScript.id = id;
         document.head.appendChild(structuredDataScript);
       }
       structuredDataScript.textContent = JSON.stringify(options.structuredData);
