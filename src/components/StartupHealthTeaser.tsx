@@ -14,7 +14,7 @@ export const StartupHealthTeaser = () => {
   };
 
   return (
-    <section className="section-padding container-padding">
+    <section className="section-padding container-padding bg-foreground/[0.02]">
       <div className="container mx-auto max-w-5xl">
         <div
           className="relative overflow-hidden rounded-2xl border border-border/40 p-8 md:p-12 cursor-pointer group"
