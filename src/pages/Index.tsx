@@ -61,9 +61,9 @@ const Index = () => {
       <HeroSection onGuideMeClick={() => setHomeWizardOpen(true)} />
       <HomeGuideWizard open={homeWizardOpen} onOpenChange={setHomeWizardOpen} />
       <WhoWeServeSection />
+      <StartupHealthTeaser />
       <ServicesSection />
       <TestimonialsSection />
-      <StartupHealthTeaser />
       <WhyChooseUs />
     </PageLayout>
   );
