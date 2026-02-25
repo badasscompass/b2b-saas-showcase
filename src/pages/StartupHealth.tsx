@@ -690,9 +690,66 @@ export default function StartupHealth() {
   const [activeMetric, setActiveMetric] = useState<string | null>("nrr");
 
   useSEO({
-    title: "Is Your Startup Healthy? | The Body Analogy for SaaS Metrics — LMN3",
-    description: "MRR is body mass. NRR is cardiovascular health. Gross margin is lung capacity. CAC is metabolic cost. Churn is muscle loss. LTV is resilience potential. Discover whether your startup is an endurance athlete or headed for cardiac arrest.",
-    keywords: ["startup health", "SaaS metrics", "MRR", "NRR", "CAC", "LTV", "churn", "startup KPIs", "product metrics", "LMN3"],
+    title: "Is Your Startup Healthy? | The Fitness Checklist for SaaS Metrics — LMN3",
+    description: "MRR is weight. NRR is cardiovascular health. CAC is metabolic cost. LTV is lifespan. Discover whether your startup is an endurance athlete or headed for cardiac arrest.",
+    keywords: ["startup health", "SaaS metrics", "unit economics", "MRR", "NRR", "CAC", "LTV", "churn", "startup KPIs", "product metrics", "LMN3"],
+    canonicalUrl: "https://lmn3.digital/startup-health",
+    openGraph: {
+      type: "article",
+      image: "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg",
+      url: "https://lmn3.digital/startup-health",
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@LMN3",
+      creator: "@IvaRumora",
+    },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does MRR tell you about startup health?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "MRR (Monthly Recurring Revenue) is like body mass. You can be heavy and unhealthy, or lean and powerful. Big MRR doesn't tell you if the organism is viable — just that it's large."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a healthy LTV to CAC ratio for SaaS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A healthy LTV:CAC ratio is 3x or above. Below 3x means your acquisition cost outweighs the value generated. 5x or higher indicates strong unit economics where the product can fund its own growth."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Net Revenue Retention (NRR) indicate?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "NRR is like cardiovascular resilience. If NRR is 115%, your existing customers are expanding without external stimulus. If it's 85%, you're constantly losing capacity and must compensate by acquiring more customers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good CAC payback period for startups?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A payback period of 6–9 months is healthy — you can reinvest repeatedly. 9–18 months is manageable but watch margins. Over 18 months means you need serious reserves or must improve efficiency."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you diagnose if a startup is healthy using metrics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Think of it as a body: MRR is weight, NRR is cardiovascular health, CAC is metabolic cost, LTV is lifespan, payback period is recovery time, and churn is muscle loss. The real signal is whether the organism recovers faster than it exhausts itself."
+          }
+        }
+      ]
+    },
   });
 
   useScrollDepth("startup-health");
