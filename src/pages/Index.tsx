@@ -6,6 +6,7 @@ import { ServicesSection } from "@/components/ServicesSection";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 import { TestimonialsSection } from "@/components/TestimonialsSection";
 import { HomeGuideWizard } from "@/components/HomeGuideWizard";
+import { StartupHealthTeaser } from "@/components/StartupHealthTeaser";
 import { useSEO } from "@/hooks/useSEO";
 import { useScrollDepth } from "@/hooks/useScrollDepth";
 
@@ -62,6 +63,7 @@ const Index = () => {
       <WhoWeServeSection />
       <ServicesSection />
       <TestimonialsSection />
+      <StartupHealthTeaser />
       <WhyChooseUs />
     </PageLayout>
   );
