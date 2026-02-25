@@ -36,10 +36,10 @@ export const StartupHealthTeaser = () => {
                 Free Diagnostic
               </span>
               <h3 className="text-xl md:text-2xl font-bold text-foreground font-manrope tracking-tight mb-2 leading-snug">
-                Is your startup an endurance athlete — or headed for cardiac arrest?
+                Is your startup an athlete — or running on vanity metrics?
               </h3>
               <p className="text-sm text-muted-foreground font-manrope leading-relaxed max-w-xl">
-                MRR is weight. NRR is cardiovascular health. CAC is metabolic cost.
+                You know your MRR. But do you know your NRR, CAC, and LTV and how they impact your growth?
                 Check your vital signs with our interactive fitness readout.
               </p>
             </div>
