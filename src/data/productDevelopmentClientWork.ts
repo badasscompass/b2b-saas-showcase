@@ -61,7 +61,8 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
         alt: 'Remote development team collaboration and product operations optimization case study'
       }
     },
-    sector: "B2B Hospitality",
-    product: "Tourism & Transport Platform"
+    sector: "B2B Traveltech | Platform for IROP management",
+    product: "Flighter.ai",
+    productUrl: "https://www.fligther.ai/"
   }
 ];

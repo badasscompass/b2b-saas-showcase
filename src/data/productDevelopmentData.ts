@@ -95,8 +95,9 @@ export const clientWork = [
         alt: 'People working with computers'
       }
     },
-    sector: "B2B Hospitality | Traveltech",
-    product: "Platform for Booking and Travel Management"
+    sector: "B2B Traveltech | Platform for IROP management",
+    product: "Flighter.ai",
+    productUrl: "https://www.fligther.ai/"
   }
 ];
 
