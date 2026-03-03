@@ -55,14 +55,8 @@ export class AnalyticsService {
     };
     if (options?.value != null) params.value = options.value;
     if (options?.currency) params.currency = options.currency;
+    // dataLayer only — GTM fires GA4 conversion tags
     this.pushToDataLayer('conversion', params);
-    if (this.isGtagAvailable()) {
-      window.gtag('event', 'conversion', {
-        send_to: this.measurementId,
-        conversion_label: conversionName,
-        ...params,
-      });
-    }
     if (isDev) console.log(`Conversion: ${conversionName}`, options);
   }
 
