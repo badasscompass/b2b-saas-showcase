@@ -10,7 +10,6 @@ declare global {
 
 export class AnalyticsService {
   private static instance: AnalyticsService;
-  private measurementId: string = 'G-FQVXJN10TZ';
 
   private constructor() {}
 
