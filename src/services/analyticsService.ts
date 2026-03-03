@@ -87,18 +87,15 @@ export class AnalyticsService {
   ]);
 
   public trackEvent(eventName: string, parameters?: Record<string, any>): void {
-    if (!this.isGtagAvailable()) {
-      console.warn('Google Analytics gtag not available');
-      return;
-    }
-
     const payload = {
       event_category: parameters?.category || 'engagement',
       event_label: parameters?.label,
       value: parameters?.value,
       ...parameters
     };
-    window.gtag('event', eventName, payload);
+
+    // Push to dataLayer only — GTM handles GA4 event tags.
+    // No direct gtag('event', ...) call to avoid duplicate hits.
     this.pushToDataLayer(eventName, payload as Record<string, unknown>);
 
     if (AnalyticsService.CONVERSION_EVENTS.has(eventName)) {
@@ -108,7 +105,7 @@ export class AnalyticsService {
       });
     }
 
-    if (isDev) console.log(`GA Event: ${eventName}`, parameters);
+    if (isDev) console.log(`Event (dataLayer): ${eventName}`, parameters);
   }
 
   // Track button clicks
