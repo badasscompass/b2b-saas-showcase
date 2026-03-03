@@ -68,17 +68,14 @@ export class AnalyticsService {
   }
 
   public trackPageView(path: string, title?: string): void {
-    if (!this.isGtagAvailable()) {
-      console.warn('Google Analytics gtag not available');
-      return;
-    }
-
-    window.gtag('config', this.measurementId, {
+    // Push to dataLayer only — GTM owns the GA4 config tag and will fire page_view.
+    // Calling gtag('config', ...) here would create a duplicate GA4 hit.
+    this.pushToDataLayer('page_view', {
       page_path: path,
       page_title: title || document.title
     });
 
-    if (isDev) console.log(`GA Page View: ${path}`);
+    if (isDev) console.log(`Page View (dataLayer): ${path}`);
   }
 
   /** Event names that should also be sent as GA4/GTM conversions */
