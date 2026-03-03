@@ -20,10 +20,6 @@ export class AnalyticsService {
     return AnalyticsService.instance;
   }
 
-  private isGtagAvailable(): boolean {
-    return typeof window !== 'undefined' && typeof window.gtag === 'function';
-  }
-
   /** Push event to dataLayer for GTM triggers (e.g. GA4 Event tags, conversion tags) */
   private pushToDataLayer(eventName: string, eventParams?: Record<string, unknown>): void {
     if (typeof window === 'undefined') return;
