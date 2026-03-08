@@ -145,7 +145,7 @@ const AboutUs = () => {
                       </div>
                       <div>
                         <h3 className="font-manrope text-xl font-bold text-foreground flex items-center gap-2">
-                          ProductBoat Harbor 2025
+                          ProductBoat Conference
                           <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                         </h3>
                         <span className="text-sm text-muted-foreground font-manrope">Conference & Community</span>
