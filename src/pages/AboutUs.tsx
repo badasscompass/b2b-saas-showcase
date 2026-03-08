@@ -121,6 +121,9 @@ const AboutUs = () => {
         </div>
       </section>
 
+      {/* Partners Section */}
+      <PartnersSection />
+
       {/* Our Projects Section */}
       <section className="py-16 md:py-20 bg-muted/30">
         <div className="container mx-auto px-4">
@@ -190,9 +193,6 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-
-      {/* Partners Section */}
-      <PartnersSection />
 
       {/* Our Approach Section */}
       <section className="py-16 md:py-20 bg-white">
