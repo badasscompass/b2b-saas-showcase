@@ -6,7 +6,7 @@ import { BlogSection } from "@/components/BlogSection";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { useSEO } from "@/hooks/useSEO";
-import { Target, Eye, Heart } from "lucide-react";
+import { Target, Eye, Heart, Anchor, PawPrint, ExternalLink } from "lucide-react";
 
 const AboutUs = () => {
   useSEO({
@@ -116,6 +116,76 @@ const AboutUs = () => {
                   </p>
                 </CardContent>
               </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Projects Section */}
+      <section className="py-16 md:py-20 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <SectionHeader 
+              title="Our Projects"
+              subtitle="Products and initiatives we're building and championing"
+            />
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <a 
+                href="https://productboat.day" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <Card className="border-2 border-[#EA3E3A]/20 shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:border-[#EA3E3A]/40">
+                  <CardContent className="p-8">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center">
+                        <Anchor className="text-white w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-manrope text-xl font-bold text-foreground flex items-center gap-2">
+                          ProductBoat Harbor 2025
+                          <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </h3>
+                        <span className="text-sm text-muted-foreground font-manrope">Conference & Community</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground font-manrope leading-relaxed">
+                      A product management conference bringing together speakers, practitioners, and founders 
+                      to share insights on building great products. Featuring curated talks, networking, and hands-on workshops.
+                    </p>
+                  </CardContent>
+                </Card>
+              </a>
+
+              <a 
+                href="https://kindline.app" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <Card className="border-2 border-[#EA3E3A]/20 shadow-lg h-full transition-all duration-300 group-hover:shadow-xl group-hover:border-[#EA3E3A]/40">
+                  <CardContent className="p-8">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full flex items-center justify-center">
+                        <PawPrint className="text-white w-6 h-6" />
+                      </div>
+                      <div>
+                        <h3 className="font-manrope text-xl font-bold text-foreground flex items-center gap-2">
+                          KindLine
+                          <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </h3>
+                        <span className="text-sm text-muted-foreground font-manrope">Community App</span>
+                      </div>
+                    </div>
+                    <p className="text-muted-foreground font-manrope leading-relaxed">
+                      A community-driven app for reporting and tracking animal rescues. Connects citizens with shelters, 
+                      veterinarians, and volunteers to coordinate rescue efforts and make a difference, one rescue at a time.
+                    </p>
+                  </CardContent>
+                </Card>
+              </a>
             </div>
           </div>
         </div>
