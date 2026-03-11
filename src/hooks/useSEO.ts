@@ -3,6 +3,8 @@ import { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { RouteMetadata } from '@/types/navigation';
 
+const DEFAULT_SOCIAL_IMAGE = "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg";
+
 interface SEOOptions extends RouteMetadata {
   structuredData?: object;
   openGraph?: {
@@ -14,6 +16,7 @@ interface SEOOptions extends RouteMetadata {
     card?: string;
     site?: string;
     creator?: string;
+    image?: string;
   };
 }
 
@@ -80,12 +83,14 @@ export const useSEO = (options: SEOOptions) => {
       if (options.openGraph.type) {
         updateMetaTag('og:type', options.openGraph.type, true);
       }
-      if (options.openGraph.image) {
-        updateMetaTag('og:image', options.openGraph.image, true);
-      }
+      const ogImage = options.openGraph.image || DEFAULT_SOCIAL_IMAGE;
+      updateMetaTag('og:image', ogImage, true);
       if (options.openGraph.url) {
         updateMetaTag('og:url', options.openGraph.url, true);
       }
+    } else {
+      // Ensure a default OG image exists even when openGraph config is minimal
+      updateMetaTag('og:image', DEFAULT_SOCIAL_IMAGE, true);
     }
 
     // Twitter Card tags
@@ -103,6 +108,11 @@ export const useSEO = (options: SEOOptions) => {
       if (options.description) {
         updateMetaTag('twitter:description', options.description);
       }
+      const twitterImage = options.twitter.image || DEFAULT_SOCIAL_IMAGE;
+      updateMetaTag('twitter:image', twitterImage);
+    } else {
+      // Fallback twitter image when no twitter object is provided
+      updateMetaTag('twitter:image', DEFAULT_SOCIAL_IMAGE);
     }
 
     // Structured Data — use a dedicated script tag so we don't overwrite the global Organization schema
