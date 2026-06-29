@@ -96,7 +96,7 @@ export const clientWork = [
       }
     },
     sector: "B2B Traveltech | Platform for IROP management",
-    product: "Flighter.ai",
+    product: ".ai",
     productUrl: "https://www.fligther.ai/"
   }
 ];
