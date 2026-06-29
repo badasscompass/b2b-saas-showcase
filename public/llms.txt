@@ -1,0 +1,26 @@
+# LMN3
+
+> Strategic product development and advisory consulting for startups and product-led companies, led by Iva Rumora.
+
+## Services
+
+- [Product Development](/product-development): Build, scale, and refine digital products from MVP to enterprise — roadmaps, prioritization frameworks, and agile delivery.
+- [Strategic Advisory](/strategic-advisory): Define value proposition, market positioning, and go-to-market strategy for product teams and founders.
+- [Product Marketing & GTM](/product-marketing-gtm): Launch and position products with the right messaging, competitive differentiation, and sales enablement.
+
+## Company
+
+- [About Us](/about-us): Meet Iva Rumora — product partner, founder, and 9+ year veteran of product leadership — and learn the LMN3 methodology.
+- [Our Partners](/partners): Trusted implementation and technology partners that extend the LMN3 delivery model.
+- [Blog](/blog): Product strategy, go-to-market playbooks, and frameworks for founders and product leaders.
+- [Case Studies](/case-studies): Real client engagements across B2B SaaS, healthtech, fintech, and marketplace verticals.
+
+## Resources
+
+- [Startup Health Diagnostic](/startup-health): An interactive body-analogy diagnostic that maps SaaS unit economics (MRR, NRR, CAC, LTV, churn) to vital signs.
+- [Contact](/contact): Book a discovery call or send an inquiry for product development, advisory, or go-to-market support.
+
+## Legal
+
+- [Terms of Service](/terms)
+- [Privacy Policy](/privacy)
