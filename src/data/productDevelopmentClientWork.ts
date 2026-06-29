@@ -63,6 +63,6 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     },
     sector: "B2B Traveltech | Platform for IROP management",
     product: "Flighter.ai",
-    productUrl: "flighter.ai"
+    productUrl: "https://flighter.ai"
   }
 ];
