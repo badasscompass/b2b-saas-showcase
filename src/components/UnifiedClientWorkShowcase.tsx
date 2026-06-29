@@ -48,7 +48,7 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
   }
 
   // Development logging
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     console.log(`Loaded ${clientWorks.length} client works for ${serviceType}`);
   }
 

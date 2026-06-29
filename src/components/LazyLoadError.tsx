@@ -38,7 +38,7 @@ export const LazyLoadError: React.FC<LazyLoadErrorProps> = ({ error, retry }) =>
           </button>
         </div>
         
-        {process.env.NODE_ENV === 'development' && error && (
+        {import.meta.env.DEV && error && (
           <details className="mt-8 text-left">
             <summary className="cursor-pointer text-sm text-gray-500 mb-2">
               Error Details (Development)
