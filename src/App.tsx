@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, Suspense } from 'react';
+import NotFound from './pages/NotFound';
 import { useNavigation } from '@/hooks/useNavigation';
 import { routeConfig } from '@/config/routerConfig';
 import { CookieConsent } from "@/components/CookieConsent";
