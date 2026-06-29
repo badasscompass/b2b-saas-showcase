@@ -11,16 +11,15 @@
 ## Company
 
 - [About Us](/about-us): Meet Iva Rumora — product partner, founder, and 9+ year veteran of product leadership — and learn the LMN3 methodology.
-- [Our Partners](/partners): Trusted implementation and technology partners that extend the LMN3 delivery model.
-- [Blog](/blog): Product strategy, go-to-market playbooks, and frameworks for founders and product leaders.
-- [Case Studies](/case-studies): Real client engagements across B2B SaaS, healthtech, fintech, and marketplace verticals.
+- [Blog](https://irumora.substack.com): Product strategy, go-to-market playbooks, and frameworks for founders and product leaders.
+
+## Case Studies
+
+- [Product Development](/product-development#client-showcase): Real engagements across AI developer tools and B2B traveltech.
+- [Strategic Advisory](/strategic-advisory#client-showcase): Advisory outcomes for B2B SaaS, proptech, and marketplace verticals.
+- [Product Marketing & GTM](/product-marketing-gtm#client-showcase): Launch, positioning, and growth marketing results.
 
 ## Resources
 
 - [Startup Health Diagnostic](/startup-health): An interactive body-analogy diagnostic that maps SaaS unit economics (MRR, NRR, CAC, LTV, churn) to vital signs.
 - [Contact](/contact): Book a discovery call or send an inquiry for product development, advisory, or go-to-market support.
-
-## Legal
-
-- [Terms of Service](/terms)
-- [Privacy Policy](/privacy)
