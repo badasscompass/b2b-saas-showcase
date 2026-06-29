@@ -95,9 +95,9 @@ export const clientWork = [
         alt: 'People working with computers'
       }
     },
-    sector: "B2B Traveltech | Platform for IROP management",
-    product: ".ai",
-    productUrl: "https://www.fligther.ai/"
+    sector: "B2B Traveltech | Platform for fight disruptions & IROP management",
+    product: "Fligher.ai",
+    productUrl: "https://fligther.ai/"
   }
 ];
 
@@ -105,7 +105,7 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
   {
     packageName: "Product Clarity Sprint",
     tier: "Solo",
-    lead: "Both",
+    lead: "Iva",
     teamSetup: "1 PM",
     format: "3-4 weeks",
     useCase: "Post-MVP startups preparing to scale; founders unsure of PMF direction or if their PMs are executing against the right priorities.",
@@ -125,7 +125,7 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
   {
     packageName: "Fractional Product Leadership",
     tier: "Solo",
-    lead: "Both",
+    lead: "Iva",
     teamSetup: "1 senior PM",
     format: "Daily 4-6 hours",
     useCase: "Founders without a prouduct lead, product teams needing interim PM support (3-6 months).",
