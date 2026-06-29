@@ -1,6 +1,11 @@
 {
   "rewrites": [
-    { "source": "/((?!assets/).*)", "destination": "/index.html" }
+    { "source": "/product-development", "destination": "/index.html" },
+    { "source": "/strategic-advisory", "destination": "/index.html" },
+    { "source": "/product-marketing-gtm", "destination": "/index.html" },
+    { "source": "/about-us", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" },
+    { "source": "/startup-health", "destination": "/index.html" }
   ],
   "headers": [
     {
