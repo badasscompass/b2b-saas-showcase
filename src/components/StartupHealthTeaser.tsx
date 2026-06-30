@@ -40,7 +40,7 @@ export const StartupHealthTeaser = () => {
               </h3>
               <p className="text-sm text-muted-foreground font-manrope leading-relaxed max-w-xl">
                 You know your MRR. But do you know your NRR, CAC, and LTV and how they impact your growth?
-                Check your vital signs with our interactive fitness readout.
+                Check your vital signs with an interactive fitness readout.
               </p>
             </div>
 

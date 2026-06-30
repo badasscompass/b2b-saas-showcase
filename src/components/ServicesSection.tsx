@@ -44,7 +44,7 @@ export const ServicesSection = () => {
       <div className="container mx-auto container-padding">
         <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 font-manrope text-gray-900">
-            Our Expertise
+            Areas of Expertise
           </h2>
           <p className="text-lg md:text-xl text-gray-600 font-manrope max-w-3xl mx-auto leading-relaxed">
             Comprehensive product leadership across every stage of your growth journey.

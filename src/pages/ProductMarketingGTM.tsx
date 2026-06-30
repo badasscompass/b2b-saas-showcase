@@ -73,7 +73,7 @@ const ProductMarketingGTM = () => {
       serviceKey="product-marketing-gtm"
       serviceTitle="Product Marketing & GTM"
     >
-      <ServiceSection title="What We Do" background="white">
+      <ServiceSection title="What's Included" background="white">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {whatWeDo.map((item, index) => (
             <ServiceCard

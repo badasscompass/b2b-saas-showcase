@@ -10,7 +10,7 @@ export const ProductOutcomesSection = () => {
         <SectionHeader title="What Success Looks Like" />
         <div className="max-w-3xl mx-auto">
           <p className="text-xl font-manrope text-gray-700 mb-8 text-center">
-            We help you:
+            Helping you:
           </p>
           <div className="grid grid-cols-1 gap-4">
             {productOutcomes.map((outcome, index) => (

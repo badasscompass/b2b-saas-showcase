@@ -860,7 +860,7 @@ export default function StartupHealth() {
               Ready to get back in shape?
             </h2>
             <p className="text-muted-foreground mb-8 font-manrope leading-relaxed max-w-xl mx-auto">
-              We help founders and product teams build the habits and systems that keep the business fit — so you can grow without burning your runway out.
+              Helping founders and product teams build the habits and systems that keep the business fit — so you can grow without burning out your runway.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button

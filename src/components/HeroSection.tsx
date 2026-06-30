@@ -44,7 +44,7 @@ export const HeroSection = ({ onGuideMeClick }: HeroSectionProps) => {
 
           {/* Subheading */}
           <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-6 font-manrope leading-relaxed max-w-3xl mx-auto px-4">
-            We help you ship faster, scale smarter, and launch with clarity — without hiring full-time.
+            Helping you ship faster, scale smarter, and launch with clarity — without hiring full-time.
           </p>
 
           {/* Feature Bullets */}

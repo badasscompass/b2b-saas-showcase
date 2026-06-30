@@ -29,22 +29,22 @@ export const whatWeDo = [
   {
     icon: React.createElement(Target, { className: "h-8 w-8 text-[#EA3E3A]" }),
     title: "Value Proposition & Messaging Frameworks",
-    description: "We craft clear, compelling messaging rooted in frameworks like JTBD and STP—ensuring your story resonates deeply with your ideal buyers.",
+    description: "Clear, compelling messaging rooted in frameworks like JTBD and STP—ensuring your story resonates deeply with your ideal buyers.",
   },
   {
     icon: React.createElement(Users, { className: "h-8 w-8 text-[#F4A42C]" }),
     title: "Market Segmentation & Positioning",
-    description: "We break your market into high-opportunity segments, define buyer personas, and create positioning that clearly maps your unique value in context.",
+    description: "Markets broken into high-opportunity segments, with buyer personas defined and positioning that clearly maps unique value in context.",
   },
   {
     icon: React.createElement(Rocket, { className: "h-8 w-8 text-[#EA3E3A]" }),
     title: "Go-to-Market Planning & Launch Execution",
-    description: "From channel selection to pricing strategy and launch readiness, we build and execute GTM roadmaps—collaborating across product, sales, and marketing for maximum impact.",
+    description: "From channel selection to pricing strategy and launch readiness — GTM roadmaps built and executed collaboratively across product, sales, and marketing for maximum impact.",
   },
   {
     icon: React.createElement(BarChart3, { className: "h-8 w-8 text-[#F4A42C]" }),
     title: "Sales Enablement & Performance Metrics",
-    description: "We design playbooks, demos, case studies, and enablement tools—and track key metrics like CAC, CLV, and close rate to continuously optimize performance.",
+    description: "Playbooks, demos, case studies, and enablement tools — with key metrics like CAC, CLV, and close rate tracked to continuously optimize performance.",
   },
 ];
 

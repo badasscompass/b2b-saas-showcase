@@ -12,7 +12,7 @@ export const ContactCTA = () => {
             Ready to transform your product business?
           </h2>
           <p className="text-xl md:text-2xl mb-8 font-manrope opacity-90 leading-relaxed">
-            Let's discuss how we can help you build products that users love and markets embrace.
+            Let's discuss how to build products that users love and markets embrace.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 

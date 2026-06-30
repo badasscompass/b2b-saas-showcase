@@ -91,7 +91,7 @@ const StrategicAdvisory = () => {
       
       <PageCTA
       title="Ready to stop guessing and start leading with clarity?"
-      subtitle= "We set the directions in the uncertainty and reframe product decisions so they align with your business, team, and growth goals."
+      subtitle= "Setting direction in uncertainty and reframing product decisions so they align with your business, team, and growth goals."
       ctaText="Book a Strategy Discovery Call"
       />
       </ServicePageLayout>
