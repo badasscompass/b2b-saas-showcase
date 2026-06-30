@@ -6,7 +6,7 @@ const config: ServiceConfig = {
   title: "Strategic Advisory",
   subtitle: "Guidance for product teams and founders",
   showcaseTitle: "Client Work Showcase",
-  showcaseSubtitle: "Explore how we've helped companies transform their strategic positioning, growth issues and go-to-market approach."
+  showcaseSubtitle: "Explore how companies have transformed their strategic positioning, growth issues and go-to-market approach."
 };
 
 export const StrategicAdvisoryClientWork = () => {

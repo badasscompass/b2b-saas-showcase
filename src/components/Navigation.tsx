@@ -76,8 +76,8 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who We Serve</Link>
-            <Link to="/#why-choose-us" onClick={() => handleNavClick('why_choose_us')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why Us</Link>
+            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Industries Served</Link>
+            <Link to="/#why-choose-us" onClick={() => handleNavClick('why_choose_us')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why LMN3</Link>
             <Link to="/about-us" onClick={() => handleNavClick('about')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
             <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" onClick={() => handleNavClick('blog', true)} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
             <Link to="/contact" onClick={() => handleNavClick('contact')} className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity">Contact</Link>
@@ -131,14 +131,14 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
                 onClick={() => { setIsMenuOpen(false); handleNavClick('who_we_serve'); }}
               >
-                Who We Serve
+                Industries Served
               </Link>
               <Link 
                 to="/#why-choose-us" 
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
                 onClick={() => { setIsMenuOpen(false); handleNavClick('why_choose_us'); }}
               >
-                Why Us
+                Why LMN3
               </Link>
               <Link 
                 to="/about-us" 

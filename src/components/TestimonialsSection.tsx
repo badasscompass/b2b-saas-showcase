@@ -50,7 +50,7 @@ export const TestimonialsSection = () => {
       <div className="container mx-auto container-padding">
         <SectionHeader 
           title="Featured Case Studies"
-          subtitle="Real results from product teams we've worked with"
+          subtitle="Real results from product teams in the portfolio"
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">

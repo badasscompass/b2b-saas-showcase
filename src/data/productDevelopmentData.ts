@@ -6,25 +6,25 @@ export const productServices = [
     icon: Target,
     iconColor: "text-[#EA3E3A]",
     title: "MVP Strategy & Development",
-    description: "We guide you from problem definition through to the first shippable version. That includes lean validation, market-fit framing, critical feature identification, and launch planning."
+    description: "Guidance from problem definition through to the first shippable version — including lean validation, market-fit framing, critical feature identification, and launch planning."
   },
   {
     icon: Users,
     iconColor: "text-[#F4A42C]",
     title: "Product Roadmapping", 
-    description: "We take your initial ideas and shape them into a prioritized, actionable roadmap. Expect clear features, milestones, value hypotheses, and delivery timelines — anchored in business goals."
+    description: "Initial ideas shaped into a prioritized, actionable roadmap. Expect clear features, milestones, value hypotheses, and delivery timelines — anchored in business goals."
   },
   {
     icon: Zap,
     iconColor: "text-[#EA3E3A]",
     title: "Technical Architecture Oversight",
-    description: "Avoid common scaling bottlenecks by reviewing your current or planned architecture. We collaborate with your CTO or tech lead to ensure decisions support feature velocity, robustness, and future scalability."
+    description: "Avoid common scaling bottlenecks by reviewing your current or planned architecture. Working alongside your CTO or tech lead to ensure decisions support feature velocity, robustness, and future scalability."
   },
   {
     icon: Clock,
     iconColor: "text-[#F4A42C]",
     title: "User Testing & Validation",
-    description: "We design rapid feedback loops — from paper prototypes to live usability testing. Insights from every sprint inform roadmap adjustments and product evolution."
+    description: "Rapid feedback loops — from paper prototypes to live usability testing — designed to inform roadmap adjustments and product evolution from every sprint."
   }
 ];
 

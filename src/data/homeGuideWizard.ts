@@ -27,7 +27,7 @@ const SERVICE_META: Record<HomeServiceKey, Omit<HomeWizardResult, 'serviceKey'>>
   'product-development': {
     serviceTitle: 'Product Development',
     servicePath: '/product-development',
-    blurb: 'From MVP scoping to delivery — we help you build and scale your product.',
+    blurb: 'From MVP scoping to delivery — build and scale your product end-to-end.',
   },
   'strategic-advisory': {
     serviceTitle: 'Strategic Advisory',

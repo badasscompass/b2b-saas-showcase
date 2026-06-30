@@ -7,7 +7,7 @@ export const ProductServicesSection = () => {
   return (
     <section className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-4">
-        <SectionHeader title="What We Do" />
+        <SectionHeader title="What's Included" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {productServices.map((service, index) => {
             const IconComponent = service.icon;

@@ -41,7 +41,7 @@ export const RelatedServices = ({ currentService }: RelatedServicesProps) => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-2xl md:text-3xl font-bold font-manrope text-gray-900 mb-4">
-            Explore Our Other Services
+            Explore Other Services
           </h2>
           <p className="text-gray-600 font-manrope max-w-2xl mx-auto">
             Comprehensive product leadership across every stage of your growth journey with Iva Rumora and the LMN3 team.

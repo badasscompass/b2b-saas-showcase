@@ -91,7 +91,7 @@ const ProductDevelopment = () => {
 
       <PageCTA
         title="Ready to Build Your Product?"
-        subtitle="From MVP to scale, we'll help you build products that users love and investors fund. Let's discuss your product vision."
+        subtitle="From MVP to scale, build products that users love and investors fund. Let's discuss your product vision."
         ctaText="Book a Product Audit Call"
       />
     </ServicePageLayout>
