@@ -6,7 +6,7 @@ const config: ServiceConfig = {
   title: "Product Development",
   subtitle: "From MVP to Launch",
   showcaseTitle: "Client Work Showcase",
-  showcaseSubtitle: "Explore our product development successes across various industries and technologies."
+  showcaseSubtitle: "Explore product development successes across various industries and technologies."
 };
 
 export const ProductDevelopmentClientWork = () => {

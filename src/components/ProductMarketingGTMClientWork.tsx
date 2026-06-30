@@ -6,7 +6,7 @@ const config: ServiceConfig = {
   title: "Product Marketing & GTM",
   subtitle: "Strategy to Scale",
   showcaseTitle: "Product Marketing Success Stories",
-  showcaseSubtitle: "See how we've helped companies successfully launch and scale their products in the market."
+  showcaseSubtitle: "See how companies have successfully launched and scaled their products in the market."
 };
 
 export const ProductMarketingGTMClientWork = () => {
