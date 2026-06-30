@@ -6,7 +6,7 @@ import { Target, TrendingUp, MessageSquare, ArrowRight, CheckCircle } from "luci
 const process = [
   {
     title: "Discovery Workshop",
-    description: "1–2 hours: We align on business goals, current assumptions, and metrics for success",
+    description: "1–2 hours: Alignment on business goals, current assumptions, and metrics for success",
     icon: <Target className="h-6 w-6" />
   },
   {
@@ -16,7 +16,7 @@ const process = [
   },
   {
     title: "Value & Positioning Sprint",
-    description: "We craft and iterate positioning, value props, and messaging frameworks",
+    description: "Crafting and iterating positioning, value props, and messaging frameworks",
     icon: <MessageSquare className="h-6 w-6" />
   },
   {

@@ -76,8 +76,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <SectionHeader 
-              title="Our Driving Principles"
-              subtitle="We help ambitious product teams emerge with clarity, engage with confidence, and evolve with purpose."
+              title="Driving Principles"
+              subtitle="Helping ambitious product teams emerge with clarity, engage with confidence, and evolve with purpose."
             />
             
             <div className="grid md:grid-cols-3 gap-8">
@@ -112,7 +112,7 @@ const AboutUs = () => {
                   </div>
                   <h3 className="font-manrope text-xl font-bold text-gray-900 mb-3">Values</h3>
                   <p className="text-gray-600 font-manrope leading-relaxed">
-                    Strategic clarity, collaborative partnership, measurable impact, and sustainable growth. We believe in building products that matter.
+                    Strategic clarity, collaborative partnership, measurable impact, and sustainable growth — anchored in the belief that products should matter.
                   </p>
                 </CardContent>
               </Card>
@@ -129,8 +129,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <SectionHeader 
-              title="Our Projects"
-              subtitle="Products and initiatives we're building and championing"
+              title="Projects"
+              subtitle="Products and initiatives being built and championed"
             />
             
             <div className="grid md:grid-cols-2 gap-8">
@@ -199,8 +199,8 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <SectionHeader 
-              title="Our Approach"
-              subtitle="How we transform product visions into market success"
+              title="The Approach"
+              subtitle="How product visions get transformed into market success"
             />
             
             <div className="space-y-8">
@@ -210,9 +210,9 @@ const AboutUs = () => {
                     Strategic Foundation First
                   </h3>
                   <p className="text-gray-700 font-manrope leading-relaxed">
-                    Before any development begins, we ensure your product has clear positioning, 
+                    Before any development begins, your product needs clear positioning, 
                     defined value propositions, and validated market opportunities. Strategy 
-                    guides every decision we make.
+                    guides every decision that follows.
                   </p>
                 </CardContent>
               </Card>
@@ -223,9 +223,9 @@ const AboutUs = () => {
                     Collaborative Partnership
                   </h3>
                   <p className="text-gray-700 font-manrope leading-relaxed">
-                    We don't just deliver recommendations—we work alongside your team as 
+                    More than just recommendations — working alongside your team as 
                     strategic partners, sharing knowledge and building internal capabilities 
-                    that last beyond our engagement.
+                    that last beyond the engagement.
                   </p>
                 </CardContent>
               </Card>
@@ -236,8 +236,8 @@ const AboutUs = () => {
                     Measurable Impact
                   </h3>
                   <p className="text-gray-700 font-manrope leading-relaxed">
-                    Every project includes clear success metrics and regular progress reviews. 
-                    We're committed to delivering tangible results that drive business growth 
+                    Every project includes clear success metrics and regular progress reviews — 
+                    a commitment to delivering tangible results that drive business growth 
                     and market success.
                   </p>
                 </CardContent>

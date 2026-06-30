@@ -27,7 +27,7 @@ export const WhyChooseUs = () => {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-manrope text-gray-900">Why Choose LMN3?</h2>
             <p className="text-xl text-gray-600 font-manrope">
-              We bring the experience, expertise, and execution you need to accelerate your product success.
+              Bringing the experience, expertise, and execution needed to accelerate your product success.
             </p>
           </div>
 
