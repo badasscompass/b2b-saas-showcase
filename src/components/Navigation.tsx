@@ -76,7 +76,7 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Industries Served</Link>
+            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who Is It For</Link>
             <Link to="/#why-choose-us" onClick={() => handleNavClick('why_choose_us')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why LMN3</Link>
             <Link to="/about-us" onClick={() => handleNavClick('about')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
             <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" onClick={() => handleNavClick('blog', true)} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
@@ -131,7 +131,7 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
                 className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
                 onClick={() => { setIsMenuOpen(false); handleNavClick('who_we_serve'); }}
               >
-                Industries Served
+                Who Is It For
               </Link>
               <Link 
                 to="/#why-choose-us" 
