@@ -57,6 +57,7 @@ export const WhoWeServeSection = () => {
         <SectionHeader 
           title="Designed for Ambitious B2B Teams"
           subtitle="Providing leadership and advisory through the unique challenges product teams face with tailored approach for critical growth stages."
+          alignment="left"
         />
 
 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-6 lg:items-stretch">

@@ -51,6 +51,7 @@ export const TestimonialsSection = () => {
         <SectionHeader 
           title="Featured Case Studies"
           subtitle="Real results from product teams in the portfolio"
+          alignment="left"
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
