@@ -821,7 +821,6 @@ export default function StartupHealth() {
               </div>
 
               {/* Metric cards */}
-              {/* Metric cards */}
               <div className="space-y-3 lg:col-span-3">
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 font-manrope tracking-tight">
                   The Diagnostic
