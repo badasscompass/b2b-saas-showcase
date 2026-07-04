@@ -803,12 +803,20 @@ export default function StartupHealth() {
         {/* Interactive Body Section */}
         <section className="pb-16 md:pb-24 container-padding">
           <div className="container mx-auto max-w-6xl">
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
-              {/* Body graphic — proportional container so silhouette scales with layout */}
-              <div className="relative flex justify-center lg:sticky lg:top-28 min-h-[420px] md:min-h-[520px] flex items-center">
-                <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] aspect-[400/560]">
+            <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+              {/* Body graphic — anchored with radial gradient halo */}
+              <div className="relative lg:col-span-2 flex justify-center lg:sticky lg:top-28 min-h-[480px] md:min-h-[600px] items-center">
+                {/* Radial anchor halo */}
+                <div
+                  className="absolute inset-0 -z-10 pointer-events-none"
+                  style={{
+                    background:
+                      "radial-gradient(ellipse 60% 55% at 50% 45%, rgba(234,62,58,0.14), rgba(244,164,44,0.08) 45%, transparent 70%)",
+                  }}
+                />
+                <div className="relative w-full max-w-[320px] sm:max-w-[380px] md:max-w-[440px] lg:max-w-[460px] aspect-[400/560]">
                   <HumanBodyVisual activeMetric={activeMetric} onHover={handleMetricClick} />
-                  <div className="absolute inset-0 -z-10 blur-3xl opacity-20 bg-gradient-to-b from-[#EA3E3A] via-[#F4A42C] to-[#FFF33B] rounded-full scale-75" />
+                  <div className="absolute inset-0 -z-10 blur-3xl opacity-30 bg-gradient-to-b from-[#EA3E3A] via-[#F4A42C] to-[#FFF33B] rounded-full scale-90" />
                 </div>
               </div>
 
