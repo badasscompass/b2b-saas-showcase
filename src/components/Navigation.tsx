@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import {
@@ -15,8 +15,13 @@ interface NavigationProps {
   logoOnly?: boolean;
 }
 
+const SERVICE_PATHS = ["/product-development", "/strategic-advisory", "/product-marketing-gtm"];
+
 export const Navigation = ({ logoOnly = false }: NavigationProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const currentHash = location.hash;
 
   const handleNavClick = (linkName: string, isExternal: boolean = false) => {
     analyticsService.trackButtonClick(`nav_${linkName}`, 'navigation');
@@ -24,6 +29,17 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
       analyticsService.trackExternalLink(`https://irumora.substack.com/`, 'Blog');
     }
   };
+
+  const isServicesActive = SERVICE_PATHS.includes(currentPath);
+  const isAboutActive = currentPath === "/about-us";
+  const isContactActive = currentPath === "/contact";
+  const isWhoActive = currentPath === "/" && currentHash === "#who-we-serve";
+  const isWhyActive = currentPath === "/" && currentHash === "#why-choose-us";
+
+  const linkBase =
+    "relative text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-1 after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-gradient-to-r after:from-[#EA3E3A] after:to-[#F4A42C] after:transition-all after:duration-300";
+  const activeUnderline = "text-[#EA3E3A] after:w-full";
+  const inactiveUnderline = "after:w-0 hover:after:w-full";
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-sm border-b border-gray-100">
@@ -42,7 +58,7 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
           {!logoOnly && (
           <div className="hidden md:flex items-center space-x-8">
             <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center space-x-1 text-gray-700 hover:text-[#EA3E3A] font-manrope transition-all duration-200 focus:outline-none group">
+              <DropdownMenuTrigger className={`flex items-center space-x-1 font-manrope focus:outline-none group ${linkBase} ${isServicesActive ? activeUnderline : inactiveUnderline}`}>
                 <span>Services</span>
                 <ChevronDown className="w-4 h-4 transition-transform duration-200 group-data-[state=open]:rotate-180" />
               </DropdownMenuTrigger>
@@ -76,11 +92,11 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Who Is It For</Link>
-            <Link to="/#why-choose-us" onClick={() => handleNavClick('why_choose_us')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Why LMN3</Link>
-            <Link to="/about-us" onClick={() => handleNavClick('about')} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">About</Link>
-            <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" onClick={() => handleNavClick('blog', true)} className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors">Blog</a>
-            <Link to="/contact" onClick={() => handleNavClick('contact')} className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white px-4 py-2 rounded-md font-manrope font-semibold hover:opacity-90 transition-opacity">Contact</Link>
+            <Link to="/#who-we-serve" onClick={() => handleNavClick('who_we_serve')} className={`${linkBase} ${isWhoActive ? activeUnderline : inactiveUnderline}`}>Who Is It For</Link>
+            <Link to="/#why-choose-us" onClick={() => handleNavClick('why_choose_us')} className={`${linkBase} ${isWhyActive ? activeUnderline : inactiveUnderline}`}>Why LMN3</Link>
+            <Link to="/about-us" onClick={() => handleNavClick('about')} className={`${linkBase} ${isAboutActive ? activeUnderline : inactiveUnderline}`}>About</Link>
+            <a href="https://irumora.substack.com/" target="_blank" rel="noopener noreferrer" onClick={() => handleNavClick('blog', true)} className={`${linkBase} ${inactiveUnderline}`}>Blog</a>
+            <Link to="/contact" onClick={() => handleNavClick('contact')} className={`px-4 py-2 rounded-md font-manrope font-semibold transition-all ${isContactActive ? 'bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white ring-2 ring-[#EA3E3A]/30 ring-offset-2' : 'bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] text-white hover:opacity-90'}`}>Contact</Link>
           </div>
           )}
 
@@ -101,25 +117,25 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
           <div className="md:hidden mt-4 py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
               <div className="space-y-2">
-                <div className="text-gray-700 font-manrope font-semibold py-2">Services</div>
+                <div className={`font-manrope font-semibold py-2 ${isServicesActive ? 'text-[#EA3E3A]' : 'text-gray-700'}`}>Services</div>
                 <div className="pl-4 space-y-2">
                   <Link 
                     to="/product-development" 
-                    className="block text-gray-600 hover:text-[#EA3E3A] font-manrope transition-colors py-1"
+                    className={`block font-manrope transition-colors py-1 ${currentPath === '/product-development' ? 'text-[#EA3E3A] font-semibold' : 'text-gray-600 hover:text-[#EA3E3A]'}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Product Development
                   </Link>
                   <Link 
                     to="/strategic-advisory" 
-                    className="block text-gray-600 hover:text-[#EA3E3A] font-manrope transition-colors py-1"
+                    className={`block font-manrope transition-colors py-1 ${currentPath === '/strategic-advisory' ? 'text-[#EA3E3A] font-semibold' : 'text-gray-600 hover:text-[#EA3E3A]'}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Strategic Advisory
                   </Link>
                   <Link 
                     to="/product-marketing-gtm" 
-                    className="block text-gray-600 hover:text-[#EA3E3A] font-manrope transition-colors py-1"
+                    className={`block font-manrope transition-colors py-1 ${currentPath === '/product-marketing-gtm' ? 'text-[#EA3E3A] font-semibold' : 'text-gray-600 hover:text-[#EA3E3A]'}`}
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Product Marketing & GTM
@@ -128,21 +144,21 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
               </div>
               <Link 
                 to="/#who-we-serve" 
-                className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
+                className={`font-manrope transition-colors py-2 ${isWhoActive ? 'text-[#EA3E3A] font-semibold' : 'text-gray-700 hover:text-[#EA3E3A]'}`}
                 onClick={() => { setIsMenuOpen(false); handleNavClick('who_we_serve'); }}
               >
                 Who Is It For
               </Link>
               <Link 
                 to="/#why-choose-us" 
-                className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
+                className={`font-manrope transition-colors py-2 ${isWhyActive ? 'text-[#EA3E3A] font-semibold' : 'text-gray-700 hover:text-[#EA3E3A]'}`}
                 onClick={() => { setIsMenuOpen(false); handleNavClick('why_choose_us'); }}
               >
                 Why LMN3
               </Link>
               <Link 
                 to="/about-us" 
-                className="text-gray-700 hover:text-[#EA3E3A] font-manrope transition-colors py-2"
+                className={`font-manrope transition-colors py-2 ${isAboutActive ? 'text-[#EA3E3A] font-semibold' : 'text-gray-700 hover:text-[#EA3E3A]'}`}
                 onClick={() => { setIsMenuOpen(false); handleNavClick('about'); }}
               >
                 About
