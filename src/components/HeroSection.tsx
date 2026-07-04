@@ -114,10 +114,10 @@ export const HeroSection = ({ onGuideMeClick }: HeroSectionProps) => {
 
                 {/* Floating accents */}
                 <div className="absolute -top-4 -right-4 w-12 h-12 bg-white rounded-2xl shadow-lg flex items-center justify-center rotate-12 border border-gray-100">
-                  <div className="w-6 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] rounded-full" />
+                  <Rocket className="w-6 h-6 text-[#EA3E3A]" />
                 </div>
                 <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center -rotate-6 border border-gray-100">
-                  <div className="w-8 h-8 rounded-full border-4 border-[#F4A42C]/30" />
+                  <BarChart3 className="w-8 h-8 text-[#F4A42C]" />
                 </div>
               </div>
             </div>
