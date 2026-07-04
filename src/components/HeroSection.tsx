@@ -1,4 +1,4 @@
-import { ArrowRight, Calendar, CheckCircle, Compass } from "lucide-react";
+import { ArrowRight, BarChart3, Calendar, CheckCircle, Compass, Rocket } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ConferenceRibbon } from "@/components/ConferenceRibbon";
 import { analyticsService } from "@/services/analyticsService";
