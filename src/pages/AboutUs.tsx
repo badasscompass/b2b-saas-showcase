@@ -26,28 +26,51 @@ const AboutUs = () => {
     },
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "LMN3",
-      "url": "https://lmn3.digital",
-      "logo": "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg",
-      "description": "Strategic product development and advisory led by Iva Rumora",
-      "founder": {
-        "@type": "Person",
-        "name": "Iva Rumora",
-        "jobTitle": "Strategic Product Partner & Founder",
-        "url": "https://lmn3.digital/about-us",
-        "sameAs": [
-          "https://www.linkedin.com/in/ivarumora"
-        ]
-      },
-      "serviceArea": "Global",
-      "areaServed": "Worldwide",
-      "knowsAbout": [
-        "Product Development",
-        "Strategic Advisory",
-        "Product Marketing",
-        "Go-to-Market Strategy",
-        "Product Management"
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://lmn3.digital/#organization",
+          "name": "LMN3",
+          "url": "https://lmn3.digital",
+          "logo": "https://lmn3.digital/lovable-uploads/lmn3_logo_white.jpg",
+          "description": "Strategic product development and advisory led by Iva Rumora",
+          "founder": { "@id": "https://lmn3.digital/#iva-rumora" },
+          "serviceArea": "Global",
+          "areaServed": "Worldwide",
+          "knowsAbout": [
+            "Product Development",
+            "Strategic Advisory",
+            "Product Marketing",
+            "Go-to-Market Strategy",
+            "Product Management"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://lmn3.digital/#iva-rumora",
+          "name": "Iva Rumora",
+          "jobTitle": "Strategic Product Partner & Founder",
+          "url": "https://lmn3.digital/about-us",
+          "worksFor": { "@id": "https://lmn3.digital/#organization" },
+          "knowsAbout": [
+            "Product Management",
+            "Product Strategy",
+            "Go-to-Market Strategy",
+            "Product Marketing",
+            "Product Development",
+            "Fractional Product Leadership"
+          ],
+          "sameAs": [
+            "https://www.linkedin.com/in/ivarumora"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lmn3.digital/" },
+            { "@type": "ListItem", "position": 2, "name": "About", "item": "https://lmn3.digital/about-us" }
+          ]
+        }
       ]
     }
   });

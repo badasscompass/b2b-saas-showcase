@@ -33,33 +33,74 @@ const StrategicAdvisory = () => {
     },
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Strategic Advisory Services",
-      "url": "https://lmn3.digital/strategic-advisory",
-      "provider": {
-        "@type": "Organization",
-        "name": "LMN3",
-        "url": "https://lmn3.digital",
-        "founder": { "@type": "Person", "name": "Iva Rumora" }
-      },
-      "description": "Expert strategic advisory for product founders and executives — value proposition, market positioning, and product-led growth strategy.",
-      "serviceType": "Strategic Business Advisory",
-      "areaServed": "Worldwide",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "url": "https://lmn3.digital/strategic-advisory"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Strategic Advisory Packages",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Strategy Workshop" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Chief Product Officer" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Investor-Ready Product Narrative" } }
-        ]
-      }
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Strategic Advisory Services",
+          "url": "https://lmn3.digital/strategic-advisory",
+          "provider": {
+            "@type": "Organization",
+            "name": "LMN3",
+            "url": "https://lmn3.digital",
+            "founder": { "@type": "Person", "name": "Iva Rumora" }
+          },
+          "description": "Expert strategic advisory for product founders and executives — value proposition, market positioning, and product-led growth strategy.",
+          "serviceType": "Strategic Business Advisory",
+          "areaServed": "Worldwide",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock",
+            "url": "https://lmn3.digital/strategic-advisory"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Strategic Advisory Packages",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Strategy Workshop" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Chief Product Officer" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Investor-Ready Product Narrative" } }
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lmn3.digital/" },
+            { "@type": "ListItem", "position": 2, "name": "Strategic Advisory", "item": "https://lmn3.digital/strategic-advisory" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is strategic product advisory?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Strategic product advisory helps founders and product leaders define their value proposition, market positioning, and go-to-market strategy — turning ambiguous product bets into a clear, defensible direction." }
+            },
+            {
+              "@type": "Question",
+              "name": "Who is strategic advisory for?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Early- and growth-stage B2B startups, SMBs, and product leaders who need senior product thinking without hiring a full-time Chief Product Officer." }
+            },
+            {
+              "@type": "Question",
+              "name": "How long does a typical engagement last?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Engagements range from a focused 2–4 week strategy workshop to ongoing fractional CPO support over 3–6 months, depending on the scope and business stage." }
+            },
+            {
+              "@type": "Question",
+              "name": "What deliverables should I expect?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Typical outputs include a refined value proposition, positioning statement, competitive analysis, buyer personas, and a prioritized product and go-to-market roadmap." }
+            },
+            {
+              "@type": "Question",
+              "name": "How is this different from a management consultant?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Advisory here is hands-on product leadership — working alongside your team on real product decisions, not producing slide decks from the outside." }
+            }
+          ]
+        }
+      ]
     }
   });
   return (

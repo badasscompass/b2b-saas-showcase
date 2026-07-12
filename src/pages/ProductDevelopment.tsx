@@ -33,33 +33,74 @@ const ProductDevelopment = () => {
     },
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Product Development Services",
-      "url": "https://lmn3.digital/product-development",
-      "provider": {
-        "@type": "Organization",
-        "name": "LMN3",
-        "url": "https://lmn3.digital",
-        "founder": { "@type": "Person", "name": "Iva Rumora" }
-      },
-      "description": "Senior fractional product management and development services — from MVP scoping to full product launches for B2B startups and SMBs.",
-      "serviceType": "Product Development Consulting",
-      "areaServed": "Worldwide",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "url": "https://lmn3.digital/product-development"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Product Development Packages",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "MVP Scoping & Roadmap" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Sprint Leadership" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Product Manager" } }
-        ]
-      }
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Product Development Services",
+          "url": "https://lmn3.digital/product-development",
+          "provider": {
+            "@type": "Organization",
+            "name": "LMN3",
+            "url": "https://lmn3.digital",
+            "founder": { "@type": "Person", "name": "Iva Rumora" }
+          },
+          "description": "Senior fractional product management and development services — from MVP scoping to full product launches for B2B startups and SMBs.",
+          "serviceType": "Product Development Consulting",
+          "areaServed": "Worldwide",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock",
+            "url": "https://lmn3.digital/product-development"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Product Development Packages",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "MVP Scoping & Roadmap" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Sprint Leadership" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Product Manager" } }
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lmn3.digital/" },
+            { "@type": "ListItem", "position": 2, "name": "Product Development", "item": "https://lmn3.digital/product-development" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What does fractional product management include?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Fractional product management provides senior product leadership on a part-time basis — discovery, roadmap, prioritization, sprint leadership, and stakeholder alignment — without the cost of a full-time hire." }
+            },
+            {
+              "@type": "Question",
+              "name": "How do you scope an MVP?",
+              "acceptedAnswer": { "@type": "Answer", "text": "MVP scoping starts with the core user problem, defines the smallest testable slice that validates the value hypothesis, and produces a prioritized backlog, milestones, and success metrics." }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you write code or manage engineers?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The engagement focuses on product leadership: shaping what to build and why, working with your engineering team or trusted delivery partners to ship it." }
+            },
+            {
+              "@type": "Question",
+              "name": "How quickly can we start?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Most engagements kick off within 1–2 weeks of a discovery call, starting with a short audit of current product, users, and priorities." }
+            },
+            {
+              "@type": "Question",
+              "name": "What size of company do you work with?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Primarily early- and growth-stage B2B startups and SMBs building or scaling a product-led business." }
+            }
+          ]
+        }
+      ]
     }
   });
   return (
