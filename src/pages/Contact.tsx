@@ -15,7 +15,16 @@ export const Contact: React.FC = () => {
     title: 'Contact Us - LMN3',
     description: 'Get in touch with LMN3. Send us your questions, project inquiries, or RFPs. We\'re here to help transform your product business.',
     keywords: ['contact', 'contact form', 'get in touch', 'RFP', 'project inquiry', 'LMN3'],
-    canonicalUrl: '/contact',
+    canonicalUrl: 'https://lmn3.digital/contact',
+    openGraph: { type: 'website', url: 'https://lmn3.digital/contact' },
+    structuredData: {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lmn3.digital/" },
+        { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://lmn3.digital/contact" }
+      ]
+    }
   })
 
   return (
