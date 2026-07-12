@@ -35,33 +35,74 @@ const ProductMarketingGTM = () => {
     },
     structuredData: {
       "@context": "https://schema.org",
-      "@type": "Service",
-      "name": "Product Marketing & Go-to-Market Services",
-      "url": "https://lmn3.digital/product-marketing-gtm",
-      "provider": {
-        "@type": "Organization",
-        "name": "LMN3",
-        "url": "https://lmn3.digital",
-        "founder": { "@type": "Person", "name": "Iva Rumora" }
-      },
-      "description": "Data-driven product marketing and go-to-market strategy services for B2B SaaS and product-led companies — positioning, launch, and growth.",
-      "serviceType": "Product Marketing Consulting",
-      "areaServed": "Worldwide",
-      "offers": {
-        "@type": "Offer",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "url": "https://lmn3.digital/product-marketing-gtm"
-      },
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Product Marketing & GTM Packages",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Strategy Sprint" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Launch Playbook" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Product Marketer" } }
-        ]
-      }
+      "@graph": [
+        {
+          "@type": "Service",
+          "name": "Product Marketing & Go-to-Market Services",
+          "url": "https://lmn3.digital/product-marketing-gtm",
+          "provider": {
+            "@type": "Organization",
+            "name": "LMN3",
+            "url": "https://lmn3.digital",
+            "founder": { "@type": "Person", "name": "Iva Rumora" }
+          },
+          "description": "Data-driven product marketing and go-to-market strategy services for B2B SaaS and product-led companies — positioning, launch, and growth.",
+          "serviceType": "Product Marketing Consulting",
+          "areaServed": "Worldwide",
+          "offers": {
+            "@type": "Offer",
+            "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock",
+            "url": "https://lmn3.digital/product-marketing-gtm"
+          },
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Product Marketing & GTM Packages",
+            "itemListElement": [
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "GTM Strategy Sprint" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Launch Playbook" } },
+              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fractional Product Marketer" } }
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://lmn3.digital/" },
+            { "@type": "ListItem", "position": 2, "name": "Product Marketing & GTM", "item": "https://lmn3.digital/product-marketing-gtm" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is a go-to-market (GTM) strategy?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A GTM strategy defines who you sell to, how you position the product, which channels you use to reach them, and how you price, launch, and measure adoption — turning product capability into revenue." }
+            },
+            {
+              "@type": "Question",
+              "name": "How is product marketing different from product management?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Product management decides what to build and why. Product marketing decides how to position, launch, and communicate it so buyers understand the value and choose it over alternatives." }
+            },
+            {
+              "@type": "Question",
+              "name": "What does a product launch playbook include?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A launch playbook covers audience segmentation, messaging, positioning, channel plan, launch assets, internal enablement, and success metrics — everything the team needs to execute a coordinated launch." }
+            },
+            {
+              "@type": "Question",
+              "name": "Do you help with pricing and packaging?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes — pricing, packaging, and tier design are core parts of most GTM engagements, informed by buyer willingness-to-pay, competitive benchmarks, and business goals." }
+            },
+            {
+              "@type": "Question",
+              "name": "How do you measure GTM success?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Typical metrics include activation rate, time-to-value, pipeline created, win rate against key competitors, and revenue from the launched feature or segment within a defined window." }
+            }
+          ]
+        }
+      ]
     }
   });
   return (
