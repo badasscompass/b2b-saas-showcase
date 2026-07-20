@@ -33,7 +33,9 @@ const grantConsent = () => {
       'ad_personalization': 'granted'
     });
   }
-  loadClarity();
+  // Clarity is already loaded on mount (cookieless). Signal consent so it sets cookies.
+  const clarity = (window as unknown as { clarity?: (...args: unknown[]) => void }).clarity;
+  if (typeof clarity === 'function') clarity('consent');
   // Enable HubSpot tracking
   if (window._hsp) {
     window._hsp.push(['setPrivacyConsent', {
@@ -70,6 +72,11 @@ export const CookieConsent = () => {
   useEffect(() => {
     // Initialize HubSpot _hsp queue
     window._hsp = window._hsp || [];
+
+    // Load Clarity immediately in cookieless mode (sessions/heatmaps without cookies).
+    // Consent, when granted, upgrades it to full tracking via clarity('consent').
+    loadClarity();
+
 
     const hasConsented = localStorage.getItem('cookieConsentAccepted');
 
