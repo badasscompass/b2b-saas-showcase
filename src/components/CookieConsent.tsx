@@ -73,6 +73,11 @@ export const CookieConsent = () => {
     // Initialize HubSpot _hsp queue
     window._hsp = window._hsp || [];
 
+    // Load Clarity immediately in cookieless mode (sessions/heatmaps without cookies).
+    // Consent, when granted, upgrades it to full tracking via clarity('consent').
+    loadClarity();
+
+
     const hasConsented = localStorage.getItem('cookieConsentAccepted');
 
     if (hasConsented === 'true') {
