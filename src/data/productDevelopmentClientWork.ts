@@ -53,8 +53,8 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     metrics: "Team alignment and delivery flow restored",
     image: {
       type: 'external' as const,
-      url: '/case-studies/FlightER%20-%20Hotel%20-%20Availability.png',
-      alt: 'Hotel availability screen - Tourism & Transport Platform, B2B Hospitality',
+      url: '/case-studies/flighter-finance-dashboard.png',
+      alt: 'Flighter Finance dashboard — spend tracking and EU261 compliance',
       fallback: {
         type: 'unsplash' as const,
         id: 'photo-1605810230434-7631ac76ec81',
