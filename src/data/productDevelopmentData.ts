@@ -119,7 +119,7 @@ export const productDevelopmentPricingTiers: PricingTier[] = [
     teamSetup: "1 PM",
     format: "3–5 weeks",
     useCase: "Growing teams in need of structure, decision hygiene, and velocity.",
-    outcomes: "Product rituals & decision models, team alignment on tools & tracking, lighter load for leadership.",
+    outcomes: "Supporting existing product leadership in establishing structure and direction with product rituals, decision frameworks, alignment on tools and tracking.",
     pricing: "3000 (starting at)"
   },
   {
