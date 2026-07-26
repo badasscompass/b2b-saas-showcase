@@ -20,7 +20,7 @@ export const HeroSection = ({ onGuideMeClick }: HeroSectionProps) => {
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EA3E3A]/5 border border-[#EA3E3A]/10 mx-auto lg:mx-0 w-fit">
                   <span className="flex h-2 w-2 rounded-full bg-[#EA3E3A]" />
                   <span className="text-xs font-bold uppercase tracking-wider text-[#EA3E3A] font-manrope">
-                    Fractional CPO & Product Strategy
+                    Fractional CPO & Custom Product Sprints
                   </span>
                 </div>
 
