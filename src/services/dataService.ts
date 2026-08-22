@@ -76,7 +76,7 @@ export class DataService {
         };
       case "Airline IROPS Module Expansion & AI Co-Pilot (2026)":
         return {
-          timeframe: "Results in 2 months",
+          timeframe: "Results in 3 months",
           results: [
             "• Module scope defined and validated with airline stakeholders",
             "• Technical feasibility and domain-level requirements confirmed",

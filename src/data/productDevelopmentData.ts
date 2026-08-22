@@ -87,12 +87,12 @@ export const clientWork = [
     metrics: "Team alignment and delivery flow restored",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1605810230434-7631ac76ec81',
-      alt: 'Team collaboration with displays',
+      id: 'photo-1436491863332-7dd61a1a7f99',
+      alt: 'Airline operations and flight disruption management technology',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1519389950473-47ba0277781c',
-        alt: 'People working with computers'
+        id: 'photo-1464037867666-48c5f6af4d24',
+        alt: 'Airport operations control room'
       }
     },
     sector: "B2B Traveltech | Platform for IROP management",
@@ -101,20 +101,21 @@ export const clientWork = [
   },
   {
     title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
-    scope: "Product discovery and validation for airline disruption operations module (remote)",
+    scope: "Product ops in a box and fractional PM engagement (remote)",
     description: "Shaped a new module for airline IROPs (Irregular Operations) management, covering technical feasibility, domain-level validation with industry stakeholders, UX improvements for operations teams, and an AI co-pilot to assist agents during disruption events.",
     lead: "Iva Rumora",
     email: "iva@lmn3.digital",
+    engagementDuration: "3 months",
     result: "Defined module scope, validated technical and domain assumptions, improved UX for operations workflows, and prototyped AI co-pilot interactions for faster disruption handling.",
     metrics: "Module scope validated and AI co-pilot concept prototyped",
     image: {
       type: 'unsplash' as const,
-      id: 'photo-1436491863332-7dd61a1a7f99',
-      alt: 'Airline operations and flight disruption management technology',
+      id: 'photo-1605810230434-7631ac76ec81',
+      alt: 'Team collaboration with displays',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1464037867666-48c5f6af4d24',
-        alt: 'Airport operations control room'
+        id: 'photo-1519389950473-47ba0277781c',
+        alt: 'People working with computers'
       }
     },
     sector: "B2B Traveltech | Airline IROP Management",

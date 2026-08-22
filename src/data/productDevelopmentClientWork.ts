@@ -53,12 +53,12 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     metrics: "Team alignment and delivery flow restored",
     image: {
       type: 'external' as const,
-      url: '/case-studies/flighter-finance-dashboard.png',
-      alt: 'Flighter Finance dashboard — spend tracking and EU261 compliance',
+      url: '/case-studies/FlightER - Hotel - Availability.png',
+      alt: 'Flighter airline IROPS hotel availability module interface',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1605810230434-7631ac76ec81',
-        alt: 'Remote development team collaboration and product operations optimization case study'
+        id: 'photo-1436491863332-7dd61a1a7f99',
+        alt: 'Airline operations and flight disruption management technology'
       }
     },
     sector: "B2B Traveltech | Platform for IROP management",
@@ -68,21 +68,21 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
   {
     id: "flighter-irops-module-expansion-2026",
     title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
-    scope: "Product discovery and validation for airline disruption operations module (remote)",
+    scope: "Product ops in a box and fractional PM engagement (remote)",
     description: "Shaped a new module for airline IROPs (Irregular Operations) management, covering technical feasibility, domain-level validation with industry stakeholders, UX improvements for operations teams, and an AI co-pilot to assist agents during disruption events.",
     lead: "Iva Rumora",
     email: "iva@lmn3.digital",
-    engagementDuration: "2 months",
+    engagementDuration: "3 months",
     result: "Defined module scope, validated technical and domain assumptions, improved UX for operations workflows, and prototyped AI co-pilot interactions for faster disruption handling.",
     metrics: "Module scope validated and AI co-pilot concept prototyped",
     image: {
       type: 'external' as const,
-      url: '/case-studies/FlightER - Hotel - Availability.png',
-      alt: 'Flighter airline IROPS hotel availability module interface',
+      url: '/case-studies/flighter-finance-dashboard.png',
+      alt: 'Flighter Finance dashboard — spend tracking and EU261 compliance',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1436491863332-7dd61a1a7f99',
-        alt: 'Airline operations and flight disruption management technology'
+        id: 'photo-1605810230434-7631ac76ec81',
+        alt: 'Remote development team collaboration and product operations optimization case study'
       }
     },
     sector: "B2B Traveltech | Airline IROP Management",
