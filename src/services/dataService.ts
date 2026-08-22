@@ -64,16 +64,26 @@ export class DataService {
           ],
           insight: "Insight: Rapid iteration and clear direction can transform unstable betas into viable products."
         };
-      case "Unblocking Remote Dev Team in 3 Weeks":
+      case "Unblocking Remote Dev Team in 3 Weeks (2025)":
         return {
           timeframe: "Results in 3 weeks",
           results: [
             "• Functional delivery flow re-established in 2 sprints",
             "• Major bottleneck cleared",
-            "• Delivery pace and team alignment restored",
-            "• Team alignment and delivery flow restored"
+            "• Delivery pace and team alignment restored"
           ],
           insight: "Insight: Process and communication fixes can dramatically improve team velocity."
+        };
+      case "Airline IROPS Module Expansion & AI Co-Pilot (2026)":
+        return {
+          timeframe: "Results in 2 months",
+          results: [
+            "• Module scope defined and validated with airline stakeholders",
+            "• Technical feasibility and domain-level requirements confirmed",
+            "• UX improvements prototyped for operations-team workflows",
+            "• AI co-pilot concept designed to assist agents during disruption events"
+          ],
+          insight: "Insight: Deep domain validation and agent-facing AI can turn complex airline operations into scalable product modules."
         };
       default:
         return undefined;

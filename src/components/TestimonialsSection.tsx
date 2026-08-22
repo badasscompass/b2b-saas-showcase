@@ -15,16 +15,16 @@ interface ClientShowcase {
 
 const clientShowcases: ClientShowcase[] = [
   {
-    title: "Unblocking Remote Dev Team in 3 Weeks",
+    title: "Unblocking Remote Dev Team in 3 Weeks (2025)",
     serviceLabel: "Product Ops in a Box",
-    snippet: "A startup was stuck in legacy code refactoring—no dev processes, no guidelines, and async workflow bottlenecks slowing progress.",
+    snippet: "A remote dev team was stuck in legacy refactoring with no clear processes or guidelines, and async bottlenecks slowing every release.",
     results: [
       "Functional delivery flow re-established in 2 sprints",
       "Major bottleneck identified and cleared",
-      "Defined and designed a new expanded scope for the platform"
+      "Delivery pace and team alignment restored"
     ],
-    sector: "TravelTech | B2B Hospitality",
-    product: "Platform for Booking and Travel Management, (Portugal/Spain)",
+    sector: "TravelTech | Airline IROP Management",
+    product: "Flighter.ai — Airline Disruption Operations Platform",
     link: "/product-development"
   },
   {
