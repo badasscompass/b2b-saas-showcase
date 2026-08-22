@@ -78,9 +78,9 @@ export const clientWork = [
     productUrl: "https://github.com/gbrian/codx-junior"
   },
   {
-    title: "Unblocking Remote Dev Team in 3 Weeks",
-    scope: "Product Operations in a Box sprint execution (remote)", 
-    description: "A client was stuck in legacy code refactoring—no dev processes, no guidelines, and async bottlenecks slowing progress. We structured the backlog and launched first sprint with release goals, focused on bug fixes to stabilise delivery. In Sprint 2, resolved a key contributor bottleneck causing conflicts and enabled smoother, aligned implementation across the team.",
+    title: "Unblocking Remote Dev Team in 3 Weeks (2025)",
+    scope: "Product Ops-in-a-Box sprint execution (remote)",
+    description: "A remote dev team was stuck in legacy refactoring with no clear processes or guidelines, and async bottlenecks slowing every release. The backlog was restructured, Sprint 1 focused on bug fixes to stabilise delivery, and Sprint 2 resolved a key contributor bottleneck causing conflicts so implementation could move forward with clearer alignment.",
     lead: "Iva Rumora",
     email: "iva@lmn3.digital",
     result: "Functional delivery flow re-established in 2 sprints. Major bottleneck cleared. Delivery pace and team alignment restored.",
@@ -95,9 +95,31 @@ export const clientWork = [
         alt: 'People working with computers'
       }
     },
-    sector: "B2B Traveltech | Platform for fight disruptions & IROP management",
-    product: "Fligher.ai",
-    productUrl: "https://fligther.ai/"
+    sector: "B2B Traveltech | Platform for IROP management",
+    product: "Flighter.ai",
+    productUrl: "https://flighter.ai"
+  },
+  {
+    title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
+    scope: "Product discovery and validation for airline disruption operations module (remote)",
+    description: "Shaped a new module for airline IROPs (Irregular Operations) management, covering technical feasibility, domain-level validation with industry stakeholders, UX improvements for operations teams, and an AI co-pilot to assist agents during disruption events.",
+    lead: "Iva Rumora",
+    email: "iva@lmn3.digital",
+    result: "Defined module scope, validated technical and domain assumptions, improved UX for operations workflows, and prototyped AI co-pilot interactions for faster disruption handling.",
+    metrics: "Module scope validated and AI co-pilot concept prototyped",
+    image: {
+      type: 'unsplash' as const,
+      id: 'photo-1436491863332-7dd61a1a7f99',
+      alt: 'Airline operations and flight disruption management technology',
+      fallback: {
+        type: 'unsplash' as const,
+        id: 'photo-1464037867666-48c5f6af4d24',
+        alt: 'Airport operations control room'
+      }
+    },
+    sector: "B2B Traveltech | Airline IROP Management",
+    product: "Flighter.ai",
+    productUrl: "https://flighter.ai"
   }
 ];
 
