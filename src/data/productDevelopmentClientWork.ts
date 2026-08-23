@@ -53,12 +53,12 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     metrics: "Team alignment and delivery flow restored",
     image: {
       type: 'external' as const,
-      url: '/case-studies/FlightER - Hotel - Availability.png',
-      alt: 'Flighter airline IROPS hotel availability module interface',
+      url: '/case-studies/flighter-finance-dashboard.png',
+      alt: 'Flighter Finance dashboard — spend tracking and EU261 compliance',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1436491863332-7dd61a1a7f99',
-        alt: 'Airline operations and flight disruption management technology'
+        id: 'photo-1605810230434-7631ac76ec81',
+        alt: 'Remote development team collaboration and product operations optimization case study'
       }
     },
     sector: "B2B Traveltech | Platform for IROP management",
@@ -77,12 +77,12 @@ export const productDevelopmentClientWork: ProductDevelopmentWork[] = [
     metrics: "Module scope validated and AI co-pilot concept prototyped",
     image: {
       type: 'external' as const,
-      url: '/case-studies/flighter-finance-dashboard.png',
-      alt: 'Flighter Finance dashboard — spend tracking and EU261 compliance',
+      url: '/case-studies/FlightER - Hotel - Availability.png',
+      alt: 'Flighter airline IROPS hotel availability module interface',
       fallback: {
         type: 'unsplash' as const,
-        id: 'photo-1605810230434-7631ac76ec81',
-        alt: 'Remote development team collaboration and product operations optimization case study'
+        id: 'photo-1436491863332-7dd61a1a7f99',
+        alt: 'Airline operations and flight disruption management technology'
       }
     },
     sector: "B2B Traveltech | Airline IROP Management",
