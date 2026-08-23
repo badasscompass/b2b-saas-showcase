@@ -103,7 +103,7 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
 
                 <div className="flex flex-wrap items-center gap-3 mb-5 md:mb-6 pt-2">
                   <span className="text-xs font-semibold font-manrope uppercase tracking-wide text-[#EA3E3A] px-3 py-1.5 rounded-full bg-gradient-to-r from-[#EA3E3A]/10 to-[#F4A42C]/10 border border-[#EA3E3A]/20">
-                    Ongoing engagement
+                    Recurring engagement
                   </span>
                   <h3 className="font-manrope font-bold text-lg md:text-xl text-gray-900">
                     {product}
