@@ -78,8 +78,8 @@ export class DataService {
         return {
           timeframe: "Results in 3 months",
           results: [
-            "• Module scope defined and validated with airline stakeholders",
-            "• Technical feasibility and domain-level requirements confirmed",
+            "• Airline pilot readiness assessment completed with stakeholders",
+            "• Technical and domain assumptions validated; core business logic refined",
             "• UX improvements prototyped for operations-team workflows",
             "• AI co-pilot concept designed to assist agents during disruption events"
           ],

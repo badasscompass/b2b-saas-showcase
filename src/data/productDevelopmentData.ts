@@ -102,12 +102,12 @@ export const clientWork = [
   {
     title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
     scope: "Product ops in a box and fractional PM engagement (remote)",
-    description: "Shaped a new module for airline IROPs (Irregular Operations) management, covering technical feasibility, domain-level validation with industry stakeholders, UX improvements for operations teams, and an AI co-pilot to assist agents during disruption events.",
+    description: "Led an airline pilot readiness assessment for an IROPs (Irregular Operations) module, validating technical and domain assumptions with industry stakeholders and refining core business logic. Improved UX for operations-team workflows and prototyped an AI co-pilot to assist agents during disruption events.",
     lead: "Iva Rumora",
     email: "iva@lmn3.digital",
     engagementDuration: "3 months",
-    result: "Defined module scope, validated technical and domain assumptions, improved UX for operations workflows, and prototyped AI co-pilot interactions for faster disruption handling.",
-    metrics: "Module scope validated and AI co-pilot concept prototyped",
+    result: "Pilot readiness validated, business logic refined, UX improved for operations workflows, and AI co-pilot interactions prototyped for faster disruption handling.",
+    metrics: "Pilot readiness validated and AI co-pilot concept prototyped",
     image: {
       type: 'unsplash' as const,
       id: 'photo-1605810230434-7631ac76ec81',
