@@ -64,7 +64,7 @@ export class DataService {
           ],
           insight: "Insight: Rapid iteration and clear direction can transform unstable betas into viable products."
         };
-      case "Unblocking Remote Dev Team in 3 Weeks (2025)":
+      case "Unblocking Remote Dev Team in 3 Weeks":
         return {
           timeframe: "Results in 3 weeks",
           results: [
@@ -74,7 +74,7 @@ export class DataService {
           ],
           insight: "Insight: Process and communication fixes can dramatically improve team velocity."
         };
-      case "Airline IROPS Module Expansion & AI Co-Pilot (2026)":
+      case "Airline IROPS Module Expansion & AI Co-Pilot":
         return {
           timeframe: "Results in 3 months",
           results: [
@@ -97,6 +97,7 @@ export class DataService {
       title: work.title,
       scope: work.scope,
       description: work.description,
+      year: work.year,
       lead: work.lead,
       email: work.email,
       image: work.image,

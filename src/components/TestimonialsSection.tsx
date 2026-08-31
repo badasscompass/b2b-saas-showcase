@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 interface ClientShowcase {
   title: string;
+  year: string;
   serviceLabel: string;
   snippet: string;
   results: string[];
@@ -15,7 +16,8 @@ interface ClientShowcase {
 
 const clientShowcases: ClientShowcase[] = [
   {
-    title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
+    title: "Airline IROPS Module Expansion & AI Co-Pilot",
+    year: "2026",
     serviceLabel: "Product Ops in a Box & Fractional PM",
     snippet: "Led an airline pilot readiness assessment for an IROPs module, validating technical and domain assumptions with industry stakeholders and refining core business logic.",
     results: [
@@ -30,6 +32,7 @@ const clientShowcases: ClientShowcase[] = [
   },
   {
     title: "Strategic Use Case Pivot within 1 month",
+    year: "2025",
     serviceLabel: "Fractional Product Leadership & Product Clarity Sprints",
     snippet: "A bootstrapped CEE proptech startup building a platform for resident communities needed to resolve unclear product direction, onboarding friction, and stalled momentum.",
     results: [
@@ -74,6 +77,9 @@ export const TestimonialsSection = () => {
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-semibold text-[#EA3E3A] font-manrope px-2 py-1 bg-[#EA3E3A]/10 rounded">
                       {showcase.sector}
+                    </span>
+                    <span className="text-xs font-semibold text-gray-600 font-manrope px-2 py-1 bg-gray-100 rounded border border-gray-200">
+                      {showcase.year}
                     </span>
                   </div>
                 </div>

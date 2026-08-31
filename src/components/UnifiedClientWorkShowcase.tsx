@@ -53,16 +53,23 @@ export const UnifiedClientWorkShowcase = ({ serviceType, config }: UnifiedClient
   }
 
   // Group works by product so multi-engagement clients read as one story
+  const byYear = <T extends { year?: number }>(a: T, b: T) => (a.year ?? 0) - (b.year ?? 0);
+
   const grouped = clientWorks.reduce<Record<string, typeof clientWorks>>((acc, work) => {
     const key = work.product || work.id;
     (acc[key] ||= []).push(work);
     return acc;
   }, {});
 
-  const multiGroups = Object.entries(grouped).filter(([, items]) => items.length > 1);
+  Object.values(grouped).forEach((items) => items.sort(byYear));
+
+  const multiGroups = Object.entries(grouped)
+    .filter(([, items]) => items.length > 1)
+    .sort(([, a], [, b]) => byYear(a[0], b[0]));
   const singles = Object.entries(grouped)
     .filter(([, items]) => items.length === 1)
-    .flatMap(([, items]) => items);
+    .flatMap(([, items]) => items)
+    .sort(byYear);
 
   const renderCard = (work: (typeof clientWorks)[number]) => (
     <Dialog key={work.id} onOpenChange={(open) => {

@@ -3,6 +3,7 @@ import type { ImageSource } from "@/types/image";
 export interface ClientWork {
   id: string;
   title: string;
+  year?: number;
   scope: string;
   description: string;
   lead: string;
@@ -18,6 +19,7 @@ export const clientWorkData: ClientWork[] = [
   {
     id: "product-positioning-clarity",
     title: "Product Positioning Clarity",
+    year: 2024,
     scope: "Strategic Positioning & Market Alignment", 
     description: "Agency in-house team building an MVP (backend-as-a-service for content management use cases) needed help defining what their product actually is and who it's for. Working fractionally (~45 hrs) over 12 weeks, we co-created product vision, mission, and value proposition, developed elevator pitch for internal and external alignment, conducted competitive landscape research, and refined product scope based on strategic positioning.",
     lead: "Iva Rumora",
@@ -40,6 +42,7 @@ export const clientWorkData: ClientWork[] = [
   {
     id: "fractional-product-leadership-proptech",
     title: "Fractional Product Leadership in Proptech SaaS space",
+    year: 2025,
     scope: "Fractional Product Leadership & Product Clarity Sprints",
     description: "A bootstrapped CEE proptech startup building a platform for resident communities engaged fractional product leadership to resolve unclear product direction, onboarding friction, and stalled momentum.\n\nThe focus was on stabilising the product core, clarifying target use cases, and strengthening collaboration within multi-owner residential communities. This included redefining community types and roles, improving onboarding UX, and introducing collaboration features beyond one-way admin communication.\n\nIn the final phase, a rapid Discovery-to-strategy sprint reframed the platform's growth path through a compliance-driven module aligned with upcoming EU regulatory mandates - connecting the existing community foundation to a scalable B2B opportunity.",
     lead: "Iva Rumora",

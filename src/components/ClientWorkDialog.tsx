@@ -26,6 +26,11 @@ export const ClientWorkDialog = ({ work }: ClientWorkDialogProps) => {
   return (
     <DialogContent className="sm:max-w-4xl max-h-[90vh] w-[95vw] p-0">
       <DialogHeader className="p-6 pb-4">
+        {work.year && (
+          <span className="self-start text-xs font-semibold font-manrope text-gray-600 px-2 py-0.5 bg-gray-100 rounded border border-gray-200">
+            {work.year}
+          </span>
+        )}
         <DialogTitle className="font-manrope text-xl md:text-2xl text-gray-900">
           {work.title}
         </DialogTitle>
