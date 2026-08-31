@@ -37,6 +37,11 @@ export const UnifiedClientWorkCard = ({ work, onClick }: UnifiedClientWorkCardPr
         </div>
         
         <div className="flex-1 flex flex-col min-h-0 pb-14">
+          {work.year && (
+            <span className="self-start mb-2 text-xs font-semibold font-manrope text-gray-600 px-2 py-0.5 bg-gray-100 rounded border border-gray-200">
+              {work.year}
+            </span>
+          )}
           <CardTitle className="font-manrope text-lg text-gray-900 mb-2 line-clamp-2 leading-tight">
             {work.title}
           </CardTitle>
