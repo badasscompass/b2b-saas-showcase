@@ -4,6 +4,7 @@ import type { ImageSource } from '@/types/image';
 export interface UnifiedClientWork {
   id: string;
   title: string;
+  year?: number;
   scope: string;
   description: string;
   lead: string;

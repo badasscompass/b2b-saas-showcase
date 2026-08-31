@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 interface ClientShowcase {
   title: string;
+  year: string;
   serviceLabel: string;
   snippet: string;
   results: string[];
@@ -15,7 +16,8 @@ interface ClientShowcase {
 
 const clientShowcases: ClientShowcase[] = [
   {
-    title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
+    title: "Airline IROPS Module Expansion & AI Co-Pilot",
+    year: "2026",
     serviceLabel: "Product Ops in a Box & Fractional PM",
     snippet: "Led an airline pilot readiness assessment for an IROPs module, validating technical and domain assumptions with industry stakeholders and refining core business logic.",
     results: [

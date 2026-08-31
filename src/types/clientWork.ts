@@ -3,6 +3,7 @@ import type { ImageSource } from '@/types/image';
 export interface GenericClientWork {
   id: string;
   title: string;
+  year?: number;
   scope: string;
   description: string;
   lead: string;

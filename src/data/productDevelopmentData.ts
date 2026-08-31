@@ -57,6 +57,7 @@ export const productOutcomes = [
 export const clientWork = [
   {
     title: "From Beta Instability to MVP in 1 Month",
+    year: 2024,
     scope: "Discovery-to-Strategy Accelerator founder advisory focused (remote)",
     description: "Working in a lightweight advisory format with a solo founder. Initial challenge: An unstable beta MVP and unclear direction—at a time when the AI dev tool landscape was rapidly evolving.",
     lead: "Iva Rumora",
@@ -78,7 +79,8 @@ export const clientWork = [
     productUrl: "https://github.com/gbrian/codx-junior"
   },
   {
-    title: "Unblocking Remote Dev Team in 3 Weeks (2025)",
+    title: "Unblocking Remote Dev Team in 3 Weeks",
+    year: 2025,
     scope: "Product Ops-in-a-Box sprint execution (remote)",
     description: "A remote dev team was stuck in legacy refactoring with no clear processes or guidelines, and async bottlenecks slowing every release. The backlog was restructured, Sprint 1 focused on bug fixes to stabilise delivery, and Sprint 2 resolved a key contributor bottleneck causing conflicts so implementation could move forward with clearer alignment.",
     lead: "Iva Rumora",
@@ -100,7 +102,8 @@ export const clientWork = [
     productUrl: "https://flighter.ai"
   },
   {
-    title: "Airline IROPS Module Expansion & AI Co-Pilot (2026)",
+    title: "Airline IROPS Module Expansion & AI Co-Pilot",
+    year: 2026,
     scope: "Product ops in a box and fractional PM engagement (remote)",
     description: "Led an airline pilot readiness assessment for an IROPs (Irregular Operations) module, validating technical and domain assumptions with industry stakeholders and refining core business logic. Improved UX for operations-team workflows and prototyped an AI co-pilot to assist agents during disruption events.",
     lead: "Iva Rumora",
