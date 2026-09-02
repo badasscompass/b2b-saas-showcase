@@ -106,7 +106,13 @@ export const HeroSection = ({ onGuideMeClick }: HeroSectionProps) => {
                 {/* Logo */}
                 <a href="/" aria-label="LMN3 Home" className="relative block">
                   <img
-                    src="/lovable-uploads/d0861208-c179-4143-aee3-7e3ec567a892.png"
+                    src="/lovable-uploads/logo-wordmark-448.webp"
+                    srcSet="/lovable-uploads/logo-wordmark-448.webp 448w, /lovable-uploads/logo-wordmark-896.webp 896w"
+                    sizes="(min-width: 1024px) 384px, (min-width: 640px) 320px, 256px"
+                    width={448}
+                    height={170}
+                    fetchPriority="high"
+                    decoding="async"
                     alt="LMN3 - Strategic Product Development by Iva Rumora"
                     className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105"
                   />
