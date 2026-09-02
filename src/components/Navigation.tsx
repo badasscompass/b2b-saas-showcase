@@ -47,8 +47,11 @@ export const Navigation = ({ logoOnly = false }: NavigationProps) => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
             <img 
-              src="/lovable-uploads/ac928757-746d-4571-b2f0-de32e4c5470e.png"
+              src="/lovable-uploads/logo-mark-128.webp"
               alt="LMN3 Logo - Iva Rumora Strategic Product Consulting"
+              width={32}
+              height={32}
+              decoding="async"
               className="w-8 h-8"
             />
             <span className="text-xl font-bold font-manrope text-[#EA3E3A]">LMN3</span>
