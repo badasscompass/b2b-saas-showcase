@@ -170,30 +170,39 @@ const IndexV2 = () => {
         {/* The problem */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl">
-              <SectionHeader
-                title="You don't need another pair of hands. You need sharper product judgment."
-                subtitle="When a product is stuck, the problem isn't always a lack of ideas or execution capacity."
-                alignment="left"
-              />
-              <p className="text-lg text-gray-900 font-manrope font-semibold mb-6">Sometimes you're:</p>
-              <ul className="space-y-4 mb-10">
-                {stuckSignals.map((signal) => (
-                  <li key={signal} className="flex items-start gap-3">
-                    <span className="mt-2 h-2 w-2 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] flex-shrink-0" />
-                    <span className="text-lg text-gray-600 font-manrope leading-relaxed">{signal}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="text-lg text-gray-800 font-manrope leading-relaxed border-l-4 border-[#EA3E3A] pl-6">
-                I step into these moments to identify what actually needs to be decided, what evidence is
-                missing, and where the team should place its next bet.
-              </p>
+            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+              <div className="lg:col-span-5">
+                <SectionHeader
+                  title="Not another pair of hands. Sharper product judgment."
+                  subtitle="When a product is stuck, the problem isn't always a lack of ideas or execution capacity."
+                  alignment="left"
+                />
+              </div>
+              <div className="lg:col-span-7">
+                <p className="text-sm font-bold uppercase tracking-wider text-[#F4A42C] font-manrope mb-6">
+                  Common signals
+                </p>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+                  {stuckSignals.map((signal) => (
+                    <li
+                      key={signal}
+                      className="flex items-start gap-3 rounded-xl bg-gray-50 border border-gray-100 p-4"
+                    >
+                      <span className="mt-2 h-2 w-2 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] flex-shrink-0" />
+                      <span className="text-base text-gray-700 font-manrope leading-relaxed">{signal}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p className="text-lg text-gray-800 font-manrope leading-relaxed border-l-4 border-[#EA3E3A] pl-6">
+                  These are the moments where the work is identifying what actually needs to be decided,
+                  what evidence is missing, and where the next bet belongs.
+                </p>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* What I do */}
+        {/* What the work is */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader
@@ -201,19 +210,22 @@ const IndexV2 = () => {
               subtitle="Three connected layers of work."
               alignment="left"
             />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {layers.map((layer) => {
                 const Icon = layer.icon;
                 return (
                   <div
                     key={layer.number}
-                    className="group bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
+                    className="group relative bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                   >
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <span className="absolute top-6 right-7 text-5xl font-extrabold font-manrope text-gray-100 select-none">
+                      {layer.number}
+                    </span>
                     <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#EA3E3A]/10 to-[#F4A42C]/10 flex items-center justify-center mb-6">
                       <Icon className="h-7 w-7 text-[#EA3E3A]" />
                     </div>
-                    <span className="text-sm font-bold font-manrope text-[#F4A42C]">{layer.number}</span>
-                    <h3 className="text-xl font-bold font-manrope text-gray-900 mt-2 mb-3">{layer.title}</h3>
+                    <h3 className="text-xl font-bold font-manrope text-gray-900 mb-3">{layer.title}</h3>
                     <p className="text-gray-600 font-manrope leading-relaxed">{layer.description}</p>
                   </div>
                 );
@@ -226,16 +238,16 @@ const IndexV2 = () => {
           </div>
         </section>
 
-        {/* How I work */}
+        {/* How the work runs */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl">
+            <div className="max-w-5xl mx-auto">
               <SectionHeader
-                title="I don't just give advice. I create decisions."
-                subtitle="My role isn't to become the person who permanently runs your product."
+                title="Advice is cheap. Decisions are the deliverable."
+                subtitle="The goal isn't to permanently own your product — it's to leave the team able to decide without outside help."
                 alignment="left"
               />
-              <div className="flex flex-wrap items-center gap-3 mb-10">
+              <div className="flex flex-wrap items-center gap-3 mb-12">
                 {["Understand", "Challenge", "Decide", "Test", "Learn"].map((step, i, arr) => (
                   <div key={step} className="flex items-center gap-3">
                     <span className="px-4 py-2 rounded-full bg-gradient-to-r from-[#EA3E3A]/10 to-[#F4A42C]/10 text-gray-900 font-manrope font-semibold">
@@ -245,32 +257,34 @@ const IndexV2 = () => {
                   </div>
                 ))}
               </div>
-              <div className="space-y-5 text-lg text-gray-600 font-manrope leading-relaxed">
-                <p>
-                  That means I will tell you when I think you're solving the wrong problem, when another
-                  feature won't fix the underlying issue, or when you're avoiding a decision that needs to
-                  be made.
-                </p>
-                <p>You'll get a clear point of view — not a list of equally plausible options.</p>
-                <p>And the team leaves with the context and mechanisms to continue without me.</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  "Naming it plainly when the wrong problem is being solved, or when another feature won't fix the underlying issue.",
+                  "A clear point of view — not a list of equally plausible options.",
+                  "Context and mechanisms that stay with the team after the engagement ends.",
+                ].map((item) => (
+                  <div key={item} className="rounded-2xl border border-gray-100 bg-gray-50 p-6">
+                    <p className="text-gray-700 font-manrope leading-relaxed">{item}</p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Who I work with */}
+        {/* Who this fits */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionHeader
               title="Best fit: teams at a product inflection point."
-              subtitle="I tend to be most useful when:"
+              subtitle="This work tends to be most useful when:"
               alignment="left"
             />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
               {bestFit.map((item) => (
                 <div
                   key={item}
-                  className="flex items-start gap-4 bg-white rounded-xl p-6 border border-gray-100"
+                  className="flex items-start gap-4 bg-white rounded-xl p-6 border border-gray-100 hover:border-[#F4A42C]/40 hover:shadow-md transition-all duration-300"
                 >
                   <Compass className="h-5 w-5 text-[#F4A42C] flex-shrink-0 mt-1" />
                   <span className="text-gray-700 font-manrope leading-relaxed">{item}</span>
@@ -278,33 +292,34 @@ const IndexV2 = () => {
               ))}
             </div>
             <p className="text-lg text-gray-800 font-manrope leading-relaxed mt-10 max-w-3xl">
-              I work with startups, scaleups and innovation teams where the cost of making the wrong
-              product decision is becoming higher than the cost of bringing in outside expertise.
+              Startups, scaleups and innovation teams where the cost of making the wrong product decision
+              is becoming higher than the cost of bringing in outside expertise.
             </p>
           </div>
         </section>
 
-        {/* Why me */}
+        {/* Why this partner */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl">
-              <SectionHeader
-                title="Broad product experience. Strong opinions. No attachment to your roadmap."
-                alignment="left"
-              />
-              <div className="space-y-5 text-lg text-gray-600 font-manrope leading-relaxed">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+              <div className="lg:col-span-5">
+                <SectionHeader
+                  title="Broad product experience. Strong opinions. No attachment to your roadmap."
+                  alignment="left"
+                />
+              </div>
+              <div className="lg:col-span-7 space-y-5 text-lg text-gray-600 font-manrope leading-relaxed">
                 <p>
-                  I've spent a decade working across products, markets and stages — from early-stage
-                  startups to complex digital products and emerging AI use cases.
+                  A decade across products, markets and stages — from early-stage startups to complex
+                  digital products and emerging AI use cases.
                 </p>
-                <p>That breadth means I don't arrive with a rigid playbook.</p>
+                <p>That breadth means no rigid playbook arrives with the engagement.</p>
                 <p>
-                  I look for the underlying constraint, form a hypothesis, and work with the team to test
-                  it.
+                  The method is simple: find the underlying constraint, form a hypothesis, and test it with
+                  the team.
                 </p>
-                <p className="text-gray-900 font-semibold">
-                  I'm not there to validate what you've already decided. I'm there to help you decide
-                  better.
+                <p className="text-gray-900 font-semibold text-xl border-l-4 border-[#F4A42C] pl-6">
+                  Not here to validate what's already decided — here to help you decide better.
                 </p>
               </div>
             </div>
@@ -321,7 +336,7 @@ const IndexV2 = () => {
               />
               <div className="space-y-5 text-lg text-gray-600 font-manrope leading-relaxed mb-10">
                 <p>
-                  I offer modular engagements around specific product problems — from strategic diagnosis
+                  Modular engagements built around specific product problems — from strategic diagnosis
                   and product discovery to AI product definition and validation.
                 </p>
                 <p>The scope depends on the problem. The principle doesn't:</p>
@@ -341,6 +356,7 @@ const IndexV2 = () => {
             </div>
           </div>
         </section>
+
 
         {/* Closing CTA */}
         <section className="py-16 md:py-20 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]">
