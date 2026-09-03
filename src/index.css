@@ -35,10 +35,12 @@
     @apply bg-background text-foreground;
     font-family: 'Manrope', sans-serif;
     line-height: 1.6;
+    overflow-x: clip;
   }
 
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
   /* Enhanced smooth scroll for anchor links */

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ArrowRight, BarChart3, Calendar, Compass, Rocket, Target, Search, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart3, Calendar, Rocket, Target, Search, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/Navigation";
 import { PageFooter } from "@/components/PageFooter";
@@ -40,19 +40,50 @@ const layers = [
   },
 ];
 
-const bestFit = [
-  "a product is entering a new market",
-  "a promising idea needs validation before significant investment",
-  "an existing product isn't translating into traction",
-  "a technically strong capability needs to become a real product",
-  "AI introduces new possibilities but also new product questions",
-  "the roadmap has become reactive or unfocused",
-  "founders need an experienced product perspective before making a consequential bet",
+const processFlow = [
+  {
+    steps: ["Understand", "Challenge"],
+    outcome:
+      "Naming it plainly when the wrong problem is being solved, or when another feature won't fix the underlying issue.",
+  },
+  {
+    steps: ["Decide", "Test"],
+    outcome: "A clear point of view — not a list of equally plausible options.",
+  },
+  {
+    steps: ["Learn"],
+    outcome: "Context and mechanisms that stay with the team after the engagement ends.",
+  },
+];
+
+const bestFitGroups = [
+  {
+    label: "Launch & validation",
+    items: [
+      "a product is entering a new market",
+      "a promising idea needs validation before significant investment",
+    ],
+  },
+  {
+    label: "Traction & focus",
+    items: [
+      "an existing product isn't translating into traction",
+      "a technically strong capability needs to become a real product",
+      "the roadmap has become reactive or unfocused",
+    ],
+  },
+  {
+    label: "High-stakes decisions",
+    items: [
+      "AI introduces new possibilities but also new product questions",
+      "founders need an experienced product perspective before making a consequential bet",
+    ],
+  },
 ];
 
 const IndexV2 = () => {
   useSEO({
-    title: "Turn Product Uncertainty Into Confident Bets | LMN3",
+    title: "Turn Product Uncertainty Into Confident Direction | LMN3",
     description:
       "Product strategy, discovery and AI-native product design for founders and teams facing consequential product decisions.",
   });
@@ -78,16 +109,16 @@ const IndexV2 = () => {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen pt-20">
+      <main className="min-h-screen overflow-x-clip pt-20">
         {/* Hero */}
         <section className="relative flex flex-col bg-gradient-to-br from-gray-50 to-white overflow-hidden">
           <div className="container mx-auto px-4 relative z-10 w-full py-16 lg:py-24">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
               <div className="lg:col-span-7 flex flex-col space-y-8 text-center lg:text-left">
                 <div className="space-y-5">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#EA3E3A]/5 border border-[#EA3E3A]/10 mx-auto lg:mx-0 w-fit">
+                  <div className="inline-flex max-w-full flex-wrap items-center gap-2 px-3 py-1 rounded-full bg-[#EA3E3A]/5 border border-[#EA3E3A]/10 mx-auto lg:mx-0 w-fit">
                     <span className="flex h-2 w-2 rounded-full bg-[#EA3E3A]" />
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#EA3E3A] font-manrope">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#EA3E3A] font-manrope text-balance">
                       Product strategy · AI products · Discovery · Productization
                     </span>
                   </div>
@@ -95,18 +126,13 @@ const IndexV2 = () => {
                   <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-manrope text-gray-900 leading-[1.1] tracking-tight">
                     Turn product uncertainty into{" "}
                     <span className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent">
-                      confident bets
+                      confident direction
                     </span>
                   </h1>
 
                   <p className="text-lg sm:text-xl text-gray-600 font-manrope leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
-                    I help founders and product teams make the hard product decisions that sit between
-                    “we built something” and “this actually has a reason to exist.”
-                  </p>
-                  <p className="text-base sm:text-lg text-gray-600 font-manrope leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                    From product strategy and discovery to AI-native product design, I bring clarity to
-                    ambiguous problems, challenge weak assumptions, and turn them into decisions the team
-                    can actually execute.
+                    Helping founders and product teams make the hard product decisions that sit between
+                    “we built something” and “this actually has a reason to exist. And someone who will buy it.”
                   </p>
                 </div>
 
@@ -139,7 +165,7 @@ const IndexV2 = () => {
                 </div>
               </div>
 
-              <div className="lg:col-span-5 flex justify-center lg:justify-end order-first lg:order-last">
+              <div className="lg:col-span-5 flex justify-center lg:justify-end order-first lg:order-last min-w-0">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#EA3E3A] to-[#F4A42C] blur-[80px] opacity-20 rounded-full" />
                   <a href="/" aria-label="LMN3 Home" className="relative block">
@@ -170,10 +196,10 @@ const IndexV2 = () => {
         {/* The problem */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
               <div className="lg:col-span-5">
                 <SectionHeader
-                  title="Not another pair of hands. Sharper product judgment."
+                  title="Not another pair of hands. Thinking partner you can trust."
                   subtitle="When a product is stuck, the problem isn't always a lack of ideas or execution capacity."
                   alignment="left"
                 />
@@ -241,30 +267,43 @@ const IndexV2 = () => {
         {/* How the work runs */}
         <section className="py-16 md:py-24 bg-white">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <SectionHeader
-                title="Advice is cheap. Decisions are the deliverable."
-                subtitle="The goal isn't to permanently own your product — it's to leave the team able to decide without outside help."
-                alignment="left"
-              />
-              <div className="flex flex-wrap items-center gap-3 mb-12">
-                {["Understand", "Challenge", "Decide", "Test", "Learn"].map((step, i, arr) => (
-                  <div key={step} className="flex items-center gap-3">
-                    <span className="px-4 py-2 rounded-full bg-gradient-to-r from-[#EA3E3A]/10 to-[#F4A42C]/10 text-gray-900 font-manrope font-semibold">
-                      {step}
-                    </span>
-                    {i < arr.length - 1 && <ArrowRight className="h-4 w-4 text-[#F4A42C]" />}
-                  </div>
-                ))}
+            <div className="max-w-7xl mx-auto">
+              <div className="[&>div]:mb-8 md:[&>div]:mb-10">
+                <SectionHeader
+                  title="Advice is cheap. Decisions are the deliverable."
+                  subtitle="The goal isn't to permanently own your product — it's to leave the team able to decide without outside help."
+                  alignment="left"
+                />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {[
-                  "Naming it plainly when the wrong problem is being solved, or when another feature won't fix the underlying issue.",
-                  "A clear point of view — not a list of equally plausible options.",
-                  "Context and mechanisms that stay with the team after the engagement ends.",
-                ].map((item) => (
-                  <div key={item} className="rounded-2xl border border-gray-100 bg-gray-50 p-6">
-                    <p className="text-gray-700 font-manrope leading-relaxed">{item}</p>
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-8 lg:items-stretch">
+                {processFlow.map((phase) => (
+                  <div key={phase.steps.join("-")} className="flex min-h-0 min-w-0 flex-col">
+                    <div className="relative flex min-h-[3.25rem] w-full min-w-0 flex-wrap items-center justify-center gap-2">
+                      <div
+                        className="pointer-events-none absolute left-[12%] right-[12%] top-1/2 hidden h-px -translate-y-1/2 bg-gradient-to-r from-[#EA3E3A]/20 via-[#F4A42C]/40 to-[#EA3E3A]/20 lg:block"
+                        aria-hidden="true"
+                      />
+                      {phase.steps.map((step, stepIndex) => (
+                        <div key={step} className="relative z-10 flex min-w-0 items-center gap-2">
+                          <span className="rounded-full border border-[#F4A42C]/20 bg-white px-3 py-2 font-manrope text-sm font-semibold text-gray-900 shadow-sm sm:px-4">
+                            {step}
+                          </span>
+                          {stepIndex < phase.steps.length - 1 && (
+                            <ArrowRight className="h-4 w-4 flex-shrink-0 text-[#F4A42C]" aria-hidden="true" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="flex shrink-0 flex-col items-center py-4" aria-hidden="true">
+                      <div className="h-6 w-px bg-gradient-to-b from-[#F4A42C] to-[#EA3E3A]/30" />
+                      <div className="h-3 w-3 rounded-full bg-gradient-to-br from-[#EA3E3A] to-[#F4A42C] ring-4 ring-white" />
+                      <div className="h-4 w-px bg-gradient-to-b from-[#EA3E3A]/30 to-gray-200" />
+                    </div>
+
+                    <div className="relative flex flex-1 flex-col rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm before:absolute before:left-1/2 before:top-0 before:h-1 before:w-16 before:-translate-x-1/2 before:-translate-y-px before:rounded-full before:bg-gradient-to-r before:from-[#EA3E3A] before:to-[#F4A42C]">
+                      <p className="font-manrope leading-relaxed text-gray-700">{phase.outcome}</p>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -275,26 +314,40 @@ const IndexV2 = () => {
         {/* Who this fits */}
         <section className="py-16 md:py-24 bg-gray-50">
           <div className="container mx-auto px-4">
-            <SectionHeader
-              title="Best fit: teams at a product inflection point."
-              subtitle="This work tends to be most useful when:"
-              alignment="left"
-            />
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-              {bestFit.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-start gap-4 bg-white rounded-xl p-6 border border-gray-100 hover:border-[#F4A42C]/40 hover:shadow-md transition-all duration-300"
-                >
-                  <Compass className="h-5 w-5 text-[#F4A42C] flex-shrink-0 mt-1" />
-                  <span className="text-gray-700 font-manrope leading-relaxed">{item}</span>
-                </div>
-              ))}
+            <div className="max-w-7xl mx-auto">
+              <SectionHeader
+                title="Best fit: teams at a product inflection point."
+                subtitle="This work tends to be most useful when:"
+                alignment="left"
+              />
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 md:items-stretch">
+                {bestFitGroups.map((group) => (
+                  <div
+                    key={group.label}
+                    className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 lg:p-8 shadow-sm"
+                  >
+                    <p className="mb-5 font-manrope text-sm font-bold uppercase tracking-wider text-[#F4A42C]">
+                      {group.label}
+                    </p>
+                    <ul className="flex flex-1 flex-col gap-3">
+                      {group.items.map((item) => (
+                        <li key={item} className="flex items-start gap-3">
+                          <span
+                            className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]"
+                            aria-hidden="true"
+                          />
+                          <span className="font-manrope leading-relaxed text-gray-700">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-10 max-w-3xl font-manrope text-lg leading-relaxed text-gray-800">
+                Startups, scaleups and innovation teams where the cost of making the wrong product decision
+                is becoming higher than the cost of bringing in outside expertise.
+              </p>
             </div>
-            <p className="text-lg text-gray-800 font-manrope leading-relaxed mt-10 max-w-3xl">
-              Startups, scaleups and innovation teams where the cost of making the wrong product decision
-              is becoming higher than the cost of bringing in outside expertise.
-            </p>
           </div>
         </section>
 
