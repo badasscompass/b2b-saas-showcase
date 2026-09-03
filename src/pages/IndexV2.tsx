@@ -366,11 +366,11 @@ const IndexV2 = () => {
                 Have a product decision you can't confidently make?
               </h2>
               <p className="text-xl md:text-2xl mb-4 font-manrope opacity-90 leading-relaxed">
-                Bring me the messy version.
+                Bring the messy version.
               </p>
               <p className="text-lg md:text-xl mb-8 font-manrope opacity-90 leading-relaxed">
-                I'll help you figure out what you're actually deciding, what you need to know, and what
-                I'd bet on next.
+                Together we'll pin down what's actually being decided, what evidence is missing, and
+                where the next bet belongs.
               </p>
               <Button
                 size="lg"
