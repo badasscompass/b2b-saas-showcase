@@ -36,6 +36,12 @@ export const routeConfig: RouteConfig[] = [
     preload: true
   },
   {
+    path: '/v2',
+    component: createLazyComponentWithErrorHandler(() => import('../pages/IndexV2')),
+    title: 'Turn Product Uncertainty Into Confident Bets | LMN3',
+    description: 'Hidden A/B variant of the LMN3 homepage focused on product decision-making, discovery and AI products.'
+  },
+  {
     path: '/product-development',
     component: createLazyComponentWithErrorHandler(() => import('../pages/ProductDevelopment')),
     title: 'Product Development Services - LMN3',
