@@ -179,7 +179,7 @@ const IndexV2 = () => {
                       fetchPriority="high"
                       decoding="async"
                       alt="LMN3 - Strategic Product Development by Iva Rumora"
-                      className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105"
+                      className="relative w-56 h-28 sm:w-80 sm:h-40 lg:w-96 lg:h-48 object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-105"
                     />
                   </a>
                   <div className="hidden lg:flex absolute -top-4 -right-4 w-12 h-12 bg-white rounded-2xl shadow-lg items-center justify-center rotate-12 border border-gray-100">
