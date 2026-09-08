@@ -123,17 +123,18 @@ const IndexV2 = () => {
                     </span>
                   </div>
 
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold font-manrope text-gray-900 leading-[1.1] tracking-tight">
+                  <h1 className="text-[2rem] leading-[1.15] sm:text-5xl sm:leading-[1.12] lg:text-6xl xl:text-7xl lg:leading-[1.08] font-extrabold font-manrope text-gray-900 tracking-tight text-balance">
                     Turn product uncertainty into{" "}
                     <span className="bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent">
                       confident direction
                     </span>
                   </h1>
 
-                  <p className="text-lg sm:text-xl text-gray-600 font-manrope leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
+                  <p className="text-base sm:text-lg lg:text-xl text-gray-600 font-manrope leading-relaxed lg:leading-[1.65] max-w-2xl mx-auto lg:mx-0 font-medium text-pretty">
                     Helping founders and product teams make the hard product decisions that sit between
                     “we built something” and “this actually has a reason to exist. And someone who will buy it.”
                   </p>
+
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center lg:justify-start flex-wrap pt-2">
@@ -194,9 +195,10 @@ const IndexV2 = () => {
         </section>
 
         {/* The problem */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <section className="py-16 sm:py-20 lg:py-28 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 items-start">
+
               <div className="lg:col-span-5">
                 <SectionHeader
                   title="Not another pair of hands. Thinking partner you can trust."
@@ -205,68 +207,71 @@ const IndexV2 = () => {
                 />
               </div>
               <div className="lg:col-span-7">
-                <p className="text-sm font-bold uppercase tracking-wider text-[#F4A42C] font-manrope mb-6">
+                <p className="text-xs sm:text-sm font-bold uppercase tracking-wider text-[#F4A42C] font-manrope mb-4 sm:mb-6">
                   Common signals
                 </p>
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 mb-8 lg:mb-10">
                   {stuckSignals.map((signal) => (
                     <li
                       key={signal}
-                      className="flex items-start gap-3 rounded-xl bg-gray-50 border border-gray-100 p-4"
+                      className="flex items-start gap-3 rounded-xl bg-gray-50 border border-gray-100 p-4 lg:p-5"
                     >
-                      <span className="mt-2 h-2 w-2 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] flex-shrink-0" />
-                      <span className="text-base text-gray-700 font-manrope leading-relaxed">{signal}</span>
+                      <span className="mt-[0.55rem] h-2 w-2 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] flex-shrink-0" />
+                      <span className="text-[0.9375rem] sm:text-base text-gray-700 font-manrope leading-[1.6]">{signal}</span>
                     </li>
                   ))}
                 </ul>
-                <p className="text-lg text-gray-800 font-manrope leading-relaxed border-l-4 border-[#EA3E3A] pl-6">
+                <p className="text-base sm:text-lg text-gray-800 font-manrope leading-[1.7] border-l-4 border-[#EA3E3A] pl-5 sm:pl-6">
                   These are the moments where the work is identifying what actually needs to be decided,
                   what evidence is missing, and where the next bet belongs.
                 </p>
+
               </div>
             </div>
           </div>
         </section>
 
         {/* What the work is */}
-        <section className="py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
+        <section className="py-16 sm:py-20 lg:py-28 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-6">
             <SectionHeader
               title="Diagnose the problem. Challenge the assumptions. Define the bet."
               subtitle="Three connected layers of work."
               alignment="left"
             />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
               {layers.map((layer) => {
                 const Icon = layer.icon;
                 return (
                   <div
                     key={layer.number}
-                    className="group relative bg-white rounded-2xl p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                    className="group relative bg-white rounded-2xl p-6 sm:p-7 lg:p-8 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                   >
                     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <span className="absolute top-6 right-7 text-5xl font-extrabold font-manrope text-gray-100 select-none">
+                    <span className="absolute top-5 right-6 text-4xl lg:text-5xl font-extrabold font-manrope text-gray-100 select-none leading-none">
                       {layer.number}
                     </span>
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#EA3E3A]/10 to-[#F4A42C]/10 flex items-center justify-center mb-6">
-                      <Icon className="h-7 w-7 text-[#EA3E3A]" />
+                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-gradient-to-br from-[#EA3E3A]/10 to-[#F4A42C]/10 flex items-center justify-center mb-5 lg:mb-6">
+                      <Icon className="h-6 w-6 lg:h-7 lg:w-7 text-[#EA3E3A]" />
                     </div>
-                    <h3 className="text-xl font-bold font-manrope text-gray-900 mb-3">{layer.title}</h3>
-                    <p className="text-gray-600 font-manrope leading-relaxed">{layer.description}</p>
+                    <h3 className="text-lg lg:text-xl font-bold font-manrope text-gray-900 mb-2 lg:mb-3 leading-snug">{layer.title}</h3>
+                    <p className="text-[0.9375rem] sm:text-base text-gray-600 font-manrope leading-[1.65]">{layer.description}</p>
                   </div>
                 );
               })}
             </div>
-            <p className="text-lg text-gray-800 font-manrope leading-relaxed mt-12 max-w-3xl">
+            <p className="text-base sm:text-lg text-gray-800 font-manrope leading-[1.7] mt-10 lg:mt-12 max-w-3xl">
               The output isn't a 40-page strategy deck. It's clarity about what matters, why it matters,
               and what to do next.
             </p>
+
           </div>
         </section>
 
         {/* How the work runs */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
+        <section className="py-16 sm:py-20 lg:py-28 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
+
             <div className="max-w-7xl mx-auto">
               <div className="[&>div]:mb-8 md:[&>div]:mb-10">
                 <SectionHeader
@@ -275,7 +280,7 @@ const IndexV2 = () => {
                   alignment="left"
                 />
               </div>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 lg:gap-8 lg:items-stretch">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-8 lg:items-stretch">
                 {processFlow.map((phase) => (
                   <div key={phase.steps.join("-")} className="flex min-h-0 min-w-0 flex-col">
                     <div className="relative flex min-h-[3.25rem] w-full min-w-0 flex-wrap items-center justify-center gap-2">
@@ -285,7 +290,7 @@ const IndexV2 = () => {
                       />
                       {phase.steps.map((step, stepIndex) => (
                         <div key={step} className="relative z-10 flex min-w-0 items-center gap-2">
-                          <span className="rounded-full border border-[#F4A42C]/20 bg-white px-3 py-2 font-manrope text-sm font-semibold text-gray-900 shadow-sm sm:px-4">
+                          <span className="rounded-full border border-[#F4A42C]/20 bg-white px-3 py-2 font-manrope text-[0.8125rem] sm:text-sm font-semibold leading-none text-gray-900 shadow-sm sm:px-4">
                             {step}
                           </span>
                           {stepIndex < phase.steps.length - 1 && (
@@ -301,8 +306,9 @@ const IndexV2 = () => {
                       <div className="h-4 w-px bg-gradient-to-b from-[#EA3E3A]/30 to-gray-200" />
                     </div>
 
-                    <div className="relative flex flex-1 flex-col rounded-2xl border border-gray-100 bg-gray-50 p-6 shadow-sm before:absolute before:left-1/2 before:top-0 before:h-1 before:w-16 before:-translate-x-1/2 before:-translate-y-px before:rounded-full before:bg-gradient-to-r before:from-[#EA3E3A] before:to-[#F4A42C]">
-                      <p className="font-manrope leading-relaxed text-gray-700">{phase.outcome}</p>
+                    <div className="relative flex flex-1 flex-col rounded-2xl border border-gray-100 bg-gray-50 p-5 sm:p-6 shadow-sm before:absolute before:left-1/2 before:top-0 before:h-1 before:w-16 before:-translate-x-1/2 before:-translate-y-px before:rounded-full before:bg-gradient-to-r before:from-[#EA3E3A] before:to-[#F4A42C]">
+                      <p className="font-manrope text-[0.9375rem] sm:text-base leading-[1.65] text-gray-700">{phase.outcome}</p>
+
                     </div>
                   </div>
                 ))}
@@ -312,56 +318,59 @@ const IndexV2 = () => {
         </section>
 
         {/* Who this fits */}
-        <section className="py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
+        <section className="py-16 sm:py-20 lg:py-28 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-6">
+
             <div className="max-w-7xl mx-auto">
               <SectionHeader
                 title="Best fit: teams at a product inflection point."
                 subtitle="This work tends to be most useful when:"
                 alignment="left"
               />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 md:items-stretch">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-8 md:items-stretch">
                 {bestFitGroups.map((group) => (
                   <div
                     key={group.label}
-                    className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 lg:p-8 shadow-sm"
+                    className="flex flex-col rounded-2xl border border-gray-100 bg-white p-6 sm:p-7 lg:p-8 shadow-sm"
                   >
-                    <p className="mb-5 font-manrope text-sm font-bold uppercase tracking-wider text-[#F4A42C]">
+                    <p className="mb-4 sm:mb-5 font-manrope text-xs sm:text-sm font-bold uppercase tracking-wider text-[#F4A42C]">
                       {group.label}
                     </p>
-                    <ul className="flex flex-1 flex-col gap-3">
+                    <ul className="flex flex-1 flex-col gap-3 lg:gap-4">
                       {group.items.map((item) => (
                         <li key={item} className="flex items-start gap-3">
                           <span
-                            className="mt-2 h-2 w-2 flex-shrink-0 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]"
+                            className="mt-[0.55rem] h-2 w-2 flex-shrink-0 rounded-full bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]"
                             aria-hidden="true"
                           />
-                          <span className="font-manrope leading-relaxed text-gray-700">{item}</span>
+                          <span className="font-manrope text-[0.9375rem] sm:text-base leading-[1.65] text-gray-700">{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 ))}
               </div>
-              <p className="mt-10 max-w-3xl font-manrope text-lg leading-relaxed text-gray-800">
+              <p className="mt-10 lg:mt-12 max-w-3xl font-manrope text-base sm:text-lg leading-[1.7] text-gray-800">
                 Startups, scaleups and innovation teams where the cost of making the wrong product decision
                 is becoming higher than the cost of bringing in outside expertise.
               </p>
+
             </div>
           </div>
         </section>
 
         {/* Why this partner */}
-        <section className="py-16 md:py-24 bg-white">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <section className="py-16 sm:py-20 lg:py-28 bg-white">
+          <div className="container mx-auto px-4 sm:px-6">
+            <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-16 items-start">
+
               <div className="lg:col-span-5">
                 <SectionHeader
                   title="Broad product experience. Strong opinions. No attachment to your roadmap."
                   alignment="left"
                 />
               </div>
-              <div className="lg:col-span-7 space-y-5 text-lg text-gray-600 font-manrope leading-relaxed">
+              <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-base sm:text-lg text-gray-600 font-manrope leading-[1.7]">
                 <p>
                   A decade across products, markets and stages — from early-stage startups to complex
                   digital products and emerging AI use cases.
@@ -371,31 +380,33 @@ const IndexV2 = () => {
                   The method is simple: find the underlying constraint, form a hypothesis, and test it with
                   the team.
                 </p>
-                <p className="text-gray-900 font-semibold text-xl border-l-4 border-[#F4A42C] pl-6">
+                <p className="text-gray-900 font-semibold text-lg sm:text-xl leading-snug border-l-4 border-[#F4A42C] pl-5 sm:pl-6">
                   Not here to validate what's already decided — here to help you decide better.
                 </p>
+
               </div>
             </div>
           </div>
         </section>
 
         {/* Engagements */}
-        <section id="engagements" className="py-16 md:py-24 bg-gray-50">
-          <div className="container mx-auto px-4">
+        <section id="engagements" className="py-16 sm:py-20 lg:py-28 bg-gray-50">
+          <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl">
               <SectionHeader
                 title="Focused interventions, not endless retainers."
                 alignment="left"
               />
-              <div className="space-y-5 text-lg text-gray-600 font-manrope leading-relaxed mb-10">
+              <div className="space-y-4 sm:space-y-5 text-base sm:text-lg text-gray-600 font-manrope leading-[1.7] mb-8 lg:mb-10">
                 <p>
                   Modular engagements built around specific product problems — from strategic diagnosis
                   and product discovery to AI product definition and validation.
                 </p>
                 <p>The scope depends on the problem. The principle doesn't:</p>
-                <p className="text-2xl md:text-3xl font-bold font-manrope bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold font-manrope leading-snug bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C] bg-clip-text text-transparent">
                   Solve the highest-value uncertainty first.
                 </p>
+
               </div>
               <Button
                 size="lg"
@@ -412,19 +423,20 @@ const IndexV2 = () => {
 
 
         {/* Closing CTA */}
-        <section className="py-16 md:py-20 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]">
-          <div className="container mx-auto px-4">
+        <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-r from-[#EA3E3A] to-[#F4A42C]">
+          <div className="container mx-auto px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center text-white">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-manrope mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold font-manrope mb-5 sm:mb-6 leading-[1.15] text-balance">
                 Have a product decision you can't confidently make?
               </h2>
-              <p className="text-xl md:text-2xl mb-4 font-manrope opacity-90 leading-relaxed">
+              <p className="text-lg sm:text-xl md:text-2xl mb-3 sm:mb-4 font-manrope opacity-90 leading-snug">
                 Bring the messy version.
               </p>
-              <p className="text-lg md:text-xl mb-8 font-manrope opacity-90 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl mb-7 sm:mb-8 font-manrope opacity-90 leading-[1.7] max-w-2xl mx-auto text-pretty">
                 Together we'll pin down what's actually being decided, what evidence is missing, and
                 where the next bet belongs.
               </p>
+
               <Button
                 size="lg"
                 className="bg-white text-[#EA3E3A] hover:bg-gray-100 font-manrope font-semibold text-lg px-8 py-4 h-auto"
