@@ -1696,7 +1696,8 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwz71MoMRHFaEQ1rYzGt
 // ▲▲▲
 const VOTE_KEY = (() => { try { return new URLSearchParams(location.search).get('k') || ''; } catch (e) { return ''; } })();
 const $ = id => document.getElementById(id);
-const normKey = s => String(s || '').trim().replace(/\s+/g, ' ').toLowerCase();
+// isto pravilo kao na poslužitelju (Code.gs), da se "moj glas" uvijek prepozna
+const normKey = s => String(s || '').replace(/^[=+\-@\s]+/, '').trim().replace(/\s+/g, ' ').slice(0, 40).toLowerCase();
 const store = {
   get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
   set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
@@ -1755,7 +1756,8 @@ function renderBallot() {
   }
   $('miniCount').textContent = `${n}/${BALLOT_SIZE}`;
   $('miniSave').disabled = save.disabled;
-  $('miniState').textContent = vote.saved && !dirty ? 'spremljeno ✓' : (dirty && n === BALLOT_SIZE ? 'nespremljeno' : '');
+  $('miniState').textContent = vote.saving ? 'spremam…' : vote.saved && !dirty ? 'spremljeno ✓' : (dirty && n === BALLOT_SIZE ? 'nespremljeno' : '');
+  $('miniSave').textContent = vote.saving ? 'Spremam…' : vote.saved && !dirty ? 'Spremljeno' : 'Spremi';
   document.querySelectorAll('.vote-btn').forEach(b => {
     const idx = vote.draft.indexOf(b.dataset.id);
     b.hidden = !vote.canVote;
@@ -1785,19 +1787,30 @@ function applyVotes(list) {
     picks: cleanPicks(v.picks), updatedAt: Number(v.updatedAt) || 0
   })).filter(b => b.key && b.picks.length === BALLOT_SIZE);
 }
+// Redoslijed odgovora: Apps Script zna odgovarati 2–3 s, pa osvježavanje pokrenuto PRIJE spremanja
+// može stići NAKON njega sa starim stanjem. Primjenjujemo samo odgovore novije od zadnjeg upisa.
+const req = { seq: 0, applied: 0, lastWrite: 0, getInFlight: false };
 async function call(payload) {
+  const id = ++req.seq;
+  if (payload) req.lastWrite = id;
   const opt = payload
     ? { method: 'POST', body: JSON.stringify(Object.assign({ key: VOTE_KEY }, payload)) } // text/plain → bez CORS preflighta
     : { method: 'GET' };
   const r = await fetch(SCRIPT_URL, opt);
   const j = await r.json();
   if (!j.ok) throw Object.assign(new Error(j.error), { code: j.error });
+  const stale = id < req.applied || (!payload && id < req.lastWrite);
+  if (stale) return false;
+  req.applied = id;
   applyVotes(j.votes);
+  return true;
 }
 async function refresh() {
-  if (!SCRIPT_URL || vote.saving) return;
+  if (!SCRIPT_URL || vote.saving || req.getInFlight) return;
+  req.getInFlight = true;
   try { await call(null); vote.error = false; }
   catch (e) { vote.error = true; setStatus('Rezultati se trenutno ne mogu učitati.'); }
+  req.getInFlight = false;
   if (!vote.loaded) { vote.loaded = true; const m = mine(); if (m && !vote.draft.length) vote.draft = m.picks.slice(); }
   renderBallot(); renderResults();
 }
