@@ -1692,7 +1692,7 @@ overlay.addEventListener('click', e => { if (e.target === overlay) overlay.class
 document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
 // ─── Glasanje preko Google Apps Scripta ───
 // ▼▼▼ KORAK 4 VODIČA: zalijepite ovdje URL web aplikacije (završava na /exec) ▼▼▼
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx54e0j7FSBB_waniv_POqjq-BWhpFdO-lUPUWE-Rc3ijjc6erY4Jlhblo7uOIcRJHN/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwz71MoMRHFaEQ1rYzGtvrOZGHXGno_FE72d1ywY1lnrSnORCu6wm4oiTacIeLVLDnNig/exec';
 // ▲▲▲
 const VOTE_KEY = (() => { try { return new URLSearchParams(location.search).get('k') || ''; } catch (e) { return ''; } })();
 const $ = id => document.getElementById(id);
