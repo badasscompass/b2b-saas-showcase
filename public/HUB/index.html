@@ -1,0 +1,1958 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CARNET Hub referentni modeli</title>
+<meta name="description" content="Referentni hub modeli za CARNET Hub (nacrt v2) s glasanjem za top 5 i sastavljenim idealnim modelom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap">
+
+<style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN PLAN
+   Layout: full-bleed header → filter strip → card grid
+   Color: CARNET blue authority + warm amber accent
+   Type: Sora (display/headings) + Inter (body/data)
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  --bg:        #F7F8FC;
+  --bg-card:   #FFFFFF;
+  --bg-subtle: #EEF0F8;
+  --fg:        #0E1428;
+  --fg-2:      #4A5270;
+  --fg-3:      #8A90A8;
+  --accent:    #0A47D1;
+  --accent-lt: #E6EDFC;
+  --amber:     #E8800A;
+  --amber-lt:  #FDF2E3;
+  --green:     #0F7E5F;
+  --green-lt:  #E3F5EF;
+  --border:    #DDE1EE;
+
+  --type-display: 'Sora', system-ui, sans-serif;
+  --type-body:    'Inter', system-ui, sans-serif;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #0B0F1E;
+    --bg-card:   #131829;
+    --bg-subtle: #1A2035;
+    --fg:        #E8EAF4;
+    --fg-2:      #9AA3C0;
+    --fg-3:      #5A6280;
+    --accent:    #4D80FF;
+    --accent-lt: #1A2A50;
+    --amber:     #F5A030;
+    --amber-lt:  #2A1E0A;
+    --green:     #34C992;
+    --green-lt:  #0A2A1F;
+    --border:    #232B45;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #0B0F1E;
+  --bg-card:   #131829;
+  --bg-subtle: #1A2035;
+  --fg:        #E8EAF4;
+  --fg-2:      #9AA3C0;
+  --fg-3:      #5A6280;
+  --accent:    #4D80FF;
+  --accent-lt: #1A2A50;
+  --amber:     #F5A030;
+  --amber-lt:  #2A1E0A;
+  --green:     #34C992;
+  --green-lt:  #0A2A1F;
+  --border:    #232B45;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-family: var(--type-body); font-size: 15px; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 40px;
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.site-header {
+  background: var(--accent);
+  color: #fff;
+  margin-left: max(-16px, calc(-1 * env(safe-area-inset-left, 0px)));
+  margin-right: max(-16px, calc(-1 * env(safe-area-inset-right, 0px)));
+  padding: 40px max(32px, env(safe-area-inset-left, 0px)) 32px;
+  padding-right: max(32px, env(safe-area-inset-right, 0px));
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  pointer-events: none;
+}
+.site-header::after {
+  content: '';
+  position: absolute;
+  right: 60px; bottom: -80px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+  pointer-events: none;
+}
+.header-label {
+  font-family: var(--type-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+.header-title {
+  font-family: var(--type-display);
+  font-size: clamp(24px, 5vw, 38px);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+.header-sub {
+  font-family: var(--type-body);
+  font-size: 14px;
+  opacity: 0.8;
+  max-width: 560px;
+  line-height: 1.6;
+}
+.header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 24px;
+}
+.header-stat {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: var(--type-display);
+  font-size: 13px;
+}
+.header-stat strong {
+  display: block;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* ─── FILTERS ─────────────────────────────────────────── */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 20px 0 16px;
+  align-items: center;
+}
+.filter-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 4px;
+}
+.filter-btn {
+  font-family: var(--type-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--fg-2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ─── GRID ────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 20px;
+  margin-top: 4px;
+}
+
+/* ─── CARD ────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(10,71,209,0.10);
+  border-color: var(--accent);
+}
+.card.hidden { display: none; }
+
+.card-rank {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 0;
+}
+.rank-badge {
+  font-family: var(--type-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--fg-3);
+}
+.rank-badge span {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-right: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.type-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+}
+.type-cop  { background: var(--accent-lt); color: var(--accent); }
+.type-cng  { background: var(--amber-lt);  color: var(--amber); }
+.type-dual { background: var(--green-lt);  color: var(--green); }
+
+.card-body { padding: 12px 18px 16px; flex: 1; }
+
+.card-name {
+  font-family: var(--type-display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 3px;
+  text-wrap: balance;
+}
+.card-country {
+  font-size: 12px;
+  color: var(--fg-3);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.card-mechanism {
+  font-size: 13.5px;
+  color: var(--fg-2);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.tag {
+  font-size: 11.5px;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--bg-subtle);
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.card-footer {
+  border-top: 1px solid var(--border);
+  padding: 12px 18px;
+  background: var(--bg-subtle);
+}
+.relevance-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.relevance-text {
+  font-size: 12.5px;
+  color: var(--fg-2);
+  line-height: 1.5;
+}
+
+/* detail panel  */
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,20,40,0.55);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 20px max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.detail-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.detail-panel {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 18px 18px 14px 14px;
+  width: 100%;
+  max-width: 620px;
+  max-height: 82vh;
+  overflow-y: auto;
+  transform: translateY(20px);
+  transition: transform 0.25s;
+}
+.detail-overlay.open .detail-panel {
+  transform: translateY(0);
+}
+.detail-head {
+  background: var(--accent);
+  color: #fff;
+  padding: 20px 24px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-radius: 16px 16px 0 0;
+  gap: 16px;
+}
+.detail-head-text { flex: 1; min-width: 0; }
+.detail-head .rank { font-size: 11px; opacity: 0.7; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px; }
+.detail-head .name { font-family: var(--type-display); font-size: 22px; font-weight: 700; line-height: 1.2; }
+.detail-head .country { font-size: 13px; opacity: 0.75; margin-top: 4px; }
+.close-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.close-btn:hover { background: rgba(255,255,255,0.28); }
+
+.detail-content { padding: 20px 24px 24px; }
+.detail-row {
+  margin-bottom: 18px;
+}
+.detail-row-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-3);
+  margin-bottom: 5px;
+}
+.detail-row-val {
+  font-size: 14px;
+  color: var(--fg);
+  line-height: 1.6;
+}
+.detail-highlight {
+  background: var(--accent-lt);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 6px;
+}
+.detail-highlight .detail-row-val { color: var(--fg); }
+
+.lifecycle-chip {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-top: 2px;
+}
+.lc-active   { background: var(--green-lt); color: var(--green); }
+.lc-project  { background: var(--amber-lt); color: var(--amber); }
+.lc-eu       { background: var(--accent-lt); color: var(--accent); }
+
+/* ─── ZAJEDNICE GRID ──────────────────────────────────── */
+.zajednice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.zajednica-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: box-shadow .15s ease;
+}
+.zajednica-card:hover {
+  box-shadow: 0 4px 18px rgba(10,71,209,.12);
+}
+
+.zajednica-pilot {
+  border-color: var(--accent);
+  border-left: 4px solid var(--accent);
+}
+.zajednica-buduci {
+  border-left: 4px solid var(--border);
+  opacity: .9;
+}
+
+.zajednica-header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.zajednica-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  width: fit-content;
+}
+.badge-pilot {
+  background: var(--accent-lt);
+  color: var(--accent);
+}
+.badge-buduci {
+  background: var(--bg-subtle);
+  color: var(--fg-3);
+}
+
+.zajednica-name {
+  font-family: var(--type-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--fg);
+}
+.zajednica-sub {
+  font-size: 12.5px;
+  color: var(--fg-2);
+  font-weight: 500;
+}
+
+.zajednica-sluzbe {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-lt);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.zajednica-body {
+  font-size: 13px;
+  color: var(--fg-2);
+  line-height: 1.55;
+}
+
+.zajednica-uzori {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+  margin-top: 2px;
+}
+.uzor-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--fg-3);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  width: 100%;
+}
+.uzor-tag {
+  font-size: 11.5px;
+  background: var(--bg-subtle);
+  color: var(--fg-2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 9px;
+  font-weight: 500;
+}
+
+/* ─── KATALOG SECTION ─────────────────────────────────── */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 36px 0 14px;
+}
+.section-title {
+  font-family: var(--type-display);
+  font-size: 18px;
+  font-weight: 700;
+}
+.section-count {
+  font-size: 12px;
+  color: var(--fg-3);
+  font-weight: 500;
+}
+
+.mech-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.mech-table th {
+  text-align: left;
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-3);
+  border-bottom: 1.5px solid var(--border);
+}
+.mech-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--fg-2);
+  vertical-align: top;
+}
+.mech-table tr:last-child td { border-bottom: none; }
+.mech-table tr:hover td { background: var(--bg-subtle); }
+.mech-table td:first-child { font-weight: 600; color: var(--fg); font-variant-numeric: tabular-nums; }
+.mech-table .hub-preslika { color: var(--accent); font-weight: 600; font-size: 12px; }
+.mech-table-wrap { overflow-x: auto; border: 1.5px solid var(--border); border-radius: 12px; }
+
+/* ─── RAZINE SUDJELOVANJA ─────────────────────────────── */
+.razine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  gap: 12px;
+  margin-top: 6px;
+}
+.razina-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.razina-num {
+  font-family: var(--type-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 4px;
+  font-variant-numeric: tabular-nums;
+}
+.razina-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.razina-desc  { font-size: 12.5px; color: var(--fg-2); line-height: 1.5; }
+.razina-ex    { font-size: 11.5px; color: var(--fg-3); margin-top: 6px; }
+
+/* ─── SOURCE NOTE ─────────────────────────────────────── */
+.source-note {
+  margin-top: 40px;
+  padding: 14px 18px;
+  background: var(--bg-subtle);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--fg-3);
+  line-height: 1.6;
+  border: 1px solid var(--border);
+}
+
+/* ─── TIERS & CARD ADDITIONS ─────────────────────────── */
+.tier-section { margin-top: 8px; }
+.tier-section.hidden { display: none; }
+.tier-head { display: flex; align-items: baseline; gap: 10px; margin: 20px 0 4px; }
+.tier-note { font-size: 12.5px; color: var(--fg-2); margin-bottom: 14px; max-width: 760px; }
+.tier-reserve { border-style: dashed; }
+.tier-extra { opacity: .85; border-style: dotted; }
+.tier-extra .rank-badge, .tier-reserve .rank-badge { text-transform: uppercase; letter-spacing: .08em; }
+a.card-name { display: block; color: var(--fg); text-decoration: none; }
+a.card-name:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
+.card-country { margin-bottom: 10px; }
+.card-reach { font-size: 12px; color: var(--fg); background: var(--bg-subtle); border-radius: 6px; padding: 6px 9px; margin: -4px 0 12px; font-variant-numeric: tabular-nums; }
+.card-why { font-size: 12px; color: var(--amber); line-height: 1.5; }
+.type-sec { font-weight: 500; opacity: .8; }
+.type-akt { background: var(--green-lt); color: var(--green); }
+.transfer-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.transfer-list li { position: relative; padding-left: 18px; font-size: 12.5px; line-height: 1.5; color: var(--fg-2); text-wrap: pretty; }
+.transfer-list li::before { content: '→'; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700; }
+.transfer-list li.note { color: var(--fg-3); font-style: italic; }
+.transfer-list li.note::before { content: '!'; color: var(--amber); left: 4px; }
+.detail-highlight .transfer-list li { font-size: 14px; color: var(--fg); }
+.more { font-size: 11.5px; color: var(--accent); font-weight: 600; margin-top: 6px; }
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.detail-head .name a { color: #fff; text-decoration: none; }
+.detail-head .name a:hover { text-decoration: underline; }
+.dp-links { display: flex; flex-direction: column; gap: 4px; }
+.dp-links a { color: var(--accent); font-size: 13px; overflow-wrap: anywhere; }
+.lc-text { font-size: 13px; color: var(--fg-2); }
+.type-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; font-size: 12px; opacity: .85; }
+.type-legend b { font-weight: 700; margin-right: 4px; }
+
+/* ─── VOTING ─────────────────────────────────────────── */
+.ballot { margin-top: 24px; background: var(--bg-card); border: 1.5px solid var(--accent); border-radius: 14px; padding: 18px 20px; }
+.ballot-intro { font-size: 13px; color: var(--fg-2); margin-top: 4px; max-width: 760px; }
+.slots { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 8px; margin: 14px 0; padding: 0; }
+.slot { display: flex; align-items: center; gap: 8px; border: 1.5px dashed var(--border); border-radius: 10px; padding: 8px 10px; min-height: 44px; font-size: 13px; color: var(--fg-3); }
+.slot.filled { border-style: solid; border-color: var(--accent); background: var(--accent-lt); color: var(--fg); }
+.slot-pos { font-family: var(--type-display); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.slot-name { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.slot:not(.filled) .slot-name { font-weight: 400; font-style: italic; }
+.slot-pts { font-size: 11px; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.slot-ctr { display: flex; gap: 2px; }
+.slot-ctr button { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); color: var(--fg-2); cursor: pointer; font-size: 13px; line-height: 1; }
+.slot-ctr button:disabled { opacity: .35; cursor: default; }
+.name-field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--fg-2); margin-top: 12px; max-width: 320px; }
+.name-field input { font: 500 14px var(--type-body); padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--fg); }
+.name-field input:focus { outline: none; border-color: var(--accent); }
+.ballot-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.btn { font: 600 13px var(--type-body); padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--fg); cursor: pointer; text-decoration: none; display: inline-block; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.ghost { border-color: transparent; color: var(--fg-3); }
+.btn:disabled { opacity: .45; cursor: default; }
+.ballot-status { font-size: 12.5px; color: var(--fg-2); }
+.card-actions { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; }
+.card-actions .more { margin-top: 0; }
+.vote-btn { font: 600 12px var(--type-body); padding: 6px 12px; border-radius: 20px; border: 1.5px solid var(--accent); background: var(--bg-card); color: var(--accent); cursor: pointer; white-space: nowrap; }
+.vote-btn.on { background: var(--accent); color: #fff; }
+.vote-btn:disabled { opacity: .4; cursor: default; }
+.card.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-lt); }
+.agg-chip { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green); background: var(--green-lt); border-radius: 20px; padding: 2px 9px; margin: 4px 0 2px; }
+.stat-link { color: #fff; text-decoration: none; }
+.stat-link:hover { background: rgba(255,255,255,0.2); }
+.empty { font-size: 13px; color: var(--fg-3); padding: 14px 0; }
+.rank-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+.rank-table td a { color: var(--fg); font-weight: 600; text-decoration: none; }
+.rank-table td a:hover { color: var(--accent); text-decoration: underline; }
+.bar { height: 5px; border-radius: 3px; background: var(--accent); margin-top: 5px; opacity: .8; }
+.ideal { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 14px; }
+.ideal-col { background: var(--bg-card); border: 1.5px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.ideal-col.wide { grid-row: span 2; }
+.ideal-h { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--fg-3); margin: 0 0 8px; }
+.ideal-h:not(:first-child) { margin-top: 16px; }
+.ideal-list { padding-left: 20px; font-size: 14px; font-weight: 600; }
+.ideal-strong { font-family: var(--type-display); font-weight: 700; font-size: 15px; }
+.ideal-meta { font-size: 12px; color: var(--fg-3); margin-top: 3px; }
+.ideal-plus { font-size: 12.5px; color: var(--green); margin-top: 6px; }
+.ideal-risk { font-size: 12.5px; color: var(--amber); margin-top: 2px; }
+.mech-rank { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.mech-rank li:not(.core) { opacity: .6; }
+.mech-top { display: flex; justify-content: space-between; gap: 8px; font-size: 13.5px; font-weight: 600; }
+.mech-pts { color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mech-hub { font-size: 12.5px; color: var(--fg-2); margin-top: 4px; }
+.levels { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.levels li { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; padding: 7px 10px; border-radius: 8px; }
+.levels li.ok { background: var(--green-lt); }
+.levels li.gap { background: var(--amber-lt); }
+.lv-name { font-weight: 600; }
+.lv-state { font-size: 11.5px; color: var(--fg-2); text-align: right; }
+.levels li.gap .lv-state { color: var(--amber); font-weight: 600; }
+.sub-title { font-family: var(--type-display); font-size: 15px; font-weight: 700; margin: 28px 0 10px; }
+.voters { display: flex; flex-direction: column; gap: 6px; }
+.voter { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+.voter img { width: 24px; height: 24px; border-radius: 50%; }
+.voter-name { font-weight: 600; min-width: 120px; }
+.voter-picks { color: var(--fg-2); font-size: 12.5px; white-space: pre-wrap; }
+.mini-bar { display: none; position: fixed; left: 50%; transform: translateX(-50%); bottom: max(12px, env(safe-area-inset-bottom, 0px)); z-index: 50; background: var(--bg-card); border: 1.5px solid var(--accent); border-radius: 30px; padding: 6px 8px 6px 16px; align-items: center; gap: 8px; font-size: 13px; box-shadow: 0 6px 24px rgba(10,20,40,.18); max-width: calc(100% - 32px); }
+.can-vote .mini-bar { display: flex; }
+.mini-bar .btn { padding: 6px 12px; border-radius: 20px; }
+.mini-state { font-size: 11.5px; color: var(--fg-3); }
+.can-vote { padding-bottom: 80px; }
+
+/* ─── RESPONSIVE ─────────────────────────────────────── */
+@media (max-width: 500px) {
+  .header-meta { gap: 10px; }
+  .header-stat { padding: 6px 12px; }
+  .card-name { font-size: 15px; }
+  .filter-bar { gap: 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ HEADER ════════════ -->
+<header class="site-header">
+  <div class="header-label">CARNET HUB · Desk istraživanje</div>
+  <h1 class="header-title">Referentni modeli<br>digitalnih hubova</h1>
+  <p class="header-sub">10 vodećih modela i 5 rezervi odabranih iz radne tablice od 22 modela, razvrstanih u tri tipa. Zajednički nazivnik: nacionalni ili europski nositelj (često NREN) daje okvir i povjerenje, a ustanove i pojedinci sukreiraju kroz zajednice, tematske skupine i ambasadore.</p>
+  <div class="header-meta">
+    <div class="header-stat"><strong>10</strong>Vodećih modela</div>
+    <div class="header-stat"><strong>5</strong>Rezervi</div>
+    <div class="header-stat"><strong>9</strong>Mehanizama za Hub</div>
+    <div class="header-stat"><strong>3</strong>Tipa modela</div>
+    <a class="header-stat stat-link" href="#rezultati"><strong id="statVotes">0</strong>Glasova · rezultati ↓</a>
+  </div>
+  <div class="type-legend">
+    <span><b>CoP</b> Zajednica praktičara</span>
+    <span><b>C&amp;G</b> Suradnja i upravljanje</span>
+    <span><b>A&amp;KT</b> Savjetovanje i prijenos znanja</span>
+  </div>
+</header>
+
+<!-- ════════════ FILTER ════════════ -->
+<section class="ballot" id="glasanje" aria-labelledby="ballotTitle">
+  <div class="ballot-head">
+    <div>
+      <h2 class="section-title" id="ballotTitle">Moj top 5</h2>
+      <p class="ballot-intro">Odaberite pet modela gumbom <b>+ Moj top 5</b> na karticama i složite ih po važnosti. Bodovi: 1. mjesto = 5 … 5. mjesto = 1. Glasovi su vidljivi svima s imenom koje upišete; glas možete ažurirati ili povući istim imenom.</p>
+    </div>
+  </div>
+  <label class="name-field">Vaše ime ili nadimak
+    <input id="voterName" type="text" maxlength="40" autocomplete="nickname" placeholder="npr. Ana K.">
+  </label>
+  <ol class="slots" id="ballotSlots"></ol>
+  <div class="ballot-actions">
+    <button type="button" class="btn primary" id="ballotSave" disabled>Spremi glas</button>
+    <button type="button" class="btn" id="ballotClear">Očisti odabir</button>
+    <button type="button" class="btn ghost" id="ballotWithdraw" hidden>Povuci glas</button>
+    <span class="ballot-status" id="ballotStatus" role="status">Učitavanje…</span>
+  </div>
+</section>
+
+<div class="filter-bar" role="group" aria-label="Filtri">
+  <span class="filter-label">Filtriranje:</span>
+  <button class="filter-btn active" aria-pressed="true" data-filter="all">Svi</button>
+  <button class="filter-btn" aria-pressed="false" data-filter="top">10 vodećih</button>
+  <button class="filter-btn" aria-pressed="false" data-filter="reserve">Rezerve</button>
+  <button class="filter-btn" aria-pressed="false" data-filter="CoP">Primarno CoP</button>
+  <button class="filter-btn" aria-pressed="false" data-filter="C&amp;G">Primarno C&amp;G</button>
+  <button class="filter-btn" aria-pressed="false" data-filter="nren">NREN nositelj</button>
+  <button class="filter-btn" aria-pressed="false" data-filter="school">Škole</button>
+</div>
+
+<!-- ════════════ GRID ════════════ -->
+<div id="cardGrid"></div>
+
+<section id="rezultati">
+  <div class="section-head" style="margin-top:44px;">
+    <h2 class="section-title">Konačni rang — rezultati glasanja</h2>
+    <span class="section-count" id="resultsCount">0 glasova</span>
+  </div>
+  <p class="tier-note">Zbroj bodova svih glasova (5-4-3-2-1). Kod jednakog broja bodova prednost ima model s više prvih mjesta. Stupac „Nacrt v2” prikazuje autorski rang radi usporedbe.</p>
+  <p class="empty" id="rankEmpty">Još nema glasova.</p>
+  <div class="mech-table-wrap" id="rankTableWrap" hidden>
+    <table class="mech-table rank-table">
+      <thead><tr><th>#</th><th>Model</th><th class="num">Bodovi</th><th class="num">1. mjesta</th><th class="num">Glasači</th><th>Nacrt v2</th></tr></thead>
+      <tbody id="rankBody"></tbody>
+    </table>
+  </div>
+
+  <div class="section-head" style="margin-top:36px;">
+    <h2 class="section-title">Idealni model za Carnet Hub</h2>
+    <span class="section-count">sastavljen iz glasova</span>
+  </div>
+  <p class="tier-note">Bodovi svakog modela prenose se na mehanizme (katalog, pogl. 6) i model upravljanja (pogl. 7.1) koje nosi; idealni model je kombinacija najjače poduprtih elemenata.</p>
+  <p class="empty" id="idealEmpty">Pojavit će se nakon prvog glasa.</p>
+  <div class="ideal" id="idealBox" hidden></div>
+
+  <h3 class="sub-title">Glasovi sudionika</h3>
+  <div class="voters" id="voterList"></div>
+</section>
+
+<div class="mini-bar" aria-label="Moj top 5">
+  <span>Moj top 5: <b id="miniCount">0/5</b> <span id="miniState" class="mini-state"></span></span>
+  <a href="#glasanje" class="btn">Uredi</a>
+  <button type="button" class="btn primary" id="miniSave" disabled>Spremi</button>
+</div>
+
+<!-- ════════════ ZAJEDNICE HUBA ════════════ -->
+<div class="section-head" style="margin-top:40px;">
+  <h2 class="section-title">CARNET HUB — Tematske zajednice i referentni uzori</h2>
+  <span class="section-count">7 zajednica + 3 horizontalne teme</span>
+</div>
+<p style="font-size:13px;color:var(--fg-2);margin-bottom:16px;line-height:1.6;">
+  Interna arhitektura CARNET HUB-a — tematske zajednice iz SPO/međusektorskog dokumenta (listopad 2026.) preslikane na vanjske referentne modele. Razvoj ide postepeno: <strong>Pilot = Potjeh + Kosjenka + Gradina</strong>, zatim fraktalno širenje.
+</p>
+<div class="zajednice-grid">
+
+  <div class="zajednica-card zajednica-pilot">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-pilot">PILOT 1</span>
+      <div class="zajednica-name">🔬 POTJEH / PERUN</div>
+      <div class="zajednica-sub">Istraživanja + Analitika učenja</div>
+    </div>
+    <div class="zajednica-sluzbe">SZIK + Služba za istraživanja + OBRT</div>
+    <div class="zajednica-body">
+      Nacionalni centar za analitiku učenja, prediktivni modeli dobrobiti učenika, metodološka podrška SIG-ovima, policy djelovanje temeljeno na podacima.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">HFD (peer savjetovanje)</span>
+      <span class="uzor-tag">SURF (policy utjecaj)</span>
+      <span class="uzor-tag">Sikt (ministry advisory)</span>
+      <span class="uzor-tag">EDUCAUSE (Top 10 proces)</span>
+    </div>
+  </div>
+
+  <div class="zajednica-card zajednica-pilot">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-pilot">PILOT 2</span>
+      <div class="zajednica-name">🎓 KOSJENKA</div>
+      <div class="zajednica-sub">Metodička učionica + CN Akademija</div>
+    </div>
+    <div class="zajednica-sluzbe">EDU služba + DOS + OBRT</div>
+    <div class="zajednica-body">
+      Razvoj digitalnih kompetencija nastavnika, CN akademija, izrada DOS-ova, koordinacija stručnih radnih skupina, metodičke pripreme i ogledni sati.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">Jisc (maturity framework)</span>
+      <span class="uzor-tag">N-TUTORR (pedagoška integracija)</span>
+      <span class="uzor-tag">HIS-HE twillo (OER + savjetovanje)</span>
+      <span class="uzor-tag">EDEH (squads za nastavnike)</span>
+    </div>
+  </div>
+
+  <div class="zajednica-card zajednica-pilot">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-pilot">PILOT 3</span>
+      <div class="zajednica-name">🌍 GRADINA</div>
+      <div class="zajednica-sub">Dijaspora + Strani učenici</div>
+    </div>
+    <div class="zajednica-sluzbe">DOS + OII + EDU</div>
+    <div class="zajednica-body">
+      Digitalni obrazovni sadržaji za dijasporu, e-lektire, očuvanje identiteta, digitalni onboarding, psiho-socijalni aspekti integracije, mentorstvo.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">EDEH Ambasadori (EU mreženje)</span>
+      <span class="uzor-tag">Circle U. (međuinstit. kohorte)</span>
+      <span class="uzor-tag">FCL (country ambassadors)</span>
+    </div>
+  </div>
+
+  <div class="zajednica-card zajednica-buduci">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <div class="zajednica-name">📚 STRIBOR</div>
+      <div class="zajednica-sub">Učenje za sve generacije</div>
+    </div>
+    <div class="zajednica-sluzbe">OII + DOS + EDU + OBRT + SZIK + Istraživanja</div>
+    <div class="zajednica-body">
+      Međugeneracijsko učenje, andragoški pristupi, internship program s ICT sektorom, multigeneracijsko mentorstvo, terenska nastava.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">Npuls (Linking teams)</span>
+      <span class="uzor-tag">Stichting Kennisnet (K-12)</span>
+      <span class="uzor-tag">ATOM/AMUE (senior praktičari)</span>
+    </div>
+  </div>
+
+  <div class="zajednica-card zajednica-buduci">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <div class="zajednica-name">🤖 NEVA</div>
+      <div class="zajednica-sub">AI alati i EdTech inovacije</div>
+    </div>
+    <div class="zajednica-sluzbe">OBRT + SZIK + Istraživanja + EDU</div>
+    <div class="zajednica-body">
+      AI modeli i chatboti, testiranje i selekcija alata, protokoli sukreacije, godišnji meet-up s EdTech industrijom, recenzije alata na Portalu DOT.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">HFD (DigitalChangeMaker)</span>
+      <span class="uzor-tag">DUH (inovacijski lab)</span>
+      <span class="uzor-tag">GÉANT (Future Talent)</span>
+      <span class="uzor-tag">DEH Italija (AI povelja)</span>
+    </div>
+  </div>
+
+  <div class="zajednica-card zajednica-buduci">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <div class="zajednica-name">🎨 MALIK</div>
+      <div class="zajednica-sub">Digitalna umjetnost i kultura</div>
+    </div>
+    <div class="zajednica-sluzbe">OII + DOS + EDU + Istraživanja</div>
+    <div class="zajednica-body">
+      VR/AR umjetnost, kreativna produkcija, hackathoni, pristupačna baština, virtualne šetnje, povezivanje kulturnog sektora i tehnoloških autora.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">FCL (fizički lab + showcase)</span>
+      <span class="uzor-tag">EDEH (squads s ishodom)</span>
+    </div>
+  </div>
+
+  <div class="zajednica-card zajednica-buduci">
+    <div class="zajednica-header">
+      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <div class="zajednica-name">🌱 REGOČ</div>
+      <div class="zajednica-sub">Zeleni digitalni ekosustav</div>
+    </div>
+    <div class="zajednica-sluzbe">OII + DOS + EDU + SZIK + OBRT</div>
+    <div class="zajednica-body">
+      Osvještavanje digitalnog otiska, edukacije o održivosti, zelene prakse i certifikati, standardi za digitalni minimalizam, Regočev zeleni krug.
+    </div>
+    <div class="zajednica-uzori">
+      <span class="uzor-label">↗ Referentni uzori:</span>
+      <span class="uzor-tag">SURF (zelene politike)</span>
+      <span class="uzor-tag">Digivisio (zajednička kultura promjene)</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Horizontalne teme -->
+<div style="margin-top:20px;padding:16px 18px;background:var(--bg-subtle);border-radius:12px;border:1.5px solid var(--border);">
+  <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg-3);margin-bottom:10px;">Horizontalne teme (prolaze kroz sve zajednice)</div>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;">
+    <span style="background:var(--accent-lt);color:var(--accent);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:600;">♿ Pristupačnost — digitalni standardi, inkluzija, AT</span>
+    <span style="background:var(--amber-lt);color:var(--amber);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:600;">📊 Podaci — analitika, etičko korištenje, GDPR</span>
+    <span style="background:var(--green-lt);color:var(--green);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:600;">📢 Komunikacija — Portal DOT, Podcast, Multilab outreach</span>
+  </div>
+</div>
+
+<!-- ════════════ KATALOG MEHANIZAMA ════════════ -->
+<div class="section-head">
+  <h2 class="section-title">Katalog mehanizama — preslika na CARNET HUB</h2>
+  <span class="section-count">9 mehanizama</span>
+</div>
+<div class="mech-table-wrap">
+<table class="mech-table">
+  <thead>
+    <tr>
+      <th>#</th><th>Mehanizam</th><th>Uzor</th><th>CARNET HUB preslika</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Strateško kolegijalno savjetovanje</td><td>HFD</td><td class="hub-preslika">Godišnja kohorta vodstava visokih učilišta i škola</td></tr>
+    <tr><td>2</td><td>Zajednica sa SIG-ovima — ugošćuje NREN</td><td>Switch Eduhub+, SURF, RNP/RUTE</td><td class="hub-preslika">SIG-ovi na Središnjem obrazovnom portalu DOT</td></tr>
+    <tr><td>3</td><td>Kratke otvorene radne skupine</td><td>EDEH, Circle U.</td><td class="hub-preslika">Tematske skupine (6 mj., ~20 članova)</td></tr>
+    <tr><td>4</td><td>OER usluga na nacionalnoj platformi</td><td>Switch OER</td><td class="hub-preslika">Edutorij + AAI@EduHr</td></tr>
+    <tr><td>5</td><td>Mreža povjerenika za promjene + godišnji lab</td><td>DUH</td><td class="hub-preslika">Povjerenici po ustanovi; CN Hub dan na CUC-u</td></tr>
+    <tr><td>6</td><td>Studentski promotori i partnerske stipendije</td><td>N-TUTORR</td><td class="hub-preslika">Studentski ogranak (buduća odluka Naručitelja)</td></tr>
+    <tr><td>7</td><td>Institucijski uklopljeni tim + pozivi s poticajima</td><td>Npuls</td><td class="hub-preslika">Institucijski nositelji Huba (npr. Multilab tim na kampusima)</td></tr>
+    <tr><td>8</td><td>Volonterski ambasadori u godišnjim kohortama</td><td>Circle U., EDEH</td><td class="hub-preslika">Ambasadori Huba u visokom obrazovanju</td></tr>
+    <tr><td>9</td><td>Ambasadori koje imenuje ministarstvo + mreža lab.</td><td>FCL</td><td class="hub-preslika">Školski ogranak uz Inovacijske laboratorije</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ════════════ RAZINE SUDJELOVANJA ════════════ -->
+<div class="section-head" style="margin-top:36px;">
+  <h2 class="section-title">Razine sudjelovanja u CARNET Hubu</h2>
+  <span class="section-count">4 razine</span>
+</div>
+<div class="razine-grid">
+  <div class="razina-card">
+    <div class="razina-num">1</div>
+    <div class="razina-title">Institucijski nositelj</div>
+    <div class="razina-desc">Imenovan u svakoj ustanovi, most prema Hubu. Institucijski mandat, pristup sredstvima.</div>
+    <div class="razina-ex">Uzor: Npuls (Linking teams)</div>
+  </div>
+  <div class="razina-card">
+    <div class="razina-num">2</div>
+    <div class="razina-title">Ambasador</div>
+    <div class="razina-desc">Godišnji poziv ili imenovanje, pisana uloga, potvrda. Reprezentacija na događanjima.</div>
+    <div class="razina-ex">Uzor: Circle U., EDEH, FCL</div>
+  </div>
+  <div class="razina-card">
+    <div class="razina-num">3</div>
+    <div class="razina-title">Voditelj/član tematske skupine</div>
+    <div class="razina-desc">Otvorena prijava, ograničeno trajanje, konkretan rezultat na kraju mandata.</div>
+    <div class="razina-ex">Uzor: EDEH squads, Eduhub+</div>
+  </div>
+  <div class="razina-card">
+    <div class="razina-num">4</div>
+    <div class="razina-title">Član zajednice</div>
+    <div class="razina-desc">Otvoreno svima, prijava putem AAI@EduHr. Praćenje zajednica i SIG-ova.</div>
+    <div class="razina-ex">Uzor: SURF Communities, Eduhub+</div>
+  </div>
+</div>
+
+<!-- ════════════ SERVISNI KONCEPTI ════════════ -->
+<div class="section-head" style="margin-top:40px;">
+  <h2 class="section-title">Servisni koncepti — preslika na CARNET usluge</h2>
+  <span class="section-count">6 koncepta iz tablice</span>
+</div>
+<p style="font-size:13px;color:var(--fg-2);margin-bottom:14px;line-height:1.6;">
+  Iz lista <em>Service strategy concept</em> u referentnoj tablici — gotovi modeli koji se mogu izravno preslikati na postojeće CARNET usluge i HUB servisnu strategiju.
+</p>
+<div class="mech-table-wrap">
+<table class="mech-table">
+  <thead>
+    <tr>
+      <th>Strategija</th><th>Referentni model</th><th>Mehanizam zajednice</th><th>CARNET usluga</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Otvorena istraživanja</td>
+      <td>Jisc Octopus (UK)</td>
+      <td>Korisnička zajednica s redovitim ažuriranjima, demoi i user-testing sesijama</td>
+      <td class="hub-preslika">EDUTorij — istraživački modul; uključiti istraživače u testiranje novih funkcionalnosti</td>
+    </tr>
+    <tr>
+      <td>Istraživanje temeljeno na praksi</td>
+      <td>Publinova (NL)</td>
+      <td>Naručeno od 14 sveučilišta primijenjenih znanosti; radne grupe i design intervjui; istraživači upravljaju vlastitim ishodom</td>
+      <td class="hub-preslika">Portal DOT — sekcija za praktično istraživanje; suradnja CARNET + politehničke škole i veleučilišta</td>
+    </tr>
+    <tr>
+      <td>OER platforma</td>
+      <td>edusources + SURF OER model (NL)</td>
+      <td>Nacionalni desk za podršku; 34 institucije kroz financiranje; 20+ profesionalnih zajednica; SIG za otvoreno obrazovanje</td>
+      <td class="hub-preslika"><strong>EDUTorij</strong> — nacionalni OER repozitorij: kontakt osoba po ustanovi, urednička provjera, prijava putem AAI@EduHr, radna skupina korisnika</td>
+    </tr>
+    <tr>
+      <td>OER + savjetovanje</td>
+      <td>HIS-HE twillo (DE)</td>
+      <td>Kombinira repozitorij s kompetencijskim centrom: osnove OER-a, događanja, praktični predlošci, savjetovanje o pravnim i didaktičkim pitanjima</td>
+      <td class="hub-preslika">EDUTorij + Hub savjetodavna usluga: pravno-didaktički helpdesk za OER, multiplikatorske konferencije za nastavnike</td>
+    </tr>
+    <tr>
+      <td>Interoperabilnost (politike)</td>
+      <td>EDEH Interoperabilnosni okvir za visoko obrazovanje (HEIF)</td>
+      <td>Radna skupina s 250+ članova iz 34 zemlje; Q&amp;A sesije, konferencije zajednice, online tečajevi</td>
+      <td class="hub-preslika">Portal DOT — interoperabilnost podatkovnih sustava (ISVU, HZMO, AAI@EduHr); usklađivanje s EU HEIF okvirom</td>
+    </tr>
+    <tr>
+      <td>Interoperabilnost (tehnika)</td>
+      <td>OEAPI + SURFeduhub (NL)</td>
+      <td>Otvoreni standard stvoren od strane zajednice institucija i dobavljača; olakšan od SURF-a uz potporu Npulsa; predstavljen na TNC 2026.</td>
+      <td class="hub-preslika">Multilabovi + Portal DOT API sloj: standardizacija podatkovnih sučelja između CARNET usluga i institucija (za kasniju fazu)</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ════════════ SOURCE ════════════ -->
+<p class="source-note">
+  <strong>Izvor:</strong> Iva Rumora — LMN3, <em>CARNET Hub – Desk istraživanje referentnih hub modela (nacrt v2)</em>, 20. 10. 2026. · Kartice modela usklađene su s nacrtom v2: 10 vodećih modela (rang, tip, životni ciklus i pouzdanost dokaza prema pogl. 3) i 5 rezervi (pogl. 5), odabranih iz radne tablice od 22 modela. Četiri dodatna modela (EUNIS, GÉANT, DEH Italija, HIS-HE) potječu iz radne tablice i nisu dio izbora nacrta v2. · Tip modela: <strong>CoP</strong> = Community of Practice · <strong>C&amp;G</strong> = Collaboration &amp; Governance · <strong>A&amp;KT</strong> = Advisory &amp; Knowledge Transfer · Radna verzija za reviziju; konačan odabir donosi Naručitelj.
+</p>
+
+<!-- ════════════ DETAIL PANEL ════════════ -->
+<div class="detail-overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Detalji modela">
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-head">
+      <div class="detail-head-text">
+        <div class="rank" id="dp-rank"></div>
+        <div class="name" id="dp-name"></div>
+        <div class="country" id="dp-country"></div>
+      </div>
+      <button class="close-btn" id="closeBtn" aria-label="Zatvori">×</button>
+    </div>
+    <div class="detail-content">
+      <div class="detail-row">
+        <div class="detail-row-label">Tip modela</div>
+        <div class="detail-row-val" id="dp-type"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Razina obrazovanja</div>
+        <div class="detail-row-val" id="dp-edu"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Životni ciklus</div>
+        <div class="detail-row-val" id="dp-lc"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Upravljanje i financiranje</div>
+        <div class="detail-row-val" id="dp-gov"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Ključni mehanizam</div>
+        <div class="detail-row-val" id="dp-mech"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Doseg / ključne brojke</div>
+        <div class="detail-row-val" id="dp-reach"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Prenosivo za CARNET HUB</div>
+        <div class="detail-highlight">
+          <div class="detail-row-val" id="dp-transfer"></div>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Zašto rezerva</div>
+        <div class="detail-row-val" id="dp-why"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Pouzdanost dokaza</div>
+        <div class="detail-row-val" id="dp-evidence"></div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-row-label">Izvori</div>
+        <div class="detail-row-val dp-links" id="dp-links"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// tier: "top" = 10 vodećih (nacrt v2, pogl. 3–4) · "reserve" = 5 rezervi (pogl. 5) · "extra" = iz radne tablice, izvan izbora nacrta v2
+const HUBS = [
+  {
+    tier: "top", rank: 1, name: "Hochschulforum Digitalisierung (HFD)",
+    url: "https://hochschulforumdigitalisierung.de/",
+    country: "Njemačka", flag: "🇩🇪",
+    typePrimary: "CoP", typeSecondary: "C&G",
+    edu: "Visoko obrazovanje",
+    lifecycle: "Trajno, od 2014.", lcType: "active",
+    governance: "Zajednička inicijativa Stifterverbanda, CHE-a i Njemačke rektorske konferencije (HRK); financira Savezno ministarstvo obrazovanja i istraživanja (BMBF).",
+    mechanism: "Kolegijalno (peer-to-peer) strateško savjetovanje vodstava ustanova: žiri bira ustanove, vanjski peers prate razvoj strategije, certifikat na festivalu University:Future.",
+    reach: "140+ prijava; savjetovane 42 ustanove + 1 savez (do 2025.); HFDnetzwerk 9.000+ članova",
+    evidence: "Visoka",
+    transfer: "Natječajne godišnje kohorte vodstava visokih učilišta (i ravnatelja škola) uz certifikat kao poticaj; objava uvida iz savjetovanja kao javni proizvod Huba; opcionalno neplaćeni studentski ogranak (po uzoru na DigitalChangeMaker) kao alternativa plaćenom modelu N-TUTORR-a.",
+    tags: ["Peer savjetovanje", "Žiri + certifikat", "HFDlead mentorstvo", "DigitalChangeMaker", "University:Future"],
+    links: [
+      ["Peer-to-Peer-Strategieberatung", "https://hochschulforumdigitalisierung.de/peer-to-peer-strategieberatung/"],
+      ["HFDlead", "https://hochschulforumdigitalisierung.de/hfdlead-das-peer-to-peer-tandem-angebot-des-hfd/"],
+      ["DigitalChangeMaker", "https://hochschulforumdigitalisierung.de/changemaker/"]
+    ],
+    nren: false, school: false
+  },
+  {
+    tier: "top", rank: 2, name: "Switch Eduhub+ i Switch OER",
+    url: "https://www.switch.ch/en/eduhub-community",
+    country: "Švicarska", flag: "🇨🇭",
+    typePrimary: "CoP", typeSecondary: "infrastruktura (NREN)",
+    edu: "Visoko i strukovno visoko obrazovanje",
+    lifecycle: "Eduhub od 2008.; Switch OER od 2024.", lcType: "active",
+    governance: "Switch (zaklada, švicarski NREN od 1987.) osnovao je, koordinira i financira zajednicu; Odbor (4 ustanove + Switch) i Vijeće zajednice (23 predstavnika iz 21 ustanove) vode agendu.",
+    mechanism: "NREN-ova zajednica s tematskim skupinama (SIG) koje koordinira Vijeće ustanova, uz nacionalnu OER uslugu s uredničkom provjerom i kontakt osobom po ustanovi.",
+    reach: "1.300+ stručnjaka; 4 aktivna SIG-a (UI, SAMoo, e-ocjenjivanje, OER); mjesečni webinari",
+    evidence: "Visoka",
+    transfer: "(1) SIG-ovi s vijećem ustanova i NREN-ovim voditeljem zajednice — izravna mapa na CARNET; (2) strategija OER-a za Edutorij: kontakt osoba po ustanovi, urednička provjera, objava preko AAI@EduHr, radna skupina korisnika.",
+    tags: ["4 SIG-a", "Vijeće ustanova", "OER repozitorij", "edu-sharing", "eduhub days"],
+    links: [
+      ["Special Interest Groups", "https://www.switch.ch/en/special-interest-groups"],
+      ["Switch OER", "https://oer.switch.ch/"],
+      ["eduhub days 2026", "https://www.switch.ch/en/eduhub-days-2026"]
+    ],
+    nren: true, school: false
+  },
+  {
+    tier: "top", rank: 3, name: "European Digital Education Hub (EDEH)",
+    url: "https://education.ec.europa.eu/focus-topics/digital-education/hub",
+    country: "Europska unija", flag: "🇪🇺",
+    typePrimary: "CoP", typeSecondary: null,
+    edu: "Sve razine",
+    lifecycle: "Od lipnja 2022.", lcType: "eu",
+    governance: "Inicijativa Europske komisije u okviru Akcijskog plana za digitalno obrazovanje, financirana iz Erasmus+.",
+    mechanism: "Kratke tematske skupine (squads): ~20 članova, voditelj-stručnjak, online do 6 mjeseci, otvorena volonterska prijava; uz njih ambasadori s trogodišnjim mandatom koje imenuje EK.",
+    reach: "7.000+ članova; 31+ skupina i radionica; 150+ publikacija; 70+ webinara; 30+ ambasadora",
+    evidence: "Visoka",
+    transfer: "Format squad (otvoren poziv, <20 ljudi, voditelj, do 6 mjeseci, konkretan rezultat) kao standard Hubovih tematskih skupina; hrvatski ambasadori EDEH-a kao prirodan most prema EU razini.",
+    tags: ["Squads ≤6 mj.", "~20 članova", "Ambasadori (3 god.)", "Interoperabilnost VO", "Erasmus+"],
+    links: [
+      ["Radne skupine", "https://education.ec.europa.eu/focus-topics/digital-education/digital-education-hub/workshops-and-working-groups"],
+      ["Ambasadori", "https://education.ec.europa.eu/focus-topics/digital-education/hub/ambassadors"]
+    ],
+    nren: false, school: true
+  },
+  {
+    tier: "top", rank: 4, name: "digital university hub (DUH / DUH25+)",
+    url: "https://www.digitaluniversityhub.eu/",
+    country: "Austrija", flag: "🇦🇹",
+    typePrimary: "C&G", typeSecondary: "CoP",
+    edu: "Visoko obrazovanje",
+    lifecycle: "Projekt 2020.–2024.; DUH25+ od 2025.", lcType: "project",
+    governance: "Jedan od 34 projekta iz poziva BMBWF-a (2019.); nositelji TU Graz, Sveučilište u Beču i Sveučilište u Grazu; danas inicijativa u programu zajednice austrijskog NREN-a ACOnet. Financiranje DUH25+ nije objavljeno.",
+    mechanism: "Mreža povjerenika za promjene (change facilitators) sa svih austrijskih visokih učilišta — redoviti susreti i virtualni Lean Coffee; prijelaz s projekta ministarstva na konzorcij ustanova.",
+    reach: "22 javna sveučilišta i 34 projekta pozvana na DUH Lab 2023.; 5 sveučilišta u DUH25+",
+    evidence: "Srednja",
+    transfer: "(1) Put „projekt ministarstva → konzorcij ustanova” kao scenarij održivosti nakon 2030.; (2) mreža povjerenika za promjene / digitalnu transformaciju po ustanovi; (3) DUH Lab kao predložak godišnjeg Carnet Hub događaja koji povezuje sektore obrazovanja.",
+    tags: ["Povjerenici za promjene", "SAY HI! – SAY WHY!", "Basic Toolkit", "DUH Lab", "ACOnet"],
+    links: [
+      ["Change-Begleiter:innen", "https://www.digitaluniversityhub.eu/about/wer-wir-sind-was-wir-tun/change-begleiterinnen"],
+      ["DUH Lab", "https://www.tugraz.at/events/duhlab/home"],
+      ["ZFHE (Michel i sur., 2024.)", "https://doaj.org/article/8c487e40c168440491dde1af8a9035b6"]
+    ],
+    nren: true, school: false
+  },
+  {
+    tier: "top", rank: 5, name: "National Forum + N-TUTORR",
+    url: "https://www.tudublin.ie/explore/about-the-university/academic-affairs/ntutorr/about/project/",
+    country: "Irska", flag: "🇮🇪",
+    typePrimary: "C&G", typeSecondary: null,
+    edu: "Visoko obrazovanje",
+    lifecycle: "Forum trajno; N-TUTORR 2022.–2024.", lcType: "project",
+    governance: "N-TUTORR koordinira Udruga tehnološkog visokog obrazovanja (THEA) uz podršku Tijela za visoko obrazovanje (HEA); 7 ustanova; ~€40 mil. iz irskog Nacionalnog plana oporavka i otpornosti. Nacionalni forum trajni je okvir pod HEA-om.",
+    mechanism: "Plaćeni studentski promotori (Student Champions: ~10 h/mj., stipendija €3.000, mandat 1 god.) i financirane partnerske stipendije za projekte studenata i osoblja.",
+    reach: "100 studentskih promotora; 131 projekt i €650.000+ u prvom krugu stipendija (2023.); 36 GenAI promotora",
+    evidence: "Visoka",
+    transfer: "Studentski ogranak ambasadora s malom stipendijom i jasnim satima; mali grantovi za zajedničke projekte studenata i nastavnika kao instrument sukreacije. Napomena: financiranje ambasadora izvan je opsega ove nabave — predlaže se za buduću odluku Naručitelja (npr. NPOO).",
+    tags: ["Student Champions", "€3.000 / ~10 h mj.", "Partnerske stipendije", "7 ustanova", "~€40 mil."],
+    links: [
+      ["ATU — Student Champions", "https://atu.ie/about/teaching-and-learning/n-tutorr/n-tutorr-stream-1"],
+      ["DkIT — uvjeti uloge", "https://www.dkit.ie/news/2023/dkit-welcomes-applications-for-funded-student-champions-project"],
+      ["TU Dublin — stipendije", "https://www.tudublin.ie/explore/about-the-university/academic-affairs/ntutorr/news-and-events/launch-of-n-tuttor-fellowships.php"]
+    ],
+    nren: false, school: false
+  },
+  {
+    tier: "top", rank: 6, name: "SURF (nizozemski tandem)",
+    url: "https://www.surf.nl/en/about",
+    country: "Nizozemska", flag: "🇳🇱",
+    typePrimary: "C&G", typeSecondary: "CoP + infrastruktura",
+    edu: "Strukovno, visoko, istraživanje",
+    lifecycle: "Trajno (zadruga)", lcType: "active",
+    governance: "Zadruga nizozemskih obrazovnih i istraživačkih ustanova i njihov NREN: 121 članica; usluge identiteta, nabave, sigurnosti, mreže i podataka.",
+    mechanism: "SURF Communities — jedna platforma za 30+ tematskih zajednica; svaki član objavljuje članke i događaje, prijava institucijskim računom ili eduID-om, nova zajednica na zahtjev.",
+    reach: "4.000+ aktivnih članova; 121 članica; 80 okvirnih ugovora; 286 događanja s 15.000 sudionika (2024.)",
+    evidence: "Visoka",
+    transfer: "Jedna platforma za mnogo malih tematskih zajednica, uz prijavu preko AAI@EduHr i otvoreno objavljivanje članova SIG-ova na Središnjem portalu DOT. Istraživački stup potencijalno primjenjiv (npr. Publinova za primijenjena istraživanja i suradnju ustanova).",
+    tags: ["30+ zajednica", "eduID", "edubadges", "Publinova", "Zajednička nabava"],
+    links: [
+      ["Edubadges", "https://www.surf.nl/en/services/flexible-education/edubadges"],
+      ["Publinova", "https://publinova.nl/en/about"],
+      ["SURF godišnji pregled 2024.", "https://surfnl.maglr.com/surf-2024-annual-overview/surf-annual-overview-2024"]
+    ],
+    nren: true, school: false
+  },
+  {
+    tier: "top", rank: 7, name: "Npuls (nizozemski tandem)",
+    url: "https://npuls.nl/en/frequently-asked-questions",
+    country: "Nizozemska", flag: "🇳🇱",
+    typePrimary: "C&G", typeSecondary: "CoP",
+    edu: "Strukovno i visoko obrazovanje",
+    lifecycle: "2023.–2031.", lcType: "project",
+    governance: "Program Nacionalnog fonda rasta; sve 102 javne strukovne škole, veleučilišta i sveučilišta; okvir €560 mil. do 2031., dio uvjetovan izvješćima o napretku.",
+    mechanism: "Ključni „vezivni” tim (Linking team) u svakoj ustanovi kao most prema nacionalnom timu + poticajne sheme koje nagrađuju zajedničke prijave više ustanova.",
+    reach: "102 ustanove; npr. €500.000 za Centar za poučavanje i učenje Sveučilišta Radboud (zajednička prijava s 2 ustanove)",
+    evidence: "Visoka (mehanizam) / Srednja (doseg zajednica)",
+    transfer: "(1) Imenovani nositelj ili mali tim Huba u svakoj ustanovi kao institucijska razina ambasadora; (2) mali poticajni pozivi koji nagrađuju zajedničke prijave više ustanova. SURF + Npuls = referenca za razdvajanje CARNET-ove infrastrukture od Hubovih programa aktivacije.",
+    tags: ["Linking teams", "Poticajne sheme", "€560 mil.", "Tematske zajednice", "Pilothub EdTech"],
+    links: [
+      ["Linking teams", "https://npuls.nl/en/topics/linking-teams"],
+      ["Poticajna shema", "https://npuls.nl/en/key-position-incentive-scheme"],
+      ["Zajednica Toetsen", "https://community-toetsen.npuls.nl/"]
+    ],
+    nren: false, school: false
+  },
+  {
+    tier: "top", rank: 8, name: "Circle U.",
+    url: "https://www.circle-u.eu/",
+    country: "Savez europskih sveučilišta", flag: "🇪🇺",
+    typePrimary: "CoP", typeSecondary: "C&G",
+    edu: "Visoko obrazovanje",
+    lifecycle: "Savez od 2020.; ambasadori od 2024.", lcType: "eu",
+    governance: "Circle U. AISBL (Bruxelles); 9 sveučilišta iz 9 zemalja (uklj. Beograd); €12,8 mil. od EK za fazu Circle U. 2030 (4 godine, od studenoga 2023.).",
+    mechanism: "Godišnje kohorte volonterskih ambasadora (budžet, umrežavanje, potvrda o volontiranju) + zajednice prakse za osoblje s minimalnim pravilima (≥2 sveučilišta, godišnji plan, kontakt osoba).",
+    reach: "38 ambasadora na 8 sveučilišta; 10 zajednica prakse (72 člana, od 60 prijedloga); seed fond €110.000 za 13 od 53 prijave; 67 aktivnosti, ~3.000 sudionika",
+    evidence: "Visoka",
+    transfer: "(1) Opis uloge ambasadora, godišnji poziv po ustanovi, mali budžet i potvrda kao poticaj; (2) poziv za zajednice prakse s minimalnim pravilima; (3) mali poticajni fond za međuinstitucijske projekte. Objavljeni pokazatelji upotrebljivi su kao KPI-jevi marketinškog plana.",
+    tags: ["38 ambasadora", "10 zajednica prakse", "Seed fond", "COIL", "Staff Weeks"],
+    links: [
+      ["Program ambasadora", "https://www.circle-u.eu/news/circle-u-launches-ambassadors-programme"],
+      ["Zajednice prakse", "https://www.circle-u.eu/cops"],
+      ["Izvješće o aktivnostima 2024.–2025.", "https://www.circle-u.eu/sites/default/files/2025-12/Web%20-%20Activity%20Report%202024-2025.pdf"]
+    ],
+    nren: false, school: false
+  },
+  {
+    tier: "top", rank: 9, name: "RNP i mreža RUTE",
+    url: "https://www.rnp.br/",
+    country: "Brazil", flag: "🇧🇷",
+    typePrimary: "C&G", typeSecondary: "CoP + infrastruktura",
+    edu: "Visoko obrazovanje i nastavne bolnice",
+    lifecycle: "RNP kao socijalna organizacija od 2002.", lcType: "active",
+    governance: "Rede Nacional de Ensino e Pesquisa — društvena organizacija vezana uz Ministarstvo znanosti, tehnologije i inovacija (MCTI) ugovorom o upravljanju.",
+    mechanism: "SIG-ovi koje predlaže ustanova, a odobrava upravni odbor RUTE-a; mjesečni virtualni sastanci (snimaju se) i unaprijed objavljen godišnji raspored tema.",
+    reach: "~800 korisničkih ustanova na ~1.500 kampusa; 130+ bolnica u RUTE-u; raniji izvor: 300+ ustanova u ~40 SIG-ova",
+    evidence: "Visoka (upravljanje) / Srednja (brojke SIG-ova)",
+    transfer: "Pravilnik SIG-a (prijedlog ustanove → odobrenje → mjesečni ritam → plan za semestar → potvrde sudionicima); godišnji događaj koji prikazuje prototipove iz Inovacijskih laboratorija.",
+    tags: ["Pravila za SIG", "Mjesečni ritam", "Telemedicina", "RUTE-ALC", "WRNP"],
+    links: [
+      ["RUTE SIG-ovi", "https://rcc.rnp.br/RUTE/sigs"],
+      ["Snimke sastanaka", "https://rcc.rnp.br/RUTE/gravadas"],
+      ["RUTE-ALC", "https://redclara.net/en/colaboracion/conozca/red-universitaria-de-telemedicina-de-america-latina-rute-al"]
+    ],
+    nren: true, school: false
+  },
+  {
+    tier: "top", rank: 10, name: "Future Classroom Lab (FCL)",
+    url: "https://fcl.eun.org/",
+    country: "Europa (škole) · European Schoolnet, Bruxelles", flag: "🇪🇺",
+    typePrimary: "CoP", typeSecondary: null,
+    edu: "Škole",
+    lifecycle: "Lab od 2012.; ambasadori od 2014.", lcType: "eu",
+    governance: "European Schoolnet (EUN) i ministarstva obrazovanja članice; mreža nastala kao program održivosti nakon EU projekta iTEC (2010.–2014.); jednogodišnja partnerstva s EdTech tvrtkama.",
+    mechanism: "Glavni ambasadori koje imenuju ministarstva i EUN — mjesečni online sastanci i dva susreta uživo godišnje; grade i obučavaju mreže lokalnih ambasadora; fizički laboratorij.",
+    reach: "Mreža glavnih ambasadora iz zemalja članica EUN-a; mreža laboratorija nadahnutih FCL-om",
+    evidence: "Visoka",
+    transfer: "Ambasador kojeg imenuje Ministarstvo znanosti, obrazovanja i mladih kao školski ogranak; Inovacijski laboratoriji kao „čvorovi” ambasadora; tromjesečni pregled aktivnosti.",
+    tags: ["Ministarstvo imenuje", "2 susreta uživo / god.", "Ambassadors' Digest", "Mreža labova", "EdTech partneri"],
+    links: [
+      ["FCL ambasadori", "https://fcl.eun.org/fcl-ambassadors"],
+      ["10 godina FCL-a", "https://fcl.eun.org/10-y-anniversary"]
+    ],
+    nren: false, school: true
+  },
+
+  /* ─── REZERVE (nacrt v2, pogl. 5) ─── */
+  {
+    tier: "reserve", name: "Jisc",
+    url: "https://www.jisc.ac.uk/",
+    country: "Ujedinjeno Kraljevstvo", flag: "🇬🇧",
+    typePrimary: "CoP", typeSecondary: "A&KT",
+    edu: "Visoko i daljnje obrazovanje",
+    lifecycle: "Trajno (neprofitna članska organizacija)", lcType: "active",
+    governance: "Neprofitna članska organizacija; vodi NREN Janet; okvir i model zrelosti digitalne transformacije izrađen sa sektorskim tijelima.",
+    mechanism: "Godišnja kohorta Community Champions koju bira žiri prema utjecaju, dosegu i angažmanu; okvir zrelosti digitalne transformacije kao operativni alat.",
+    reach: null,
+    evidence: "—",
+    whyReserve: "Opseg i model financiranja znatno veći od CARNET-ova; mehanizam zajednice sekundaran u odnosu na usluge.",
+    transfer: "Žirirana godišnja kohorta prvaka zajednice; okvir zrelosti digitalne transformacije kao podloga operativnog plana Huba.",
+    tags: ["Community Champions", "Model zrelosti", "NREN Janet"],
+    links: [
+      ["Community Champions", "https://www.jisc.ac.uk/get-involved/community-champions"],
+      ["Okvir digitalne transformacije", "https://www.jisc.ac.uk/guides/framework-for-digital-transformation-in-higher-education"]
+    ],
+    nren: true, school: false
+  },
+  {
+    tier: "reserve", name: "Digivisio 2030",
+    url: "https://csc.fi/en/our-expertise/higher-education-institutions-digivisio-2030-project/",
+    country: "Finska", flag: "🇫🇮",
+    typePrimary: "C&G", typeSecondary: "CoP + infrastruktura",
+    edu: "Visoko obrazovanje",
+    lifecycle: "Program do 2030.; portal Opin.fi od 2025.", lcType: "project",
+    governance: "Program u vlasništvu 37 visokih učilišta; projektni ured u CSC-u (finski nacionalni IT centar za znanost); zaseban operater nacionalnog portala.",
+    mechanism: "Troslojni model upravljanja: ustanove vlasnici → nacionalna agencija domaćin → operater portala.",
+    reach: "37 visokih učilišta",
+    evidence: "—",
+    whyReserve: "Fokus na studijsku ponudu i podatkovnu platformu (interoperabilnost više nego aktivacija pojedinaca, slično SURF-u); nema programa ambasadora.",
+    transfer: "Troslojna podjela uloga (vlasništvo ustanova / CARNET kao domaćin / operater platforme) kao referenca za upravljanje Hubom.",
+    tags: ["37 ustanova vlasnika", "CSC domaćin", "Opin.fi"],
+    links: [["Opin.fi", "https://opin.fi/"]],
+    nren: true, school: false
+  },
+  {
+    tier: "reserve", name: "EDUCAUSE",
+    url: "https://www.educause.edu/",
+    country: "SAD / globalno", flag: "🇺🇸",
+    typePrimary: "CoP", typeSecondary: null,
+    edu: "Visoko obrazovanje (IT i vodstvo)",
+    lifecycle: "Trajno (članska udruga)", lcType: "active",
+    governance: "Neprofitna članska udruga, 2.100+ organizacija članica; upravni odbor te odbori i radne skupine koje vode volonteri; prihod ~25 mil. USD, većinom od naknada za programe.",
+    mechanism: "76 zajednica (Community Groups) s volonterskim voditeljima; prijelaz iz zajednice u radnu skupinu (6 mj.) s objavljenim rezultatom; po jedan ambasador po ustanovi (2–4 h mj., mikrokvalifikacija).",
+    reach: "2.100+ članica; 76 zajednica; EDUCAUSE Review, Horizon Report, Top 10 IT Issues",
+    evidence: "—",
+    whyReserve: "Model članarina i pristup zajednicama samo za članove; usmjeren na IT i vodstvo, manje na nastavnike i studente.",
+    transfer: "Put zajednica → vremenski ograničena radna skupina s objavljenim rezultatom; jedan ambasador po ustanovi uz mikrokvalifikaciju kao poticaj.",
+    tags: ["76 zajednica", "Radne skupine 6 mj.", "1 ambasador / ustanova", "Mikrokvalifikacija"],
+    links: [
+      ["Zajednice (Connect)", "https://connect.educause.edu/allcommunities/explore-communities"],
+      ["Program ambasadora", "https://www.educause.edu/about/discover-membership/educause-ambassador-program"]
+    ],
+    nren: false, school: false
+  },
+  {
+    tier: "reserve", name: "Stichting Kennisnet",
+    url: "https://www.kennisnet.nl/over-kennisnet/",
+    country: "Nizozemska", flag: "🇳🇱",
+    typePrimary: "C&G", typeSecondary: "CoP",
+    edu: "Osnovne, srednje i strukovne škole",
+    lifecycle: "Trajno (25 godina)", lcType: "active",
+    governance: "Zaklada koju uglavnom financira Ministarstvo obrazovanja, kulture i znanosti; nadzorni odbor od 5 članova uz neovisnog predsjednika — 3 imenuju sektorska vijeća (npr. VO-raad, MBO Raad).",
+    mechanism: "Zajednica praktičara provjerava zajedničke standarde prije usvajanja (arhitektura FORA); tematske zajednice i radne skupine; monitor digitalne zrelosti MYRA.",
+    reach: "School-CERT 312 članova; tematske zajednice (UI, FORA, informacijska sigurnost i privatnost)",
+    evidence: "—",
+    whyReserve: "Usmjeren na škole i strukovno obrazovanje te na IT i upravljanje informacijama; nema programa ambasadora.",
+    transfer: "Legitimitet kroz mjesta u odboru koja imenuju sektorska vijeća; validacija standarda u zajednici prije usvajanja; monitor digitalne zrelosti za škole.",
+    tags: ["FORA", "MYRA monitor", "School-CERT", "Sektorska vijeća u odboru"],
+    links: [["Onderwijsnetwerk Digitalisering", "https://onderwijsnetwerk-digitalisering.nl/"]],
+    nren: false, school: true
+  },
+  {
+    tier: "reserve", name: "ATOM i Études (Amue)",
+    url: "https://www.amue.fr/les-communautes/les-communautes-metiers/la-communaute-atom",
+    country: "Francuska", flag: "🇫🇷",
+    typePrimary: "CoP", typeSecondary: "C&G",
+    edu: "Visoko obrazovanje (uprava)",
+    lifecycle: "Trajno (strukovne zajednice Amue)", lcType: "active",
+    governance: "Strukovne zajednice Agencije za udruživanje sveučilišta i ustanova (Amue).",
+    mechanism: "Zajednica povjerenja oko „ljudske strane” transformacije: susreti Lab'U ATOM i neformalne online „kave”; Études uz zajednički plan razvoja na Padletu.",
+    reach: "Opseg zajednice za provjeru",
+    evidence: "—",
+    whyReserve: "Usmjereno na upravu i menadžment ustanova; nema vlastite platforme ni ambasadora.",
+    transfer: "Neformalni, niskopražni formati (online „kava”) za upravljačko osoblje kao dopuna formalnim SIG-ovima.",
+    tags: ["Lab'U ATOM", "Online kave", "Uprava ustanova"],
+    links: [],
+    nren: false, school: false
+  },
+
+  /* ─── IZVAN NACRTA V2 (iz radne tablice; nisu provjereni u nacrtu) ─── */
+  {
+    tier: "extra", name: "EUNIS — Special Interest Groups",
+    url: "https://www.eunis.org/",
+    country: "Europa", flag: "🇪🇺",
+    typePrimary: "CoP", typeSecondary: null,
+    edu: "Visoko obrazovanje (IT vodstvo)",
+    lifecycle: "Trajno, od 1993.", lcType: "active",
+    governance: null,
+    mechanism: "7 SIG-ova s godišnjim proračunom + program ambasadora kao nacionalnih kontakt točaka.",
+    reach: "~120 institucija",
+    evidence: "Nije procijenjeno u nacrtu v2",
+    transfer: "(1) Pravilnik SIG-a: ustanova predlaže, EUNIS odobrava, godišnja potpora, preporučen susret uživo. (2) Ambasador kao kontakt točka, potaknut vidljivošću na kongresu. (3) BencHEIT kao alat za praćenje digitalne zrelosti.",
+    tags: ["7 SIG-ova", "BencHEIT", "Godišnji kongres"],
+    links: [],
+    nren: false, school: false
+  },
+  {
+    tier: "extra", name: "GÉANT Community",
+    url: "https://geant.org/",
+    country: "Pan-Europa", flag: "🇪🇺",
+    typePrimary: "C&G", typeSecondary: "CoP + infrastruktura",
+    edu: "Visoko obrazovanje i istraživanje",
+    lifecycle: "Trajno (europski NREN-i)", lcType: "eu",
+    governance: null,
+    mechanism: "Suradnja 40+ europskih NREN-a; Community Awards i Future Talent Programme za mlade stručnjake.",
+    reach: "40+ NREN-a; CARNET je član",
+    evidence: "Nije procijenjeno u nacrtu v2",
+    transfer: "(1) Prirodni EU okvir za vidljivost Huba (CARNET je član). (2) Community Awards kao niskotroškovno priznanje članovima. (3) Future Talent (lightning talks) za završno događanje. (4) Infoshare format tematske razmjene.",
+    tags: ["40+ NREN-a", "Community Awards", "Future Talent"],
+    links: [],
+    nren: true, school: false
+  },
+  {
+    tier: "extra", name: "Digital Education Hubs — EDVANCE (Italija)",
+    url: "https://www.polimi.it/formazione/polimi-learning-innovation/dettaglio/edvance",
+    country: "Italija", flag: "🇮🇹",
+    typePrimary: "C&G", typeSecondary: null,
+    edu: "Visoko obrazovanje",
+    lifecycle: "Projekt PNRR/RRF 2022.–2026.", lcType: "project",
+    governance: null,
+    mechanism: "Regionalni konzorcijski hubovi (EDVANCE pod vodstvom PoliMi, 17+ partnera) sa zajedničkom platformom kao uvjetom financiranja.",
+    reach: "~€60 mil. (prema radnoj tablici)",
+    evidence: "Nije procijenjeno u nacrtu v2",
+    transfer: "Upozoravajući primjer: hub financiran iz RRF-a suočava se s rizikom prekida financiranja po isteku — relevantno ako se Hub financira iz NPOO-a. Zajednička AI povelja i vodiči (listopad 2025.) kao konkretan zajednički rezultat.",
+    tags: ["PNRR / RRF", "Rizik održivosti", "AI povelja"],
+    links: [],
+    nren: false, school: false
+  },
+  {
+    tier: "extra", name: "HIS-HE (HIS-Institut für Hochschulentwicklung)",
+    url: "https://his-he.de/",
+    country: "Njemačka", flag: "🇩🇪",
+    typePrimary: "A&KT", typeSecondary: "C&G",
+    edu: "Visoko obrazovanje (ministarstva i sveučilišta)",
+    lifecycle: "Trajno, od 2014.", lcType: "active",
+    governance: null,
+    mechanism: "Izravno savjetovanje ministarstava i sveučilišta (istraživanje → strategija → upravljanje → podrška provedbi), bez razvoja softvera.",
+    reach: null,
+    evidence: "Nije procijenjeno u nacrtu v2",
+    transfer: "Predložak za savjetodavni sloj Huba; OER portal twillo koji je naručilo ministarstvo kao referenca za Edutorij; krizna podrška nakon kibernapada kao moguća Hub usluga.",
+    tags: ["A&KT uzor", "twillo OER", "Savjetovanje ministarstava"],
+    links: [],
+    nren: false, school: false
+  }
+];
+
+// ─── Glasanje: identiteti, mehanizmi (nacrt v2, pogl. 6) i modeli upravljanja (pogl. 7.1) ───
+// [id, kratki naziv, mehanizmi #, model upravljanja]. Za 10 vodećih mapiranje je iz nacrta; za ostale je autorsko (mechDerived).
+const META = {
+  "Hochschulforum Digitalisierung (HFD)": ["hfd", "HFD", [1], "g2"],
+  "Switch Eduhub+ i Switch OER": ["switch", "Switch", [2, 4], "g1"],
+  "European Digital Education Hub (EDEH)": ["edeh", "EDEH", [3, 8], "g5"],
+  "digital university hub (DUH / DUH25+)": ["duh", "DUH", [5], "g3"],
+  "National Forum + N-TUTORR": ["ntutorr", "N-TUTORR", [6], "g4"],
+  "SURF (nizozemski tandem)": ["surf", "SURF", [2], "g1"],
+  "Npuls (nizozemski tandem)": ["npuls", "Npuls", [7], "g4"],
+  "Circle U.": ["circleu", "Circle U.", [3, 8], "g5"],
+  "RNP i mreža RUTE": ["rnp", "RNP / RUTE", [2], "g1"],
+  "Future Classroom Lab (FCL)": ["fcl", "FCL", [9], "g6"],
+  "Jisc": ["jisc", "Jisc", [8], "g1"],
+  "Digivisio 2030": ["digivisio", "Digivisio 2030", [], "g3"],
+  "EDUCAUSE": ["educause", "EDUCAUSE", [2, 3, 8], null],
+  "Stichting Kennisnet": ["kennisnet", "Kennisnet", [2], "g2"],
+  "ATOM i Études (Amue)": ["amue", "ATOM / Amue", [2], null],
+  "EUNIS — Special Interest Groups": ["eunis", "EUNIS", [2, 8], null],
+  "GÉANT Community": ["geant", "GÉANT", [2], "g1"],
+  "Digital Education Hubs — EDVANCE (Italija)": ["deh", "DEH Italija", [], "g4"],
+  "HIS-HE (HIS-Institut für Hochschulentwicklung)": ["hishe", "HIS-HE", [1], null]
+};
+HUBS.forEach(h => {
+  const m = META[h.name];
+  h.id = m[0]; h.short = m[1]; h.mech = m[2]; h.gov = m[3];
+  h.mechDerived = h.tier !== 'top';
+});
+const HUB_BY_ID = Object.fromEntries(HUBS.map(h => [h.id, h]));
+
+const MECHS = {
+  1: ["Strateško kolegijalno savjetovanje", "Godišnja kohorta vodstava visokih učilišta i škola"],
+  2: ["Zajednica sa SIG-ovima koju ugošćuje NREN", "SIG-ovi na Središnjem obrazovnom portalu DOT"],
+  3: ["Kratke otvorene radne skupine", "Tematske skupine (~20 članova, do 6 mjeseci, konkretan rezultat)"],
+  4: ["OER usluga na nacionalnoj platformi", "Edutorij + AAI@EduHr"],
+  5: ["Mreža povjerenika za promjene + godišnji lab", "Povjerenici po ustanovi; Carnet Hub dan na CUC-u"],
+  6: ["Studentski promotori i partnerske stipendije", "Studentski ogranak (buduća odluka Naručitelja)"],
+  7: ["Institucijski uklopljeni tim + pozivi s poticajima", "Institucijski nositelji Huba (npr. Multilab tim na kampusima)"],
+  8: ["Volonterski ambasadori u godišnjim kohortama", "Ambasadori Huba u visokom obrazovanju"],
+  9: ["Ambasadori koje imenuje ministarstvo + mreža laboratorija", "Školski ogranak uz Inovacijske laboratorije"]
+};
+const GOVS = {
+  g1: ["NREN sa slojem zajednice", "Stabilan mandat, identitet i povjerenje", "Zajednica ostaje marginalna bez voditelja zajednice i promocije"],
+  g2: ["Inicijativa nacionalnih tijela uz državno financiranje", "Legitimitet kod vodstava; nije vezana uz jednu ustanovu", "Ovisnost o produženju ministarskog financiranja"],
+  g3: ["Projekt ministarstva → konzorcij ustanova", "Dokumentiran put do održivosti", "Financiranje nakon projekta nije transparentno"],
+  g4: ["Program fonda (nacionalnog ili EU) uz trajnog domaćina", "Opseg; novac za pojedince i ustanove", "Plaćene uloge nestaju s programom ako nema drugih poticaja"],
+  g5: ["EU-financirana zajednica ili savez", "Europski doseg, otvoren ulaz", "Ovisnost o Erasmus+ ciklusima"],
+  g6: ["Mreža ministarstava uz industrijska partnerstva", "Imenovanja s mandatom; fizički prostor", "Ovisnost o partnerima iz industrije"]
+};
+// Razine sudjelovanja (pogl. 6) i mehanizmi koji ih pokrivaju
+const LEVELS = [
+  ["Institucijski nositelj", [7]],
+  ["Ambasador", [8, 9, 6]],
+  ["Voditelj / član tematske skupine", [3, 1]],
+  ["Član zajednice", [2, 4, 5]]
+];
+const BALLOT_SIZE = 5;
+const POINTS = [5, 4, 3, 2, 1];
+const vote = { db: null, user: null, uid: null, canVote: false, draft: [], saved: null, ballots: [], saving: false };
+
+const TYPE_NAMES = { "CoP": "Zajednica praktičara", "C&G": "Suradnja i upravljanje", "A&KT": "Savjetovanje i prijenos znanja" };
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function typeLabel(hub) {
+  return hub.typeSecondary ? `${hub.typePrimary} / ${hub.typeSecondary}` : hub.typePrimary;
+}
+function typeBadgeClass(hub) {
+  if (hub.typePrimary === 'C&G') return 'type-cng';
+  if (hub.typePrimary === 'A&KT') return 'type-akt';
+  return 'type-cop';
+}
+function lcClass(t) { return t === 'active' ? 'lc-active' : t === 'project' ? 'lc-project' : 'lc-eu'; }
+function lcLabel(t) { return t === 'active' ? 'Trajno' : t === 'project' ? 'Vremenski ograničeno' : 'EU / europska mreža'; }
+function transferList(t) {
+  const items = t
+    .split(/;\s*|\s*\(\d\)\s*|(?<!npr|mj|god|sur)\.\s+(?=[A-ZČĆŠŽĐ„])/)
+    .map(s => s.trim().replace(/(?<!\d)[;.]+$/, ''))
+    .filter(Boolean)
+    .map(s => s.charAt(0).toUpperCase() + s.slice(1));
+  return '<ul class="transfer-list">' + items.map(s =>
+    /^(Napomena|Upozoravajući)/.test(s) ? `<li class="note">${esc(s)}</li>` : `<li>${esc(s)}</li>`
+  ).join('') + '</ul>';
+}
+function rankText(hub) {
+  if (hub.tier === 'top') return `<span>${hub.rank}</span> od 10`;
+  if (hub.tier === 'reserve') return `Rezerva`;
+  return `Izvan nacrta v2`;
+}
+
+function buildCard(hub) {
+  const div = document.createElement('div');
+  div.className = 'card tier-' + hub.tier;
+  div.dataset.tier = hub.tier;
+  div.dataset.id = hub.id;
+  div.dataset.type = hub.typePrimary;
+  div.dataset.nren = hub.nren;
+  div.dataset.school = hub.school;
+  div.tabIndex = 0;
+  div.setAttribute('role', 'button');
+  div.setAttribute('aria-label', 'Detalji: ' + hub.name);
+
+  const sec = hub.typeSecondary ? ` <span class="type-sec">/ ${esc(hub.typeSecondary)}</span>` : '';
+  const reserveNote = hub.whyReserve ? `<div class="card-why"><strong>Zašto rezerva:</strong> ${esc(hub.whyReserve)}</div>` : '';
+  const reach = hub.reach ? `<div class="card-reach">${esc(hub.reach)}</div>` : '';
+
+  div.innerHTML = `
+    <div class="card-rank">
+      <div class="rank-badge">${rankText(hub)}</div>
+      <span class="type-badge ${typeBadgeClass(hub)}" title="${esc(TYPE_NAMES[hub.typePrimary])}">${esc(hub.typePrimary)}${sec}</span>
+    </div>
+    <div class="card-body">
+      <a class="card-name" href="${esc(hub.url)}" target="_blank" rel="noopener">${esc(hub.name)} <span class="ext" aria-hidden="true">↗</span></a>
+      <div class="agg-chip" hidden></div>
+      <div class="card-country">${hub.flag} ${esc(hub.country)} · ${esc(hub.edu)}</div>
+      <div class="card-mechanism">${esc(hub.mechanism)}</div>
+      ${reach}
+      <div class="card-tags">${hub.tags.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>
+      ${reserveNote}
+    </div>
+    <div class="card-footer">
+      <div class="relevance-label">↳ Prenosivo za Carnet Hub</div>
+      ${transferList(hub.transfer)}
+      <div class="card-actions"><span class="more">Detalji →</span><button type="button" class="vote-btn" data-id="${hub.id}" hidden>+ Moj top 5</button></div>
+    </div>
+  `;
+  div.querySelector('a.card-name').addEventListener('click', e => e.stopPropagation());
+  div.querySelector('.vote-btn').addEventListener('click', e => { e.stopPropagation(); togglePick(hub.id); });
+  div.querySelector('.vote-btn').addEventListener('keydown', e => e.stopPropagation());
+  div.addEventListener('click', () => openDetail(hub));
+  div.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(hub); } });
+  return div;
+}
+
+const TIERS = [
+  ['top', 'Deset vodećih modela', 'Rang je autorski prijedlog za raspravu (nacrt v2, pogl. 3–4); konačan odabir i redoslijed donosi Naručitelj.'],
+  ['reserve', 'Rezerve za razmatranje', 'Svaki nosi jedan jak mehanizam prijenosa (nacrt v2, pogl. 5). Pouzdanost dokaza za rezerve nije zasebno ocijenjena.'],
+  ['extra', 'Dodatni modeli iz radne tablice', 'Nisu dio izbora nacrta v2 i podaci nisu provjereni prema nacrtu; zadržani jer se na njih pozivaju tematske zajednice i servisni koncepti niže.']
+];
+const gridWrap = document.getElementById('cardGrid');
+TIERS.forEach(([tier, title, note]) => {
+  const items = HUBS.filter(h => h.tier === tier);
+  const sec = document.createElement('section');
+  sec.className = 'tier-section';
+  sec.dataset.tier = tier;
+  sec.innerHTML = `<div class="tier-head"><h2 class="section-title">${title}</h2><span class="section-count">${items.length} modela</span></div><p class="tier-note">${note}</p>`;
+  const g = document.createElement('div');
+  g.className = 'grid';
+  items.forEach(h => g.appendChild(buildCard(h)));
+  sec.appendChild(g);
+  gridWrap.appendChild(sec);
+});
+
+// filter
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('active'); btn.setAttribute('aria-pressed', 'true');
+    const f = btn.dataset.filter;
+    document.querySelectorAll('#cardGrid .card').forEach(card => {
+      let show = true;
+      if (f === 'top' || f === 'reserve') show = card.dataset.tier === f;
+      else if (f === 'nren') show = card.dataset.nren === 'true';
+      else if (f === 'school') show = card.dataset.school === 'true';
+      else if (f === 'CoP' || f === 'C&G') show = card.dataset.type === f;
+      card.classList.toggle('hidden', !show);
+    });
+    document.querySelectorAll('.tier-section').forEach(s => {
+      s.classList.toggle('hidden', !s.querySelector('.card:not(.hidden)'));
+    });
+  });
+});
+
+// detail
+const overlay = document.getElementById('overlay');
+const closeBtn = document.getElementById('closeBtn');
+function setRow(id, val, html) {
+  const el = document.getElementById(id);
+  el.closest('.detail-row').hidden = !val;
+  if (val) { if (html) el.innerHTML = val; else el.textContent = val; }
+}
+function openDetail(hub) {
+  document.getElementById('dp-rank').textContent = hub.tier === 'top' ? `Rang ${hub.rank} od 10` : hub.tier === 'reserve' ? 'Rezerva za razmatranje' : 'Izvan izbora nacrta v2';
+  const nameEl = document.getElementById('dp-name');
+  nameEl.innerHTML = `<a href="${esc(hub.url)}" target="_blank" rel="noopener">${esc(hub.name)} ↗</a>`;
+  document.getElementById('dp-country').textContent = `${hub.flag}  ${hub.country}`;
+  setRow('dp-type', `${typeLabel(hub)} — ${TYPE_NAMES[hub.typePrimary]}`);
+  setRow('dp-edu', hub.edu);
+  setRow('dp-lc', `<span class="lifecycle-chip ${lcClass(hub.lcType)}">${lcLabel(hub.lcType)}</span> <span class="lc-text">${esc(hub.lifecycle)}</span>`, true);
+  setRow('dp-gov', hub.governance);
+  setRow('dp-mech', hub.mechanism);
+  setRow('dp-reach', hub.reach);
+  setRow('dp-transfer', transferList(hub.transfer), true);
+  setRow('dp-why', hub.whyReserve);
+  setRow('dp-evidence', hub.evidence);
+  const links = [[hub.name + ' (početna)', hub.url], ...hub.links];
+  setRow('dp-links', links.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)}</a>`).join(''), true);
+  overlay.classList.add('open');
+  document.getElementById('detailPanel').scrollTop = 0;
+  closeBtn.focus();
+}
+closeBtn.addEventListener('click', () => overlay.classList.remove('open'));
+overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
+// ─── Glasanje preko Google Apps Scripta ───
+// ▼▼▼ KORAK 4 VODIČA: zalijepite ovdje URL web aplikacije (završava na /exec) ▼▼▼
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxM7aEQWZYpNvbQ0NmG05fvz1rDmnWedbPv3brYRnrW72kbzRC58oGSH40gcG263yGr/exec';
+// ▲▲▲
+const VOTE_KEY = (() => { try { return new URLSearchParams(location.search).get('k') || ''; } catch (e) { return ''; } })();
+const $ = id => document.getElementById(id);
+const normKey = s => String(s || '').trim().replace(/\s+/g, ' ').toLowerCase();
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+};
+vote.canVote = !!SCRIPT_URL;
+vote.name = store.get('hubVoterName') || '';
+
+function cleanPicks(p) {
+  if (!Array.isArray(p)) return [];
+  const out = [];
+  for (const id of p) if (typeof id === 'string' && HUB_BY_ID[id] && !out.includes(id) && out.length < BALLOT_SIZE) out.push(id);
+  return out;
+}
+const sameList = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+function mine() { const k = normKey(vote.name); return k ? vote.ballots.find(b => b.key === k) : null; }
+
+function setStatus(t) { $('ballotStatus').textContent = t; }
+
+function renderBallot() {
+  const slots = $('ballotSlots');
+  slots.textContent = '';
+  for (let i = 0; i < BALLOT_SIZE; i++) {
+    const id = vote.draft[i];
+    const li = document.createElement('li');
+    li.className = 'slot' + (id ? ' filled' : '');
+    const pos = document.createElement('span'); pos.className = 'slot-pos'; pos.textContent = (i + 1) + '.'; li.appendChild(pos);
+    const label = document.createElement('span'); label.className = 'slot-name';
+    label.textContent = id ? HUB_BY_ID[id].short : 'odaberi model na kartici'; li.appendChild(label);
+    const pts = document.createElement('span'); pts.className = 'slot-pts'; pts.textContent = POINTS[i] + ' b.'; li.appendChild(pts);
+    if (id) {
+      const ctr = document.createElement('span'); ctr.className = 'slot-ctr';
+      [['↑', 'Pomakni gore', i > 0, () => move(i, -1)], ['↓', 'Pomakni dolje', i < vote.draft.length - 1, () => move(i, 1)], ['×', 'Ukloni', true, () => togglePick(id)]]
+        .forEach(([t, l, en, fn]) => {
+          const b = document.createElement('button');
+          b.type = 'button'; b.textContent = t; b.setAttribute('aria-label', l + ': ' + HUB_BY_ID[id].short); b.disabled = !en;
+          b.addEventListener('click', fn); ctr.appendChild(b);
+        });
+      li.appendChild(ctr);
+    }
+    slots.appendChild(li);
+  }
+  const n = vote.draft.length;
+  const m = mine();
+  vote.saved = m ? m.picks : null;
+  const dirty = !vote.saved || !sameList(vote.draft, vote.saved);
+  const hasName = !!normKey(vote.name);
+  const save = $('ballotSave');
+  save.disabled = !vote.canVote || vote.saving || n !== BALLOT_SIZE || !hasName || !dirty;
+  save.textContent = vote.saving ? 'Spremam…' : vote.saved ? 'Ažuriraj glas' : 'Spremi glas';
+  $('ballotWithdraw').hidden = !vote.saved || !vote.canVote;
+  if (vote.canVote && !vote.saving && !vote.error) {
+    if (!hasName) setStatus('Upišite ime ili nadimak.');
+    else if (n < BALLOT_SIZE) setStatus(`Odabrano ${n} od ${BALLOT_SIZE}.`);
+    else if (dirty) setStatus(vote.saved ? 'Imate nespremljene promjene.' : 'Spremno za spremanje.');
+    else setStatus('Vaš glas je spremljen ✓');
+  }
+  $('miniCount').textContent = `${n}/${BALLOT_SIZE}`;
+  $('miniSave').disabled = save.disabled;
+  $('miniState').textContent = vote.saved && !dirty ? 'spremljeno ✓' : (dirty && n === BALLOT_SIZE ? 'nespremljeno' : '');
+  document.querySelectorAll('.vote-btn').forEach(b => {
+    const idx = vote.draft.indexOf(b.dataset.id);
+    b.hidden = !vote.canVote;
+    b.classList.toggle('on', idx >= 0);
+    b.textContent = idx >= 0 ? `✓ #${idx + 1} · ukloni` : '+ Moj top 5';
+    b.disabled = idx < 0 && n >= BALLOT_SIZE;
+    b.closest('.card').classList.toggle('picked', idx >= 0);
+  });
+}
+
+function togglePick(id) {
+  const i = vote.draft.indexOf(id);
+  if (i >= 0) vote.draft.splice(i, 1);
+  else if (vote.draft.length < BALLOT_SIZE) vote.draft.push(id);
+  vote.error = false; renderBallot();
+}
+function move(i, d) { const j = i + d; [vote.draft[i], vote.draft[j]] = [vote.draft[j], vote.draft[i]]; renderBallot(); }
+
+const ERR = {
+  no_name: 'Upišite ime ili nadimak.',
+  bad_picks: 'Glas nije valjan — odaberite točno pet različitih modela.',
+  bad_key: 'Poveznica nema ispravnu lozinku za glasanje (?k=…).'
+};
+function applyVotes(list) {
+  vote.ballots = (Array.isArray(list) ? list : []).map(v => ({
+    key: normKey(v.name), name: String(v.name || '').slice(0, 40),
+    picks: cleanPicks(v.picks), updatedAt: Number(v.updatedAt) || 0
+  })).filter(b => b.key && b.picks.length === BALLOT_SIZE);
+}
+async function call(payload) {
+  const opt = payload
+    ? { method: 'POST', body: JSON.stringify(Object.assign({ key: VOTE_KEY }, payload)) } // text/plain → bez CORS preflighta
+    : { method: 'GET' };
+  const r = await fetch(SCRIPT_URL, opt);
+  const j = await r.json();
+  if (!j.ok) throw Object.assign(new Error(j.error), { code: j.error });
+  applyVotes(j.votes);
+}
+async function refresh() {
+  if (!SCRIPT_URL || vote.saving) return;
+  try { await call(null); vote.error = false; }
+  catch (e) { vote.error = true; setStatus('Rezultati se trenutno ne mogu učitati.'); }
+  if (!vote.loaded) { vote.loaded = true; const m = mine(); if (m && !vote.draft.length) vote.draft = m.picks.slice(); }
+  renderBallot(); renderResults();
+}
+async function saveBallot() {
+  if (vote.saving || vote.draft.length !== BALLOT_SIZE || !normKey(vote.name)) return;
+  vote.saving = true; vote.error = false; renderBallot(); setStatus('Spremam…');
+  try { await call({ action: 'vote', name: vote.name, picks: vote.draft.slice() }); }
+  catch (e) { vote.error = true; setStatus(ERR[e.code] || 'Spremanje nije uspjelo — provjerite vezu i pokušajte ponovno.'); }
+  vote.saving = false; renderBallot(); renderResults();
+}
+async function withdrawBallot() {
+  if (!vote.saved) return;
+  vote.saving = true; renderBallot();
+  try { await call({ action: 'delete', name: vote.name }); vote.draft = []; }
+  catch (e) { vote.error = true; setStatus('Povlačenje glasa nije uspjelo.'); }
+  vote.saving = false; renderBallot(); renderResults();
+}
+
+// ─── Agregacija ───
+function aggregate() {
+  const models = {};
+  HUBS.forEach(h => models[h.id] = { id: h.id, pts: 0, first: 0, voters: 0 });
+  vote.ballots.forEach(b => b.picks.forEach((id, i) => { const m = models[id]; m.pts += POINTS[i]; m.voters++; if (i === 0) m.first++; }));
+  const ranked = Object.values(models).filter(m => m.pts > 0)
+    .sort((a, b) => b.pts - a.pts || b.first - a.first || b.voters - a.voters || a.id.localeCompare(b.id));
+  ranked.forEach((m, i) => { const p = ranked[i - 1]; m.rank = p && p.pts === m.pts && p.first === m.first ? p.rank : i + 1; });
+  const mech = {}; Object.keys(MECHS).forEach(k => mech[k] = { k: +k, pts: 0, models: [] });
+  const gov = {}; Object.keys(GOVS).forEach(k => gov[k] = { k, pts: 0, models: [] });
+  ranked.forEach(m => {
+    const h = HUB_BY_ID[m.id];
+    h.mech.forEach(k => { mech[k].pts += m.pts; mech[k].models.push(h.short); });
+    if (h.gov) { gov[h.gov].pts += m.pts; gov[h.gov].models.push(h.short); }
+  });
+  return {
+    ranked,
+    mechR: Object.values(mech).filter(x => x.pts > 0).sort((a, b) => b.pts - a.pts || a.k - b.k),
+    govR: Object.values(gov).filter(x => x.pts > 0).sort((a, b) => b.pts - a.pts)
+  };
+}
+
+function renderResults() {
+  const n = vote.ballots.length;
+  $('statVotes').textContent = n;
+  $('resultsCount').textContent = n === 1 ? '1 glas' : `${n} glasova`;
+  const { ranked, mechR, govR } = aggregate();
+  const body = $('rankBody'); body.textContent = '';
+  $('rankEmpty').hidden = ranked.length > 0;
+  $('rankTableWrap').hidden = ranked.length === 0;
+  const max = ranked[0] ? ranked[0].pts : 1;
+  ranked.forEach(m => {
+    const h = HUB_BY_ID[m.id];
+    const tr = document.createElement('tr');
+    [String(m.rank), null, String(m.pts), String(m.first), `${m.voters}/${n}`,
+     h.tier === 'top' ? String(h.rank) : h.tier === 'reserve' ? 'rezerva' : 'izvan v2'].forEach((c, i) => {
+      const td = document.createElement('td');
+      if (i === 1) {
+        const a = document.createElement('a'); a.href = h.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = h.short; td.appendChild(a);
+        const bar = document.createElement('div'); bar.className = 'bar'; bar.style.width = Math.max(4, Math.round(m.pts / max * 100)) + '%'; td.appendChild(bar);
+      } else { td.textContent = c; if (i >= 2 && i <= 4) td.className = 'num'; }
+      tr.appendChild(td);
+    });
+    body.appendChild(tr);
+  });
+  document.querySelectorAll('#cardGrid .card').forEach(c => {
+    const m = ranked.find(r => r.id === c.dataset.id);
+    const chip = c.querySelector('.agg-chip');
+    chip.hidden = !m;
+    if (m) chip.textContent = `Glasanje: #${m.rank} · ${m.pts} b.`;
+  });
+  renderIdeal(ranked, mechR, govR, n);
+  renderVoters();
+}
+
+function renderIdeal(ranked, mechR, govR, n) {
+  const box = $('idealBox'); box.textContent = '';
+  $('idealEmpty').hidden = n > 0; box.hidden = n === 0;
+  if (!n) return;
+  const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  const c1 = el('div', 'ideal-col');
+  c1.appendChild(el('div', 'ideal-h', 'Glavni uzori'));
+  const ol = el('ol', 'ideal-list');
+  ranked.slice(0, 3).forEach(m => ol.appendChild(el('li', null, `${HUB_BY_ID[m.id].short} — ${m.pts} b.`)));
+  c1.appendChild(ol);
+  c1.appendChild(el('div', 'ideal-h', 'Model upravljanja'));
+  const g = govR[0];
+  if (g) {
+    const [name, plus, risk] = GOVS[g.k];
+    c1.appendChild(el('div', 'ideal-strong', name));
+    c1.appendChild(el('div', 'ideal-meta', `${g.pts} b. · ${g.models.join(', ')}`));
+    c1.appendChild(el('div', 'ideal-plus', '+ ' + plus));
+    c1.appendChild(el('div', 'ideal-risk', '! ' + risk));
+  } else c1.appendChild(el('div', 'ideal-meta', 'Nema dovoljno podataka.'));
+  box.appendChild(c1);
+  const c2 = el('div', 'ideal-col wide');
+  c2.appendChild(el('div', 'ideal-h', 'Mehanizmi za Carnet Hub (težinski prema glasovima)'));
+  const mmax = mechR[0] ? mechR[0].pts : 1;
+  const ul = el('ul', 'mech-rank');
+  mechR.forEach((x, i) => {
+    const [name, hub] = MECHS[x.k];
+    const li = el('li', i < 5 ? 'core' : '');
+    const top = el('div', 'mech-top');
+    top.appendChild(el('span', 'mech-name', `${x.k}. ${name}`));
+    top.appendChild(el('span', 'mech-pts', `${x.pts} b.`));
+    li.appendChild(top);
+    const bar = el('div', 'bar'); bar.style.width = Math.max(4, Math.round(x.pts / mmax * 100)) + '%'; li.appendChild(bar);
+    li.appendChild(el('div', 'mech-hub', '→ ' + hub));
+    li.appendChild(el('div', 'ideal-meta', 'Uzori: ' + x.models.join(', ')));
+    ul.appendChild(li);
+  });
+  c2.appendChild(ul); box.appendChild(c2);
+  const c3 = el('div', 'ideal-col');
+  c3.appendChild(el('div', 'ideal-h', 'Pokrivenost razina sudjelovanja'));
+  const core = new Set(mechR.slice(0, 5).map(x => x.k));
+  const lv = el('ol', 'levels');
+  LEVELS.forEach(([name, ks]) => {
+    const hit = ks.filter(k => core.has(k));
+    const li = el('li', hit.length ? 'ok' : 'gap');
+    li.appendChild(el('span', 'lv-name', name));
+    li.appendChild(el('span', 'lv-state', hit.length ? 'pokriveno · meh. ' + hit.join(', ') : 'praznina'));
+    lv.appendChild(li);
+  });
+  c3.appendChild(lv);
+  c3.appendChild(el('p', 'ideal-meta', 'Jezgru čini pet mehanizama s najviše bodova. Za 10 vodećih modela veza model → mehanizam preuzeta je iz kataloga (nacrt v2, pogl. 6); za rezerve i dodatne modele mapiranje je autorsko.'));
+  box.appendChild(c3);
+}
+
+function renderVoters() {
+  const wrap = $('voterList'); wrap.textContent = '';
+  const me = normKey(vote.name);
+  vote.ballots.slice().sort((a, b) => b.updatedAt - a.updatedAt).forEach(b => {
+    const row = document.createElement('div'); row.className = 'voter';
+    const nm = document.createElement('span'); nm.className = 'voter-name';
+    nm.textContent = b.name + (b.key === me ? ' (vi)' : ''); row.appendChild(nm);
+    const picks = document.createElement('span'); picks.className = 'voter-picks';
+    picks.textContent = b.picks.map((id, i) => `${i + 1}. ${HUB_BY_ID[id].short}`).join('  ');
+    row.appendChild(picks); wrap.appendChild(row);
+  });
+}
+
+// ─── Pokretanje ───
+$('voterName').value = vote.name;
+$('voterName').addEventListener('input', e => {
+  vote.name = e.target.value; store.set('hubVoterName', vote.name);
+  const m = mine();
+  if (m && !vote.draft.length) vote.draft = m.picks.slice();
+  vote.error = false; renderBallot(); renderVoters();
+});
+$('ballotSave').addEventListener('click', saveBallot);
+$('miniSave').addEventListener('click', saveBallot);
+$('ballotWithdraw').addEventListener('click', withdrawBallot);
+$('ballotClear').addEventListener('click', () => { vote.draft = []; vote.error = false; renderBallot(); });
+if (SCRIPT_URL) document.body.classList.add('can-vote');
+else setStatus('Glasanje još nije povezano (SCRIPT_URL nije postavljen).');
+renderBallot(); renderResults();
+refresh();
+setInterval(() => { if (!document.hidden) refresh(); }, 30000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+
+</script>
+
+</body></html>
