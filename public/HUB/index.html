@@ -649,6 +649,11 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 .name-field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--fg-2); margin-top: 12px; max-width: 320px; }
 .name-field input { font: 500 14px var(--type-body); padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--fg); }
 .name-field input:focus { outline: none; border-color: var(--accent); }
+.comment-field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 600; color: var(--fg-2); margin: 0 0 14px; }
+.comment-field textarea { font: 400 14px/1.5 var(--type-body); padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--fg); resize: vertical; min-height: 64px; }
+.comment-field textarea:focus { outline: none; border-color: var(--accent); }
+.comment-count { align-self: flex-end; font-weight: 500; color: var(--fg-3); font-variant-numeric: tabular-nums; }
+.voter-comment { flex-basis: 100%; margin: 2px 0 0; padding: 6px 10px; border-left: 3px solid var(--accent); background: var(--bg-subtle); border-radius: 0 6px 6px 0; font-size: 13px; color: var(--fg); white-space: pre-wrap; overflow-wrap: anywhere; }
 .ballot-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .btn { font: 600 13px var(--type-body); padding: 8px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--fg); cursor: pointer; text-decoration: none; display: inline-block; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -738,13 +743,17 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
   <div class="ballot-head">
     <div>
       <h2 class="section-title" id="ballotTitle">Moj top 5</h2>
-      <p class="ballot-intro">Odaberite pet modela gumbom <b>+ Moj top 5</b> na karticama i složite ih po važnosti. Bodovi: 1. mjesto = 5 … 5. mjesto = 1. Glasovi su vidljivi svima s imenom koje upišete; glas možete ažurirati ili povući istim imenom.</p>
+      <p class="ballot-intro">Odaberite pet modela gumbom <b>+ Moj top 5</b> na karticama i složite ih po važnosti. Bodovi: 1. mjesto = 5 … 5. mjesto = 1. Glasovi su vidljivi svima s imenom koje upišete; glas i komentar možete ažurirati ili povući istim imenom.</p>
     </div>
   </div>
   <label class="name-field">Vaše ime ili nadimak
     <input id="voterName" type="text" maxlength="40" autocomplete="nickname" placeholder="npr. Ana K.">
   </label>
   <ol class="slots" id="ballotSlots"></ol>
+  <label class="comment-field">Komentar (neobavezno)
+    <textarea id="voterComment" maxlength="500" rows="3" placeholder="Zašto ovaj izbor? Što nedostaje u modelima?"></textarea>
+    <span class="comment-count" id="commentCount">0 / 500</span>
+  </label>
   <div class="ballot-actions">
     <button type="button" class="btn primary" id="ballotSave" disabled>Spremi glas</button>
     <button type="button" class="btn" id="ballotClear">Očisti odabir</button>
@@ -1692,7 +1701,7 @@ overlay.addEventListener('click', e => { if (e.target === overlay) overlay.class
 document.addEventListener('keydown', e => { if (e.key === 'Escape') overlay.classList.remove('open'); });
 // ─── Glasanje preko Google Apps Scripta ───
 // ▼▼▼ KORAK 4 VODIČA: zalijepite ovdje URL web aplikacije (završava na /exec) ▼▼▼
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwxhFD7BlicogkYdogvWcDc5R4lzAM-8W71PoN7NB9va9Jn-q6wZdYnPC5UGI7ZJGsDkQ/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkvSgvNzzCCVmnbW9PAGfzm9aMu7hEqxkCcq_ESuAhcHa5NEEhndGnOFhMApy53p-HEA/exec';
 // ▲▲▲
 const VOTE_KEY = (() => { try { return new URLSearchParams(location.search).get('k') || ''; } catch (e) { return ''; } })();
 const $ = id => document.getElementById(id);
@@ -1704,6 +1713,9 @@ const store = {
 };
 vote.canVote = !!SCRIPT_URL;
 vote.name = store.get('hubVoterName') || '';
+vote.comment = '';
+const COMMENT_MAX = 500;
+const cleanC = s => String(s || '').trim();
 
 function cleanPicks(p) {
   if (!Array.isArray(p)) return [];
@@ -1712,6 +1724,12 @@ function cleanPicks(p) {
   return out;
 }
 const sameList = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+function prefillMine() {
+  const m = mine();
+  if (!m) return;
+  if (!vote.draft.length) vote.draft = m.picks.slice();
+  if (!vote.comment && m.comment) { vote.comment = m.comment; $('voterComment').value = m.comment; }
+}
 function mine() { const k = normKey(vote.name); return k ? vote.ballots.find(b => b.key === k) : null; }
 
 function setStatus(t) { $('ballotStatus').textContent = t; }
@@ -1742,7 +1760,9 @@ function renderBallot() {
   const n = vote.draft.length;
   const m = mine();
   vote.saved = m ? m.picks : null;
-  const dirty = !vote.saved || !sameList(vote.draft, vote.saved);
+  const savedComment = m ? m.comment : '';
+  const dirty = !vote.saved || !sameList(vote.draft, vote.saved) || cleanC(vote.comment) !== savedComment;
+  $('commentCount').textContent = `${vote.comment.length} / ${COMMENT_MAX}`;
   const hasName = !!normKey(vote.name);
   const save = $('ballotSave');
   save.disabled = !vote.canVote || vote.saving || n !== BALLOT_SIZE || !hasName || !dirty;
@@ -1784,7 +1804,8 @@ const ERR = {
 function applyVotes(list) {
   vote.ballots = (Array.isArray(list) ? list : []).map(v => ({
     key: normKey(v.name), name: String(v.name || '').slice(0, 40),
-    picks: cleanPicks(v.picks), updatedAt: Number(v.updatedAt) || 0
+    picks: cleanPicks(v.picks), updatedAt: Number(v.updatedAt) || 0,
+    comment: String(v.comment || '').slice(0, COMMENT_MAX)
   })).filter(b => b.key && b.picks.length === BALLOT_SIZE);
 }
 // Redoslijed odgovora: Apps Script zna odgovarati 2–3 s, pa osvježavanje pokrenuto PRIJE spremanja
@@ -1811,20 +1832,20 @@ async function refresh() {
   try { await call(null); vote.error = false; }
   catch (e) { vote.error = true; setStatus('Rezultati se trenutno ne mogu učitati.'); }
   req.getInFlight = false;
-  if (!vote.loaded) { vote.loaded = true; const m = mine(); if (m && !vote.draft.length) vote.draft = m.picks.slice(); }
+  if (!vote.loaded) { vote.loaded = true; prefillMine(); }
   renderBallot(); renderResults();
 }
 async function saveBallot() {
   if (vote.saving || vote.draft.length !== BALLOT_SIZE || !normKey(vote.name)) return;
   vote.saving = true; vote.error = false; renderBallot(); setStatus('Spremam…');
-  try { await call({ action: 'vote', name: vote.name, picks: vote.draft.slice() }); }
+  try { await call({ action: 'vote', name: vote.name, picks: vote.draft.slice(), comment: cleanC(vote.comment) }); }
   catch (e) { vote.error = true; setStatus(ERR[e.code] || 'Spremanje nije uspjelo — provjerite vezu i pokušajte ponovno.'); }
   vote.saving = false; renderBallot(); renderResults();
 }
 async function withdrawBallot() {
   if (!vote.saved) return;
   vote.saving = true; renderBallot();
-  try { await call({ action: 'delete', name: vote.name }); vote.draft = []; }
+  try { await call({ action: 'delete', name: vote.name }); vote.draft = []; vote.comment = ''; $('voterComment').value = ''; }
   catch (e) { vote.error = true; setStatus('Povlačenje glasa nije uspjelo.'); }
   vote.saving = false; renderBallot(); renderResults();
 }
@@ -1946,7 +1967,9 @@ function renderVoters() {
     nm.textContent = b.name + (b.key === me ? ' (vi)' : ''); row.appendChild(nm);
     const picks = document.createElement('span'); picks.className = 'voter-picks';
     picks.textContent = b.picks.map((id, i) => `${i + 1}. ${HUB_BY_ID[id].short}`).join('  ');
-    row.appendChild(picks); wrap.appendChild(row);
+    row.appendChild(picks);
+    if (b.comment) { const c = document.createElement('p'); c.className = 'voter-comment'; c.textContent = b.comment; row.appendChild(c); }
+    wrap.appendChild(row);
   });
 }
 
@@ -1954,14 +1977,14 @@ function renderVoters() {
 $('voterName').value = vote.name;
 $('voterName').addEventListener('input', e => {
   vote.name = e.target.value; store.set('hubVoterName', vote.name);
-  const m = mine();
-  if (m && !vote.draft.length) vote.draft = m.picks.slice();
+  prefillMine();
   vote.error = false; renderBallot(); renderVoters();
 });
+$('voterComment').addEventListener('input', e => { vote.comment = e.target.value.slice(0, COMMENT_MAX); vote.error = false; renderBallot(); });
 $('ballotSave').addEventListener('click', saveBallot);
 $('miniSave').addEventListener('click', saveBallot);
 $('ballotWithdraw').addEventListener('click', withdrawBallot);
-$('ballotClear').addEventListener('click', () => { vote.draft = []; vote.error = false; renderBallot(); });
+$('ballotClear').addEventListener('click', () => { vote.draft = []; vote.comment = ''; $('voterComment').value = ''; vote.error = false; renderBallot(); });
 if (SCRIPT_URL) document.body.classList.add('can-vote');
 else setStatus('Glasanje još nije povezano (SCRIPT_URL nije postavljen).');
 renderBallot(); renderResults();
