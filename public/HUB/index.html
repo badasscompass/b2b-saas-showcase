@@ -667,42 +667,8 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 .vote-btn:disabled { opacity: .4; cursor: default; }
 .card.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-lt); }
 .agg-chip { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green); background: var(--green-lt); border-radius: 20px; padding: 2px 9px; margin: 4px 0 2px; }
-/* Clickable KPI: solid white tile so it stands out from the translucent stats */
-.header-stat.stat-link {
-  background: #fff;
-  border: 1px solid #fff;
-  color: #0A47D1;                 /* fixed CARNET blue: stays readable in dark mode */
-  text-decoration: none;
-  position: relative;
-  padding-right: 34px;            /* room for the arrow */
-  box-shadow: 0 4px 14px rgba(5, 20, 60, 0.25);
-  cursor: pointer;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.header-stat.stat-link strong { color: #0A47D1; }
-.header-stat.stat-link::after {
-  content: '↓';
-  position: absolute;
-  right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 16px;
-  font-weight: 700;
-  transition: transform .15s ease;
-}
-.header-stat.stat-link:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(5, 20, 60, 0.32);
-}
-.header-stat.stat-link:hover::after { transform: translateY(-30%); }
-.header-stat.stat-link:focus-visible {
-  outline: 3px solid #FDF2E3;     /* amber-light ring, visible on the blue header */
-  outline-offset: 3px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .header-stat.stat-link,
-  .header-stat.stat-link::after { transition: none; }
-}
+.stat-link { color: #fff; text-decoration: none; }
+.stat-link:hover { background: rgba(255,255,255,0.2); }
 .empty { font-size: 13px; color: var(--fg-3); padding: 14px 0; }
 .rank-table .num { text-align: right; font-variant-numeric: tabular-nums; }
 .rank-table td a { color: var(--fg); font-weight: 600; text-decoration: none; }
@@ -790,7 +756,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
     <div class="header-stat"><strong>5</strong>Rezervi</div>
     <div class="header-stat"><strong>9</strong>Mehanizama za Hub</div>
     <div class="header-stat"><strong>3</strong>Tipa modela</div>
-    <a class="header-stat stat-link" href="#rezultati"><strong id="statVotes">0</strong>Glasova · rezultati ↓</a>
+    <a class="header-stat stat-link" href="#rezultati"><strong id="statVotes">0</strong>Glasova · rezultati</a>  
   </div>
   <div class="type-legend">
     <span><b>CoP</b> Zajednica praktičara</span>
