@@ -667,8 +667,42 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 .vote-btn:disabled { opacity: .4; cursor: default; }
 .card.picked { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-lt); }
 .agg-chip { display: inline-block; font-size: 11px; font-weight: 700; color: var(--green); background: var(--green-lt); border-radius: 20px; padding: 2px 9px; margin: 4px 0 2px; }
-.stat-link { color: #fff; text-decoration: none; }
-.stat-link:hover { background: rgba(255,255,255,0.2); }
+/* Clickable KPI: solid white tile so it stands out from the translucent stats */
+.header-stat.stat-link {
+  background: #fff;
+  border: 1px solid #fff;
+  color: #0A47D1;                 /* fixed CARNET blue: stays readable in dark mode */
+  text-decoration: none;
+  position: relative;
+  padding-right: 34px;            /* room for the arrow */
+  box-shadow: 0 4px 14px rgba(5, 20, 60, 0.25);
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.header-stat.stat-link strong { color: #0A47D1; }
+.header-stat.stat-link::after {
+  content: '↓';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 16px;
+  font-weight: 700;
+  transition: transform .15s ease;
+}
+.header-stat.stat-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(5, 20, 60, 0.32);
+}
+.header-stat.stat-link:hover::after { transform: translateY(-30%); }
+.header-stat.stat-link:focus-visible {
+  outline: 3px solid #FDF2E3;     /* amber-light ring, visible on the blue header */
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .header-stat.stat-link,
+  .header-stat.stat-link::after { transition: none; }
+}
 .empty { font-size: 13px; color: var(--fg-3); padding: 14px 0; }
 .rank-table .num { text-align: right; font-variant-numeric: tabular-nums; }
 .rank-table td a { color: var(--fg); font-weight: 600; text-decoration: none; }
@@ -818,7 +852,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
   </div>
 
   <div class="section-head" style="margin-top:36px;">
-    <h2 class="section-title">Idealni model za Carnet Hub</h2>
+    <h2 class="section-title">Idealni model za CARNET Hub</h2>
     <span class="section-count">sastavljen iz glasova</span>
   </div>
   <p class="tier-note">Bodovi svakog modela prenose se na mehanizme (katalog, pogl. 6) i model upravljanja (pogl. 7.1) koje nosi; idealni model je kombinacija najjače poduprtih elemenata.</p>
@@ -1052,14 +1086,14 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
 <!-- ════════════ KATALOG MEHANIZAMA ════════════ -->
 <div class="section-head">
-  <h2 class="section-title">Katalog mehanizama — preslika na CARNET HUB</h2>
+  <h2 class="section-title">Katalog mehanizama — preslika na CARNET Hub</h2>
   <span class="section-count">9 mehanizama</span>
 </div>
 <div class="mech-table-wrap">
 <table class="mech-table">
   <thead>
     <tr>
-      <th>#</th><th>Mehanizam</th><th>Uzor</th><th>CARNET HUB preslika</th>
+      <th>#</th><th>Mehanizam</th><th>Uzor</th><th>CARNET Hub preslika</th>
     </tr>
   </thead>
   <tbody>
