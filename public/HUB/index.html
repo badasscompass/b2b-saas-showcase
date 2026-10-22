@@ -708,6 +708,33 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 .mini-state { font-size: 11.5px; color: var(--fg-3); }
 .can-vote { padding-bottom: 80px; }
 
+/* ─── CARNET USLUGE ─────────────────────────────────── */
+.svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.svc.svc-wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.1fr 1.2fr 1fr; gap: 10px 22px; align-items: start; }
+.svc-col { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+@media (max-width: 860px) {
+  .svc-grid { grid-template-columns: 1fr; }
+  .svc.svc-wide { grid-template-columns: 1fr; }
+}
+.svc { background: var(--bg-card); border: 1.5px solid var(--border); border-top: 4px solid var(--accent); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.svc-name { font-family: var(--type-display); font-size: 16px; font-weight: 700; margin: 0; }
+.svc-name a { color: var(--fg); text-decoration: none; }
+.svc-name a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.svc-name .ext { font-size: 13px; color: var(--accent); }
+.svc-desc { font-size: 13px; color: var(--fg-2); line-height: 1.5; margin: 0; }
+.svc-role { font-size: 13px; color: var(--fg); background: var(--accent-lt); border-radius: 8px; padding: 8px 10px; line-height: 1.45; }
+.svc-label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); margin-bottom: 3px; }
+.svc-mech { font-size: 11.5px; color: var(--fg-3); }
+.svc-ctx { font-size: 11.5px; color: var(--fg-3); line-height: 1.45; margin: 0; }
+.svc-ctx a { color: var(--accent); }
+.svc-sub { font-size: 11.5px; font-weight: 600; color: var(--fg-3); margin: -4px 0 0; }
+.svc-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.svc-list li { position: relative; padding-left: 14px; font-size: 12.5px; color: var(--fg-2); line-height: 1.45; }
+.svc-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; font-size: 11px; top: 1px; }
+.svc-list b { color: var(--fg); font-weight: 600; }
+.svc-plan { font-size: 12.5px; color: var(--fg); background: var(--green-lt); border-radius: 8px; padding: 8px 10px; line-height: 1.45; }
+.svc-plan .svc-label { color: var(--green); }
+
 /* ─── RESPONSIVE ─────────────────────────────────────── */
 @media (max-width: 500px) {
   .header-meta { gap: 10px; }
@@ -751,7 +778,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
   </label>
   <ol class="slots" id="ballotSlots"></ol>
   <label class="comment-field">Komentar (neobavezno)
-    <textarea id="voterComment" maxlength="500" rows="3" placeholder="Navedi ključne pojmove ili konkretan mehanizam modela za bilješku"></textarea>
+    <textarea id="voterComment" maxlength="500" rows="3" placeholder="Zašto ovaj izbor? Što nedostaje u modelima?"></textarea>
     <span class="comment-count" id="commentCount">0 / 500</span>
   </label>
   <div class="ballot-actions">
@@ -802,6 +829,72 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
   <div class="voters" id="voterList"></div>
 </section>
 
+<!-- ════════════ CARNET USLUGE U HUBU ════════════ -->
+<section id="usluge" aria-labelledby="uslugeTitle">
+  <div class="section-head" style="margin-top:44px;">
+    <h2 class="section-title" id="uslugeTitle">CARNET usluge u Hub programu</h2>
+    <span class="section-count">trenutni opseg · 5 usluga</span>
+  </div>
+  <p class="tier-note">Postojeće usluge na koje se Hub oslanja: što usluga jest i koju ulogu preuzima u Carnet Hubu.</p>
+  <div class="svc-grid">
+    <article class="svc">
+      <h3 class="svc-name"><a href="https://www.hr" target="_blank" rel="noopener">Portal DOT <span class="ext" aria-hidden="true">↗</span></a></h3>
+      <p class="svc-desc">Nacionalni obrazovni portal za razmjenu znanja i stručnih sadržaja</p>
+      <div class="svc-role"><span class="svc-label">Uloga u Hubu</span>Središnji kanal za diseminaciju spoznaja i sadržaja Huba</div>
+      <div class="svc-mech">Mehanizmi iz kataloga: 2 · SIG-ovi na portalu</div>
+    </article>
+    <article class="svc">
+      <h3 class="svc-name">Multilab</h3>
+      <p class="svc-desc">Fizički i virtualni prostori za istraživanje i razvoj obrazovnih inovacija</p>
+      <div class="svc-role"><span class="svc-label">Uloga u Hubu</span>Mjesta provedbe Hub aktivnosti i događanja</div>
+      <div class="svc-mech">Mehanizmi iz kataloga: 7 · Multilab tim na kampusima</div>
+    </article>
+    <article class="svc">
+      <h3 class="svc-name">Edutorij</h3>
+      <p class="svc-desc">Repozitorij otvorenih obrazovnih materijala za nastavnike i nastavnice: razmjena sadržaja i kolegijalna (peer) evaluacija</p>
+      <div class="svc-role"><span class="svc-label">Uloga u Hubu</span>Kanal za primjenu i razmjenu spoznaja Huba</div>
+      <div class="svc-mech">Mehanizmi iz kataloga: 4 · OER uz AAI@EduHr</div>
+    </article>
+    <article class="svc svc-wide">
+      <div class="svc-col">
+        <h3 class="svc-name"><a href="https://www.carnet.hr/usluga/carnetove-edukacije/" target="_blank" rel="noopener">Edukacijski programi <span class="ext" aria-hidden="true">↗</span></a></h3>
+        <p class="svc-sub">CARNET-ove edukacije · za odgojno-obrazovne djelatnike školskih ustanova</p>
+        <p class="svc-desc">Podrška razvoju digitalnih kompetencija obrazovne i akademske zajednice: učinkovito korištenje digitalnih tehnologija u učenju, poučavanju i poslovanju obrazovnih ustanova.</p>
+      </div>
+      <div class="svc-col">
+        <ul class="svc-list">
+          <li><b>Radionice i webinari</b> — uživo i u MS Teams</li>
+          <li><b>E-tečajevi</b> u sustavu Loomen, uz digitalnu značku</li>
+          <li><b>Samoučenje</b> — EduBlic (230 mikro-sadržaja), ~250 videa na Meduzi, priručnici na Edutoriju</li>
+          <li><b>Upis i potvrde</b> putem sustava EMA, uz AAI@EduHr</li>
+        </ul>
+      </div>
+      <div class="svc-col svc-col-role">
+        <div class="svc-role"><span class="svc-label">Uloga u Hubu</span>Sadržajni input za planove i dioničku mrežu</div>
+      </div>
+    </article>
+    <article class="svc svc-wide">
+      <div class="svc-col">
+        <h3 class="svc-name"><a href="https://www.carnet.hr/usluga/savjeti-i-edukacija-za-uvodenje-e-ucenja/" target="_blank" rel="noopener">Program obrazovanja <span class="ext" aria-hidden="true">↗</span></a></h3>
+        <p class="svc-sub">Savjeti i edukacija za uvođenje e-učenja · za ustanove</p>
+        <p class="svc-desc">Savjetodavna i edukativna podrška ustanovama zainteresiranima za sustavno uvođenje e-učenja.</p>
+        <p class="svc-ctx">Dio CARNET-ove skupine usluga <a href="https://www.carnet.hr/tema/promotori-digitalnog-obrazovanja/" target="_blank" rel="noopener">Promotori digitalnog obrazovanja</a> (Loomen, Edutorij, e-Škole DOS i scenariji poučavanja, EMA, CN MultiLab…)</p>
+      </div>
+      <div class="svc-col">
+        <ul class="svc-list">
+          <li><b>Savjetovanje</b> — strateško planiranje: infrastruktura, ljudski resursi, obrazovanje osoblja, pedagoške paradigme</li>
+          <li><b>Radionice po mjeri ustanove</b> — e-učenje, online poučavanje, Moodle, multimedija, OER i licenciranje; obično 1 dan po temi</li>
+          <li><b>Dosad provedeno</b> u 10 ustanova</li>
+        </ul>
+      </div>
+      <div class="svc-col svc-col-role">
+        <div class="svc-role"><span class="svc-label">Uloga u Hubu</span>Temelj za policy preporuke i strateška istraživanja</div>
+        <div class="svc-plan"><span class="svc-label">Planirano · zajednica praktičara</span>Dio stvaranja zajednice praktičara kroz vođene prezentacije CARNET OER-a i CN Akademije te dioničke sastanke i meetupe</div>
+      </div>
+    </article>
+  </div>
+</section>
+
 <div class="mini-bar" aria-label="Moj top 5">
   <span>Moj top 5: <b id="miniCount">0/5</b> <span id="miniState" class="mini-state"></span></span>
   <a href="#glasanje" class="btn">Uredi</a>
@@ -810,17 +903,17 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
 <!-- ════════════ ZAJEDNICE HUBA ════════════ -->
 <div class="section-head" style="margin-top:40px;">
-  <h2 class="section-title">CARNET HUB — Tematske zajednice i referentni uzori</h2>
-  <span class="section-count">7 zajednica + 3 horizontalne teme</span>
+  <h2 class="section-title">Tematske zajednice SPO 2024./2025. — referentni okvir</h2>
+  <span class="section-count">7 zajednica + 3 horizontalne teme · izvan trenutnog opsega Huba</span>
 </div>
 <p style="font-size:13px;color:var(--fg-2);margin-bottom:16px;line-height:1.6;">
-  Interna arhitektura CARNET HUB-a — tematske zajednice iz SPO/međusektorskog dokumenta (listopad 2026.) preslikane na vanjske referentne modele. Razvoj ide postepeno: <strong>Pilot = Potjeh + Kosjenka + Gradina</strong>, zatim fraktalno širenje.
+  Tematske zajednice iz SPO/međusektorskog dokumenta odnose se na <strong>opseg 2024./2025.</strong> i nisu dio trenutnog Hub programa. Ostaju kao <strong>referentne usluge</strong> za moguće buduće uključivanje u Hub; ovdje su preslikane na vanjske referentne modele radi usporedbe. Oznake „pilot” i „sljedeća faza” prenesene su iz izvornog dokumenta.
 </p>
 <div class="zajednice-grid">
 
-  <div class="zajednica-card zajednica-pilot">
+  <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-pilot">PILOT 1</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · pilot 1</span>
       <div class="zajednica-name">🔬 POTJEH / PERUN</div>
       <div class="zajednica-sub">Istraživanja + Analitika učenja</div>
     </div>
@@ -837,9 +930,9 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
     </div>
   </div>
 
-  <div class="zajednica-card zajednica-pilot">
+  <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-pilot">PILOT 2</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · pilot 2</span>
       <div class="zajednica-name">🎓 KOSJENKA</div>
       <div class="zajednica-sub">Metodička učionica + CN Akademija</div>
     </div>
@@ -856,9 +949,9 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
     </div>
   </div>
 
-  <div class="zajednica-card zajednica-pilot">
+  <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-pilot">PILOT 3</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · pilot 3</span>
       <div class="zajednica-name">🌍 GRADINA</div>
       <div class="zajednica-sub">Dijaspora + Strani učenici</div>
     </div>
@@ -876,7 +969,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
   <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · sljedeća faza</span>
       <div class="zajednica-name">📚 STRIBOR</div>
       <div class="zajednica-sub">Učenje za sve generacije</div>
     </div>
@@ -894,7 +987,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
   <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · sljedeća faza</span>
       <div class="zajednica-name">🤖 NEVA</div>
       <div class="zajednica-sub">AI alati i EdTech inovacije</div>
     </div>
@@ -913,7 +1006,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
   <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · sljedeća faza</span>
       <div class="zajednica-name">🎨 MALIK</div>
       <div class="zajednica-sub">Digitalna umjetnost i kultura</div>
     </div>
@@ -930,7 +1023,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
   <div class="zajednica-card zajednica-buduci">
     <div class="zajednica-header">
-      <span class="zajednica-badge badge-buduci">SLJEDEĆA FAZA</span>
+      <span class="zajednica-badge badge-buduci">2024./25. · sljedeća faza</span>
       <div class="zajednica-name">🌱 REGOČ</div>
       <div class="zajednica-sub">Zeleni digitalni ekosustav</div>
     </div>
@@ -949,7 +1042,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
 <!-- Horizontalne teme -->
 <div style="margin-top:20px;padding:16px 18px;background:var(--bg-subtle);border-radius:12px;border:1.5px solid var(--border);">
-  <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg-3);margin-bottom:10px;">Horizontalne teme (prolaze kroz sve zajednice)</div>
+  <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--fg-3);margin-bottom:10px;">Horizontalne teme (prolaze kroz sve zajednice · 2024./2025.)</div>
   <div style="display:flex;flex-wrap:wrap;gap:8px;">
     <span style="background:var(--accent-lt);color:var(--accent);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:600;">♿ Pristupačnost — digitalni standardi, inkluzija, AT</span>
     <span style="background:var(--amber-lt);color:var(--amber);border-radius:6px;padding:5px 12px;font-size:12.5px;font-weight:600;">📊 Podaci — analitika, etičko korištenje, GDPR</span>
@@ -1035,7 +1128,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
       <td>Otvorena istraživanja</td>
       <td>Jisc Octopus (UK)</td>
       <td>Korisnička zajednica s redovitim ažuriranjima, demoi i user-testing sesijama</td>
-      <td class="hub-preslika">EDUTorij — istraživački modul; uključiti istraživače u testiranje novih funkcionalnosti</td>
+      <td class="hub-preslika">Edutorij — istraživački modul; uključiti istraživače u testiranje novih funkcionalnosti</td>
     </tr>
     <tr>
       <td>Istraživanje temeljeno na praksi</td>
@@ -1047,13 +1140,13 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
       <td>OER platforma</td>
       <td>edusources + SURF OER model (NL)</td>
       <td>Nacionalni desk za podršku; 34 institucije kroz financiranje; 20+ profesionalnih zajednica; SIG za otvoreno obrazovanje</td>
-      <td class="hub-preslika"><strong>EDUTorij</strong> — nacionalni OER repozitorij: kontakt osoba po ustanovi, urednička provjera, prijava putem AAI@EduHr, radna skupina korisnika</td>
+      <td class="hub-preslika"><strong>Edutorij</strong> — nacionalni OER repozitorij: kontakt osoba po ustanovi, urednička provjera, prijava putem AAI@EduHr, radna skupina korisnika</td>
     </tr>
     <tr>
       <td>OER + savjetovanje</td>
       <td>HIS-HE twillo (DE)</td>
       <td>Kombinira repozitorij s kompetencijskim centrom: osnove OER-a, događanja, praktični predlošci, savjetovanje o pravnim i didaktičkim pitanjima</td>
-      <td class="hub-preslika">EDUTorij + Hub savjetodavna usluga: pravno-didaktički helpdesk za OER, multiplikatorske konferencije za nastavnike</td>
+      <td class="hub-preslika">Edutorij + Hub savjetodavna usluga: pravno-didaktički helpdesk za OER, multiplikatorske konferencije za nastavnike</td>
     </tr>
     <tr>
       <td>Interoperabilnost (politike)</td>
