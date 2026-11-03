@@ -11,3 +11,5 @@ Disallow: /admin/
 Disallow: /.well-known/
 # Hidden A/B test variant
 Disallow: /v2
+# Internal CARNET HUB drafts (also noindex in page meta)
+Disallow: /HUB/

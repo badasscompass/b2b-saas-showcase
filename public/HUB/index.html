@@ -125,6 +125,11 @@ body {
   opacity: 0.7;
   margin-bottom: 10px;
 }
+.header-label a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .header-title {
   font-family: var(--type-display);
   font-size: clamp(24px, 5vw, 38px);
@@ -748,7 +753,7 @@ a.card-name .ext { font-size: 13px; color: var(--accent); font-weight: 600; }
 
 <!-- ════════════ HEADER ════════════ -->
 <header class="site-header">
-  <div class="header-label">CARNET HUB · Desk istraživanje</div>
+  <div class="header-label">CARNET HUB · Desk istraživanje · <a href="ciklus-aktivacije/" rel="nofollow">Ciklus aktivacije</a></div>
   <h1 class="header-title">Referentni modeli<br>digitalnih hubova</h1>
   <p class="header-sub">10 vodećih modela i 5 rezervi odabranih iz radne tablice od 22 modela, razvrstanih u tri tipa. Zajednički nazivnik: nacionalni ili europski nositelj (često NREN) daje okvir i povjerenje, a ustanove i pojedinci sukreiraju kroz zajednice, tematske skupine i ambasadore.</p>
   <div class="header-meta">
@@ -1442,7 +1447,7 @@ const HUBS = [
     reach: null,
     evidence: "—",
     whyReserve: "Opseg i model financiranja znatno veći od CARNET-ova; mehanizam zajednice sekundaran u odnosu na usluge.",
-    transfer: "Žirirana godišnja kohorta prvaka zajednice; okvir zrelosti digitalne transformacije kao podloga operativnog plana Huba.",
+    transfer: "Žirirana godišnja kohorta promotora zajednice; okvir zrelosti digitalne transformacije kao podloga operativnog plana Huba.",
     tags: ["Community Champions", "Model zrelosti", "NREN Janet"],
     links: [
       ["Community Champions", "https://www.jisc.ac.uk/get-involved/community-champions"],
