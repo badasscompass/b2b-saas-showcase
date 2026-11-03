@@ -3,56 +3,105 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Ciklus aktivacije HUB-a</title>
+<title>Ciklus aktivacije CARNET Hub-a</title>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="description" content="Interni nacrt vodiča za skraćeni sukreacijski ciklus CARNET HUB-a.">
+<meta name="description" content="Interni nacrt vodiča za skraćeni sukreacijski ciklus CARNET Hub-a.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: field-guide page — header, challenge picker, a horizontal cycle stepper driving one detail panel, then reference sections. */
 :root{
-  --bg:#f3f6f8; --surface:#ffffff; --ink:#15213a; --muted:#56637a; --line:#d6dde6;
-  --accent:#2a55e0; --accent-soft:#e3eafc; --mark:#f2c94c; --mark-ink:#3d2f00;
-  --good:#1f7a4d; --warn:#a15c00;
+  --bg:#f3eee6; --surface:#fffcf7; --surface-2:#eef5fb; --ink:#10182a; --muted:#3d4b61; --line:#d4c8b8;
+  --accent:#1a4bd4; --accent-soft:#d9e6ff;
+  --coral:#c43c28; --coral-soft:#fde6df;
+  --teal:#0b7a6e; --teal-soft:#d7f3ee;
+  --amber:#b56a00; --amber-soft:#ffe9bf;
+  --violet:#5a47a8; --violet-soft:#ece6ff;
+  --mark:#ffd56a; --mark-ink:#3a2800;
+  --good:#147a4b; --warn:#b45309;
   --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --f-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0f1522; --surface:#172033; --ink:#e7ecf5; --muted:#9aa6bd; --line:#2a3550;
-  --accent:#7d9bff; --accent-soft:#1f2c4d; --mark:#e0b93f; --mark-ink:#1c1500;
+  --bg:#121018; --surface:#1a2234; --surface-2:#152033; --ink:#f1f3fa; --muted:#b4bfd4; --line:#3a3348;
+  --accent:#8fb0ff; --accent-soft:#24365c;
+  --coral:#ff8d78; --coral-soft:#3a1f1c;
+  --teal:#5fe0d0; --teal-soft:#163833;
+  --amber:#f0b44a; --amber-soft:#3a2c12;
+  --violet:#c4b4ff; --violet-soft:#2a2444;
+  --mark:#e0b93f; --mark-ink:#1c1500;
   --good:#5cc995; --warn:#f0a948; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0f1522; --surface:#172033; --ink:#e7ecf5; --muted:#9aa6bd; --line:#2a3550;
-  --accent:#7d9bff; --accent-soft:#1f2c4d; --mark:#e0b93f; --mark-ink:#1c1500;
+  --bg:#121018; --surface:#1a2234; --surface-2:#152033; --ink:#f1f3fa; --muted:#b4bfd4; --line:#3a3348;
+  --accent:#8fb0ff; --accent-soft:#24365c;
+  --coral:#ff8d78; --coral-soft:#3a1f1c;
+  --teal:#5fe0d0; --teal-soft:#163833;
+  --amber:#f0b44a; --amber-soft:#3a2c12;
+  --violet:#c4b4ff; --violet-soft:#2a2444;
+  --mark:#e0b93f; --mark-ink:#1c1500;
   --good:#5cc995; --warn:#f0a948; color-scheme:dark}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
+body{background:
+  radial-gradient(1100px 420px at 0% -8%, #d7e6ff 0%, transparent 58%),
+  radial-gradient(900px 380px at 100% 0%, #ffd8c8 0%, transparent 52%),
+  radial-gradient(800px 460px at 80% 100%, #c8f0e8 0%, transparent 50%),
+  var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;
   padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 64px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:
+  radial-gradient(1100px 420px at 0% -8%, #1a2a4a 0%, transparent 58%),
+  radial-gradient(900px 380px at 100% 0%, #3a221c 0%, transparent 52%),
+  radial-gradient(800px 460px at 80% 100%, #14332e 0%, transparent 50%),
+  var(--bg)}}
+:root[data-theme="dark"] body{background:
+  radial-gradient(1100px 420px at 0% -8%, #1a2a4a 0%, transparent 58%),
+  radial-gradient(900px 380px at 100% 0%, #3a221c 0%, transparent 52%),
+  radial-gradient(800px 460px at 80% 100%, #14332e 0%, transparent 50%),
+  var(--bg)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .copy{color:#1a100e}}
+:root[data-theme="dark"] .copy{color:#1a100e}
 .wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:44px}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
 h1{font-size:clamp(30px,5vw,46px);line-height:1.05;font-weight:700}
 h2{font-size:24px;font-weight:700}
 h3{font-size:17px;font-weight:700}
 p{margin:0;max-width:68ch}
-.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);font-weight:500}
 .mono{font-family:var(--f-mono)}
 a{color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-header{display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--coral);border-radius:12px;padding:22px 24px}
 .lede{font-size:17px;color:var(--muted)}
-.meta{display:flex;flex-wrap:wrap;gap:8px 18px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
-.meta b{color:var(--ink);font-weight:500}
+.meta{display:flex;flex-wrap:wrap;gap:8px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted)}
+.meta span{background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+.meta span:nth-child(1){background:var(--accent-soft);border-color:transparent}
+.meta span:nth-child(2){background:var(--teal-soft);border-color:transparent}
+.meta span:nth-child(3){background:var(--amber-soft);border-color:transparent}
+.meta span:nth-child(4){background:var(--coral-soft);border-color:transparent}
+.meta b{color:var(--ink);font-weight:600}
 section{display:flex;flex-direction:column;gap:16px}
+section:nth-of-type(2) .eyebrow{color:var(--teal)}
+section:nth-of-type(3) .eyebrow{color:var(--accent)}
+section:nth-of-type(4) .eyebrow{color:var(--violet)}
+section:nth-of-type(5) .eyebrow{color:var(--amber)}
+section:nth-of-type(6) .eyebrow{color:var(--coral)}
+section:nth-of-type(7) .eyebrow{color:var(--teal)}
+section:nth-of-type(8) .eyebrow{color:var(--violet)}
 .sec-head{display:flex;flex-direction:column;gap:6px}
 .picker{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
 .opt{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:8px;padding:16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);min-width:0}
-.opt:hover{border-color:var(--accent)}
-.opt[aria-pressed="true"]{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent);background:var(--accent-soft)}
-.opt .tag{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.opt:nth-child(1){background:var(--accent-soft);border-color:transparent}
+.opt:nth-child(2){background:var(--teal-soft);border-color:transparent}
+.opt:nth-child(3){background:var(--coral-soft);border-color:transparent}
+.opt:hover{outline:2px solid var(--ink)}
+.opt[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
+.opt .tag{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:500}
+.opt:nth-child(2) .tag{color:var(--teal)}
+.opt:nth-child(3) .tag{color:var(--coral)}
 .opt .q{font-weight:600}
 .opt .out{font-size:13.5px;color:var(--muted)}
 .opt:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -63,59 +112,76 @@ section{display:flex;flex-direction:column;gap:16px}
 .st .n{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .st .t{font-weight:600;font-size:14px;line-height:1.2;overflow-wrap:anywhere}
 .st .w{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
-.st .bar{position:absolute;left:0;right:0;bottom:0;height:3px;background:transparent}
-.st.prep .bar{background:var(--line)}
-.st.cycle .bar{background:var(--accent);opacity:.35}
-.st[aria-selected="true"]{background:var(--accent-soft)}
-.st[aria-selected="true"] .bar{opacity:1;background:var(--accent)}
-.st .done{font-family:var(--f-mono);font-size:10.5px;color:var(--good)}
-.st:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.st .bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:transparent}
+.st.prep{background:var(--teal-soft)}
+.st.cycle{background:var(--accent-soft)}
+.st.prep .bar{background:var(--teal)}
+.st.cycle .bar{background:var(--accent)}
+.st[aria-selected="true"]{background:var(--amber-soft)}
+.st[aria-selected="true"] .bar{background:var(--amber)}
+.st[aria-selected="true"] .t{color:var(--ink)}
+.st .done{font-family:var(--f-mono);font-size:10.5px;color:var(--good);font-weight:500}
+.st:focus-visible{outline:2px solid var(--ink);outline-offset:-2px}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12.5px;color:var(--muted)}
-.legend span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:6px;vertical-align:middle;background:var(--line)}
+.legend span::before{content:"";display:inline-block;width:14px;height:4px;margin-right:6px;vertical-align:middle;background:var(--line)}
+.legend .lp::before{background:var(--teal)}
 .legend .lc::before{background:var(--accent)}
 @media (max-width:820px){.stepper{grid-template-columns:repeat(4,minmax(0,1fr))}.st:nth-child(4){border-right:0}.st:nth-child(-n+4){border-bottom:1px solid var(--line)}}
 @media (max-width:440px){.stepper{grid-template-columns:repeat(2,minmax(0,1fr))}.st:nth-child(2n){border-right:0}.st:nth-child(-n+6){border-bottom:1px solid var(--line)}}
-.detail{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px}
+.detail{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:10px;padding:22px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:28px}
 @media (max-width:820px){.detail{grid-template-columns:1fr}}
 .dcol{display:flex;flex-direction:column;gap:16px;min-width:0}
+.dcol:last-child{background:var(--surface-2);border-radius:8px;padding:14px}
 .dhead{display:flex;flex-direction:column;gap:6px}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px}
-.facts dt{font-family:var(--f-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding-top:2px}
+.facts dt{font-family:var(--f-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);padding-top:2px;font-weight:500}
 .facts dd{margin:0}
 .block{display:flex;flex-direction:column;gap:8px}
-.block h4{margin:0;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.block h4{margin:0;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);font-weight:500}
 ul.plain{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
 .check{display:flex;flex-direction:column;gap:6px}
 .check label{display:flex;gap:10px;align-items:flex-start;cursor:pointer;font-size:14px}
-.check input{margin-top:4px;accent-color:var(--accent);flex:none}
-.challenge-in{background:var(--mark);color:var(--mark-ink);padding:1px 6px;border-radius:3px}
+.check input{margin-top:4px;accent-color:var(--teal);flex:none}
+.challenge-in{background:var(--mark);color:var(--mark-ink);padding:1px 6px;border-radius:3px;font-weight:600}
 .reuse{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px}
 .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
 table{border-collapse:collapse;width:100%;font-size:14px;min-width:620px}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
 tr:last-child td{border-bottom:0}
-th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--bg)}
-td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.pill{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:1px 7px;border-radius:999px;border:1px solid currentColor}
-.pill.f{color:var(--accent)} .pill.v{color:var(--good)} .pill.d{color:var(--warn)}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);font-weight:600;background:var(--amber-soft)}
+tr:nth-child(even) td{background:var(--surface-2)}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--accent);font-weight:500}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:11px;padding:2px 8px;border-radius:999px;border:0;font-weight:600}
+.pill.f{color:var(--accent);background:var(--accent-soft)} .pill.v{color:var(--good);background:var(--teal-soft)} .pill.d{color:var(--warn);background:var(--amber-soft)}
 .tpl-tabs{display:flex;flex-wrap:wrap;gap:6px}
 .tpl-tabs button{all:unset;cursor:pointer;font-size:13.5px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
-.tpl-tabs button[aria-selected="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+.tpl-tabs button[aria-selected="true"]{border-color:transparent;color:var(--ink);background:var(--violet-soft);font-weight:600}
 .tpl-tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.tpl{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px}
-.tpl pre{margin:0;white-space:pre-wrap;font-family:var(--f-mono);font-size:13px;line-height:1.6;background:var(--bg);border-radius:6px;padding:14px;overflow-x:auto}
-.copy{all:unset;cursor:pointer;align-self:flex-start;font-family:var(--f-mono);font-size:12px;padding:5px 10px;border:1px solid var(--accent);color:var(--accent);border-radius:6px}
-.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tpl{background:var(--violet-soft);border:1px solid transparent;border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.tpl pre{margin:0;white-space:pre-wrap;font-family:var(--f-mono);font-size:13px;line-height:1.6;background:var(--surface);border-radius:6px;padding:14px;overflow-x:auto}
+.copy{all:unset;cursor:pointer;align-self:flex-start;font-family:var(--f-mono);font-size:12px;padding:6px 12px;background:var(--coral);color:#fff;border-radius:6px;font-weight:500}
+.copy:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .rhythm{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
-.rh{border-top:3px solid var(--accent);background:var(--surface);border-radius:0 0 8px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
-.rh .eyebrow{color:var(--accent)}
+.rh{border-top:4px solid var(--accent);background:var(--accent-soft);border-radius:0 0 8px 8px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.rh:nth-child(2){border-top-color:var(--teal);background:var(--teal-soft)}
+.rh:nth-child(3){border-top-color:var(--coral);background:var(--coral-soft)}
+.rh:nth-child(4){border-top-color:var(--amber);background:var(--amber-soft)}
+.rh .eyebrow{color:inherit}
+.rh:nth-child(1) .eyebrow{color:var(--accent)}
+.rh:nth-child(2) .eyebrow{color:var(--teal)}
+.rh:nth-child(3) .eyebrow{color:var(--coral)}
+.rh:nth-child(4) .eyebrow{color:var(--amber)}
 .ladder{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
-.ladder span.r{padding:5px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.ladder span.r{padding:5px 10px;border:0;border-radius:6px;background:var(--accent-soft);font-weight:600}
+.ladder span.r:nth-child(3){background:var(--teal-soft)}
+.ladder span.r:nth-child(5){background:var(--amber-soft)}
+.ladder span.r:nth-child(7){background:var(--coral-soft)}
+.ladder span.r:nth-child(9){background:var(--violet-soft)}
 .ladder span.a{color:var(--muted)}
 .sources{font-size:13.5px;display:flex;flex-direction:column;gap:6px}
-footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);padding-top:14px}
 .crumb{font-size:13px;color:var(--muted)}
-.crumb a{color:var(--accent);text-decoration:none}
+.crumb a{color:var(--coral);text-decoration:none;font-weight:600}
 .crumb a:hover{text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
@@ -124,10 +190,10 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
 <div class="wrap">
 
 <header>
-  <p class="crumb"><a href="../">CARNET HUB</a> · Ciklus aktivacije</p>
-  <span class="eyebrow">CARNET HUB · Dokaz koncepta · Nacrt za internu povratnu informaciju</span>
-  <h1>Ciklus aktivacije HUB-a</h1>
-  <p class="lede">Vodič korak po korak za provedbu jednog skraćenog sukreacijskog ciklusa s Odjelom za razvoj i implementaciju obrazovnih sustava, od prvog usklađivanja do predstavljanja na pokretanju HUB-a. Odjel je vlasnik teme, a HUB osigurava obrazac koji se ponavlja.</p>
+  <p class="crumb"><a href="../">CARNET Hub</a> · Ciklus aktivacije</p>
+  <span class="eyebrow">CARNET Hub · Dokaz koncepta · Nacrt za internu povratnu informaciju</span>
+  <h1>Ciklus aktivacije CARNET Hub-a</h1>
+  <p class="lede">Vodič korak po korak za provedbu jednog skraćenog sukreacijskog ciklusa s Odjelom za razvoj i implementaciju obrazovnih sustava, od prvog usklađivanja do predstavljanja na pokretanju CARNET Hub-a. Odjel je vlasnik teme, a CARNET Hub osigurava obrazac koji se ponavlja.</p>
   <div class="meta">
     <span>Razdoblje <b>9. 11. – 9. 12. 2026.</b></span>
     <span>Skupina <b>15–25 nastavnika</b></span>
@@ -149,11 +215,11 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="sec-head">
     <span class="eyebrow">Ciklus</span>
     <h2 id="cyc-h">Osam koraka, jedan mjesec</h2>
-    <div class="legend"><span>Priprema (jednom po odjelu)</span><span class="lc">Ciklus aktivacije (ponavlja se tromjesečno)</span></div>
+    <div class="legend"><span class="lp">Priprema (jednom po odjelu)</span><span class="lc">Ciklus aktivacije (ponavlja se tromjesečno)</span></div>
   </div>
   <div class="stepper" role="tablist" id="stepper" aria-label="Koraci ciklusa"></div>
   <div class="detail" id="detail" role="tabpanel" aria-live="polite"></div>
-  <p class="note">Označene stavke kontrolnog popisa spremaju se samo u vašem pregledniku. Datumi su prijedlog i pretpostavljaju pokretanje HUB-a najkasnije 9. prosinca.</p>
+  <p class="note">Označene stavke kontrolnog popisa spremaju se samo u vašem pregledniku. Datumi su prijedlog i pretpostavljaju pokretanje CARNET Hub-a najkasnije 9. prosinca.</p>
 </section>
 
 <section aria-labelledby="dig-h">
@@ -176,10 +242,10 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
   <div class="tbl"><table>
     <thead><tr><th>Objava</th><th>Kada</th><th>Sadržaj</th></tr></thead>
     <tbody>
-      <tr><td><b>1. Poziv</b></td><td class="num">do 13. 11.</td><td>Što je HUB, izazov, datumi, poveznica za upis u e-kolegij na Loomenu</td></tr>
+      <tr><td><b>1. Poziv</b></td><td class="num">do 13. 11.</td><td>Što je CARNET Hub, izazov, datumi, poveznica za upis u e-kolegij na Loomenu</td></tr>
       <tr><td><b>2. Što smo čuli</b></td><td class="num">tjedan od 23. 11.</td><td>Glavni problemi sa susreta slušanja, riječima nastavnika</td></tr>
       <tr><td><b>3. Što timovi isprobavaju</b></td><td class="num">tjedan od 30. 11.</td><td>3–4 timske ideje, poziv na dan predstavljanja</td></tr>
-      <tr><td><b>4. Rezultati</b></td><td class="num">do 9. 12.</td><td>Radni rezultati na Edutoriju, snimka na Meduzi, „Rekli ste, napravili smo”, poveznica na pokretanje HUB-a</td></tr>
+      <tr><td><b>4. Rezultati</b></td><td class="num">do 9. 12.</td><td>Radni rezultati na Edutoriju, snimka na Meduzi, „Rekli ste, napravili smo”, poveznica na pokretanje CARNET Hub-a</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -193,7 +259,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     <thead><tr><th>Uloga</th><th>Tko</th><th>Odgovoran za</th><th>Vrijeme u PoC-u</th></tr></thead>
     <tbody>
       <tr><td><b>Vlasnik teme</b></td><td>Voditelj/ica iz odjela (ispunjavatelj/ica upitnika)</td><td>Izazov, stručni sadržaj, pristup mreži, predaja nalaza vlasniku usluge</td><td class="num">~20 h</td></tr>
-      <tr><td><b>Facilitator HUB-a</b></td><td>Odjel za istraživanje / tim HUB-a</td><td>Formati, moderiranje, prostor, komunikacija, mjerenje, ažuriranje vodiča</td><td class="num">~25 h</td></tr>
+      <tr><td><b>Facilitator CARNET Hub-a</b></td><td>Odjel za istraživanje / tim CARNET Hub-a</td><td>Formati, moderiranje, prostor, komunikacija, mjerenje, ažuriranje vodiča</td><td class="num">~25 h</td></tr>
       <tr><td><b>Nastavnici</b></td><td>15–25 iz mreže odjela</td><td>Izazovi iz prakse, ideje, mini-pilot u razredu, radni rezultati, povratna informacija kolegama</td><td class="num">4–8 h po osobi</td></tr>
       <tr><td><b>Akademski validator</b></td><td>npr. Fakultet organizacije i informatike (FOI)</td><td>Pedagoška provjera radnih rezultata na sukreaciji i danu predstavljanja</td><td class="num">~5 h</td></tr>
       <tr><td><b>Vodstvo ustanova</b></td><td>Ravnatelji/ce i dekani/ce ustanova sudionika</td><td>Obaviješteni; odobravaju vrijeme nastavnika</td><td class="num">~0,5 h</td></tr>
@@ -260,10 +326,10 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
       <tr><td>Desetak dana je kratko vrijeme za okupljanje sudionika</td><td>Pozivati samo iz postojeće mreže odjela, a poziv neka pošalje osoba koju nastavnici već poznaju.</td></tr>
       <tr><td>Dostupnost MultiLaba</td><td>Rezervirati datume prvog susreta i dana predstavljanja u koraku 0. Ako termin otpadne, susret se održava na daljinu.</td></tr>
       <tr><td>Akademski validator ili partneri bez sustavnog korisničkog računa</td><td>Provjeriti imaju li AAI@EduHr račun u koraku 1. Ako nemaju, osigurati gostujući pristup e-kolegiju ili sudjelovanje samo putem prijenosa.</td></tr>
-      <tr><td>Popunjeni urednički termini na DOT-u</td><td>Rezervirati sve četiri objave u koraku 0. Objave su kratke, a može ih pripremiti facilitator HUB-a i poslati glavnom uredniku na odobrenje.</td></tr>
+      <tr><td>Popunjeni urednički termini na DOT-u</td><td>Rezervirati sve četiri objave u koraku 0. Objave su kratke, a može ih pripremiti facilitator CARNET Hub-a i poslati glavnom uredniku na odobrenje.</td></tr>
       <tr><td>Prekoračenje sati djelatnika</td><td>Tjedno pratiti sate. Ako je plan prekoračen do 3. tjedna, skraćuje se druga sukreacijska provjera, a ne dan predstavljanja.</td></tr>
       <tr><td>Osobni podaci iz povratnih informacija, fotografija i snimki</td><td>Rečenica o privoli u obrascu za prijavu; snimaju se samo izlagači koji pristanu, u skladu s Općom uredbom o zaštiti podataka (GDPR).</td></tr>
-      <tr><td>Materijali izrađeni uz pomoć umjetne inteligencije</td><td>Označiti sadržaj izrađen umjetnom inteligencijom, kako zahtijeva točka 7.4. specifikacije HUB-a (Akt o umjetnoj inteligenciji EU-a, članak 50.).</td></tr>
+      <tr><td>Materijali izrađeni uz pomoć umjetne inteligencije</td><td>Označiti sadržaj izrađen umjetnom inteligencijom, kako zahtijeva točka 7.4. specifikacije CARNET Hub-a (Akt o umjetnoj inteligenciji EU-a, članak 50.).</td></tr>
     </tbody>
   </table></div>
 </section>
@@ -294,11 +360,11 @@ footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padd
     <li>Europsko čvorište za digitalno obrazovanje (EDEH), vremenski ograničene tematske skupine („squads”) (radna verzija pregleda referentnih hubova, poglavlje 5).</li>
     <li>Projekt BrAIn u medijima: <a href="https://www.novilist.hr/?p=1748743" target="_blank" rel="noopener">Novi list</a>, <a href="https://dnevnik.hr/vijesti/tech/cuc2025-hrvatska-medu-prvima-uvodi-umjetnu-inteligenciju-u-osnovne-i-srednje-skole---907404.html" target="_blank" rel="noopener">Dnevnik.hr</a>.</li>
     <li>Christensen, Hall, Dillon i Duncan (2016.), <i>Competing Against Luck</i>, HarperBusiness. Metoda Jobs to Be Done kao osnova tablice ishoda za nastavnike.</li>
-    <li>Koraci, trajanja, procjene rada i ciljane vrijednosti prijedlog su radnog tima HUB-a, a ne preuzete referentne vrijednosti.</li>
+    <li>Koraci, trajanja, procjene rada i ciljane vrijednosti prijedlog su radnog tima CARNET Hub-a, a ne preuzete referentne vrijednosti.</li>
   </ul>
 </section>
 
-<footer>Nacrt v0.1 · 26. listopada 2026. · Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije HUB-a.</footer>
+<footer>Nacrt v0.1 · 26. listopada 2026. · Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Hub-a.</footer>
 </div>
 
 <script>
@@ -320,25 +386,25 @@ const CHALLENGES = [
 const STEPS = [
   {k:"align", n:"0", t:"Usklađivanje", w:"9.–11. 11.", type:"prep",
    goal:"Dogovoriti čemu služi ovaj dokaz koncepta i što mu odjel može dati.",
-   who:"Voditelj/ica iz odjela, facilitator HUB-a", format:"Sastanak od 1 h, na daljinu", effort:"3 h",
+   who:"Voditelj/ica iz odjela, facilitator CARNET Hub-a", format:"Sastanak od 1 h, na daljinu", effort:"3 h",
    does:["Zajedno proći kroz ovaj vodič.","Odjel odabire izazov iz ponude iznad.","Dogovoriti broj sati djelatnika i imenovati jednu osobu iz odjela kao voditelja.","Rezervirati MultiLab za prvi susret i dan predstavljanja.","Upoznati glavnog urednika DOT-a i rezervirati četiri termina za objave."],
    out:["Odabrani izazov","Plan sati i imenovani voditelj","Dva termina u MultiLabu"],
    reuse:"Za sljedeće odjele ovo postaje uvodni razgovor od 30 minuta."},
   {k:"codesign", n:"1", t:"Sudizajn", w:"9.–13. 11.", type:"prep",
    goal:"Oblikovati ciklus prema mreži odjela i odabranom izazovu.",
-   who:"Voditelj/ica iz odjela, facilitator HUB-a, akademski validator (po želji)", format:"Radionica od 2 h", effort:"6 h",
+   who:"Voditelj/ica iz odjela, facilitator CARNET Hub-a, akademski validator (po želji)", format:"Radionica od 2 h", effort:"6 h",
    does:["Mapirati mrežu odjela: koga pozvati i kojim kanalom.","Potvrditi akademskog validatora.","Dogovoriti ciljane vrijednosti pokazatelja uspjeha.","Prilagoditi predloške poziva i susreta.","Postaviti e-kolegij za skupinu na Loomenu sa samoupisom."],
    out:["Popis pozvanih","Dogovorene ciljane vrijednosti","Konačni predlošci"],
    reuse:"Mapa mreže i ciljane vrijednosti prenose se u sljedeći ciklus."},
   {k:"recruit", n:"2", t:"Okupljanje", w:"9.–20. 11.", type:"prep",
    goal:"Okupiti 15–25 nastavnika preko ljudi koje već poznaju.",
-   who:"Poziv šalje voditelj/ica iz odjela, facilitator HUB-a prati prijave", format:"Osobni pozivi + kratki obrazac za prijavu", effort:"6 h",
+   who:"Poziv šalje voditelj/ica iz odjela, facilitator CARNET Hub-a prati prijave", format:"Osobni pozivi + kratki obrazac za prijavu", effort:"6 h",
    does:["Pozvati nastavnike iz projekta Učenici digitalni ambasadori i aktivne korisnike Loomena i Edutorija.","Obrazac prikuplja ime, ustanovu, predmet, željeni format sudjelovanja i privolu.","Poslati kratku obavijest ravnatelju/ici ili dekanu/ici svakog sudionika.","Poslati podsjetnik 3 dana prije prvog susreta."],
    out:["Popis prijava s privolom","Podjela: uživo / na daljinu"],
-   reuse:"Prijavljeni postaju prvi popis zajednice HUB-a."},
+   reuse:"Prijavljeni postaju prvi popis zajednice CARNET Hub-a."},
   {k:"listen", n:"3", t:"Slušanje", w:"Tjedan od 16. 11.", type:"cycle",
    goal:"Čuti što je trenutno teško, u opuštenom okruženju.",
-   who:"Nastavnici; facilitator HUB-a moderira, voditelj/ica iz odjela sluša", format:"Susret od 90 min, MultiLab + na daljinu", effort:"8 h",
+   who:"Nastavnici; facilitator CARNET Hub-a moderira, voditelj/ica iz odjela sluša", format:"Susret od 90 min, MultiLab + na daljinu", effort:"8 h",
    does:["Početno stanje: samoprocjena sigurnosti 1–5 na ulazu ili online.","Krug priča: \"Ispričajte kada ste posljednji put ovo pokušali. Što se dogodilo, kome ili čemu ste se obratili, od čega ste odustali?\"","Grupirati priče na zidu ili digitalnoj ploči, uključujući ono što nastavnici danas koriste.","Glasati za 2–3 najčešća problema.","Dogovoriti 5–6 kratkih razgovora jedan na jedan (20 min, online) s dobrovoljcima.","Završiti jednim kratkim pitanjem o korisnosti."],
    out:["Grupirani problemi","Što nastavnici danas koriste","Prva 2–3 problema","Početna samoprocjena sigurnosti","Bilješke iz 5–6 razgovora"],
    reuse:"Od 2027. ovo je mjesečni otvoreni susret."},
@@ -350,7 +416,7 @@ const STEPS = [
    reuse:"Timovi su prototip vremenski ograničenih tematskih skupina."},
   {k:"try", n:"5", t:"Isprobavanje", w:"30. 11.–4. 12.", type:"cycle",
    goal:"Isprobati svaki radni rezultat jednom, u stvarnom razredu.",
-   who:"Nastavnici, facilitator HUB-a na raspolaganju", format:"Samostalno + jedna provjera od 45 min na daljinu", effort:"4 h",
+   who:"Nastavnici, facilitator CARNET Hub-a na raspolaganju", format:"Samostalno + jedna provjera od 45 min na daljinu", effort:"4 h",
    does:["Svaki tim isproba svoj radni rezultat na jednom satu.","Članovi u zajednički predložak bilježe što je uspjelo, a što nije.","Provjera sredinom tjedna radi rješavanja zapreka.","Timovi biraju člana koji će izlagati na danu predstavljanja."],
    out:["Isprobani radni rezultati","Kratke bilješke po timu"],
    reuse:"Predložak za bilješke u kasnijim ciklusima postaje zapis u portfoliju."},
@@ -361,20 +427,20 @@ const STEPS = [
    out:["Recenzirani radni rezultati","Dobrovoljno predani sadržaji za Edutorij","Snimka na Meduzi","Bilješka o predaji nalaza vlasniku usluge"],
    reuse:"Od 2027. ovo je tromjesečni dan predstavljanja."},
   {k:"reflect", n:"7", t:"Refleksija", w:"8.–9. 12.", type:"cycle",
-   goal:"Procijeniti izvedivost i opravdanost te priču prenijeti na pokretanje HUB-a.",
-   who:"Voditelj/ica iz odjela, facilitator HUB-a, 2–3 nastavnika", format:"Retrospektiva od 1 h + termin na pokretanju", effort:"5 h",
-   does:["Odvojeno usporediti KPI-jeve CARNET-a i ishode za nastavnike s ciljanim vrijednostima.","Retrospektiva: zadržati, promijeniti, ukinuti.","Ažurirati ovaj vodič na verziju v1.","Predstaviti ciklus na pokretanju HUB-a, po mogućnosti zajedno s nastavnikom."],
-   out:["Dvije ocijenjene tablice","Vodič v1","Primjer za pokretanje HUB-a"],
+   goal:"Procijeniti izvedivost i opravdanost te priču prenijeti na pokretanje CARNET Hub-a.",
+   who:"Voditelj/ica iz odjela, facilitator CARNET Hub-a, 2–3 nastavnika", format:"Retrospektiva od 1 h + termin na pokretanju", effort:"5 h",
+   does:["Odvojeno usporediti KPI-jeve CARNET-a i ishode za nastavnike s ciljanim vrijednostima.","Retrospektiva: zadržati, promijeniti, ukinuti.","Ažurirati ovaj vodič na verziju v1.","Predstaviti ciklus na pokretanju CARNET Hub-a, po mogućnosti zajedno s nastavnikom."],
+   out:["Dvije ocijenjene tablice","Vodič v1","Primjer za pokretanje CARNET Hub-a"],
    reuse:"Priča s pokretanja ujedno je poziv budućim ambasadorima."}
 ];
 
 const TEMPLATES = [
   {k:"invite", t:"Poziv", body:
-`Predmet: Pridružite se kratkom sukreacijskom ciklusu HUB-a (9. 11. – 9. 12.)
+`Predmet: Pridružite se kratkom sukreacijskom ciklusu CARNET Hub-a (9. 11. – 9. 12.)
 
 Poštovani/a [ime],
 
-CARNET pokreće HUB, mjesto na kojem nastavnici i CARNET zajedno oblikuju digitalno obrazovanje. Prije službenog pokretanja provodimo jedan kratki probni ciklus na temu:
+CARNET pokreće Hub, mjesto na kojem nastavnici i CARNET zajedno oblikuju digitalno obrazovanje. Prije službenog pokretanja provodimo jedan kratki probni ciklus na temu:
 
 „Kako bi nastavnici mogli [izazov]?”
 
@@ -400,7 +466,7 @@ Više o ciklusu na DOT-u: [poveznica]
 75–85  Što slijedi, termin sukreacijskog susreta
 85–90  Kratko pitanje: „Koliko vam je današnji susret bio koristan? 1–5”
 
-Moderira: facilitator HUB-a · Bilježi: voditelj/ica iz odjela`},
+Moderira: facilitator CARNET Hub-a · Bilježi: voditelj/ica iz odjela`},
   {k:"cocreate", t:"Plan sukreacije", body:
 `SUKREACIJSKI SUSRET · 2 h
 
@@ -428,7 +494,7 @@ KPI-jevi CARNET-a
 6. Biste li se uključili u sljedeći ciklus? (da / možda / ne)
 7. Što bismo prvo trebali promijeniti? (jedna rečenica)`},
   {k:"handover", t:"Predaja nalaza", body:
-`ZA: [vlasnik usluge]   OD: HUB, ciklus [br.]   DATUM: [datum]
+`ZA: [vlasnik usluge]   OD: CARNET Hub, ciklus [br.]   DATUM: [datum]
 
 Izazov: Kako bi nastavnici mogli [izazov]?
 Sudionici: [br.] nastavnika iz [br.] ustanova
@@ -475,7 +541,7 @@ const DIG = {
   cocreate:"Timske grupe i forum u e-kolegiju; nakon susreta 3. objava na DOT-u.",
   try:"Bilješke u zajedničkom predlošku na Loomenu; pitanja na forumu.",
   show:"Prijenos i snimka na Meduzi; timovi koji to žele predaju recenzirane radne rezultate na Edutorij.",
-  reflect:"Izvješća s Loomena za stopu povratka i ocjene korisnosti; 4. objava na DOT-u upućuje na pokretanje HUB-a."
+  reflect:"Izvješća s Loomena za stopu povratka i ocjene korisnosti; 4. objava na DOT-u upućuje na pokretanje CARNET Hub-a."
 };
 let challenge = null, current = 0, tpl = 0;
 const store = {
