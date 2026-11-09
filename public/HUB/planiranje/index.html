@@ -151,6 +151,26 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 .cb-in{min-height:0;margin-top:6px;font-size:13.5px;color:var(--ink)}
 .openlink{font-size:13.5px;font-weight:600;min-height:38px;display:flex;align-items:center}
 @media (max-width:760px){.pextra{grid-template-columns:1fr}}
+/* Step sub-groups (step 0: Operativno, MultiLab, DOT objave) */
+.pgroup{border:1px solid var(--line);border-radius:10px;background:var(--surface-2);padding:12px;display:flex;flex-direction:column;gap:10px}
+.ghead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.ghead h4{margin:0;font-family:var(--f-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--sc);font-weight:600;padding:3px 10px;border-radius:999px;background:var(--ss)}
+.ghead .gd{font-size:13px;color:var(--muted);flex:1 1 auto}
+.ghead .gp{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.cards{display:grid;gap:10px}
+.cards.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cards.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:860px){.cards.cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.cards.cols-3,.cards.cols-2{grid-template-columns:1fr}}
+/* Compact card: fields stacked; value and note full width, owner and deadline side by side */
+.pitem.compact{gap:8px}
+.pitem.compact .phead{flex-direction:column;align-items:stretch;gap:6px}
+.pitem.compact .phead .l{font-size:14.5px;line-height:1.3}
+.pitem.compact .phead select{min-width:0;width:100%;font-size:13px;min-height:34px;padding-block:5px}
+.pitem.compact .pgrid{grid-template-columns:1fr 1fr;gap:8px}
+.pitem.compact .fv,.pitem.compact .fnote{grid-column:1/-1}
+.pitem.compact .pextra{grid-template-columns:1fr;gap:8px;padding-top:8px}
+@media (max-width:440px){.pitem.compact .pgrid{grid-template-columns:1fr}}
 .pitem .frok input{border-style:dashed;border-color:var(--warn)}
 /* Status shown on the dropdown itself */
 .st-sel{font-weight:600;border-radius:999px;padding-inline:12px}
@@ -285,18 +305,25 @@ let LISTS = JSON.parse(JSON.stringify(LISTS_DEFAULT));
    flag:"<text>" adds a checkbox whose text is stored in front of the value ("Uredništvo DOT-a · Ime"), so no extra sheet column is needed,
    t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
 const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
+/* Sub-groups inside a step: shown as separate panels; cols = cards per row (compact cards, fields stacked).
+   Items with w:1 take a full-width row in the normal horizontal layout. sl = shorter name inside the panel. */
+const PREP_GROUPS = {
+  op:{t:"Operativno", d:"Vlasništvo, voditelj i sati", cols:3},
+  ml:{t:"MultiLab", d:"Lokacija i rezervirani termini", cols:3},
+  dot:{t:"DOT objave", d:"Tko objavljuje i četiri objave ciklusa", cols:2}
+};
 const PREP = [
-  {id:"p0_vlasnik", k:0, l:"Vlasnik teme", v:"Odjel", t:"text", pre:tp=>OWNERS[tp.o].n},
-  {id:"p0_voditelj", k:0, l:"Imenovani voditelj/ica iz odjela", v:"Ime i prezime", t:"text"},
-  {id:"p0_sati", k:0, l:"Dogovoreni sati djelatnika CARNET-a", v:"Broj sati", t:"number"},
-  {id:"p0_multilab", k:0, l:"MultiLab za susrete", v:"Lokacija", t:"list:Lokacija"},
-  {id:"p0_ml_prvi", k:0, l:"Rezervacija MultiLaba: prvi susret", v:"Datum susreta", t:"date"},
-  {id:"p0_ml_dan", k:0, l:"Rezervacija MultiLaba: dan predstavljanja", v:"Datum predstavljanja", t:"date"},
-  {id:"p0_urednik", k:0, l:"Odgovoran za DOT objave", v:"Ime i kontakt", t:"text", flag:"Uredništvo DOT-a"},
-  {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date", x:"objava"},
-  {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date", x:"objava"},
-  {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date", x:"objava"},
-  {id:"p0_dot4", k:0, l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_vlasnik", k:0, g:"op", l:"Vlasnik teme", v:"Odjel", t:"text", pre:tp=>OWNERS[tp.o].n},
+  {id:"p0_voditelj", k:0, g:"op", sl:"Voditelj/ica iz odjela", l:"Imenovani voditelj/ica iz odjela", v:"Ime i prezime", t:"text"},
+  {id:"p0_sati", k:0, g:"op", sl:"Sati djelatnika CARNET-a", l:"Dogovoreni sati djelatnika CARNET-a", v:"Broj sati", t:"number"},
+  {id:"p0_multilab", k:0, g:"ml", sl:"Mjesto održavanja", l:"MultiLab za susrete", v:"Lokacija", t:"list:Lokacija"},
+  {id:"p0_ml_prvi", k:0, g:"ml", sl:"Prvi susret", l:"Rezervacija MultiLaba: prvi susret", v:"Datum susreta", t:"date"},
+  {id:"p0_ml_dan", k:0, g:"ml", sl:"Dan predstavljanja", l:"Rezervacija MultiLaba: dan predstavljanja", v:"Datum predstavljanja", t:"date"},
+  {id:"p0_urednik", k:0, g:"dot", w:1, l:"Odgovoran za DOT objave", v:"Ime i kontakt", t:"text", flag:"Uredništvo DOT-a"},
+  {id:"p0_dot1", k:0, g:"dot", sl:"Objava 1 · Poziv", l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_dot2", k:0, g:"dot", sl:"Objava 2 · Što smo čuli", l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_dot3", k:0, g:"dot", sl:"Objava 3 · Što timovi isprobavaju", l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_dot4", k:0, g:"dot", sl:"Objava 4 · Rezultati", l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date", x:"objava"},
   {id:"p1_validator", k:1, l:"Akademski validator", v:"Ime i prezime", t:"text"},
   {id:"p1_val_ust", k:1, l:"Ustanova validatora", v:"Ustanova", t:"text"},
   {id:"p1_val_potvrda", k:1, l:"Validator potvrdio sudjelovanje", v:"Potvrđeno", t:"list:Da/Ne"},
@@ -451,27 +478,43 @@ function renderPrep(){
     const [d,n]=stepProgress(k);
     return `<details class="step s${k}"${k===0?" open":""}>
       <summary><span class="t"><span class="k">KORAK ${k}</span>${STEP_NAMES[k]}</span><span class="prog" id="prog${k}"><span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo</span></summary>
-      <div class="pitems">${PREP.filter(i=>i.k===k).map(it=>{
-        if(!S.prep[it.id]&&it.pre&&tp) S.prep[it.id]={vrijednost:it.pre(tp)};
+      <div class="pitems">${stepBody(k,tp)}</div></details>`;
+  }).join("");
+}
+function groupProgress(g){const items=PREP.filter(i=>i.g===g);return [items.filter(i=>["Gotovo","Nije primjenjivo"].includes(prepVal(i).status)).length,items.length]}
+function stepBody(k,tp){
+  const items=PREP.filter(i=>i.k===k);
+  items.forEach(it=>{if(!S.prep[it.id]&&it.pre&&tp) S.prep[it.id]={vrijednost:it.pre(tp)}});
+  if(!items.some(i=>i.g)) return items.map(it=>itemHtml(it,false)).join("");
+  return Object.keys(PREP_GROUPS).filter(g=>items.some(i=>i.g===g)).map(g=>{
+    const G=PREP_GROUPS[g], gi=items.filter(i=>i.g===g), [d,n]=groupProgress(g);
+    const wide=gi.filter(i=>i.w), cards=gi.filter(i=>!i.w);
+    return `<section class="pgroup" aria-labelledby="pg-${g}">
+      <div class="ghead"><h4 id="pg-${g}">${esc(G.t)}</h4><span class="gd">${esc(G.d)}</span><span class="gp" id="gp-${g}">${d}/${n} gotovo</span></div>
+      ${wide.map(it=>itemHtml(it,false)).join("")}
+      <div class="cards cols-${G.cols}">${cards.map(it=>itemHtml(it,true)).join("")}</div>
+    </section>`;
+  }).join("");
+}
+function itemHtml(it,compact){
         const p=prepVal(it);
-        return `<div class="pitem" data-status="${esc(p.status||"")}" id="pi-${it.id}">
-          <div class="phead"><span class="l">${esc(it.l)}</span><select class="st-sel" data-v="${esc(p.status||"Nije započeto")}" aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
+        return `<div class="pitem${compact?" compact":""}" data-status="${esc(p.status||"")}" id="pi-${it.id}">
+          <div class="phead"><span class="l">${esc(compact&&it.sl?it.sl:it.l)}</span><select class="st-sel" data-v="${esc(p.status||"Nije započeto")}" aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
           <div class="pgrid">
             ${it.t.startsWith("multi:")?`<div class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</div>`:`<label class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</label>`}
             <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" value="${esc(p.odgovorna_osoba||"")}"></label>
             <label class="f frok" title="Do kada stavka mora biti obavljena"><span>Rok za izvršenje</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
-            <label class="f"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
+            <label class="f fnote"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
           </div>${it.x==="objava"?`
           <div class="pextra">
             <label class="f"><span>Poveznica na objavu</span><input type="url" placeholder="https://" data-s="prep" data-id="${it.id}" data-f="poveznica" value="${esc(p.poveznica||"")}" aria-label="Poveznica na objavu: ${esc(it.l)}"></label>
             <label class="cb"><input type="checkbox" data-s="prep" data-id="${it.id}" data-f="newsletter" data-bool${p.newsletter==="Da"?" checked":""}>Poslano i u newsletteru / mailing listi</label>
             ${p.poveznica&&/^https?:\/\//.test(p.poveznica)?`<a class="openlink" href="${esc(p.poveznica)}" target="_blank" rel="noopener">Otvori objavu ↗</a>`:""}
           </div>`:""}</div>`;
-      }).join("")}</div></details>`;
-  }).join("");
 }
 function renderProgress(){
   [0,1,2].forEach(k=>{const [d,n]=stepProgress(k);$("prog"+k).innerHTML=`<span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo`});
+  Object.keys(PREP_GROUPS).forEach(g=>{const el=$("gp-"+g);if(el){const [d,n]=groupProgress(g);el.textContent=`${d}/${n} gotovo`}});
 }
 function evSummaryHtml(ev){
   return `<span class="vr">${esc(ev.vrsta||"Vrsta nije odabrana")}</span><span class="nm">${esc(ev.naziv||"Događanje bez naziva")}</span><span class="dt">${esc([ev.datum,ev.pocetak].filter(Boolean).join(" · ")||"bez datuma")}${ev.lokacija?" · "+esc(ev.lokacija):""}</span><span class="ss" data-st="${esc(ev.status||"")}">${esc(ev.status||"—")}</span>`;
