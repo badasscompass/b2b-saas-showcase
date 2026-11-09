@@ -160,8 +160,9 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 .cards{display:grid;gap:10px}
 .cards.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .cards.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
-@media (max-width:860px){.cards.cols-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:600px){.cards.cols-3,.cards.cols-2{grid-template-columns:1fr}}
+.cards.cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:860px){.cards.cols-3,.cards.cols-4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.cards.cols-3,.cards.cols-2,.cards.cols-4{grid-template-columns:1fr}}
 /* Compact card: fields stacked; value and note full width, owner and deadline side by side */
 .pitem.compact{gap:8px}
 .pitem.compact .phead{flex-direction:column;align-items:stretch;gap:6px}
@@ -169,6 +170,7 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 .pitem.compact .phead select{min-width:0;width:100%;font-size:13px;min-height:34px;padding-block:5px}
 .pitem.compact .pgrid{grid-template-columns:1fr 1fr;gap:8px}
 .pitem.compact .fv,.pitem.compact .fnote{grid-column:1/-1}
+.cards.cols-4 .pitem.compact .pgrid{grid-template-columns:1fr}
 .pitem.compact .pextra{grid-template-columns:1fr;gap:8px;padding-top:8px}
 @media (max-width:440px){.pitem.compact .pgrid{grid-template-columns:1fr}}
 .pitem .frok input{border-style:dashed;border-color:var(--warn)}
@@ -310,7 +312,13 @@ const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
 const PREP_GROUPS = {
   op:{t:"Operativno", d:"Vlasništvo, voditelj i sati", cols:3},
   ml:{t:"MultiLab", d:"Lokacija i rezervirani termini", cols:3},
-  dot:{t:"DOT objave", d:"Tko objavljuje i četiri objave ciklusa", cols:2}
+  dot:{t:"DOT objave", d:"Tko objavljuje i četiri objave ciklusa", cols:2},
+  val:{t:"Validator", d:"Akademski validator i potvrda sudjelovanja", cols:3},
+  plan:{t:"Plan", d:"Ciljane vrijednosti i predlošci", cols:2},
+  kan:{t:"Kanali i poveznice", d:"Kako pozivamo i gdje se nastavnici prijavljuju", cols:2},
+  poz:{t:"Poziv i prijave", d:"Kada ide poziv i do kada traju prijave", cols:2},
+  broj:{t:"Brojke", d:"Ciljani i stvarni broj sudionika", cols:4},
+  obav:{t:"Obavijesti", d:"Vodstvo ustanova i podsjetnik", cols:2}
 };
 const PREP = [
   {id:"p0_vlasnik", k:0, g:"op", l:"Vlasnik teme", v:"Odjel", t:"text", pre:tp=>OWNERS[tp.o].n},
@@ -324,22 +332,22 @@ const PREP = [
   {id:"p0_dot2", k:0, g:"dot", sl:"Objava 2 · Što smo čuli", l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot3", k:0, g:"dot", sl:"Objava 3 · Što timovi isprobavaju", l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot4", k:0, g:"dot", sl:"Objava 4 · Rezultati", l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date", x:"objava"},
-  {id:"p1_validator", k:1, l:"Akademski validator", v:"Ime i prezime", t:"text"},
-  {id:"p1_val_ust", k:1, l:"Ustanova validatora", v:"Ustanova", t:"text"},
-  {id:"p1_val_potvrda", k:1, l:"Validator potvrdio sudjelovanje", v:"Potvrđeno", t:"list:Da/Ne"},
-  {id:"p1_kpi", k:1, l:"Ciljane vrijednosti pokazatelja dogovorene", v:"Dogovoreno", t:"list:Da/Ne"},
-  {id:"p1_kanali", k:1, l:"Kanali poziva", v:"Kanali", t:"multi:Kanal poziva"},
-  {id:"p1_loomen", k:1, l:"E-kolegij na Loomenu", v:"Poveznica", t:"url"},
-  {id:"p1_obrazac", k:1, l:"Obrazac za prijavu na DOT-u", v:"Poveznica", t:"url"},
-  {id:"p1_predlosci", k:1, l:"Predlošci poziva i susreta prilagođeni", v:"Prilagođeno", t:"list:Da/Ne"},
-  {id:"p2_poziv", k:2, l:"Slanje poziva", v:"Datum slanja", t:"date"},
-  {id:"p2_rok", k:2, l:"Zatvaranje prijava", v:"Zadnji dan prijava", t:"date"},
-  {id:"p2_cilj", k:2, l:"Ciljani broj sudionika", v:"Broj", t:"number"},
-  {id:"p2_prijave", k:2, l:"Broj prijavljenih", v:"Broj", t:"number"},
-  {id:"p2_uzivo", k:2, l:"Prijavljeni uživo", v:"Broj", t:"number"},
-  {id:"p2_daljina", k:2, l:"Prijavljeni na daljinu", v:"Broj", t:"number"},
-  {id:"p2_vodstvo", k:2, l:"Obavijesti vodstvu ustanova", v:"Poslano", t:"list:Da/Ne"},
-  {id:"p2_podsjetnik", k:2, l:"Podsjetnik prijavljenima", v:"Poslano", t:"list:Da/Ne"}
+  {id:"p1_validator", k:1, g:"val", sl:"Ime validatora", l:"Akademski validator", v:"Ime i prezime", t:"text"},
+  {id:"p1_val_ust", k:1, g:"val", sl:"Ustanova validatora", l:"Ustanova validatora", v:"Ustanova", t:"text"},
+  {id:"p1_val_potvrda", k:1, g:"val", sl:"Potvrda sudjelovanja", l:"Validator potvrdio sudjelovanje", v:"Potvrđeno", t:"list:Da/Ne"},
+  {id:"p1_kpi", k:1, g:"plan", sl:"Ciljane vrijednosti pokazatelja", l:"Ciljane vrijednosti pokazatelja dogovorene", v:"Dogovoreno", t:"list:Da/Ne"},
+  {id:"p1_kanali", k:1, g:"kan", w:1, l:"Kanali poziva", v:"Kanali", t:"multi:Kanal poziva"},
+  {id:"p1_loomen", k:1, g:"kan", l:"E-kolegij na Loomenu", v:"Poveznica", t:"url"},
+  {id:"p1_obrazac", k:1, g:"kan", l:"Obrazac za prijavu na DOT-u", v:"Poveznica", t:"url"},
+  {id:"p1_predlosci", k:1, g:"plan", sl:"Prilagođeni predlošci", l:"Predlošci poziva i susreta prilagođeni", v:"Prilagođeno", t:"list:Da/Ne"},
+  {id:"p2_poziv", k:2, g:"poz", l:"Slanje poziva", v:"Datum slanja", t:"date"},
+  {id:"p2_rok", k:2, g:"poz", l:"Zatvaranje prijava", v:"Zadnji dan prijava", t:"date"},
+  {id:"p2_cilj", k:2, g:"broj", sl:"Ciljano", l:"Ciljani broj sudionika", v:"Broj", t:"number"},
+  {id:"p2_prijave", k:2, g:"broj", sl:"Prijavljeno", l:"Broj prijavljenih", v:"Broj", t:"number"},
+  {id:"p2_uzivo", k:2, g:"broj", sl:"Uživo", l:"Prijavljeni uživo", v:"Broj", t:"number"},
+  {id:"p2_daljina", k:2, g:"broj", sl:"Na daljinu", l:"Prijavljeni na daljinu", v:"Broj", t:"number"},
+  {id:"p2_vodstvo", k:2, g:"obav", sl:"Vodstvo ustanova", l:"Obavijesti vodstvu ustanova", v:"Poslano", t:"list:Da/Ne"},
+  {id:"p2_podsjetnik", k:2, g:"obav", sl:"Podsjetnik prijavljenima", l:"Podsjetnik prijavljenima", v:"Poslano", t:"list:Da/Ne"}
 ];
 
 /* Standard cycle meetings (steps 3–7 of the Ciklus aktivacije guide). */
