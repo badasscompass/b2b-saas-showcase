@@ -148,6 +148,7 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 .pextra .f>span{color:var(--sc);font-weight:600}
 .cb{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer;min-height:38px}
 .cb input{width:18px;height:18px;min-height:0;accent-color:var(--sc)}
+.cb-in{min-height:0;margin-top:6px;font-size:13.5px;color:var(--ink)}
 .openlink{font-size:13.5px;font-weight:600;min-height:38px;display:flex;align-items:center}
 @media (max-width:760px){.pextra{grid-template-columns:1fr}}
 .pitem .frok input{border-style:dashed;border-color:var(--warn)}
@@ -281,6 +282,7 @@ let LISTS = JSON.parse(JSON.stringify(LISTS_DEFAULT));
 
 /* Preparation items for steps 0–2. l: item name, v: label of its value field (never "Rok": the due date has its own field),
    x:"objava" adds a link to the published post and a newsletter / mailing-list checkbox,
+   flag:"<text>" adds a checkbox whose text is stored in front of the value ("Uredništvo DOT-a · Ime"), so no extra sheet column is needed,
    t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
 const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
 const PREP = [
@@ -290,7 +292,7 @@ const PREP = [
   {id:"p0_multilab", k:0, l:"MultiLab za susrete", v:"Lokacija", t:"list:Lokacija"},
   {id:"p0_ml_prvi", k:0, l:"Rezervacija MultiLaba: prvi susret", v:"Datum susreta", t:"date"},
   {id:"p0_ml_dan", k:0, l:"Rezervacija MultiLaba: dan predstavljanja", v:"Datum predstavljanja", t:"date"},
-  {id:"p0_urednik", k:0, l:"Glavni urednik DOT-a", v:"Ime i kontakt", t:"text"},
+  {id:"p0_urednik", k:0, l:"Odgovoran za DOT objave", v:"Ime i kontakt", t:"text", flag:"Uredništvo DOT-a"},
   {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date", x:"objava"},
@@ -416,7 +418,22 @@ function renderTema(){
     <label class="f wide"><span>Napomena o temi</span><textarea data-s="tema" data-f="napomena">${esc(t.napomena)}</textarea></label>`;
 }
 function prepVal(it){const p=S.prep[it.id]||{};return p}
+/* Items with a flag store "<flag> · <text>" in vrijednost; split it back for the form. */
+const FLAG_SEP=" · ";
+function splitFlag(it,v){
+  v=String(v||"");
+  if(!it.flag) return {on:false,text:v};
+  if(v===it.flag) return {on:true,text:""};
+  if(v.startsWith(it.flag+FLAG_SEP)) return {on:true,text:v.slice(it.flag.length+FLAG_SEP.length)};
+  return {on:false,text:v};
+}
+function joinFlag(it,on,text){text=text.trim();return on?(text?it.flag+FLAG_SEP+text:it.flag):text}
 function valueInput(it,p){
+  if(it.flag){
+    const fv=splitFlag(it,p.vrijednost);
+    return `<input type="text" data-s="prep" data-id="${it.id}" data-f="vrijednost" data-flagtext aria-label="${esc(it.v+": "+it.l)}" value="${esc(fv.text)}">
+      <label class="cb cb-in"><input type="checkbox" data-s="prep" data-id="${it.id}" data-f="vrijednost" data-flag${fv.on?" checked":""}>${esc(it.flag)}</label>`;
+  }
   const v=p.vrijednost??"", a=`data-s="prep" data-id="${it.id}" data-f="vrijednost" aria-label="${esc(it.v+": "+it.l)}"`;
   const [kind,list]=it.t.split(":");
   if(kind==="list") return `<select ${a}>${opts(list,v,"—")}</select>`;
@@ -551,7 +568,11 @@ function onField(e){
   if(s==="tema"){S.tema[f]=el.value;if(f==="planirani_broj_dogadjanja")renderEvSummary()}
   else if(s==="prep"){
     const p=S.prep[id]||(S.prep[id]={});
-    if(el.dataset.multi!==undefined){
+    const it=PREP.find(x=>x.id===id);
+    if(it&&it.flag&&f==="vrijednost"){
+      const t=document.querySelector(`[data-id="${id}"][data-flagtext]`), c=document.querySelector(`[data-id="${id}"][data-flag]`);
+      p.vrijednost=joinFlag(it,c.checked,t.value);
+    }else if(el.dataset.multi!==undefined){
       p.vrijednost=[...document.querySelectorAll(`[data-id="${id}"][data-multi]`)].filter(x=>x.checked).map(x=>x.dataset.multi).join(", ");
     }else if(el.dataset.bool!==undefined) p[f]=el.checked?"Da":"";
     else p[f]=el.value;
