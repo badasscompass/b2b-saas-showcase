@@ -1,7 +1,7 @@
 /**
  * CARNET Hub · Planiranje tema — Google Apps Script back office.
  *
- * The planning page (public/HUB/planiranje/) reads and writes one topic at a time
+ * The planning page (public/HUB/hub-planer/) reads and writes one topic at a time
  * through this web app. Setup: docs/hub-planiranje/SETUP.md.
  *
  *  - Script property PLAN_KOD holds the shared planning code (never put it in this file).

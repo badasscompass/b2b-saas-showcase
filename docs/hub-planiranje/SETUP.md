@@ -1,6 +1,6 @@
 # Planiranje teme — Google Sheet back office setup
 
-The planning page `public/HUB/planiranje/` saves each topic's plan to a Google Sheet through a
+The planning page `public/HUB/hub-planer/` saves each topic's plan to a Google Sheet through a
 Google Apps Script web app (`apps-script.gs` in this folder). Until it is connected, the page
 keeps everything in the planner's browser.
 
@@ -44,7 +44,7 @@ Script versions: v2 adds the Priprema columns **Poveznica** and **Newsletter / m
 On the planning page open **Postavke veze s tablicom**, paste the URL and the planning code,
 then **Spremi postavke i provjeri vezu**. Both are stored only in that browser.
 
-Optional: put the URL in `DEFAULT_API_URL` in `public/HUB/planiranje/index.html` so planners
+Optional: put the URL in `DEFAULT_API_URL` in `public/HUB/hub-planer/index.html` so planners
 only need the code.
 
 ## Security notes

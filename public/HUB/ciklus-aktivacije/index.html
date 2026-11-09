@@ -279,7 +279,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   </div>
   <div class="toolbar">
     <span class="hint">Kartice se otvaraju klikom. Počnite odabirom teme, pa prođite korake.</span>
-    <span class="btns-r"><a class="tgl" href="../planiranje/">Planiranje teme →</a> <button class="tgl" id="toggleAll" aria-expanded="false">Otvori sve</button></span>
+    <span class="btns-r"><a class="tgl" href="../hub-planer/">Planiranje teme →</a> <button class="tgl" id="toggleAll" aria-expanded="false">Otvori sve</button></span>
   </div>
 </header>
 
@@ -804,7 +804,7 @@ function renderActive(){
   el.innerHTML=`<span class="eyebrow">Odabrana tema za ovaj ciklus</span>
     <p><b>${esc(c.q)}</b></p>
     <dl class="facts"><dt>Zajednica</dt><dd>${b.id} · ${esc(b.n)}</dd><dt>Vlasnik teme</dt><dd>${esc(o.n)}</dd><dt>Mreža za korak 1</dt><dd>${esc(o.s)}</dd><dt>Tko još može pomoći</dt><dd>${esc(o.h)}</dd></dl>
-    <p><a href="../planiranje/?tema=${encodeURIComponent(c.id)}">Planirajte pripremu i događanja za ovu temu →</a></p>`;
+    <p><a href="../hub-planer/?tema=${encodeURIComponent(c.id)}">Planirajte pripremu i događanja za ovu temu →</a></p>`;
 }
 
 function doneCount(s){const t=ticks[s.k]||[];return t.filter(Boolean).length}

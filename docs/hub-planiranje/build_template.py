@@ -19,7 +19,7 @@ def tab(name,headers,example,widths):
 u=wb.active; u.title='Upute'
 rows=[["CARNET Hub · Planiranje tema · pozadinska tablica"],[],
 ["Kako radi"],
-["Stranica „Planiranje teme” (public/HUB/planiranje/) čita i sprema podatke u ovu tablicu putem Apps Script web-aplikacije (Proširenja → Apps Script)."],
+["Stranica „Planiranje teme” (public/HUB/hub-planer/) čita i sprema podatke u ovu tablicu putem Apps Script web-aplikacije (Proširenja → Apps Script)."],
 ["Svako spremanje teme zamjenjuje sve retke te teme u listovima Teme, Priprema i Dogadjanja. Ostale teme ostaju netaknute."],
 ["Ako je temu u međuvremenu spremio netko drugi, stranica pita prije prepisivanja."],[],
 ["Pravila"],

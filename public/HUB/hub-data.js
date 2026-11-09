@@ -1,5 +1,5 @@
 /* Shared CARNET Hub data: topic owners, formats, thematic communities and the 21 topics
-   from the questionnaire "Hub – sukreacija odgovori". Used by ciklus-aktivacije/ and planiranje/. */
+   from the questionnaire "Hub – sukreacija odgovori". Used by ciklus-aktivacije/ and hub-planer/. */
 const OWNERS = {
   r1:{n:"Odjel za razvoj i implementaciju obrazovnih sustava",
       s:"nastavnici OŠ i SŠ iz projekta Učenici digitalni ambasadori, korisnici Loomena i Edutorija, MZOM (tim projekta Cjelodnevne škole), FOI, UNICEF",
