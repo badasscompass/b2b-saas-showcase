@@ -144,6 +144,12 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 .pitem .fv>span{color:var(--sc);font-weight:600}
 /* Deadline field is styled apart from event dates */
 .pitem .frok>span{color:var(--warn);font-weight:600}
+.pextra{display:grid;grid-template-columns:minmax(0,1.4fr) auto auto;gap:10px 16px;align-items:end;padding-top:10px;border-top:1px dashed var(--line)}
+.pextra .f>span{color:var(--sc);font-weight:600}
+.cb{display:flex;gap:8px;align-items:center;font-size:14px;cursor:pointer;min-height:38px}
+.cb input{width:18px;height:18px;min-height:0;accent-color:var(--sc)}
+.openlink{font-size:13.5px;font-weight:600;min-height:38px;display:flex;align-items:center}
+@media (max-width:760px){.pextra{grid-template-columns:1fr}}
 .pitem .frok input{border-style:dashed;border-color:var(--warn)}
 /* Status shown on the dropdown itself */
 .st-sel{font-weight:600;border-radius:999px;padding-inline:12px}
@@ -274,6 +280,7 @@ const LISTS_DEFAULT = {
 let LISTS = JSON.parse(JSON.stringify(LISTS_DEFAULT));
 
 /* Preparation items for steps 0–2. l: item name, v: label of its value field (never "Rok": the due date has its own field),
+   x:"objava" adds a link to the published post and a newsletter / mailing-list checkbox,
    t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
 const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
 const PREP = [
@@ -284,10 +291,10 @@ const PREP = [
   {id:"p0_ml_prvi", k:0, l:"Rezervacija MultiLaba: prvi susret", v:"Datum susreta", t:"date"},
   {id:"p0_ml_dan", k:0, l:"Rezervacija MultiLaba: dan predstavljanja", v:"Datum predstavljanja", t:"date"},
   {id:"p0_urednik", k:0, l:"Glavni urednik DOT-a", v:"Ime i kontakt", t:"text"},
-  {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date"},
-  {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date"},
-  {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date"},
-  {id:"p0_dot4", k:0, l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date"},
+  {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date", x:"objava"},
+  {id:"p0_dot4", k:0, l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date", x:"objava"},
   {id:"p1_validator", k:1, l:"Akademski validator", v:"Ime i prezime", t:"text"},
   {id:"p1_val_ust", k:1, l:"Ustanova validatora", v:"Ustanova", t:"text"},
   {id:"p1_val_potvrda", k:1, l:"Validator potvrdio sudjelovanje", v:"Potvrđeno", t:"list:Da/Ne"},
@@ -365,6 +372,14 @@ async function api(action, params, body){
   }finally{clearTimeout(t)}
 }
 let remoteTopics = {};
+const NEEDS_SCRIPT = 2;
+function checkVersion(r){
+  if(r&&r.ok&&!(r.verzija>=NEEDS_SCRIPT)){
+    setErr("Skripta u tablici je starija verzija: poveznice i newsletter za DOT objave neće se spremiti. Ažurirajte Apps Script (Deploy → Manage deployments → New version).");
+    return false;
+  }
+  return true;
+}
 function applyLists(p){
   LISTS=JSON.parse(JSON.stringify(LISTS_DEFAULT));
   if(p) Object.keys(p).forEach(k=>{if(Array.isArray(p[k])&&p[k].length) LISTS[k]=p[k]});
@@ -429,7 +444,12 @@ function renderPrep(){
             <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" value="${esc(p.odgovorna_osoba||"")}"></label>
             <label class="f frok" title="Do kada stavka mora biti obavljena"><span>Rok za izvršenje</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
             <label class="f"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
-          </div></div>`;
+          </div>${it.x==="objava"?`
+          <div class="pextra">
+            <label class="f"><span>Poveznica na objavu</span><input type="url" placeholder="https://" data-s="prep" data-id="${it.id}" data-f="poveznica" value="${esc(p.poveznica||"")}" aria-label="Poveznica na objavu: ${esc(it.l)}"></label>
+            <label class="cb"><input type="checkbox" data-s="prep" data-id="${it.id}" data-f="newsletter" data-bool${p.newsletter==="Da"?" checked":""}>Poslano i u newsletteru / mailing listi</label>
+            ${p.poveznica&&/^https?:\/\//.test(p.poveznica)?`<a class="openlink" href="${esc(p.poveznica)}" target="_blank" rel="noopener">Otvori objavu ↗</a>`:""}
+          </div>`:""}</div>`;
       }).join("")}</div></details>`;
   }).join("");
 }
@@ -533,7 +553,8 @@ function onField(e){
     const p=S.prep[id]||(S.prep[id]={});
     if(el.dataset.multi!==undefined){
       p.vrijednost=[...document.querySelectorAll(`[data-id="${id}"][data-multi]`)].filter(x=>x.checked).map(x=>x.dataset.multi).join(", ");
-    }else p[f]=el.value;
+    }else if(el.dataset.bool!==undefined) p[f]=el.checked?"Da":"";
+    else p[f]=el.value;
     if(f==="status"){$("pi-"+id).dataset.status=el.value;el.dataset.v=el.value;renderProgress()}
   }else if(s==="ev"){
     const ev=S.events.find(x=>x.id===id); if(!ev) return;
@@ -574,8 +595,8 @@ function payload(){
   const tp=topicById(topicId);
   return {
     tema:Object.assign({}, S.tema, {tema:tp.t, zajednica:blockName(tp.b), vlasnik_teme:OWNERS[tp.o].n}),
-    priprema:PREP.filter(it=>{const p=S.prep[it.id];return p&&["vrijednost","odgovorna_osoba","rok","status","napomena"].some(k=>p[k]&&p[k]!=="Nije započeto")})
-      .map(it=>{const p=S.prep[it.id];return {korak:it.k, stavka_id:it.id, stavka:it.l, vrijednost:p.vrijednost||"", odgovorna_osoba:p.odgovorna_osoba||"", rok:p.rok||"", status:p.status||"Nije započeto", napomena:p.napomena||""}}),
+    priprema:PREP.filter(it=>{const p=S.prep[it.id];return p&&["vrijednost","odgovorna_osoba","rok","status","napomena","poveznica","newsletter"].some(k=>p[k]&&p[k]!=="Nije započeto")})
+      .map(it=>{const p=S.prep[it.id];return {korak:it.k, stavka_id:it.id, stavka:it.l, vrijednost:p.vrijednost||"", odgovorna_osoba:p.odgovorna_osoba||"", rok:p.rok||"", status:p.status||"Nije započeto", napomena:p.napomena||"", poveznica:p.poveznica||"", newsletter:p.newsletter||""}}),
     dogadjanja:S.events.map(ev=>({dogadjanje_id:ev.id, naziv:ev.naziv||"", vrsta:ev.vrsta||"", korak:ev.korak||"", voditelj:ev.voditelj||"", odjel:ev.odjel||"", gosti:ev.gosti||"", publika:ev.publika||"", ocekivani_broj:ev.ocekivani_broj||"", datum:ev.datum||"", pocetak:ev.pocetak||"", trajanje:ev.trajanje||"", format:ev.format||"", lokacija:ev.lokacija||"", platforma:ev.platforma||"", snimanje:ev.snimanje||"", status:ev.status||"", resursi:ev.resursi||"", napomena:ev.napomena||""}))
   };
 }
@@ -593,7 +614,8 @@ async function save(force){
     if(!r.ok) throw new Error(r.error||"Spremanje nije uspjelo.");
     S.ucitano=r.azurirano;S.spremljeno=r.azurirano;S.dirty=false;saveLocal();
     remoteTopics[topicId]={azurirano:r.azurirano,planer:S.tema.planer};
-    renderTopicSelect();renderInfo();renderState();toast("Spremljeno u tablicu");
+    renderTopicSelect();renderInfo();renderState();
+    if(checkVersion(r)) toast("Spremljeno u tablicu");
   }catch(e){setErr(e.message)}finally{busy(false)}
 }
 async function load(){
@@ -606,7 +628,7 @@ async function load(){
     applyLists(r.popisi);
     const tp=topicById(topicId), n=blank(tp);
     if(r.tema){["planer","format_teme","razdoblje_od","razdoblje_do","planirani_broj_dogadjanja","napomena"].forEach(k=>n.tema[k]=r.tema[k]||"");n.ucitano=r.tema.azurirano;n.spremljeno=r.tema.azurirano}
-    (r.priprema||[]).forEach(p=>{n.prep[p.stavka_id]={vrijednost:p.vrijednost,odgovorna_osoba:p.odgovorna_osoba,rok:p.rok,status:p.status,napomena:p.napomena}});
+    (r.priprema||[]).forEach(p=>{n.prep[p.stavka_id]={vrijednost:p.vrijednost,odgovorna_osoba:p.odgovorna_osoba,rok:p.rok,status:p.status,napomena:p.napomena,poveznica:p.poveznica||"",newsletter:p.newsletter||""}});
     n.events=(r.dogadjanja||[]).map(d=>Object.assign({},d,{id:d.dogadjanje_id||newId()}));
     n.events.forEach(e=>{delete e.dogadjanje_id;delete e.tema_id;delete e.azurirano});
     S=n;saveLocal();renderAll();
@@ -620,6 +642,7 @@ async function refreshRemote(silent){
     applyLists(r.popisi);
     remoteTopics={};(r.teme||[]).forEach(t=>remoteTopics[t.tema_id]=t);
     renderAll();
+    if(!checkVersion(r)) return true;
     if(!silent) toast("Veza s tablicom radi");
     return true;
   }catch(e){if(!silent)setErr(e.message);return false}

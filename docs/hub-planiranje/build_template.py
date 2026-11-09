@@ -39,9 +39,9 @@ for r in range(1,len(rows)+1): u.cell(r,1).alignment=Alignment(wrap_text=True,ve
 teme=tab('Teme',["Tema ID","Tema","Zajednica","Vlasnik teme","Format teme","Planer/ica","Razdoblje od","Razdoblje do","Planirani broj događanja","Napomena","Ažurirano","Ažurirao/la"],
  ["PRIMJER","Kontinuirana podrška nastavnicima u planiranju i primjeni obrazovnih tehnologija","Nastavnička praksa i digitalne kompetencije","Odjel za razvoj i implementaciju obrazovnih sustava","Ciklus aktivacije","Ime Prezime","2026-11-16","2026-12-14",6,"Primjer retka","2026-11-09 12:00:00","Ime Prezime"],
  [10,48,34,34,18,18,13,13,12,30,19,18])
-prip=tab('Priprema',["Tema ID","Korak","Stavka ID","Stavka","Vrijednost","Odgovorna osoba","Rok","Status","Napomena","Ažurirano"],
- ["PRIMJER","0","p0_multilab","MultiLab za susrete","MultiLab Zagreb","Ime Prezime","2026-11-17","U tijeku","Primjer retka","2026-11-09 12:00:00"],
- [10,7,14,40,30,20,12,16,30,19])
+prip=tab('Priprema',["Tema ID","Korak","Stavka ID","Stavka","Vrijednost","Odgovorna osoba","Rok","Status","Napomena","Ažurirano","Poveznica","Newsletter / mailing lista"],
+ ["PRIMJER","0","p0_multilab","MultiLab za susrete","MultiLab Zagreb","Ime Prezime","2026-11-17","U tijeku","Primjer retka","2026-11-09 12:00:00","",""],
+ [10,7,14,40,30,20,12,16,30,19,36,14])
 dog=tab('Dogadjanja',["Tema ID","Događanje ID","Naziv","Vrsta","Korak ciklusa","Voditelj/ica","Odjel","Gosti i izlagači","Publika","Očekivani broj","Datum","Početak","Trajanje","Format","Lokacija","Platforma","Snimanje","Status","Potrebni resursi","Napomena","Ažurirano"],
  ["PRIMJER","dprimjer","Susret slušanja","Susret / sastanak skupine","Korak 3 · Slušanje","Ime Prezime","Odjel za razvoj i implementaciju obrazovnih sustava","","Nastavnici OŠ i SŠ",20,"2026-11-26","14:00","90 min","Hibridno","MultiLab Zagreb","Microsoft Teams","Da","Planirano","Ljepljivi papirići, digitalna ploča","Primjer retka","2026-11-09 12:00:00"],
  [10,14,30,24,22,18,34,22,22,10,12,9,11,11,17,16,9,12,28,28,19])

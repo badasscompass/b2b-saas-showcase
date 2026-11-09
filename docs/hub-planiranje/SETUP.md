@@ -35,7 +35,9 @@ Open the sheet → **File → Settings → Time zone** → `(GMT+01:00) Central 
 3. **Deploy**, approve the permission prompt (the script only edits this spreadsheet).
 4. Copy the **Web app URL** (ends with `/exec`).
 
-To change the script later: **Deploy → Manage deployments → Edit → Version: New version**. The URL stays the same.
+To change the script later: paste the new code, save, then **Deploy → Manage deployments → Edit → Version: New version**. The URL stays the same.
+
+Script versions: v2 adds the Priprema columns **Poveznica** and **Newsletter / mailing lista** (link to the published DOT post and whether it also went out by newsletter). The script writes their header cells itself on first use. If the page talks to an older script it shows a warning, because those two fields would not be saved.
 
 ## 4. Connect the page
 

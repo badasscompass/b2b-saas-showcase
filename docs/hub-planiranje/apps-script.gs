@@ -11,6 +11,8 @@
  *  - Do not reorder the columns of the data tabs; the order below is the contract.
  */
 
+const VERSION = 2; // the planning page warns when it talks to an older script
+
 const TABS = { teme: 'Teme', priprema: 'Priprema', dogadjanja: 'Dogadjanja', popisi: 'Popisi' };
 
 const COLS = {
@@ -18,7 +20,9 @@ const COLS = {
          'razdoblje_od', 'razdoblje_do', 'planirani_broj_dogadjanja', 'napomena',
          'azurirano', 'azurirao'],
   priprema: ['tema_id', 'korak', 'stavka_id', 'stavka', 'vrijednost', 'odgovorna_osoba',
-             'rok', 'status', 'napomena', 'azurirano'],
+             'rok', 'status', 'napomena', 'azurirano',
+             // v2: added at the end so rows saved by v1 keep their column positions
+             'poveznica', 'newsletter'],
   dogadjanja: ['tema_id', 'dogadjanje_id', 'naziv', 'vrsta', 'korak', 'voditelj', 'odjel',
                'gosti', 'publika', 'ocekivani_broj', 'datum', 'pocetak', 'trajanje', 'format',
                'lokacija', 'platforma', 'snimanje', 'status', 'resursi', 'napomena', 'azurirano']
@@ -29,6 +33,11 @@ const COLS = {
 const NUMBER_COLS = ['planirani_broj_dogadjanja', 'ocekivani_broj'];
 
 const EXAMPLE_ID = 'PRIMJER';
+
+/* Header labels for columns added after the template was created; written once if the cell is empty. */
+const ADDED_HEADERS = {
+  priprema: { poveznica: 'Poveznica', newsletter: 'Newsletter / mailing lista' }
+};
 
 function doGet(e) {
   return handle_((e && e.parameter) || {}, null);
@@ -53,7 +62,7 @@ function handle_(p, body) {
   try {
     if (p.action === 'popis') {
       return out_({
-        ok: true,
+        ok: true, verzija: VERSION,
         teme: readAll_(ss, 'teme').map(r => ({ tema_id: r.tema_id, planer: r.planer, azurirano: r.azurirano })),
         popisi: readPopisi_(ss)
       });
@@ -62,7 +71,7 @@ function handle_(p, body) {
       const id = String(p.tema || '');
       if (!id) return out_({ ok: false, error: 'Nedostaje tema.' });
       return out_({
-        ok: true,
+        ok: true, verzija: VERSION,
         tema: readAll_(ss, 'teme').find(r => r.tema_id === id) || null,
         priprema: readAll_(ss, 'priprema').filter(r => r.tema_id === id),
         dogadjanja: readAll_(ss, 'dogadjanja').filter(r => r.tema_id === id),
@@ -99,7 +108,7 @@ function save_(ss, b) {
     replace_(ss, 'teme', id, [tema]);
     replace_(ss, 'priprema', id, (data.priprema || []).map(r => Object.assign({}, r, { tema_id: id, azurirano: now })));
     replace_(ss, 'dogadjanja', id, (data.dogadjanja || []).map(r => Object.assign({}, r, { tema_id: id, azurirano: now })));
-    return out_({ ok: true, azurirano: now });
+    return out_({ ok: true, verzija: VERSION, azurirano: now });
   } finally {
     lock.releaseLock();
   }
@@ -181,6 +190,14 @@ function readPopisi_(ss) {
 function sheet_(ss, key) {
   const sh = ss.getSheetByName(TABS[key]);
   if (!sh) throw new Error('Nedostaje list „' + TABS[key] + '”.');
+  const added = ADDED_HEADERS[key];
+  if (added) {
+    const cols = COLS[key];
+    const head = sh.getRange(1, 1, 1, cols.length).getValues()[0];
+    cols.forEach((c, i) => {
+      if (added[c] && String(head[i] || '') === '') sh.getRange(1, i + 1, 1, 1).setValues([[added[c]]]);
+    });
+  }
   return sh;
 }
 
