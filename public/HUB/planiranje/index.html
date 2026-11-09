@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Planiranje teme CARNET Huba</title>
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="description" content="Interni alat za planiranje ciklusa po temi: priprema (koraci 0–2) i događanja, s pozadinskom Google tablicom.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: planning tool — header, sync bar, topic picker, preparation steps 0–2, events list, summary.
+   Same tokens as ../ciklus-aktivacije/ so the two pages read as one product. */
+:root{
+  --bg:#f3eee6; --surface:#fffcf7; --surface-2:#eef5fb; --ink:#10182a; --muted:#3d4b61; --line:#d4c8b8;
+  --accent:#1a4bd4; --accent-soft:#d9e6ff;
+  --coral:#c43c28; --coral-soft:#fde6df;
+  --teal:#0b7a6e; --teal-soft:#d7f3ee;
+  --amber:#b56a00; --amber-soft:#ffe9bf;
+  --violet:#5a47a8; --violet-soft:#ece6ff;
+  --mark:#ffd56a; --mark-ink:#3a2800;
+  --good:#147a4b; --warn:#b45309; --bad:#b42318;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#121018; --surface:#1a2234; --surface-2:#152033; --ink:#f1f3fa; --muted:#b4bfd4; --line:#3a3348;
+  --accent:#8fb0ff; --accent-soft:#24365c;
+  --coral:#ff8d78; --coral-soft:#3a1f1c;
+  --teal:#5fe0d0; --teal-soft:#163833;
+  --amber:#f0b44a; --amber-soft:#3a2c12;
+  --violet:#c4b4ff; --violet-soft:#2a2444;
+  --mark:#e0b93f; --mark-ink:#1c1500;
+  --good:#5cc995; --warn:#f0a948; --bad:#ff8a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121018; --surface:#1a2234; --surface-2:#152033; --ink:#f1f3fa; --muted:#b4bfd4; --line:#3a3348;
+  --accent:#8fb0ff; --accent-soft:#24365c;
+  --coral:#ff8d78; --coral-soft:#3a1f1c;
+  --teal:#5fe0d0; --teal-soft:#163833;
+  --amber:#f0b44a; --amber-soft:#3a2c12;
+  --violet:#c4b4ff; --violet-soft:#2a2444;
+  --mark:#e0b93f; --mark-ink:#1c1500;
+  --good:#5cc995; --warn:#f0a948; --bad:#ff8a80; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:
+  radial-gradient(1100px 420px at 0% -8%, #d7e6ff 0%, transparent 58%),
+  radial-gradient(900px 380px at 100% 0%, #ffd8c8 0%, transparent 52%),
+  var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 64px}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) body{background:
+  radial-gradient(1100px 420px at 0% -8%, #1a2a4a 0%, transparent 58%),
+  radial-gradient(900px 380px at 100% 0%, #3a221c 0%, transparent 52%), var(--bg)}}
+:root[data-theme="dark"] body{background:
+  radial-gradient(1100px 420px at 0% -8%, #1a2a4a 0%, transparent 58%),
+  radial-gradient(900px 380px at 100% 0%, #3a221c 0%, transparent 52%), var(--bg)}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.05;font-weight:700}
+h2{font-size:22px;font-weight:700}
+h3{font-size:16px;font-weight:700}
+p{margin:0;max-width:72ch}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);font-weight:500}
+.note{font-size:13px;color:var(--muted)}
+.crumb{font-size:13px;color:var(--muted);margin:0}
+.crumb a{color:var(--coral);text-decoration:none;font-weight:600}
+.crumb a:hover{text-decoration:underline;text-underline-offset:3px}
+header,.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;display:flex;flex-direction:column;gap:14px;min-width:0}
+header{border-top:5px solid var(--coral)}
+.card{border-top:4px solid var(--c,var(--accent))}
+.lede{font-size:16px;color:var(--muted)}
+.sec-head{display:flex;flex-direction:column;gap:4px}
+
+/* Buttons */
+.btn{all:unset;cursor:pointer;font-family:var(--f-mono);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--coral);color:var(--coral);background:var(--surface);text-align:center}
+.btn.primary{background:var(--coral);color:#fff}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#1a100e}}
+:root[data-theme="dark"] .btn.primary{color:#1a100e}
+.btn.ghost{border-color:var(--line);color:var(--ink)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* Form fields */
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);min-width:0}
+.f>span{font-weight:500}
+.f.wide{grid-column:1/-1}
+input,select,textarea{font:inherit;font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-height:38px;width:100%;min-width:0}
+textarea{min-height:70px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.multi{display:flex;flex-wrap:wrap;gap:6px 14px;padding:6px 0;font-size:14px;color:var(--ink)}
+.multi label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.multi input{width:auto;min-height:0;accent-color:var(--teal)}
+
+/* Sync bar */
+.sync{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;--c:var(--teal)}
+.state{display:flex;align-items:center;gap:8px;font-size:14px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--muted);flex:none}
+.state.local .dot{background:var(--amber)}
+.state.ok .dot{background:var(--good)}
+.state.dirty .dot{background:var(--coral)}
+.state.err .dot{background:var(--bad)}
+details.settings{width:100%;border-top:1px dashed var(--line);padding-top:10px}
+details.settings>summary{cursor:pointer;font-size:13px;color:var(--muted);font-weight:600}
+details.settings .fields{margin-top:10px}
+
+/* Topic info */
+.tinfo{background:var(--surface-2);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.tinfo .q{font-weight:600}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13.5px;margin:0}
+.facts dt{font-family:var(--f-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);padding-top:2px}
+.facts dd{margin:0}
+.fmt{display:inline-block;align-self:flex-start;font-family:var(--f-mono);font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600;color:var(--accent);background:var(--accent-soft)}
+
+/* Preparation steps */
+details.step{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+details.step>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between}
+details.step>summary::-webkit-details-marker{display:none}
+details.step>summary:hover{background:var(--surface-2)}
+details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:16px}
+.prog{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.bar{width:90px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--good)}
+.pitems{display:flex;flex-direction:column;gap:10px;padding:4px 16px 16px}
+.pitem{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pitem[data-status="Gotovo"]{border-left-color:var(--good)}
+.pitem[data-status="U tijeku"]{border-left-color:var(--accent)}
+.pitem[data-status="Blokirano"]{border-left-color:var(--bad)}
+.pitem[data-status="Nije primjenjivo"]{opacity:.7}
+.phead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.phead .l{font-weight:600}
+.phead select{width:auto;min-width:150px}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,.8fr) minmax(0,1.2fr);gap:10px}
+@media (max-width:760px){.pgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:440px){.pgrid{grid-template-columns:1fr}}
+
+/* Events */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;padding:4px 10px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line)}
+.chip b{font-family:var(--f-mono)}
+.chip.warn{background:var(--amber-soft);border-color:transparent}
+.evlist{display:flex;flex-direction:column;gap:10px}
+details.ev{border:1px solid var(--line);border-left:5px solid var(--vc,var(--line));border-radius:10px;background:var(--surface)}
+details.ev>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+details.ev>summary::-webkit-details-marker{display:none}
+details.ev>summary:hover{background:var(--surface-2)}
+.ev .vr{font-family:var(--f-mono);font-size:11.5px;font-weight:600;color:var(--vc,var(--muted))}
+.ev .nm{font-weight:600;flex:1 1 220px;min-width:0;overflow-wrap:anywhere}
+.ev .dt{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.ev .ss{font-size:12px;padding:2px 8px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line)}
+.evbody{padding:4px 14px 14px;display:flex;flex-direction:column;gap:12px}
+fieldset{border:1px solid var(--line);border-radius:8px;padding:10px 12px 12px;margin:0;min-width:0}
+legend{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);padding:0 6px}
+.empty{border:1px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:14px}
+footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);padding-top:14px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:calc(100% - 32px);z-index:10;display:none}
+.toast.show{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="crumb"><a href="../">CARNET Hub</a> · <a href="../ciklus-aktivacije/">Ciklus aktivacije</a> · Planiranje teme</p>
+  <span class="eyebrow">CARNET Hub · Interni alat za planiranje</span>
+  <h1>Planiranje teme</h1>
+  <p class="lede">Za odabranu temu isplanirajte pripremu (koraci 0–2) i sva događanja u ciklusu: tko, kada i gdje. Unosi se automatski čuvaju u ovom pregledniku, a gumbom „Spremi u tablicu” šalju se u zajedničku Google tablicu.</p>
+</header>
+
+<section class="card sync" aria-label="Veza s tablicom">
+  <div class="state local" id="state" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="stateText">Spremljeno samo u ovom pregledniku</span></div>
+  <div class="btns">
+    <button class="btn ghost" id="btnLoad" type="button">Učitaj iz tablice</button>
+    <button class="btn primary" id="btnSave" type="button">Spremi u tablicu</button>
+  </div>
+  <details class="settings" id="settings">
+    <summary>Postavke veze s tablicom</summary>
+    <div class="fields">
+      <label class="f wide"><span>Adresa web-aplikacije (Apps Script, završava na /exec)</span><input id="apiUrl" type="url" placeholder="https://script.google.com/macros/s/…/exec" autocomplete="off" spellcheck="false"></label>
+      <label class="f"><span>Kod za planiranje</span><input id="apiKod" type="password" autocomplete="off"></label>
+      <div class="f"><span>&nbsp;</span><button class="btn ghost" id="btnTest" type="button">Spremi postavke i provjeri vezu</button></div>
+    </div>
+    <p class="note" style="margin-top:8px">Adresa i kod čuvaju se samo u ovom pregledniku. Kod dobivate od administratora tablice.</p>
+  </details>
+</section>
+
+<section class="card" style="--c:var(--coral)" aria-labelledby="tema-h">
+  <div class="sec-head"><span class="eyebrow">1 · Tema</span><h2 id="tema-h">Odabir teme i okvir ciklusa</h2></div>
+  <label class="f"><span>Tema (21 tema iz upitnika, po tematskim zajednicama)</span><select id="topic"></select></label>
+  <div class="tinfo" id="tinfo"></div>
+  <div class="fields" id="temaFields"></div>
+</section>
+
+<section class="card" style="--c:var(--teal)" aria-labelledby="prep-h">
+  <div class="sec-head"><span class="eyebrow">2 · Priprema</span><h2 id="prep-h">Koraci 0–2: usklađivanje, sudizajn, okupljanje</h2>
+    <p class="note">Svaka stavka ima vrijednost, odgovornu osobu, rok i status. Stavke prate kontrolne popise iz vodiča Ciklus aktivacije.</p></div>
+  <div id="prep" style="display:flex;flex-direction:column;gap:10px"></div>
+</section>
+
+<section class="card" style="--c:var(--violet)" aria-labelledby="ev-h">
+  <div class="sec-head"><span class="eyebrow">3 · Događanja</span><h2 id="ev-h">Događanja u ciklusu teme</h2>
+    <p class="note">Dodajte svako događanje: radionicu, panel ili okrugli stol, webinar ili susret skupine. Za svako odredite tko ga vodi, kada je i gdje se održava.</p></div>
+  <div class="chips" id="evSummary" aria-live="polite"></div>
+  <div class="btns">
+    <button class="btn primary" id="btnAddEv" type="button">+ Dodaj događanje</button>
+    <button class="btn ghost" id="btnAddCycle" type="button">+ Dodaj susrete ciklusa (koraci 3–7)</button>
+  </div>
+  <div class="evlist" id="evlist"></div>
+</section>
+
+<footer>Nacrt v0.1 · 9. studenoga 2026. · Povezano s vodičem <a href="../ciklus-aktivacije/">Ciklus aktivacije</a>. Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../hub-data.js"></script>
+<script>
+/* ---------- Configuration ---------- */
+/* Default Apps Script web-app URL. Leave empty until deployed; planners can also set it under "Postavke veze". */
+const DEFAULT_API_URL = "";
+
+/* Default dropdown values. The Popisi tab of the Google Sheet overrides any list it defines (same header name). */
+const LISTS_DEFAULT = {
+  "Vrsta događanja": ["Radionica","Panel / okrugli stol","Webinar","Susret / sastanak skupine"],
+  "Format teme": ["Ciklus aktivacije","Događanje u ritmu","Radna skupina","Strateški okvir"],
+  "Korak ciklusa": ["Korak 0 · Usklađivanje","Korak 1 · Sudizajn","Korak 2 · Okupljanje","Korak 3 · Slušanje","Korak 4 · Sukreacija","Korak 5 · Isprobavanje","Korak 6 · Predstavljanje","Korak 7 · Refleksija","Izvan koraka ciklusa"],
+  "Publika": ["Nastavnici OŠ","Nastavnici SŠ","Nastavnici OŠ i SŠ","Nastavno osoblje visokih učilišta","Budući nastavnici","IT osoblje ustanova","Ravnatelji i uprave","Mješovita publika"],
+  "Trajanje": ["45 min","60 min","90 min","120 min","Pola dana","Cijeli dan"],
+  "Format": ["Uživo","Hibridno","Online"],
+  "Lokacija": ["MultiLab Zagreb","MultiLab Rijeka","MultiLab Osijek","MultiLab Split","Online","Drugo"],
+  "Platforma": ["Loomen","Microsoft Teams","Zoom","Nije potrebno","Drugo"],
+  "Status događanja": ["Ideja","Planirano","Potvrđeno","Održano","Otkazano"],
+  "Status stavke": ["Nije započeto","U tijeku","Gotovo","Blokirano","Nije primjenjivo"],
+  "Da/Ne": ["Da","Ne"],
+  "Kanal poziva": ["E-pošta","Mreža odjela","Objava na DOT-u","Društvene mreže","Osobni kontakt"],
+  "Odjel": Object.values(OWNERS).map(o=>o.n).concat(["Vanjski partner"])
+};
+let LISTS = JSON.parse(JSON.stringify(LISTS_DEFAULT));
+
+/* Preparation items for steps 0–2. t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
+const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
+const PREP = [
+  {id:"p0_vlasnik", k:0, l:"Vlasnik teme (odjel)", t:"text", pre:tp=>OWNERS[tp.o].n},
+  {id:"p0_voditelj", k:0, l:"Imenovani voditelj/ica iz odjela", t:"text"},
+  {id:"p0_sati", k:0, l:"Dogovoreni sati djelatnika CARNET-a", t:"number"},
+  {id:"p0_multilab", k:0, l:"MultiLab za susrete", t:"list:Lokacija"},
+  {id:"p0_ml_prvi", k:0, l:"MultiLab rezerviran: prvi susret", t:"date"},
+  {id:"p0_ml_dan", k:0, l:"MultiLab rezerviran: dan predstavljanja", t:"date"},
+  {id:"p0_urednik", k:0, l:"Glavni urednik DOT-a (kontakt)", t:"text"},
+  {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv (datum)", t:"date"},
+  {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli (datum)", t:"date"},
+  {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju (datum)", t:"date"},
+  {id:"p0_dot4", k:0, l:"DOT objava 4 · Rezultati (datum)", t:"date"},
+  {id:"p1_validator", k:1, l:"Akademski validator (ime)", t:"text"},
+  {id:"p1_val_ust", k:1, l:"Ustanova validatora", t:"text"},
+  {id:"p1_val_potvrda", k:1, l:"Validator potvrdio sudjelovanje", t:"list:Da/Ne"},
+  {id:"p1_kpi", k:1, l:"Ciljane vrijednosti pokazatelja dogovorene", t:"list:Da/Ne"},
+  {id:"p1_kanali", k:1, l:"Kanali poziva", t:"multi:Kanal poziva"},
+  {id:"p1_loomen", k:1, l:"Poveznica na e-kolegij na Loomenu", t:"url"},
+  {id:"p1_obrazac", k:1, l:"Poveznica na obrazac za prijavu na DOT-u", t:"url"},
+  {id:"p1_predlosci", k:1, l:"Predlošci poziva i susreta prilagođeni", t:"list:Da/Ne"},
+  {id:"p2_poziv", k:2, l:"Datum slanja poziva", t:"date"},
+  {id:"p2_rok", k:2, l:"Rok za prijave", t:"date"},
+  {id:"p2_cilj", k:2, l:"Ciljani broj sudionika", t:"number"},
+  {id:"p2_prijave", k:2, l:"Broj prijavljenih", t:"number"},
+  {id:"p2_uzivo", k:2, l:"Prijavljeni uživo", t:"number"},
+  {id:"p2_daljina", k:2, l:"Prijavljeni na daljinu", t:"number"},
+  {id:"p2_vodstvo", k:2, l:"Obavijesti vodstvu ustanova poslane", t:"list:Da/Ne"},
+  {id:"p2_podsjetnik", k:2, l:"Podsjetnik prijavljenima poslan", t:"list:Da/Ne"}
+];
+
+/* Standard cycle meetings (steps 3–7 of the Ciklus aktivacije guide). */
+const CYCLE_EVENTS = [
+  {naziv:"Susret slušanja", korak:"Korak 3 · Slušanje", trajanje:"90 min", format:"Hibridno"},
+  {naziv:"Sukreacijski susret", korak:"Korak 4 · Sukreacija", trajanje:"120 min", format:"Hibridno"},
+  {naziv:"Provjera isprobavanja", korak:"Korak 5 · Isprobavanje", trajanje:"45 min", format:"Online", lokacija:"Online"},
+  {naziv:"Dan predstavljanja", korak:"Korak 6 · Predstavljanje", trajanje:"90 min", format:"Hibridno"},
+  {naziv:"Retrospektiva", korak:"Korak 7 · Refleksija", trajanje:"60 min", format:"Online", lokacija:"Online"}
+];
+const EV_COLORS = {"Radionica":"var(--teal)","Panel / okrugli stol":"var(--amber)","Webinar":"var(--accent)","Susret / sastanak skupine":"var(--violet)"};
+const STRATEGIC = {id:"S", n:"Strateški okvir · iznad svih zajednica"};
+
+/* ---------- Helpers ---------- */
+const $ = id => document.getElementById(id);
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}
+const store = {
+  get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+function topicById(id){return TOPICS.find(t=>t.id===id)}
+function blockName(id){return id==="S"?STRATEGIC.n:(BLOCKS.find(b=>b.id===id)||{}).n||id}
+function newId(){return "d"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),3200)}
+function opts(list, val, blank){
+  const l=LISTS[list]||[]; const extra=val&&!l.includes(val)?[val]:[];
+  return (blank?`<option value="">${esc(blank)}</option>`:"")+l.concat(extra).map(o=>`<option${o===val?" selected":""}>${esc(o)}</option>`).join("");
+}
+
+/* ---------- State ---------- */
+let topicId = null, S = null;
+const keyFor = id => "hubplan-v1-"+id;
+function blank(tp){
+  return {tema:{planer:"", format_teme:(FORMATS[tp.f]||{}).l||"", razdoblje_od:"", razdoblje_do:"", planirani_broj_dogadjanja:"", napomena:""},
+          prep:{}, events:[], ucitano:"", dirty:false, spremljeno:""};
+}
+function loadLocal(id){const tp=topicById(id);const s=store.get(keyFor(id));return s&&s.tema?Object.assign(blank(tp),s):blank(tp)}
+function saveLocal(){store.set(keyFor(topicId),S)}
+function touch(){S.dirty=true;saveLocal();renderState()}
+
+/* ---------- Connection ---------- */
+function apiCfg(){return {url:(store.get("hubplan-url")||DEFAULT_API_URL||"").trim(), kod:store.get("hubplan-kod")||""}}
+async function api(action, params, body){
+  const {url,kod}=apiCfg();
+  if(!url) throw new Error("Veza s tablicom nije postavljena. Otvorite „Postavke veze s tablicom”.");
+  if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)) throw new Error("Adresa mora biti adresa Apps Script web-aplikacije (https://script.google.com/…).");
+  const ctl=new AbortController(); const t=setTimeout(()=>ctl.abort(),25000);
+  try{
+    let r;
+    if(body){
+      r=await fetch(url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({},body,{action,kod})),signal:ctl.signal});
+    }else{
+      r=await fetch(url+"?"+new URLSearchParams(Object.assign({},params,{action,kod})),{signal:ctl.signal});
+    }
+    const j=await r.json();
+    return j;
+  }catch(e){
+    throw new Error(e.name==="AbortError"?"Tablica ne odgovara (isteklo vrijeme).":"Veza s tablicom nije uspjela. Provjerite adresu i internetsku vezu.");
+  }finally{clearTimeout(t)}
+}
+let remoteTopics = {};
+function applyLists(p){
+  LISTS=JSON.parse(JSON.stringify(LISTS_DEFAULT));
+  if(p) Object.keys(p).forEach(k=>{if(Array.isArray(p[k])&&p[k].length) LISTS[k]=p[k]});
+}
+
+/* ---------- Rendering ---------- */
+function renderTopicSelect(){
+  const groups=BLOCKS.map(b=>b.id).concat(["S"]);
+  $("topic").innerHTML=`<option value="">— Odaberite temu —</option>`+groups.map(g=>{
+    const ts=TOPICS.filter(t=>t.b===g); if(!ts.length) return "";
+    const label=g==="S"?STRATEGIC.n:(g==="Z"?"Izvan ritma · ":"Zajednica "+g+" · ")+(g==="S"?"":blockName(g).replace(" · izvan trenutnog ritma",""));
+    return `<optgroup label="${esc(label)}">${ts.map(t=>`<option value="${t.id}"${t.id===topicId?" selected":""}>${remoteTopics[t.id]?"● ":""}${esc(t.t)} (${esc(FORMATS[t.f].l)})</option>`).join("")}</optgroup>`;
+  }).join("");
+}
+function renderInfo(){
+  const tp=topicById(topicId), el=$("tinfo");
+  if(!tp){el.innerHTML=`<p class="note">Odaberite temu da biste započeli planiranje.</p>`;return}
+  const o=OWNERS[tp.o];
+  el.innerHTML=`<span class="fmt">${esc(FORMATS[tp.f].l)}</span>
+    ${tp.q?`<p class="q">${esc(tp.q)}</p>`:""}
+    ${tp.rh?`<p>${esc(tp.rh)}</p>`:""}
+    <dl class="facts"><dt>Zajednica</dt><dd>${esc(blockName(tp.b))}</dd><dt>Vlasnik teme</dt><dd>${esc(o.n)}</dd><dt>Mreža</dt><dd>${esc(o.s)}</dd>${remoteTopics[tp.id]?`<dt>U tablici</dt><dd>zadnje spremanje ${esc(remoteTopics[tp.id].azurirano)}${remoteTopics[tp.id].planer?" · "+esc(remoteTopics[tp.id].planer):""}</dd>`:""}</dl>`;
+}
+function renderTema(){
+  const t=S.tema;
+  $("temaFields").innerHTML=`
+    <label class="f"><span>Planer/ica teme</span><input data-s="tema" data-f="planer" value="${esc(t.planer)}" autocomplete="name"></label>
+    <label class="f"><span>Format teme</span><select data-s="tema" data-f="format_teme">${opts("Format teme",t.format_teme)}</select></label>
+    <label class="f"><span>Razdoblje ciklusa od</span><input type="date" data-s="tema" data-f="razdoblje_od" value="${esc(t.razdoblje_od)}"></label>
+    <label class="f"><span>Razdoblje ciklusa do</span><input type="date" data-s="tema" data-f="razdoblje_do" value="${esc(t.razdoblje_do)}"></label>
+    <label class="f"><span>Planirani broj događanja</span><input type="number" min="0" step="1" inputmode="numeric" data-s="tema" data-f="planirani_broj_dogadjanja" value="${esc(t.planirani_broj_dogadjanja)}"></label>
+    <label class="f wide"><span>Napomena o temi</span><textarea data-s="tema" data-f="napomena">${esc(t.napomena)}</textarea></label>`;
+}
+function prepVal(it){const p=S.prep[it.id]||{};return p}
+function valueInput(it,p){
+  const v=p.vrijednost??"", a=`data-s="prep" data-id="${it.id}" data-f="vrijednost"`;
+  const [kind,list]=it.t.split(":");
+  if(kind==="list") return `<select ${a}>${opts(list,v,"—")}</select>`;
+  if(kind==="multi"){
+    const sel=String(v).split(",").map(x=>x.trim()).filter(Boolean);
+    return `<div class="multi" role="group" aria-label="${esc(it.l)}">${(LISTS[list]||[]).map(o=>`<label><input type="checkbox" data-s="prep" data-id="${it.id}" data-f="vrijednost" data-multi="${esc(o)}"${sel.includes(o)?" checked":""}>${esc(o)}</label>`).join("")}</div>`;
+  }
+  const type={number:"number",date:"date",url:"url"}[kind]||"text";
+  return `<input type="${type}" ${a} value="${esc(v)}"${type==="number"?' min="0" inputmode="numeric"':""}${type==="url"?' placeholder="https://"':""}>`;
+}
+function stepProgress(k){const items=PREP.filter(i=>i.k===k);const done=items.filter(i=>["Gotovo","Nije primjenjivo"].includes(prepVal(i).status)).length;return [done,items.length]}
+function renderPrep(){
+  const tp=topicById(topicId);
+  $("prep").innerHTML=[0,1,2].map(k=>{
+    const [d,n]=stepProgress(k);
+    return `<details class="step"${k===0?" open":""}>
+      <summary><span class="t">Korak ${k} · ${STEP_NAMES[k]}</span><span class="prog" id="prog${k}"><span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo</span></summary>
+      <div class="pitems">${PREP.filter(i=>i.k===k).map(it=>{
+        if(!S.prep[it.id]&&it.pre&&tp) S.prep[it.id]={vrijednost:it.pre(tp)};
+        const p=prepVal(it);
+        return `<div class="pitem" data-status="${esc(p.status||"")}" id="pi-${it.id}">
+          <div class="phead"><span class="l">${esc(it.l)}</span><select aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
+          <div class="pgrid">
+            <div class="f"><span>Vrijednost</span>${valueInput(it,p)}</div>
+            <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" value="${esc(p.odgovorna_osoba||"")}"></label>
+            <label class="f"><span>Rok</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
+            <label class="f"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
+          </div></div>`;
+      }).join("")}</div></details>`;
+  }).join("");
+  // value inputs that are plain inputs need an accessible name; the visible "Vrijednost" span is not a <label>
+  PREP.forEach(it=>{const el=document.querySelector(`[data-id="${it.id}"][data-f="vrijednost"]:not([data-multi])`);if(el)el.setAttribute("aria-label",it.l)});
+}
+function renderProgress(){
+  [0,1,2].forEach(k=>{const [d,n]=stepProgress(k);$("prog"+k).innerHTML=`<span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo`});
+}
+function evSummaryHtml(ev){
+  return `<span class="vr">${esc(ev.vrsta||"Vrsta nije odabrana")}</span><span class="nm">${esc(ev.naziv||"Događanje bez naziva")}</span><span class="dt">${esc([ev.datum,ev.pocetak].filter(Boolean).join(" · ")||"bez datuma")}${ev.lokacija?" · "+esc(ev.lokacija):""}</span><span class="ss">${esc(ev.status||"—")}</span>`;
+}
+function evField(ev,f,label,inner,wide){return `<label class="f${wide?" wide":""}"><span>${label}</span>${inner}</label>`}
+function evInput(ev,f,type,extra){return `<input type="${type||"text"}" data-s="ev" data-id="${ev.id}" data-f="${f}" value="${esc(ev[f]||"")}"${extra||""}>`}
+function evSelect(ev,f,list){return `<select data-s="ev" data-id="${ev.id}" data-f="${f}">${opts(list,ev[f]||"","—")}</select>`}
+function renderEvents(openId){
+  const el=$("evlist");
+  if(!S.events.length){el.innerHTML=`<div class="empty">Još nema događanja. Dodajte prvo događanje ili standardne susrete ciklusa.</div>`;renderEvSummary();return}
+  el.innerHTML=S.events.map((ev,i)=>`
+    <details class="ev" id="ev-${ev.id}" style="--vc:${EV_COLORS[ev.vrsta]||"var(--line)"}"${ev.id===openId?" open":""}>
+      <summary id="evs-${ev.id}">${evSummaryHtml(ev)}</summary>
+      <div class="evbody">
+        <div class="fields">
+          ${evField(ev,"naziv","Naziv događanja",evInput(ev,"naziv"),true)}
+          ${evField(ev,"vrsta","Vrsta",evSelect(ev,"vrsta","Vrsta događanja"))}
+          ${evField(ev,"korak","Korak ciklusa",evSelect(ev,"korak","Korak ciklusa"))}
+          ${evField(ev,"status","Status",evSelect(ev,"status","Status događanja"))}
+        </div>
+        <fieldset><legend>Tko</legend><div class="fields">
+          ${evField(ev,"voditelj","Voditelj/ica ili moderator/ica",evInput(ev,"voditelj"))}
+          ${evField(ev,"odjel","Odjel",evSelect(ev,"odjel","Odjel"))}
+          ${evField(ev,"gosti","Gosti i izlagači",evInput(ev,"gosti"))}
+          ${evField(ev,"publika","Publika",evSelect(ev,"publika","Publika"))}
+          ${evField(ev,"ocekivani_broj","Očekivani broj sudionika",evInput(ev,"ocekivani_broj","number",' min="0" inputmode="numeric"'))}
+        </div></fieldset>
+        <fieldset><legend>Kada</legend><div class="fields">
+          ${evField(ev,"datum","Datum",evInput(ev,"datum","date"))}
+          ${evField(ev,"pocetak","Početak",evInput(ev,"pocetak","time"))}
+          ${evField(ev,"trajanje","Trajanje",evSelect(ev,"trajanje","Trajanje"))}
+        </div></fieldset>
+        <fieldset><legend>Gdje</legend><div class="fields">
+          ${evField(ev,"format","Format",evSelect(ev,"format","Format"))}
+          ${evField(ev,"lokacija","Lokacija",evSelect(ev,"lokacija","Lokacija"))}
+          ${evField(ev,"platforma","Platforma za sudjelovanje na daljinu",evSelect(ev,"platforma","Platforma"))}
+          ${evField(ev,"snimanje","Snimanje",evSelect(ev,"snimanje","Da/Ne"))}
+        </div></fieldset>
+        <fieldset><legend>Resursi i napomene</legend><div class="fields">
+          ${evField(ev,"resursi","Potrebni resursi",`<textarea data-s="ev" data-id="${ev.id}" data-f="resursi">${esc(ev.resursi||"")}</textarea>`)}
+          ${evField(ev,"napomena","Napomena",`<textarea data-s="ev" data-id="${ev.id}" data-f="napomena">${esc(ev.napomena||"")}</textarea>`)}
+        </div></fieldset>
+        <div class="btns">
+          <button class="btn ghost" type="button" data-act="copy" data-id="${ev.id}">Kopiraj događanje</button>
+          <button class="btn ghost" type="button" data-act="del" data-id="${ev.id}">Ukloni</button>
+        </div>
+      </div>
+    </details>`).join("");
+  renderEvSummary();
+}
+function renderEvSummary(){
+  const n=S.events.length, plan=parseInt(S.tema.planirani_broj_dogadjanja,10);
+  const byType=(LISTS["Vrsta događanja"]||[]).map(v=>[v,S.events.filter(e=>e.vrsta===v).length]).filter(x=>x[1]);
+  const noType=S.events.filter(e=>!e.vrsta).length;
+  const byStatus=(LISTS["Status događanja"]||[]).map(v=>[v,S.events.filter(e=>e.status===v).length]).filter(x=>x[1]);
+  let html=`<span class="chip${!isNaN(plan)&&plan!==n?" warn":""}">Ukupno <b>${n}</b>${!isNaN(plan)?` od planiranih <b>${plan}</b>`:""}</span>`;
+  html+=byType.map(([v,c])=>`<span class="chip">${esc(v)} <b>${c}</b></span>`).join("");
+  if(noType) html+=`<span class="chip warn">Bez vrste <b>${noType}</b></span>`;
+  html+=byStatus.map(([v,c])=>`<span class="chip">${esc(v)} <b>${c}</b></span>`).join("");
+  $("evSummary").innerHTML=html;
+}
+function renderState(){
+  const st=$("state"), tx=$("stateText"), {url}=apiCfg();
+  st.className="state "+(S&&S.dirty?(url?"dirty":"local"):(S&&S.spremljeno?"ok":"local"));
+  if(!S){tx.textContent="Odaberite temu";return}
+  if(!url) tx.textContent="Spremljeno samo u ovom pregledniku · veza s tablicom nije postavljena";
+  else if(S.dirty) tx.textContent="Nespremljene promjene u tablici";
+  else if(S.spremljeno) tx.textContent="Spremljeno u tablicu · "+S.spremljeno;
+  else tx.textContent="Spremljeno u ovom pregledniku";
+}
+function setErr(msg){$("state").className="state err";$("stateText").textContent=msg}
+function renderAll(){
+  renderTopicSelect();renderInfo();
+  const on=!!S;
+  ["temaFields","prep","evlist","evSummary"].forEach(id=>$(id).hidden=!on);
+  ["btnAddEv","btnAddCycle","btnLoad","btnSave"].forEach(id=>$(id).disabled=!on);
+  if(on){renderTema();renderPrep();renderEvents()}
+  renderState();
+}
+
+/* ---------- Topic switching ---------- */
+function selectTopic(id){
+  topicId=topicById(id)?id:null;
+  S=topicId?loadLocal(topicId):null;
+  store.set("hubplan-last",topicId);
+  const u=new URL(location.href); if(topicId)u.searchParams.set("tema",topicId);else u.searchParams.delete("tema"); history.replaceState(null,"",u);
+  renderAll();
+}
+
+/* ---------- Input handling (delegated, no full re-render so focus stays put) ---------- */
+function onField(e){
+  const el=e.target; const s=el.dataset&&el.dataset.s; if(!s||!S) return;
+  const f=el.dataset.f, id=el.dataset.id;
+  if(s==="tema"){S.tema[f]=el.value;if(f==="planirani_broj_dogadjanja")renderEvSummary()}
+  else if(s==="prep"){
+    const p=S.prep[id]||(S.prep[id]={});
+    if(el.dataset.multi!==undefined){
+      p.vrijednost=[...document.querySelectorAll(`[data-id="${id}"][data-multi]`)].filter(x=>x.checked).map(x=>x.dataset.multi).join(", ");
+    }else p[f]=el.value;
+    if(f==="status"){$("pi-"+id).dataset.status=el.value;renderProgress()}
+  }else if(s==="ev"){
+    const ev=S.events.find(x=>x.id===id); if(!ev) return;
+    ev[f]=el.value;
+    if(["naziv","vrsta","datum","pocetak","lokacija","status"].includes(f)){$("evs-"+id).innerHTML=evSummaryHtml(ev);if(f==="vrsta")$("ev-"+id).style.setProperty("--vc",EV_COLORS[ev.vrsta]||"var(--line)");renderEvSummary()}
+  }
+  touch();
+}
+document.addEventListener("input",onField);
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]"); if(!b||!S) return;
+  const i=S.events.findIndex(x=>x.id===b.dataset.id); if(i<0) return;
+  if(b.dataset.act==="del"){
+    if(!confirm(`Ukloniti događanje „${S.events[i].naziv||"bez naziva"}”?`)) return;
+    S.events.splice(i,1);touch();renderEvents();toast("Događanje uklonjeno");
+  }else if(b.dataset.act==="copy"){
+    const c=Object.assign({},S.events[i],{id:newId(),naziv:(S.events[i].naziv||"Događanje")+" (kopija)",status:"Ideja"});
+    S.events.splice(i+1,0,c);touch();renderEvents(c.id);$("ev-"+c.id).scrollIntoView({behavior:"smooth",block:"nearest"});
+  }
+});
+$("topic").addEventListener("change",e=>selectTopic(e.target.value));
+$("btnAddEv").onclick=()=>{
+  const ev={id:newId(),naziv:"",vrsta:"",korak:"",status:"Ideja",snimanje:"Da",odjel:OWNERS[topicById(topicId).o].n};
+  S.events.push(ev);touch();renderEvents(ev.id);
+  const d=$("ev-"+ev.id);d.scrollIntoView({behavior:"smooth",block:"center"});d.querySelector("input").focus({preventScroll:true});
+};
+$("btnAddCycle").onclick=()=>{
+  const have=new Set(S.events.map(e=>e.korak));
+  const add=CYCLE_EVENTS.filter(c=>!have.has(c.korak));
+  if(!add.length){toast("Susreti ciklusa za korake 3–7 već su dodani");return}
+  const odjel=OWNERS[topicById(topicId).o].n;
+  add.forEach(c=>S.events.push(Object.assign({id:newId(),vrsta:"Susret / sastanak skupine",status:"Planirano",snimanje:"Da",odjel},c)));
+  touch();renderEvents();toast(`Dodano susreta: ${add.length}`);
+};
+
+/* ---------- Sync with the Google Sheet ---------- */
+function payload(){
+  const tp=topicById(topicId);
+  return {
+    tema:Object.assign({}, S.tema, {tema:tp.t, zajednica:blockName(tp.b), vlasnik_teme:OWNERS[tp.o].n}),
+    priprema:PREP.filter(it=>{const p=S.prep[it.id];return p&&["vrijednost","odgovorna_osoba","rok","status","napomena"].some(k=>p[k]&&p[k]!=="Nije započeto")})
+      .map(it=>{const p=S.prep[it.id];return {korak:it.k, stavka_id:it.id, stavka:it.l, vrijednost:p.vrijednost||"", odgovorna_osoba:p.odgovorna_osoba||"", rok:p.rok||"", status:p.status||"Nije započeto", napomena:p.napomena||""}}),
+    dogadjanja:S.events.map(ev=>({dogadjanje_id:ev.id, naziv:ev.naziv||"", vrsta:ev.vrsta||"", korak:ev.korak||"", voditelj:ev.voditelj||"", odjel:ev.odjel||"", gosti:ev.gosti||"", publika:ev.publika||"", ocekivani_broj:ev.ocekivani_broj||"", datum:ev.datum||"", pocetak:ev.pocetak||"", trajanje:ev.trajanje||"", format:ev.format||"", lokacija:ev.lokacija||"", platforma:ev.platforma||"", snimanje:ev.snimanje||"", status:ev.status||"", resursi:ev.resursi||"", napomena:ev.napomena||""}))
+  };
+}
+function busy(on){$("btnTest").disabled=on;["btnLoad","btnSave"].forEach(id=>$(id).disabled=on||!S)}
+async function save(force){
+  if(!S) return;
+  busy(true);$("stateText").textContent="Spremanje u tablicu…";
+  try{
+    const r=await api("spremi",null,{tema:topicId, ucitano:S.ucitano, prepisi:!!force, podaci:payload()});
+    if(!r.ok&&r.code==="conflict"){
+      busy(false);
+      if(confirm(`Ovu je temu u tablicu spremio/la ${r.azurirao||"netko drugi"} (${r.azurirano}) nakon što ste je vi učitali.\n\nU redu: prepisati tablicu vašom verzijom.\nOdustani: ne spremati; zatim možete učitati njihovu verziju.`)) return save(true);
+      renderState();return;
+    }
+    if(!r.ok) throw new Error(r.error||"Spremanje nije uspjelo.");
+    S.ucitano=r.azurirano;S.spremljeno=r.azurirano;S.dirty=false;saveLocal();
+    remoteTopics[topicId]={azurirano:r.azurirano,planer:S.tema.planer};
+    renderTopicSelect();renderInfo();renderState();toast("Spremljeno u tablicu");
+  }catch(e){setErr(e.message)}finally{busy(false)}
+}
+async function load(){
+  if(!S) return;
+  if(S.dirty&&!confirm("Imate promjene koje nisu spremljene u tablicu. Učitavanje iz tablice zamijenit će ih. Nastaviti?")) return;
+  busy(true);$("stateText").textContent="Učitavanje iz tablice…";
+  try{
+    const r=await api("ucitaj",{tema:topicId});
+    if(!r.ok) throw new Error(r.error||"Učitavanje nije uspjelo.");
+    applyLists(r.popisi);
+    const tp=topicById(topicId), n=blank(tp);
+    if(r.tema){["planer","format_teme","razdoblje_od","razdoblje_do","planirani_broj_dogadjanja","napomena"].forEach(k=>n.tema[k]=r.tema[k]||"");n.ucitano=r.tema.azurirano;n.spremljeno=r.tema.azurirano}
+    (r.priprema||[]).forEach(p=>{n.prep[p.stavka_id]={vrijednost:p.vrijednost,odgovorna_osoba:p.odgovorna_osoba,rok:p.rok,status:p.status,napomena:p.napomena}});
+    n.events=(r.dogadjanja||[]).map(d=>Object.assign({},d,{id:d.dogadjanje_id||newId()}));
+    n.events.forEach(e=>{delete e.dogadjanje_id;delete e.tema_id;delete e.azurirano});
+    S=n;saveLocal();renderAll();
+    toast(r.tema?"Učitano iz tablice":"Tema još nije spremljena u tablicu; prikazan je prazan plan");
+  }catch(e){setErr(e.message)}finally{busy(false)}
+}
+async function refreshRemote(silent){
+  try{
+    const r=await api("popis");
+    if(!r.ok) throw new Error(r.error||"Provjera nije uspjela.");
+    applyLists(r.popisi);
+    remoteTopics={};(r.teme||[]).forEach(t=>remoteTopics[t.tema_id]=t);
+    renderAll();
+    if(!silent) toast("Veza s tablicom radi");
+    return true;
+  }catch(e){if(!silent)setErr(e.message);return false}
+}
+$("btnSave").onclick=()=>save(false);
+$("btnLoad").onclick=load;
+$("btnTest").onclick=async()=>{
+  store.set("hubplan-url",$("apiUrl").value.trim());store.set("hubplan-kod",$("apiKod").value);
+  busy(true);$("stateText").textContent="Provjera veze…";
+  if(await refreshRemote(false))$("settings").open=false;
+  busy(false);
+};
+addEventListener("beforeunload",e=>{if(S&&S.dirty&&apiCfg().url){e.preventDefault();e.returnValue=""}});
+
+/* ---------- Start ---------- */
+(function init(){
+  const cfg=apiCfg();$("apiUrl").value=cfg.url;$("apiKod").value=cfg.kod;
+  if(!cfg.url)$("settings").open=true;
+  const q=new URLSearchParams(location.search).get("tema");
+  selectTopic(topicById(q)?q:(store.get("hubplan-last")||""));
+  if(cfg.url&&cfg.kod) refreshRemote(true);
+})();
+</script>
+</body>
+</html>
