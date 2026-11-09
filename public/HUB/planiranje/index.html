@@ -586,6 +586,11 @@ function evSummaryHtml(ev){
 }
 function evField(ev,f,label,inner,wide){return `<label class="f${wide?" wide":""}" id="evf-${f}-${ev.id}"><span>${label}</span>${inner}</label>`}
 function evInput(ev,f,type,extra){return `<input type="${type||"text"}" data-s="ev" data-id="${ev.id}" data-f="${f}" value="${esc(ev[f]||"")}"${extra||""}>`}
+/* Multiple choice for an event field: stored as "A, B" in one sheet cell. */
+function evMulti(ev,f,label,list,wide){
+  const sel=String(ev[f]||"").split(",").map(x=>x.trim()).filter(Boolean);
+  return `<div class="f${wide?" wide":""}" id="evf-${f}-${ev.id}"><span>${label}</span><div class="multi" role="group" aria-label="${esc(label)}">${(LISTS[list]||[]).map(o=>`<label><input type="checkbox" data-s="ev" data-id="${ev.id}" data-f="${f}" data-multi="${esc(o)}"${sel.includes(o)?" checked":""}>${esc(o)}</label>`).join("")}</div></div>`;
+}
 function evSelect(ev,f,list){return `<select data-s="ev" data-id="${ev.id}" data-f="${f}">${opts(list,ev[f]||"","—")}</select>`}
 function renderEvents(openId){
   const el=$("evlist");
@@ -600,14 +605,13 @@ function renderEvents(openId){
         <div class="fields">
           ${evField(ev,"naziv","Naziv događanja",evInput(ev,"naziv"),true)}
           ${evField(ev,"vrsta","Vrsta",evSelect(ev,"vrsta","Vrsta događanja"))}
-          ${evField(ev,"korak","Korak ciklusa",evSelect(ev,"korak","Korak ciklusa"))}
           ${evField(ev,"status","Status",evSelect(ev,"status","Status događanja"))}
         </div>
         <fieldset class="fw"><legend>Tko</legend><div class="fields">
           ${evField(ev,"voditelj","Voditelj/ica ili moderator/ica",evInput(ev,"voditelj","text",' list="dl-names" autocomplete="off"'))}
           ${evField(ev,"odjel","Odjel",evSelect(ev,"odjel","Odjel"))}
           ${evField(ev,"gosti","Gosti i izlagači",evInput(ev,"gosti"))}
-          ${evField(ev,"publika","Publika",evSelect(ev,"publika","Publika"))}
+          ${evMulti(ev,"publika","Publika (može više)","Publika",true)}
           ${evField(ev,"ocekivani_broj","Očekivani broj sudionika",evInput(ev,"ocekivani_broj","number",' min="0" inputmode="numeric"'))}
         </div></fieldset>
         <fieldset class="fk"><legend>Kada</legend><div class="fields">
@@ -618,7 +622,7 @@ function renderEvents(openId){
         <fieldset class="fg"><legend>Gdje</legend><div class="fields">
           ${evField(ev,"format","Format",evSelect(ev,"format","Format"))}
           ${evField(ev,"lokacija","Lokacija",evSelect(ev,"lokacija","Lokacija"))}
-          ${evField(ev,"platforma","Platforma za sudjelovanje na daljinu",evSelect(ev,"platforma","Platforma"))}
+          ${evMulti(ev,"platforma","Platforma za sudjelovanje na daljinu (može više)","Platforma")}
           ${evField(ev,"snimanje","Snimanje",evSelect(ev,"snimanje","Da/Ne"))}
         </div></fieldset>
         <fieldset class="fr"><legend>Resursi i napomene</legend><div class="fields">
@@ -816,7 +820,8 @@ function onField(e){
     renderProgress();
   }else if(s==="ev"){
     const ev=S.events.find(x=>x.id===id); if(!ev) return;
-    ev[f]=el.value;
+    if(el.dataset.multi!==undefined) ev[f]=[...document.querySelectorAll(`[data-id="${id}"][data-f="${f}"][data-multi]`)].filter(x=>x.checked).map(x=>x.dataset.multi).join(", ");
+    else ev[f]=el.value;
     if(f==="format"){if(ev.format==="Online"&&!ev.lokacija){ev.lokacija="Online";const l=document.querySelector(`[data-id="${id}"][data-f="lokacija"]`);if(l)l.value="Online"}applyEvFormat(ev)}
     if(f==="datum"||f==="korak") syncFromEvent(ev);
     if(["naziv","vrsta","datum","pocetak","lokacija","status","format"].includes(f)){$("evs-"+id).innerHTML=evSummaryHtml(ev);if(f==="vrsta")$("ev-"+id).style.setProperty("--vc",EV_COLORS[ev.vrsta]||"var(--line)");renderEvSummary()}
