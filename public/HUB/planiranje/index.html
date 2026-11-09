@@ -76,6 +76,8 @@ header{border-top:5px solid var(--coral)}
 .card{border-top:4px solid var(--c,var(--accent))}
 .lede{font-size:16px;color:var(--muted)}
 .sec-head{display:flex;flex-direction:column;gap:4px}
+.card .sec-head .eyebrow{color:var(--c)}
+.card .sec-head h2{padding-bottom:6px;border-bottom:2px solid var(--c);align-self:flex-start}
 
 /* Buttons */
 .btn{all:unset;cursor:pointer;font-family:var(--f-mono);font-size:12.5px;font-weight:600;padding:8px 14px;border-radius:999px;border:1px solid var(--coral);color:var(--coral);background:var(--surface);text-align:center}
@@ -112,7 +114,8 @@ details.settings>summary{cursor:pointer;font-size:13px;color:var(--muted);font-w
 details.settings .fields{margin-top:10px}
 
 /* Topic info */
-.tinfo{background:var(--surface-2);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.tinfo{background:var(--bs,var(--surface-2));border-left:5px solid var(--bc,var(--line));border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.tinfo .facts dt{color:var(--bc,var(--teal))}
 .tinfo .q{font-weight:600}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:13.5px;margin:0}
 .facts dt{font-family:var(--f-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);padding-top:2px}
@@ -120,20 +123,34 @@ details.settings .fields{margin-top:10px}
 .fmt{display:inline-block;align-self:flex-start;font-family:var(--f-mono);font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600;color:var(--accent);background:var(--accent-soft)}
 
 /* Preparation steps */
-details.step{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+/* Step colours: 0 blue, 1 violet, 2 teal (header tint + item stripe). Warm orange is kept for the deadline field. */
+details.step{--sc:var(--accent);--ss:var(--accent-soft);border:1px solid var(--line);border-top:4px solid var(--sc);border-radius:10px;background:var(--surface);overflow:hidden}
+details.step.s1{--sc:var(--violet);--ss:var(--violet-soft)}
+details.step.s2{--sc:var(--teal);--ss:var(--teal-soft)}
+details.step>summary{background:var(--ss)}
+details.step>summary .t{color:var(--ink)}
+details.step>summary .k{font-family:var(--f-mono);font-size:12px;font-weight:600;color:var(--sc);margin-right:6px}
 details.step>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between}
 details.step>summary::-webkit-details-marker{display:none}
-details.step>summary:hover{background:var(--surface-2)}
+details.step>summary:hover{filter:brightness(.97)}
 details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:16px}
 .prog{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .bar{width:90px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--good)}
 .pitems{display:flex;flex-direction:column;gap:10px;padding:4px 16px 16px}
-.pitem{border:1px solid var(--line);border-left:4px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
-.pitem[data-status="Gotovo"]{border-left-color:var(--good)}
-.pitem[data-status="U tijeku"]{border-left-color:var(--accent)}
-.pitem[data-status="Blokirano"]{border-left-color:var(--bad)}
-.pitem[data-status="Nije primjenjivo"]{opacity:.7}
+.pitems{padding-top:12px}
+.pitem{border:1px solid var(--line);border-left:4px solid var(--sc);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--surface)}
+.pitem[data-status="Nije primjenjivo"]{opacity:.65}
+.pitem .fv>span{color:var(--sc);font-weight:600}
+/* Deadline field is styled apart from event dates */
+.pitem .frok>span{color:var(--warn);font-weight:600}
+.pitem .frok input{border-style:dashed;border-color:var(--warn)}
+/* Status shown on the dropdown itself */
+.st-sel{font-weight:600;border-radius:999px;padding-inline:12px}
+.st-sel[data-v="U tijeku"]{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.st-sel[data-v="Gotovo"]{background:var(--teal-soft);color:var(--good);border-color:transparent}
+.st-sel[data-v="Blokirano"]{background:var(--coral-soft);color:var(--bad);border-color:transparent}
+.st-sel[data-v="Nije primjenjivo"]{background:var(--surface-2);color:var(--muted)}
 .phead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
 .phead .l{font-weight:600}
 .phead select{width:auto;min-width:150px}
@@ -146,6 +163,14 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 .chip{font-size:13px;padding:4px 10px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line)}
 .chip b{font-family:var(--f-mono)}
 .chip.warn{background:var(--amber-soft);border-color:transparent}
+.chip.tot{background:var(--violet-soft);border-color:transparent;font-weight:600}
+.chip.ty{border-left:4px solid var(--vc)}
+.chip.sx,.ev .ss{border-color:transparent}
+:is(.chip,.ev .ss)[data-st="Ideja"]{background:var(--surface-2)}
+:is(.chip,.ev .ss)[data-st="Planirano"]{background:var(--accent-soft)}
+:is(.chip,.ev .ss)[data-st="Potvrđeno"]{background:var(--teal-soft)}
+:is(.chip,.ev .ss)[data-st="Održano"]{background:var(--violet-soft)}
+:is(.chip,.ev .ss)[data-st="Otkazano"]{background:var(--coral-soft);text-decoration:line-through}
 .evlist{display:flex;flex-direction:column;gap:10px}
 details.ev{border:1px solid var(--line);border-left:5px solid var(--vc,var(--line));border-radius:10px;background:var(--surface)}
 details.ev>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
@@ -156,8 +181,13 @@ details.ev>summary:hover{background:var(--surface-2)}
 .ev .dt{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .ev .ss{font-size:12px;padding:2px 8px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line)}
 .evbody{padding:4px 14px 14px;display:flex;flex-direction:column;gap:12px}
-fieldset{border:1px solid var(--line);border-radius:8px;padding:10px 12px 12px;margin:0;min-width:0}
-legend{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);padding:0 6px}
+/* Event fieldsets: Tko teal, Kada blue, Gdje amber, Resursi violet */
+fieldset{--fc:var(--coral);--fs:transparent;border:1px solid var(--line);border-left:4px solid var(--fc);border-radius:8px;padding:10px 12px 12px;margin:0;min-width:0;background:linear-gradient(90deg,var(--fs),transparent 70%)}
+fieldset.fw{--fc:var(--teal);--fs:var(--teal-soft)}
+fieldset.fk{--fc:var(--accent);--fs:var(--accent-soft)}
+fieldset.fg{--fc:var(--amber);--fs:var(--amber-soft)}
+fieldset.fr{--fc:var(--violet);--fs:var(--violet-soft)}
+legend{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fc);font-weight:600;padding:0 6px}
 .empty{border:1px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:14px}
 footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);padding-top:14px}
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:calc(100% - 32px);z-index:10;display:none}
@@ -353,6 +383,8 @@ function renderInfo(){
   const tp=topicById(topicId), el=$("tinfo");
   if(!tp){el.innerHTML=`<p class="note">Odaberite temu da biste započeli planiranje.</p>`;return}
   const o=OWNERS[tp.o];
+  const bl=BLOCKS.find(b=>b.id===tp.b);
+  el.style.setProperty("--bc",bl?`var(${bl.c})`:"var(--warn)");el.style.setProperty("--bs",bl?`var(${bl.cs})`:"var(--amber-soft)");
   el.innerHTML=`<span class="fmt">${esc(FORMATS[tp.f].l)}</span>
     ${tp.q?`<p class="q">${esc(tp.q)}</p>`:""}
     ${tp.rh?`<p>${esc(tp.rh)}</p>`:""}
@@ -385,17 +417,17 @@ function renderPrep(){
   const tp=topicById(topicId);
   $("prep").innerHTML=[0,1,2].map(k=>{
     const [d,n]=stepProgress(k);
-    return `<details class="step"${k===0?" open":""}>
-      <summary><span class="t">Korak ${k} · ${STEP_NAMES[k]}</span><span class="prog" id="prog${k}"><span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo</span></summary>
+    return `<details class="step s${k}"${k===0?" open":""}>
+      <summary><span class="t"><span class="k">KORAK ${k}</span>${STEP_NAMES[k]}</span><span class="prog" id="prog${k}"><span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo</span></summary>
       <div class="pitems">${PREP.filter(i=>i.k===k).map(it=>{
         if(!S.prep[it.id]&&it.pre&&tp) S.prep[it.id]={vrijednost:it.pre(tp)};
         const p=prepVal(it);
         return `<div class="pitem" data-status="${esc(p.status||"")}" id="pi-${it.id}">
-          <div class="phead"><span class="l">${esc(it.l)}</span><select aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
+          <div class="phead"><span class="l">${esc(it.l)}</span><select class="st-sel" data-v="${esc(p.status||"Nije započeto")}" aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
           <div class="pgrid">
-            ${it.t.startsWith("multi:")?`<div class="f"><span>${esc(it.v)}</span>${valueInput(it,p)}</div>`:`<label class="f"><span>${esc(it.v)}</span>${valueInput(it,p)}</label>`}
+            ${it.t.startsWith("multi:")?`<div class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</div>`:`<label class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</label>`}
             <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" value="${esc(p.odgovorna_osoba||"")}"></label>
-            <label class="f" title="Do kada stavka mora biti obavljena"><span>Rok za izvršenje</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
+            <label class="f frok" title="Do kada stavka mora biti obavljena"><span>Rok za izvršenje</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
             <label class="f"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
           </div></div>`;
       }).join("")}</div></details>`;
@@ -405,7 +437,7 @@ function renderProgress(){
   [0,1,2].forEach(k=>{const [d,n]=stepProgress(k);$("prog"+k).innerHTML=`<span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo`});
 }
 function evSummaryHtml(ev){
-  return `<span class="vr">${esc(ev.vrsta||"Vrsta nije odabrana")}</span><span class="nm">${esc(ev.naziv||"Događanje bez naziva")}</span><span class="dt">${esc([ev.datum,ev.pocetak].filter(Boolean).join(" · ")||"bez datuma")}${ev.lokacija?" · "+esc(ev.lokacija):""}</span><span class="ss">${esc(ev.status||"—")}</span>`;
+  return `<span class="vr">${esc(ev.vrsta||"Vrsta nije odabrana")}</span><span class="nm">${esc(ev.naziv||"Događanje bez naziva")}</span><span class="dt">${esc([ev.datum,ev.pocetak].filter(Boolean).join(" · ")||"bez datuma")}${ev.lokacija?" · "+esc(ev.lokacija):""}</span><span class="ss" data-st="${esc(ev.status||"")}">${esc(ev.status||"—")}</span>`;
 }
 function evField(ev,f,label,inner,wide){return `<label class="f${wide?" wide":""}"><span>${label}</span>${inner}</label>`}
 function evInput(ev,f,type,extra){return `<input type="${type||"text"}" data-s="ev" data-id="${ev.id}" data-f="${f}" value="${esc(ev[f]||"")}"${extra||""}>`}
@@ -423,25 +455,25 @@ function renderEvents(openId){
           ${evField(ev,"korak","Korak ciklusa",evSelect(ev,"korak","Korak ciklusa"))}
           ${evField(ev,"status","Status",evSelect(ev,"status","Status događanja"))}
         </div>
-        <fieldset><legend>Tko</legend><div class="fields">
+        <fieldset class="fw"><legend>Tko</legend><div class="fields">
           ${evField(ev,"voditelj","Voditelj/ica ili moderator/ica",evInput(ev,"voditelj"))}
           ${evField(ev,"odjel","Odjel",evSelect(ev,"odjel","Odjel"))}
           ${evField(ev,"gosti","Gosti i izlagači",evInput(ev,"gosti"))}
           ${evField(ev,"publika","Publika",evSelect(ev,"publika","Publika"))}
           ${evField(ev,"ocekivani_broj","Očekivani broj sudionika",evInput(ev,"ocekivani_broj","number",' min="0" inputmode="numeric"'))}
         </div></fieldset>
-        <fieldset><legend>Kada</legend><div class="fields">
+        <fieldset class="fk"><legend>Kada</legend><div class="fields">
           ${evField(ev,"datum","Datum",evInput(ev,"datum","date"))}
           ${evField(ev,"pocetak","Početak",evInput(ev,"pocetak","time"))}
           ${evField(ev,"trajanje","Trajanje",evSelect(ev,"trajanje","Trajanje"))}
         </div></fieldset>
-        <fieldset><legend>Gdje</legend><div class="fields">
+        <fieldset class="fg"><legend>Gdje</legend><div class="fields">
           ${evField(ev,"format","Format",evSelect(ev,"format","Format"))}
           ${evField(ev,"lokacija","Lokacija",evSelect(ev,"lokacija","Lokacija"))}
           ${evField(ev,"platforma","Platforma za sudjelovanje na daljinu",evSelect(ev,"platforma","Platforma"))}
           ${evField(ev,"snimanje","Snimanje",evSelect(ev,"snimanje","Da/Ne"))}
         </div></fieldset>
-        <fieldset><legend>Resursi i napomene</legend><div class="fields">
+        <fieldset class="fr"><legend>Resursi i napomene</legend><div class="fields">
           ${evField(ev,"resursi","Potrebni resursi",`<textarea data-s="ev" data-id="${ev.id}" data-f="resursi">${esc(ev.resursi||"")}</textarea>`)}
           ${evField(ev,"napomena","Napomena",`<textarea data-s="ev" data-id="${ev.id}" data-f="napomena">${esc(ev.napomena||"")}</textarea>`)}
         </div></fieldset>
@@ -458,10 +490,10 @@ function renderEvSummary(){
   const byType=(LISTS["Vrsta događanja"]||[]).map(v=>[v,S.events.filter(e=>e.vrsta===v).length]).filter(x=>x[1]);
   const noType=S.events.filter(e=>!e.vrsta).length;
   const byStatus=(LISTS["Status događanja"]||[]).map(v=>[v,S.events.filter(e=>e.status===v).length]).filter(x=>x[1]);
-  let html=`<span class="chip${!isNaN(plan)&&plan!==n?" warn":""}">Ukupno <b>${n}</b>${!isNaN(plan)?` od planiranih <b>${plan}</b>`:""}</span>`;
-  html+=byType.map(([v,c])=>`<span class="chip">${esc(v)} <b>${c}</b></span>`).join("");
+  let html=`<span class="chip tot${!isNaN(plan)&&plan!==n?" warn":""}">Ukupno <b>${n}</b>${!isNaN(plan)?` od planiranih <b>${plan}</b>`:""}</span>`;
+  html+=byType.map(([v,c])=>`<span class="chip ty" style="--vc:${EV_COLORS[v]||"var(--line)"}">${esc(v)} <b>${c}</b></span>`).join("");
   if(noType) html+=`<span class="chip warn">Bez vrste <b>${noType}</b></span>`;
-  html+=byStatus.map(([v,c])=>`<span class="chip">${esc(v)} <b>${c}</b></span>`).join("");
+  html+=byStatus.map(([v,c])=>`<span class="chip sx" data-st="${esc(v)}">${esc(v)} <b>${c}</b></span>`).join("");
   $("evSummary").innerHTML=html;
 }
 function renderState(){
@@ -502,7 +534,7 @@ function onField(e){
     if(el.dataset.multi!==undefined){
       p.vrijednost=[...document.querySelectorAll(`[data-id="${id}"][data-multi]`)].filter(x=>x.checked).map(x=>x.dataset.multi).join(", ");
     }else p[f]=el.value;
-    if(f==="status"){$("pi-"+id).dataset.status=el.value;renderProgress()}
+    if(f==="status"){$("pi-"+id).dataset.status=el.value;el.dataset.v=el.value;renderProgress()}
   }else if(s==="ev"){
     const ev=S.events.find(x=>x.id===id); if(!ev) return;
     ev[f]=el.value;
