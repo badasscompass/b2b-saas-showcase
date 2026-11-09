@@ -47,6 +47,7 @@
   --mark:#e0b93f; --mark-ink:#1c1500;
   --good:#5cc995; --warn:#f0a948; --bad:#ff8a80; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{margin:0;background:
   radial-gradient(1100px 420px at 0% -8%, #d7e6ff 0%, transparent 58%),
   radial-gradient(900px 380px at 100% 0%, #ffd8c8 0%, transparent 52%),
@@ -219,7 +220,30 @@ fieldset.fr{--fc:var(--violet);--fs:var(--violet-soft)}
 legend{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fc);font-weight:600;padding:0 6px}
 .empty{border:1px dashed var(--line);border-radius:10px;padding:18px;text-align:center;color:var(--muted);font-size:14px}
 footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);padding-top:14px}
-.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:calc(100% - 32px);z-index:10;display:none}
+/* Warnings (date and count checks) */
+.wmsg:empty{display:none}
+.wmsg{display:flex;flex-direction:column;gap:4px}
+.wmsg p{margin:0;max-width:none;font-size:13px;color:var(--ink);background:var(--amber-soft);border-left:3px solid var(--warn);border-radius:6px;padding:6px 10px}
+details.ev>summary[data-warn]::after{content:"⚠";color:var(--warn);font-weight:700;margin-left:2px}
+/* Facts (Podatak): value only */
+.pitem.fact .pgrid{grid-template-columns:1fr}
+.tag-fact{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px;align-self:flex-start}
+.pitem.compact.fact .phead{flex-direction:row;align-items:center;justify-content:space-between}
+.prep-off{background:var(--surface-2);border-left:4px solid var(--teal);border-radius:8px;padding:10px 12px;max-width:none}
+/* Sticky bottom bar: section links, warnings, save */
+body{padding-bottom:96px}
+.sbar{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(0,0,0,.08);padding:10px max(16px, env(safe-area-inset-left, 0px)) calc(10px + env(safe-area-inset-bottom, 0px));display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.sbar[hidden]{display:none}
+.bnav{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:13.5px}
+.bnav a{color:var(--ink);text-decoration:none;font-weight:600}
+.bnav a:hover{text-decoration:underline;text-underline-offset:3px}
+.bnav b{font-family:var(--f-mono);font-size:12px;font-weight:500;color:var(--muted)}
+.warnlink{all:unset;cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);background:var(--amber-soft);border-radius:999px;padding:3px 10px}
+.warnlink:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bright{display:flex;gap:10px;align-items:center;margin-left:auto}
+.bright .state{font-size:13px}
+@media (max-width:600px){.bright .state span:last-child{display:none}.bnav{font-size:13px;gap:4px 10px}}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:calc(100% - 32px);z-index:10;display:none}
 .toast.show{display:block}
 </style>
 </head>
@@ -230,7 +254,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   <p class="crumb"><a href="../">CARNET Hub</a> · <a href="../ciklus-aktivacije/">Ciklus aktivacije</a> · Planiranje teme</p>
   <span class="eyebrow">CARNET Hub · Interni alat za planiranje</span>
   <h1>Planiranje teme</h1>
-  <p class="lede">Za odabranu temu isplanirajte pripremu (koraci 0–2) i sva događanja u ciklusu: tko, kada i gdje. Unosi se automatski čuvaju u ovom pregledniku, a gumbom „Spremi u tablicu” šalju se u zajedničku Google tablicu.</p>
+  <p class="lede">Za odabranu temu isplanirajte sva događanja (tko, kada i gdje) i, za teme formata Ciklus aktivacije, pripremu u koracima 0–2. Unosi se automatski čuvaju u ovom pregledniku, a gumbom „Spremi u tablicu” šalju se u zajedničku Google tablicu.</p>
 </header>
 
 <section class="card sync" aria-label="Veza s tablicom">
@@ -255,16 +279,11 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   <label class="f"><span>Tema (21 tema iz upitnika, po tematskim zajednicama)</span><select id="topic"></select></label>
   <div class="tinfo" id="tinfo"></div>
   <div class="fields" id="temaFields"></div>
-</section>
-
-<section class="card" style="--c:var(--teal)" aria-labelledby="prep-h">
-  <div class="sec-head"><span class="eyebrow">2 · Priprema</span><h2 id="prep-h">Koraci 0–2: usklađivanje, sudizajn, okupljanje</h2>
-    <p class="note">Svaka stavka ima svoj unos (npr. datum objave ili lokaciju), odgovornu osobu, rok za izvršenje i status. Datum u unosu je datum samog događaja ili objave, a rok za izvršenje je do kada stavka mora biti obavljena. Stavke prate kontrolne popise iz vodiča Ciklus aktivacije.</p></div>
-  <div id="prep" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div class="wmsg" id="w-tema"></div>
 </section>
 
 <section class="card" style="--c:var(--violet)" aria-labelledby="ev-h">
-  <div class="sec-head"><span class="eyebrow">3 · Događanja</span><h2 id="ev-h">Događanja u ciklusu teme</h2>
+  <div class="sec-head"><span class="eyebrow">2 · Događanja</span><h2 id="ev-h">Događanja u ciklusu teme</h2>
     <p class="note">Dodajte svako događanje: radionicu, panel ili okrugli stol, webinar ili susret skupine. Za svako odredite tko ga vodi, kada je i gdje se održava.</p></div>
   <div class="chips" id="evSummary" aria-live="polite"></div>
   <div class="btns">
@@ -274,9 +293,29 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   <div class="evlist" id="evlist"></div>
 </section>
 
-<footer>Nacrt v0.1 · 9. studenoga 2026. · Povezano s vodičem <a href="../ciklus-aktivacije/">Ciklus aktivacije</a>. Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
+<section class="card" style="--c:var(--teal)" aria-labelledby="prep-h">
+  <div class="sec-head"><span class="eyebrow">3 · Priprema</span><h2 id="prep-h">Koraci 0–2: usklađivanje, sudizajn, okupljanje</h2>
+    <p class="note"><b>Zadaci</b> imaju unos, odgovornu osobu, rok za izvršenje i status; <b>podaci</b> (oznaka „Podatak”) imaju samo vrijednost. Datum u unosu je datum samog događaja ili objave, a rok za izvršenje je do kada zadatak mora biti obavljen. Stavke prate kontrolne popise iz vodiča Ciklus aktivacije.</p></div>
+  <p class="note prep-off" id="prepOff" hidden>Priprema u koracima 0–2 odnosi se samo na teme formata <b>Ciklus aktivacije</b>. Ova tema ima drugi format, pa se planiraju samo događanja. Ako se tema ipak provodi kao ciklus, promijenite „Format teme” u bloku 1; već uneseni podaci pripreme ostaju sačuvani.</p>
+  <div id="prep" style="display:flex;flex-direction:column;gap:10px"></div>
+</section>
+
+<footer>Nacrt v0.2 · 9. studenoga 2026. · Povezano s vodičem <a href="../ciklus-aktivacije/">Ciklus aktivacije</a>. Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<datalist id="dl-names"></datalist>
+<nav class="sbar" id="bar" aria-label="Brza navigacija i spremanje" hidden>
+  <div class="bnav">
+    <a href="#tema-h">Tema</a>
+    <a href="#ev-h">Događanja <b id="navEv"></b></a>
+    <a href="#prep-h" id="navPrepA">Priprema <b id="navPrep"></b></a>
+    <button type="button" class="warnlink" id="navWarn" hidden>⚠ <b id="navWarnN"></b></button>
+  </div>
+  <div class="bright">
+    <span class="state local" id="state2"><span class="dot" aria-hidden="true"></span><span id="stateText2"></span></span>
+    <button class="btn primary" id="btnSave2" type="button">Spremi u tablicu</button>
+  </div>
+</nav>
 
 <script src="../hub-data.js"></script>
 <script>
@@ -305,6 +344,7 @@ let LISTS = JSON.parse(JSON.stringify(LISTS_DEFAULT));
 /* Preparation items for steps 0–2. l: item name, v: label of its value field (never "Rok": the due date has its own field),
    x:"objava" adds a link to the published post and a newsletter / mailing-list checkbox,
    flag:"<text>" adds a checkbox whose text is stored in front of the value ("Uredništvo DOT-a · Ime"), so no extra sheet column is needed,
+   fact:1 = a fact (value only, counts as done once filled); everything else is a task with owner, deadline and status,
    t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
 const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
 /* Sub-groups inside a step: shown as separate panels; cols = cards per row (compact cards, fields stacked).
@@ -321,31 +361,31 @@ const PREP_GROUPS = {
   obav:{t:"Obavijesti", d:"Vodstvo ustanova i podsjetnik", cols:2}
 };
 const PREP = [
-  {id:"p0_vlasnik", k:0, g:"op", l:"Vlasnik teme", v:"Odjel", t:"text", pre:tp=>OWNERS[tp.o].n},
-  {id:"p0_voditelj", k:0, g:"op", sl:"Voditelj/ica iz odjela", l:"Imenovani voditelj/ica iz odjela", v:"Ime i prezime", t:"text"},
-  {id:"p0_sati", k:0, g:"op", sl:"Sati djelatnika CARNET-a", l:"Dogovoreni sati djelatnika CARNET-a", v:"Broj sati", t:"number"},
-  {id:"p0_multilab", k:0, g:"ml", sl:"Mjesto održavanja", l:"MultiLab za susrete", v:"Lokacija", t:"list:Lokacija"},
+  {id:"p0_vlasnik", fact:1, k:0, g:"op", l:"Vlasnik teme", v:"Odjel", t:"text", pre:tp=>OWNERS[tp.o].n},
+  {id:"p0_voditelj", fact:1, k:0, g:"op", sl:"Voditelj/ica iz odjela", l:"Imenovani voditelj/ica iz odjela", v:"Ime i prezime", t:"text"},
+  {id:"p0_sati", fact:1, k:0, g:"op", sl:"Sati djelatnika CARNET-a", l:"Dogovoreni sati djelatnika CARNET-a", v:"Broj sati", t:"number"},
+  {id:"p0_multilab", fact:1, k:0, g:"ml", sl:"Mjesto održavanja", l:"MultiLab za susrete", v:"Lokacija", t:"list:Lokacija"},
   {id:"p0_ml_prvi", k:0, g:"ml", sl:"Prvi susret", l:"Rezervacija MultiLaba: prvi susret", v:"Datum susreta", t:"date"},
   {id:"p0_ml_dan", k:0, g:"ml", sl:"Dan predstavljanja", l:"Rezervacija MultiLaba: dan predstavljanja", v:"Datum predstavljanja", t:"date"},
-  {id:"p0_urednik", k:0, g:"dot", w:1, l:"Odgovoran za DOT objave", v:"Ime i kontakt", t:"text", flag:"Uredništvo DOT-a"},
+  {id:"p0_urednik", fact:1, k:0, g:"dot", w:1, l:"Odgovoran za DOT objave", v:"Ime i kontakt", t:"text", flag:"Uredništvo DOT-a"},
   {id:"p0_dot1", k:0, g:"dot", sl:"Objava 1 · Poziv", l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot2", k:0, g:"dot", sl:"Objava 2 · Što smo čuli", l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot3", k:0, g:"dot", sl:"Objava 3 · Što timovi isprobavaju", l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date", x:"objava"},
   {id:"p0_dot4", k:0, g:"dot", sl:"Objava 4 · Rezultati", l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date", x:"objava"},
-  {id:"p1_validator", k:1, g:"val", sl:"Ime validatora", l:"Akademski validator", v:"Ime i prezime", t:"text"},
-  {id:"p1_val_ust", k:1, g:"val", sl:"Ustanova validatora", l:"Ustanova validatora", v:"Ustanova", t:"text"},
+  {id:"p1_validator", fact:1, k:1, g:"val", sl:"Ime validatora", l:"Akademski validator", v:"Ime i prezime", t:"text"},
+  {id:"p1_val_ust", fact:1, k:1, g:"val", sl:"Ustanova validatora", l:"Ustanova validatora", v:"Ustanova", t:"text"},
   {id:"p1_val_potvrda", k:1, g:"val", sl:"Potvrda sudjelovanja", l:"Validator potvrdio sudjelovanje", v:"Potvrđeno", t:"list:Da/Ne"},
   {id:"p1_kpi", k:1, g:"plan", sl:"Ciljane vrijednosti pokazatelja", l:"Ciljane vrijednosti pokazatelja dogovorene", v:"Dogovoreno", t:"list:Da/Ne"},
-  {id:"p1_kanali", k:1, g:"kan", w:1, l:"Kanali poziva", v:"Kanali", t:"multi:Kanal poziva"},
+  {id:"p1_kanali", fact:1, k:1, g:"kan", w:1, l:"Kanali poziva", v:"Kanali", t:"multi:Kanal poziva"},
   {id:"p1_loomen", k:1, g:"kan", l:"E-kolegij na Loomenu", v:"Poveznica", t:"url"},
   {id:"p1_obrazac", k:1, g:"kan", l:"Obrazac za prijavu na DOT-u", v:"Poveznica", t:"url"},
   {id:"p1_predlosci", k:1, g:"plan", sl:"Prilagođeni predlošci", l:"Predlošci poziva i susreta prilagođeni", v:"Prilagođeno", t:"list:Da/Ne"},
   {id:"p2_poziv", k:2, g:"poz", l:"Slanje poziva", v:"Datum slanja", t:"date"},
-  {id:"p2_rok", k:2, g:"poz", l:"Zatvaranje prijava", v:"Zadnji dan prijava", t:"date"},
-  {id:"p2_cilj", k:2, g:"broj", sl:"Ciljano", l:"Ciljani broj sudionika", v:"Broj", t:"number"},
-  {id:"p2_prijave", k:2, g:"broj", sl:"Prijavljeno", l:"Broj prijavljenih", v:"Broj", t:"number"},
-  {id:"p2_uzivo", k:2, g:"broj", sl:"Uživo", l:"Prijavljeni uživo", v:"Broj", t:"number"},
-  {id:"p2_daljina", k:2, g:"broj", sl:"Na daljinu", l:"Prijavljeni na daljinu", v:"Broj", t:"number"},
+  {id:"p2_rok", fact:1, k:2, g:"poz", l:"Zatvaranje prijava", v:"Zadnji dan prijava", t:"date"},
+  {id:"p2_cilj", fact:1, k:2, g:"broj", sl:"Ciljano", l:"Ciljani broj sudionika", v:"Broj", t:"number"},
+  {id:"p2_prijave", fact:1, k:2, g:"broj", sl:"Prijavljeno", l:"Broj prijavljenih", v:"Broj", t:"number"},
+  {id:"p2_uzivo", fact:1, k:2, g:"broj", sl:"Uživo", l:"Prijavljeni uživo", v:"Broj", t:"number"},
+  {id:"p2_daljina", fact:1, k:2, g:"broj", sl:"Na daljinu", l:"Prijavljeni na daljinu", v:"Broj", t:"number"},
   {id:"p2_vodstvo", k:2, g:"obav", sl:"Vodstvo ustanova", l:"Obavijesti vodstvu ustanova", v:"Poslano", t:"list:Da/Ne"},
   {id:"p2_podsjetnik", k:2, g:"obav", sl:"Podsjetnik prijavljenima", l:"Podsjetnik prijavljenima", v:"Poslano", t:"list:Da/Ne"}
 ];
@@ -357,6 +397,11 @@ const CYCLE_EVENTS = [
   {naziv:"Provjera isprobavanja", korak:"Korak 5 · Isprobavanje", trajanje:"45 min", format:"Online", lokacija:"Online"},
   {naziv:"Dan predstavljanja", korak:"Korak 6 · Predstavljanje", trajanje:"90 min", format:"Hibridno"},
   {naziv:"Retrospektiva", korak:"Korak 7 · Refleksija", trajanje:"60 min", format:"Online", lokacija:"Online"}
+];
+/* A MultiLab booking in step 0 and the cycle event it is for: dates fill each other and are checked. */
+const LINKS = [
+  {prep:"p0_ml_prvi", korak:"Korak 3 · Slušanje", name:"Susret slušanja"},
+  {prep:"p0_ml_dan", korak:"Korak 6 · Predstavljanje", name:"Dan predstavljanja"}
 ];
 const EV_COLORS = {"Radionica":"var(--teal)","Panel / okrugli stol":"var(--amber)","Webinar":"var(--accent)","Susret / sastanak skupine":"var(--violet)"};
 const STRATEGIC = {id:"S", n:"Strateški okvir · iznad svih zajednica"};
@@ -372,6 +417,10 @@ function topicById(id){return TOPICS.find(t=>t.id===id)}
 function blockName(id){return id==="S"?STRATEGIC.n:(BLOCKS.find(b=>b.id===id)||{}).n||id}
 function newId(){return "d"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),3200)}
+function fmtDate(iso){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||"");return m?`${+m[3]}. ${+m[2]}. ${m[1]}.`:(iso||"")}
+function filled(v){return String(v??"").trim()!==""}
+function isCycle(){return !!S&&S.tema.format_teme==="Ciklus aktivacije"}
+function pv(id){return (S.prep[id]||{}).vrijednost||""}
 function opts(list, val, blank){
   const l=LISTS[list]||[]; const extra=val&&!l.includes(val)?[val]:[];
   return (blank?`<option value="">${esc(blank)}</option>`:"")+l.concat(extra).map(o=>`<option${o===val?" selected":""}>${esc(o)}</option>`).join("");
@@ -386,7 +435,7 @@ function blank(tp){
 }
 function loadLocal(id){const tp=topicById(id);const s=store.get(keyFor(id));return s&&s.tema?Object.assign(blank(tp),s):blank(tp)}
 function saveLocal(){store.set(keyFor(topicId),S)}
-function touch(){S.dirty=true;saveLocal();renderState()}
+function touch(){S.dirty=true;saveLocal();renderState();renderChecks();renderNav()}
 
 /* ---------- Connection ---------- */
 function apiCfg(){return {url:(store.get("hubplan-url")||DEFAULT_API_URL||"").trim(), kod:store.get("hubplan-kod")||""}}
@@ -445,7 +494,7 @@ function renderInfo(){
 function renderTema(){
   const t=S.tema;
   $("temaFields").innerHTML=`
-    <label class="f"><span>Planer/ica teme</span><input data-s="tema" data-f="planer" value="${esc(t.planer)}" autocomplete="name"></label>
+    <label class="f"><span>Planer/ica teme</span><input data-s="tema" data-f="planer" value="${esc(t.planer)}" list="dl-names" autocomplete="off"></label>
     <label class="f"><span>Format teme</span><select data-s="tema" data-f="format_teme">${opts("Format teme",t.format_teme)}</select></label>
     <label class="f"><span>Razdoblje ciklusa od</span><input type="date" data-s="tema" data-f="razdoblje_od" value="${esc(t.razdoblje_od)}"></label>
     <label class="f"><span>Razdoblje ciklusa do</span><input type="date" data-s="tema" data-f="razdoblje_do" value="${esc(t.razdoblje_do)}"></label>
@@ -477,9 +526,11 @@ function valueInput(it,p){
     return `<div class="multi" role="group" aria-label="${esc(it.l)}">${(LISTS[list]||[]).map(o=>`<label><input type="checkbox" data-s="prep" data-id="${it.id}" data-f="vrijednost" data-multi="${esc(o)}"${sel.includes(o)?" checked":""}>${esc(o)}</label>`).join("")}</div>`;
   }
   const type={number:"number",date:"date",url:"url"}[kind]||"text";
-  return `<input type="${type}" ${a} value="${esc(v)}"${type==="number"?' min="0" inputmode="numeric"':""}${type==="url"?' placeholder="https://"':""}>`;
+  const names=it.v==="Ime i prezime"?' list="dl-names" autocomplete="off"':"";
+  return `<input type="${type}" ${a}${names} value="${esc(v)}"${type==="number"?' min="0" inputmode="numeric"':""}${type==="url"?' placeholder="https://"':""}>`;
 }
-function stepProgress(k){const items=PREP.filter(i=>i.k===k);const done=items.filter(i=>["Gotovo","Nije primjenjivo"].includes(prepVal(i).status)).length;return [done,items.length]}
+function isDone(it){const p=prepVal(it);return it.fact?filled(p.vrijednost):["Gotovo","Nije primjenjivo"].includes(p.status)}
+function stepProgress(k){const items=PREP.filter(i=>i.k===k);return [items.filter(isDone).length,items.length]}
 function renderPrep(){
   const tp=topicById(topicId);
   $("prep").innerHTML=[0,1,2].map(k=>{
@@ -489,7 +540,7 @@ function renderPrep(){
       <div class="pitems">${stepBody(k,tp)}</div></details>`;
   }).join("");
 }
-function groupProgress(g){const items=PREP.filter(i=>i.g===g);return [items.filter(i=>["Gotovo","Nije primjenjivo"].includes(prepVal(i).status)).length,items.length]}
+function groupProgress(g){const items=PREP.filter(i=>i.g===g);return [items.filter(isDone).length,items.length]}
 function stepBody(k,tp){
   const items=PREP.filter(i=>i.k===k);
   items.forEach(it=>{if(!S.prep[it.id]&&it.pre&&tp) S.prep[it.id]={vrijednost:it.pre(tp)}});
@@ -506,11 +557,16 @@ function stepBody(k,tp){
 }
 function itemHtml(it,compact){
         const p=prepVal(it);
+        const title=esc(compact&&it.sl?it.sl:it.l);
+        const vf=it.t.startsWith("multi:")?`<div class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</div>`:`<label class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</label>`;
+        if(it.fact) return `<div class="pitem fact${compact?" compact":""}" id="pi-${it.id}">
+          <div class="phead"><span class="l">${title}</span><span class="tag-fact">Podatak</span></div>
+          <div class="pgrid">${vf}</div><div class="wmsg" id="w-${it.id}"></div></div>`;
         return `<div class="pitem${compact?" compact":""}" data-status="${esc(p.status||"")}" id="pi-${it.id}">
           <div class="phead"><span class="l">${esc(compact&&it.sl?it.sl:it.l)}</span><select class="st-sel" data-v="${esc(p.status||"Nije započeto")}" aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
           <div class="pgrid">
             ${it.t.startsWith("multi:")?`<div class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</div>`:`<label class="f fv"><span>${esc(it.v)}</span>${valueInput(it,p)}</label>`}
-            <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" value="${esc(p.odgovorna_osoba||"")}"></label>
+            <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" list="dl-names" autocomplete="off" value="${esc(p.odgovorna_osoba||"")}"></label>
             <label class="f frok" title="Do kada stavka mora biti obavljena"><span>Rok za izvršenje</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
             <label class="f fnote"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
           </div>${it.x==="objava"?`
@@ -518,7 +574,7 @@ function itemHtml(it,compact){
             <label class="f"><span>Poveznica na objavu</span><input type="url" placeholder="https://" data-s="prep" data-id="${it.id}" data-f="poveznica" value="${esc(p.poveznica||"")}" aria-label="Poveznica na objavu: ${esc(it.l)}"></label>
             <label class="cb"><input type="checkbox" data-s="prep" data-id="${it.id}" data-f="newsletter" data-bool${p.newsletter==="Da"?" checked":""}>Poslano i u newsletteru / mailing listi</label>
             ${p.poveznica&&/^https?:\/\//.test(p.poveznica)?`<a class="openlink" href="${esc(p.poveznica)}" target="_blank" rel="noopener">Otvori objavu ↗</a>`:""}
-          </div>`:""}</div>`;
+          </div>`:""}<div class="wmsg" id="w-${it.id}"></div></div>`;
 }
 function renderProgress(){
   [0,1,2].forEach(k=>{const [d,n]=stepProgress(k);$("prog"+k).innerHTML=`<span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo`});
@@ -527,16 +583,19 @@ function renderProgress(){
 function evSummaryHtml(ev){
   return `<span class="vr">${esc(ev.vrsta||"Vrsta nije odabrana")}</span><span class="nm">${esc(ev.naziv||"Događanje bez naziva")}</span><span class="dt">${esc([ev.datum,ev.pocetak].filter(Boolean).join(" · ")||"bez datuma")}${ev.lokacija?" · "+esc(ev.lokacija):""}</span><span class="ss" data-st="${esc(ev.status||"")}">${esc(ev.status||"—")}</span>`;
 }
-function evField(ev,f,label,inner,wide){return `<label class="f${wide?" wide":""}"><span>${label}</span>${inner}</label>`}
+function evField(ev,f,label,inner,wide){return `<label class="f${wide?" wide":""}" id="evf-${f}-${ev.id}"><span>${label}</span>${inner}</label>`}
 function evInput(ev,f,type,extra){return `<input type="${type||"text"}" data-s="ev" data-id="${ev.id}" data-f="${f}" value="${esc(ev[f]||"")}"${extra||""}>`}
 function evSelect(ev,f,list){return `<select data-s="ev" data-id="${ev.id}" data-f="${f}">${opts(list,ev[f]||"","—")}</select>`}
 function renderEvents(openId){
   const el=$("evlist");
   if(!S.events.length){el.innerHTML=`<div class="empty">Još nema događanja. Dodajte prvo događanje ili standardne susrete ciklusa.</div>`;renderEvSummary();return}
+  // Events are listed by date; events without a date come last, in the order they were added.
+  S.events.sort((a,b)=>(a.datum||"9999-99-99").localeCompare(b.datum||"9999-99-99"));
   el.innerHTML=S.events.map((ev,i)=>`
     <details class="ev" id="ev-${ev.id}" style="--vc:${EV_COLORS[ev.vrsta]||"var(--line)"}"${ev.id===openId?" open":""}>
       <summary id="evs-${ev.id}">${evSummaryHtml(ev)}</summary>
       <div class="evbody">
+        <div class="wmsg" id="w-ev-${ev.id}"></div>
         <div class="fields">
           ${evField(ev,"naziv","Naziv događanja",evInput(ev,"naziv"),true)}
           ${evField(ev,"vrsta","Vrsta",evSelect(ev,"vrsta","Vrsta događanja"))}
@@ -544,7 +603,7 @@ function renderEvents(openId){
           ${evField(ev,"status","Status",evSelect(ev,"status","Status događanja"))}
         </div>
         <fieldset class="fw"><legend>Tko</legend><div class="fields">
-          ${evField(ev,"voditelj","Voditelj/ica ili moderator/ica",evInput(ev,"voditelj"))}
+          ${evField(ev,"voditelj","Voditelj/ica ili moderator/ica",evInput(ev,"voditelj","text",' list="dl-names" autocomplete="off"'))}
           ${evField(ev,"odjel","Odjel",evSelect(ev,"odjel","Odjel"))}
           ${evField(ev,"gosti","Gosti i izlagači",evInput(ev,"gosti"))}
           ${evField(ev,"publika","Publika",evSelect(ev,"publika","Publika"))}
@@ -571,7 +630,13 @@ function renderEvents(openId){
         </div>
       </div>
     </details>`).join("");
+  S.events.forEach(applyEvFormat);
   renderEvSummary();
+}
+/* Online events need no venue, in-person events no remote platform: hide those fields (values are kept). */
+function applyEvFormat(ev){
+  const loc=$("evf-lokacija-"+ev.id), plat=$("evf-platforma-"+ev.id); if(!loc||!plat) return;
+  loc.hidden=ev.format==="Online"; plat.hidden=ev.format==="Uživo";
 }
 function renderEvSummary(){
   const n=S.events.length, plan=parseInt(S.tema.planirani_broj_dogadjanja,10);
@@ -584,22 +649,104 @@ function renderEvSummary(){
   html+=byStatus.map(([v,c])=>`<span class="chip sx" data-st="${esc(v)}">${esc(v)} <b>${c}</b></span>`).join("");
   $("evSummary").innerHTML=html;
 }
-function renderState(){
-  const st=$("state"), tx=$("stateText"), {url}=apiCfg();
-  st.className="state "+(S&&S.dirty?(url?"dirty":"local"):(S&&S.spremljeno?"ok":"local"));
-  if(!S){tx.textContent="Odaberite temu";return}
-  if(!url) tx.textContent="Spremljeno samo u ovom pregledniku · veza s tablicom nije postavljena";
-  else if(S.dirty) tx.textContent="Nespremljene promjene u tablici";
-  else if(S.spremljeno) tx.textContent="Spremljeno u tablicu · "+S.spremljeno;
-  else tx.textContent="Spremljeno u ovom pregledniku";
+function setStateUI(cls,text){
+  $("state").className="state "+cls;$("stateText").textContent=text;
+  $("state2").className="state "+cls;$("stateText2").textContent=text;
 }
-function setErr(msg){$("state").className="state err";$("stateText").textContent=msg}
+function renderState(){
+  const {url}=apiCfg();
+  const cls=S&&S.dirty?(url?"dirty":"local"):(S&&S.spremljeno?"ok":"local");
+  if(!S) return setStateUI(cls,"Odaberite temu");
+  if(!url) setStateUI(cls,"Spremljeno samo u ovom pregledniku · veza s tablicom nije postavljena");
+  else if(S.dirty) setStateUI(cls,"Nespremljene promjene u tablici");
+  else if(S.spremljeno) setStateUI(cls,"Spremljeno u tablicu · "+S.spremljeno);
+  else setStateUI(cls,"Spremljeno u ovom pregledniku");
+}
+function setErr(msg){setStateUI("err",msg)}
+function setBusyText(t){$("stateText").textContent=t;$("stateText2").textContent=t}
+
+/* ---------- Checks: dates and counts that contradict each other ---------- */
+function computeChecks(){
+  const W={}, add=(k,m)=>(W[k]=W[k]||[]).push(m);
+  const t=S.tema, od=t.razdoblje_od, doo=t.razdoblje_do;
+  if(od&&doo&&od>doo) add("tema",`Razdoblje ciklusa počinje (${fmtDate(od)}) nakon što završava (${fmtDate(doo)}).`);
+  S.events.forEach(ev=>{
+    if(ev.datum&&((od&&ev.datum<od)||(doo&&ev.datum>doo))) add("ev-"+ev.id,`Datum ${fmtDate(ev.datum)} je izvan razdoblja ciklusa (${fmtDate(od)||"…"} – ${fmtDate(doo)||"…"}).`);
+  });
+  if(!isCycle()) return W;
+  LINKS.forEach(l=>{
+    const d=pv(l.prep), ev=S.events.find(e=>e.korak===l.korak);
+    if(d&&ev&&ev.datum&&d!==ev.datum){
+      const m=`Rezervacija MultiLaba (${fmtDate(d)}) i događanje „${ev.naziv||l.name}” (${fmtDate(ev.datum)}) imaju različite datume.`;
+      add(l.prep,m); add("ev-"+ev.id,m);
+    }
+  });
+  const first=pv("p0_ml_prvi")||(S.events.find(e=>e.korak===LINKS[0].korak)||{}).datum||"";
+  const rok=pv("p2_rok"), poz=pv("p2_poziv");
+  if(rok&&first&&rok>=first) add("p2_rok",`Prijave se zatvaraju ${fmtDate(rok)}, a prvi susret je ${fmtDate(first)}. Prijave bi trebale završiti prije prvog susreta.`);
+  if(poz&&rok&&poz>rok) add("p2_poziv",`Poziv se šalje ${fmtDate(poz)}, nakon zatvaranja prijava (${fmtDate(rok)}).`);
+  let prev=null;
+  ["p0_dot1","p0_dot2","p0_dot3","p0_dot4"].forEach((id,i)=>{
+    const d=pv(id); if(!d) return;
+    if(prev&&d<prev.d) add(id,`Objava ${i+1} (${fmtDate(d)}) dolazi prije objave ${prev.n} (${fmtDate(prev.d)}).`);
+    prev={d,n:i+1};
+  });
+  PREP.filter(it=>!it.fact&&it.t==="date").forEach(it=>{
+    const p=S.prep[it.id]||{};
+    if(p.rok&&p.vrijednost&&p.rok>p.vrijednost) add(it.id,`Rok za izvršenje (${fmtDate(p.rok)}) je nakon datuma koji se planira (${fmtDate(p.vrijednost)}).`);
+  });
+  const num=id=>filled(pv(id))?Number(pv(id)):null;
+  const pr=num("p2_prijave"), u=num("p2_uzivo"), dl=num("p2_daljina");
+  if(pr!==null&&u!==null&&dl!==null&&u+dl!==pr) add("p2_prijave",`Uživo (${u}) + na daljinu (${dl}) = ${u+dl}, a prijavljeno je ${pr}.`);
+  return W;
+}
+function renderChecks(){
+  if(!S) return;
+  const W=computeChecks();
+  document.querySelectorAll(".wmsg").forEach(el=>el.innerHTML="");
+  document.querySelectorAll("details.ev>summary[data-warn]").forEach(el=>el.removeAttribute("data-warn"));
+  let n=0;
+  Object.entries(W).forEach(([k,msgs])=>{
+    const el=$("w-"+k); if(!el) return;
+    if(!isCycle()&&!k.startsWith("ev-")&&k!=="tema") return;
+    el.innerHTML=msgs.map(m=>`<p>⚠ ${esc(m)}</p>`).join(""); n+=msgs.length;
+    if(k.startsWith("ev-")){const sm=$("evs-"+k.slice(3));if(sm)sm.dataset.warn="1"}
+  });
+  $("navWarn").hidden=!n; $("navWarnN").textContent=n+(n===1?" upozorenje":" upozorenja");
+}
+
+/* ---------- Bottom bar: section links with counts ---------- */
+function renderNav(){
+  if(!S) return;
+  const plan=parseInt(S.tema.planirani_broj_dogadjanja,10);
+  $("navEv").textContent=S.events.length+(isNaN(plan)?"":"/"+plan);
+  $("navPrepA").hidden=!isCycle();
+  const all=PREP.filter(isDone).length; $("navPrep").textContent=all+"/"+PREP.length;
+}
+function prepVisibility(){
+  const on=isCycle();
+  $("prep").hidden=!on; $("prepOff").hidden=on; $("btnAddCycle").hidden=!on;
+}
+
+/* ---------- Name suggestions from names already used in the plan ---------- */
+function refreshNames(){
+  if(!S) return;
+  const set=new Set();
+  const addN=v=>{v=String(v||"").trim();if(v&&v.length<80)set.add(v)};
+  addN(S.tema.planer);
+  ["p0_voditelj","p1_validator"].forEach(id=>addN(pv(id)));
+  Object.values(S.prep).forEach(p=>addN(p.odgovorna_osoba));
+  S.events.forEach(e=>addN(e.voditelj));
+  $("dl-names").innerHTML=[...set].sort((a,b)=>a.localeCompare(b,"hr")).map(n=>`<option value="${esc(n)}">`).join("");
+}
 function renderAll(){
   renderTopicSelect();renderInfo();
   const on=!!S;
   ["temaFields","prep","evlist","evSummary"].forEach(id=>$(id).hidden=!on);
-  ["btnAddEv","btnAddCycle","btnLoad","btnSave"].forEach(id=>$(id).disabled=!on);
-  if(on){renderTema();renderPrep();renderEvents()}
+  ["btnAddEv","btnAddCycle","btnLoad","btnSave","btnSave2"].forEach(id=>$(id).disabled=!on);
+  $("bar").hidden=!on;
+  if(on){renderTema();renderPrep();renderEvents();prepVisibility();renderChecks();renderNav();refreshNames()}
+  else $("prepOff").hidden=true;
   renderState();
 }
 
@@ -613,10 +760,39 @@ function selectTopic(id){
 }
 
 /* ---------- Input handling (delegated, no full re-render so focus stays put) ---------- */
+/* Tasks move forward on their own when their answer makes it obvious; a manual "Blokirano" or "Nije primjenjivo" is left alone. */
+function autoStatus(it,p){
+  if(it.fact) return;
+  const cur=p.status||"Nije započeto";
+  if(["Blokirano","Nije primjenjivo"].includes(cur)) return;
+  let next=null;
+  if(it.t==="list:Da/Ne") next=p.vrijednost==="Da"?"Gotovo":(filled(p.vrijednost)&&cur==="Nije započeto"?"U tijeku":null);
+  else if(it.x==="objava"&&filled(p.poveznica)) next="Gotovo";
+  else if((filled(p.vrijednost)||filled(p.odgovorna_osoba))&&cur==="Nije započeto") next="U tijeku";
+  if(!next||next===cur) return;
+  p.status=next;
+  const sel=document.querySelector(`[data-id="${it.id}"][data-f="status"]`); if(sel){sel.value=next;sel.dataset.v=next}
+  $("pi-"+it.id).dataset.status=next;
+}
+/* Fill an empty linked date from the other side (MultiLab booking <-> cycle event). */
+function syncFromPrep(id){
+  const l=LINKS.find(x=>x.prep===id), d=pv(id); if(!l||!d) return;
+  const ev=S.events.find(e=>e.korak===l.korak);
+  if(ev&&!ev.datum){ev.datum=d;const inp=document.querySelector(`[data-id="${ev.id}"][data-f="datum"]`);if(inp)inp.value=d;$("evs-"+ev.id).innerHTML=evSummaryHtml(ev);toast(`Datum prenesen i u događanje „${ev.naziv||l.name}”`)}
+}
+function syncFromEvent(ev){
+  const l=LINKS.find(x=>x.korak===ev.korak); if(!l||!ev.datum||!isCycle()) return;
+  if(!pv(l.prep)){
+    (S.prep[l.prep]=S.prep[l.prep]||{}).vrijednost=ev.datum;
+    const inp=document.querySelector(`[data-id="${l.prep}"][data-f="vrijednost"]`);if(inp)inp.value=ev.datum;
+    const it=PREP.find(x=>x.id===l.prep);autoStatus(it,S.prep[l.prep]);renderProgress();
+    toast("Datum prenesen i u rezervaciju MultiLaba (korak 0)");
+  }
+}
 function onField(e){
   const el=e.target; const s=el.dataset&&el.dataset.s; if(!s||!S) return;
   const f=el.dataset.f, id=el.dataset.id;
-  if(s==="tema"){S.tema[f]=el.value;if(f==="planirani_broj_dogadjanja")renderEvSummary()}
+  if(s==="tema"){S.tema[f]=el.value;if(f==="planirani_broj_dogadjanja")renderEvSummary();if(f==="format_teme")prepVisibility()}
   else if(s==="prep"){
     const p=S.prep[id]||(S.prep[id]={});
     const it=PREP.find(x=>x.id===id);
@@ -627,15 +803,25 @@ function onField(e){
       p.vrijednost=[...document.querySelectorAll(`[data-id="${id}"][data-multi]`)].filter(x=>x.checked).map(x=>x.dataset.multi).join(", ");
     }else if(el.dataset.bool!==undefined) p[f]=el.checked?"Da":"";
     else p[f]=el.value;
-    if(f==="status"){$("pi-"+id).dataset.status=el.value;el.dataset.v=el.value;renderProgress()}
+    if(f==="status"){$("pi-"+id).dataset.status=el.value;el.dataset.v=el.value}
+    else if(it){autoStatus(it,p);if(f==="vrijednost")syncFromPrep(id)}
+    renderProgress();
   }else if(s==="ev"){
     const ev=S.events.find(x=>x.id===id); if(!ev) return;
     ev[f]=el.value;
-    if(["naziv","vrsta","datum","pocetak","lokacija","status"].includes(f)){$("evs-"+id).innerHTML=evSummaryHtml(ev);if(f==="vrsta")$("ev-"+id).style.setProperty("--vc",EV_COLORS[ev.vrsta]||"var(--line)");renderEvSummary()}
+    if(f==="format"){if(ev.format==="Online"&&!ev.lokacija){ev.lokacija="Online";const l=document.querySelector(`[data-id="${id}"][data-f="lokacija"]`);if(l)l.value="Online"}applyEvFormat(ev)}
+    if(f==="datum"||f==="korak") syncFromEvent(ev);
+    if(["naziv","vrsta","datum","pocetak","lokacija","status","format"].includes(f)){$("evs-"+id).innerHTML=evSummaryHtml(ev);if(f==="vrsta")$("ev-"+id).style.setProperty("--vc",EV_COLORS[ev.vrsta]||"var(--line)");renderEvSummary()}
   }
   touch();
 }
 document.addEventListener("input",onField);
+/* Committed changes: re-sort events when a date is set, refresh name suggestions. */
+document.addEventListener("change",e=>{
+  const el=e.target; if(!S||!el.dataset) return;
+  if(el.dataset.s==="ev"&&el.dataset.f==="datum"){renderEvents(el.dataset.id);renderChecks()}
+  if(el.list&&el.list.id==="dl-names"||el.dataset.f==="planer") refreshNames();
+});
 document.addEventListener("click",e=>{
   const b=e.target.closest("[data-act]"); if(!b||!S) return;
   const i=S.events.findIndex(x=>x.id===b.dataset.id); if(i<0) return;
@@ -648,6 +834,13 @@ document.addEventListener("click",e=>{
   }
 });
 $("topic").addEventListener("change",e=>selectTopic(e.target.value));
+$("btnSave2").onclick=()=>save(false);
+$("navWarn").onclick=()=>{
+  const w=[...document.querySelectorAll(".wmsg")].find(x=>x.innerHTML&&!x.closest("[hidden]"));
+  if(!w) return;
+  const d=w.closest("details"); if(d) d.open=true;
+  w.scrollIntoView({behavior:"smooth",block:"center"});
+};
 $("btnAddEv").onclick=()=>{
   const ev={id:newId(),naziv:"",vrsta:"",korak:"",status:"Ideja",snimanje:"Da",odjel:OWNERS[topicById(topicId).o].n};
   S.events.push(ev);touch();renderEvents(ev.id);
@@ -657,9 +850,14 @@ $("btnAddCycle").onclick=()=>{
   const have=new Set(S.events.map(e=>e.korak));
   const add=CYCLE_EVENTS.filter(c=>!have.has(c.korak));
   if(!add.length){toast("Susreti ciklusa za korake 3–7 već su dodani");return}
-  const odjel=OWNERS[topicById(topicId).o].n;
-  add.forEach(c=>S.events.push(Object.assign({id:newId(),vrsta:"Susret / sastanak skupine",status:"Planirano",snimanje:"Da",odjel},c)));
-  touch();renderEvents();toast(`Dodano susreta: ${add.length}`);
+  const odjel=OWNERS[topicById(topicId).o].n, venue=pv("p0_multilab");
+  add.forEach(c=>{
+    const ev=Object.assign({id:newId(),vrsta:"Susret / sastanak skupine",status:"Planirano",snimanje:"Da",odjel},c);
+    const l=LINKS.find(x=>x.korak===c.korak); if(l&&pv(l.prep)) ev.datum=pv(l.prep);
+    if(!ev.lokacija&&venue&&ev.format!=="Online") ev.lokacija=venue;
+    S.events.push(ev);
+  });
+  touch();renderEvents();renderChecks();toast(`Dodano susreta: ${add.length}`+(venue||pv("p0_ml_prvi")?" · datumi i lokacija preuzeti iz koraka 0":""));
 };
 
 /* ---------- Sync with the Google Sheet ---------- */
@@ -668,14 +866,14 @@ function payload(){
   return {
     tema:Object.assign({}, S.tema, {tema:tp.t, zajednica:blockName(tp.b), vlasnik_teme:OWNERS[tp.o].n}),
     priprema:PREP.filter(it=>{const p=S.prep[it.id];return p&&["vrijednost","odgovorna_osoba","rok","status","napomena","poveznica","newsletter"].some(k=>p[k]&&p[k]!=="Nije započeto")})
-      .map(it=>{const p=S.prep[it.id];return {korak:it.k, stavka_id:it.id, stavka:it.l, vrijednost:p.vrijednost||"", odgovorna_osoba:p.odgovorna_osoba||"", rok:p.rok||"", status:p.status||"Nije započeto", napomena:p.napomena||"", poveznica:p.poveznica||"", newsletter:p.newsletter||""}}),
+      .map(it=>{const p=S.prep[it.id];return {korak:it.k, stavka_id:it.id, stavka:it.l, vrijednost:p.vrijednost||"", odgovorna_osoba:p.odgovorna_osoba||"", rok:p.rok||"", status:it.fact?"":(p.status||"Nije započeto"), napomena:p.napomena||"", poveznica:p.poveznica||"", newsletter:p.newsletter||""}}),
     dogadjanja:S.events.map(ev=>({dogadjanje_id:ev.id, naziv:ev.naziv||"", vrsta:ev.vrsta||"", korak:ev.korak||"", voditelj:ev.voditelj||"", odjel:ev.odjel||"", gosti:ev.gosti||"", publika:ev.publika||"", ocekivani_broj:ev.ocekivani_broj||"", datum:ev.datum||"", pocetak:ev.pocetak||"", trajanje:ev.trajanje||"", format:ev.format||"", lokacija:ev.lokacija||"", platforma:ev.platforma||"", snimanje:ev.snimanje||"", status:ev.status||"", resursi:ev.resursi||"", napomena:ev.napomena||""}))
   };
 }
-function busy(on){$("btnTest").disabled=on;["btnLoad","btnSave"].forEach(id=>$(id).disabled=on||!S)}
+function busy(on){$("btnTest").disabled=on;["btnLoad","btnSave","btnSave2"].forEach(id=>$(id).disabled=on||!S)}
 async function save(force){
   if(!S) return;
-  busy(true);$("stateText").textContent="Spremanje u tablicu…";
+  busy(true);setBusyText("Spremanje u tablicu…");
   try{
     const r=await api("spremi",null,{tema:topicId, ucitano:S.ucitano, prepisi:!!force, podaci:payload()});
     if(!r.ok&&r.code==="conflict"){
@@ -693,7 +891,7 @@ async function save(force){
 async function load(){
   if(!S) return;
   if(S.dirty&&!confirm("Imate promjene koje nisu spremljene u tablicu. Učitavanje iz tablice zamijenit će ih. Nastaviti?")) return;
-  busy(true);$("stateText").textContent="Učitavanje iz tablice…";
+  busy(true);setBusyText("Učitavanje iz tablice…");
   try{
     const r=await api("ucitaj",{tema:topicId});
     if(!r.ok) throw new Error(r.error||"Učitavanje nije uspjelo.");
@@ -723,7 +921,7 @@ $("btnSave").onclick=()=>save(false);
 $("btnLoad").onclick=load;
 $("btnTest").onclick=async()=>{
   store.set("hubplan-url",$("apiUrl").value.trim());store.set("hubplan-kod",$("apiKod").value);
-  busy(true);$("stateText").textContent="Provjera veze…";
+  busy(true);setBusyText("Provjera veze…");
   if(await refreshRemote(false))$("settings").open=false;
   busy(false);
 };
