@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Ciklus aktivacije CARNET Hub-a</title>
+<title>Ciklus aktivacije CARNET Huba</title>
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="description" content="Interni nacrt vodiča za skraćeni sukreacijski ciklus CARNET Hub-a.">
+<meta name="description" content="Interni nacrt vodiča za skraćeni sukreacijski ciklus CARNET Huba.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -98,6 +98,7 @@ section:nth-of-type(6) details.disc{border-top:4px solid var(--coral)}
 section:nth-of-type(7) details.disc{border-top:4px solid var(--teal)}
 section:nth-of-type(8) details.disc{border-top:4px solid var(--violet)}
 section:nth-of-type(9) details.disc{border-top:4px solid var(--amber)}
+section:nth-of-type(10) details.disc{border-top:4px solid var(--coral)}
 section:nth-of-type(2) .eyebrow{color:var(--teal)}
 section:nth-of-type(3) .eyebrow{color:var(--accent)}
 section:nth-of-type(4) .eyebrow{color:var(--violet)}
@@ -234,6 +235,29 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
 .crumb{font-size:13px;color:var(--muted)}
 .crumb a{color:var(--coral);text-decoration:none;font-weight:600}
 .crumb a:hover{text-decoration:underline;text-underline-offset:3px}
+/* Glossary */
+.gloss dt{text-transform:none;letter-spacing:0;font-family:var(--f-body);font-size:14px;font-weight:600;color:var(--ink)}
+/* Selected topic: label on card, compact line above the steps */
+.tp .sel{font-family:var(--f-mono);font-size:11.5px;font-weight:600}
+.cyc-topic{margin:0;font-size:14px;padding:10px 14px;border-radius:8px;background:var(--surface-2);border-left:5px solid var(--mark)}
+.cyc-topic.none{border-left-color:var(--amber)}
+.lnk{all:unset;cursor:pointer;color:var(--coral);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.lnk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tlinks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px}
+.row-end{display:flex;justify-content:flex-end}
+/* Phone: topic cards show only the question until one is selected */
+@media (max-width:600px){
+  button.tp:not([aria-pressed="true"]) .tt,button.tp:not([aria-pressed="true"]) .out,.tp.nc .out{display:none}
+}
+/* Print: every card open, no interactive controls */
+@media print{
+  body{background:#fff}
+  .toolbar,.copy,.tgl,.lnk,.tpl-tabs,.tlinks,details.disc>summary::after{display:none!important}
+  details.disc{break-inside:auto;border-top-width:2px}
+  .tbl{overflow:visible}
+  table{min-width:0}
+  button.tp .tt,button.tp .out,.tp.nc .out{display:block!important}
+}
 </style>
 </head>
 <body>
@@ -243,13 +267,13 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
 <header>
   <p class="crumb"><a href="../">CARNET Hub</a> · Ciklus aktivacije</p>
   <span class="eyebrow">CARNET Hub · Dokaz koncepta · Nacrt za internu povratnu informaciju</span>
-  <h1>Ciklus aktivacije CARNET Hub-a</h1>
-  <p class="lede">Vodič korak po korak za provedbu sukreacijskog ciklusa CARNET Hub-a, od prvog usklađivanja do dana predstavljanja. Teme dolaze iz tematskih zajednica, a prvi, skraćeni ciklus (dokaz koncepta) vodi Odjel za razvoj i implementaciju obrazovnih sustava do pokretanja CARNET Hub-a. Vlasnik teme donosi temu, a CARNET Hub osigurava obrazac koji se ponavlja.</p>
+  <h1>Ciklus aktivacije CARNET Huba</h1>
+  <p class="lede">Vodič korak po korak za provedbu sukreacijskog ciklusa CARNET Huba, od prvog usklađivanja do dana predstavljanja. Teme dolaze iz tematskih zajednica, a prvi, skraćeni ciklus (dokaz koncepta) vodi Odjel za razvoj i implementaciju obrazovnih sustava do pokretanja CARNET Huba. Vlasnik teme donosi temu, a CARNET Hub osigurava obrazac koji se ponavlja.</p>
   <div class="meta">
-    <span>Razdoblje <b>9. 11. – 9. 12. 2026.</b></span>
+    <span>Razdoblje <b>16. 11. – 14. 12. 2026.</b></span>
     <span>Skupina <b>15–25 nastavnika</b></span>
-    <span>Rad djelatnika <b>~50 h (procjena)</b></span>
-    <span>Status <b>v0.2 · prijedlog</b></span>
+    <span>Rad djelatnika CARNET-a <b>~47 h (procjena)</b></span>
+    <span>Status <b>v0.3 · prijedlog</b></span>
   </div>
   <div class="toolbar">
     <span class="hint">Kartice se otvaraju klikom. Počnite odabirom teme, pa prođite korake.</span>
@@ -257,21 +281,47 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   </div>
 </header>
 
+<section aria-labelledby="gloss-h">
+  <details class="disc">
+  <summary>
+    <div class="sec-head">
+      <span class="eyebrow">Zajednički jezik</span>
+      <h2 id="gloss-h">Pojmovnik</h2>
+      <span class="s-teaser">Deset pojmova koje vodič koristi: tema, izazov, ciklus, radni rezultat i uloge</span>
+    </div>
+  </summary>
+  <div class="cbody">
+    <dl class="facts gloss">
+      <dt>Tema</dt><dd>Prijedlog iz upitnika „Hub – sukreacija odgovori”; pripada jednoj tematskoj zajednici i ima vlasnika teme.</dd>
+      <dt>Izazov</dt><dd>Tema preformulirana u pitanje „Kako bi nastavnici mogli…?”; na njemu radi jedan ciklus aktivacije.</dd>
+      <dt>Tematska zajednica</dt><dd>Trajni okvir (A–E) u kojem se ciklusi i događanja ponavljaju.</dd>
+      <dt>Ciklus aktivacije</dt><dd>Osam koraka u oko mjesec dana, od usklađivanja do refleksije.</dd>
+      <dt>Dokaz koncepta</dt><dd>Prvi, skraćeni ciklus (16. 11. – 14. 12. 2026.) koji provjerava model prije pokretanja CARNET Huba.</dd>
+      <dt>Radni rezultat</dt><dd>Mali, konkretan proizvod tima (aktivnost, scenarij, predložak) isproban u razredu.</dd>
+      <dt>Vlasnik teme</dt><dd>Odjel koji je predložio temu; donosi stručni sadržaj i mrežu nastavnika.</dd>
+      <dt>Facilitator</dt><dd>Osoba iz tima CARNET Huba koja vodi formate, moderiranje i mjerenje.</dd>
+      <dt>Vlasnik usluge</dt><dd>Odjel odgovoran za uslugu (npr. Edutorij, Loomen) koji prima nalaze i odgovara na njih.</dd>
+      <dt>Dan predstavljanja</dt><dd>Završni susret na kojem timovi prikazuju radne rezultate.</dd>
+    </dl>
+  </div>
+  </details>
+</section>
+
 <section aria-labelledby="pick-h">
   <details class="disc" open>
   <summary>
     <div class="sec-head">
       <span class="eyebrow">Ulaz za korak 0 · odluku donosi vlasnik teme</span>
       <h2 id="pick-h">Tematske zajednice i teme</h2>
-      <span class="s-teaser">21 tema iz upitnika razvrstana u 5 zajednica + strateški okvir · kliknite zajednicu za teme</span>
+      <span class="s-teaser">21 tema iz upitnika: 5 zajednica, pojas izvan ritma i strateški okvir · kliknite zajednicu za teme</span>
     </div>
   </summary>
   <div class="cbody">
     <p class="note">Svih 21 tema iz upitnika „Hub – sukreacija odgovori” razvrstano je u pet tematskih zajednica i jedan pojas izvan trenutnog ritma. Zajednica je trajni okvir u kojem se ciklusi ponavljaju. Ciklus aktivacije provodi se za jednu temu formata <span class="fmt c">Ciklus aktivacije</span>; ostale teme ulaze u ritam Huba kao <span class="fmt e">Događanje u ritmu</span> ili <span class="fmt w">Radna skupina</span>. Odabrana tema prenosi se u korake i predloške u nastavku.</p>
+    <div class="active" id="active" aria-live="polite"></div>
     <div class="frame" id="frame"></div>
     <div class="blocks" role="tablist" id="blocks" aria-label="Tematske zajednice"></div>
     <div class="bpanel" id="bpanel" role="tabpanel"></div>
-    <div class="active" id="active" aria-live="polite"></div>
     <p class="note">Razvrstavanje tema u zajednice i formate te pitanja „Kako bi nastavnici mogli…?” za nove teme prijedlog su radnog tima, za potvrdu s vlasnicima tema. Prethodnici su tematske zajednice SPO 2024./2025. s referentne stranice CARNET Huba; GRADINA (dijaspora i strani učenici) i REGOČ (zeleni digitalni ekosustav) nemaju temu u upitniku. Kratice službi navedene su kako su upisane u upitnik.</p>
   </div>
   </details>
@@ -287,45 +337,12 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     </div>
   </summary>
   <div class="cbody">
+    <p class="cyc-topic" id="cycTopic"></p>
     <div class="legend"><span class="lp">Priprema (jednom po odjelu)</span><span class="lc">Ciklus aktivacije (ponavlja se tromjesečno)</span></div>
     <div class="stepper" role="tablist" id="stepper" aria-label="Koraci ciklusa"></div>
     <div class="detail" id="detail" role="tabpanel" aria-live="polite"></div>
-    <p class="note">Označene stavke kontrolnog popisa spremaju se samo u vašem pregledniku. Datumi su prijedlog i pretpostavljaju pokretanje CARNET Hub-a najkasnije 9. prosinca.</p>
-  </div>
-  </details>
-</section>
-
-<section aria-labelledby="dig-h">
-  <details class="disc">
-  <summary>
-    <div class="sec-head">
-      <span class="eyebrow">Digitalna podrška · samo postojeće CARNET-ove usluge</span>
-      <h2 id="dig-h">Dva mjesta koja nastavnici trebaju znati</h2>
-      <span class="s-teaser">DOT kao ulazna vrata, Loomen kao radna soba · plus niz od četiri objave</span>
-    </div>
-  </summary>
-  <div class="cbody">
-    <p class="note">Nastavnici vide niz objava na DOT-u koji ih obavještava što se događa i jedan e-kolegij na Loomenu u kojem se radi. Sve ostalo odvija se u pozadini. Za dokaz koncepta ništa se ne razvija iznova.</p>
-    <div class="tbl"><table>
-      <thead><tr><th>Usluga</th><th>Uloga u ciklusu</th><th>Vlasnik / odobrava</th></tr></thead>
-      <tbody>
-        <tr><td><b>DOT</b> (Središnji obrazovni portal)</td><td><b>Ulazna vrata.</b> Kratki niz objava najavljuje ciklus, upućuje na prijavu i izvještava o rezultatima. Portal je u obliku bloga, pa na samom DOT-u nema obrazaca ni prijave.</td><td>Urednički odbor DOT-a i glavni urednik</td></tr>
-        <tr><td><b>Loomen</b></td><td><b>Radna soba.</b> Jedan e-kolegij za skupinu, sa samoupisom, timskim grupama, forumom, zajedničkim predloškom za bilješke i kratkim upitnicima. Ujedno izvor podataka o dolascima i ocjenama korisnosti.</td><td>Odjel za obrazovne usluge</td></tr>
-        <tr><td><b>Edutorij</b></td><td><b>Polica.</b> Recenzirani radni rezultati objavljuju se ovdje nakon dana predstavljanja.</td><td>Odjel za obrazovne usluge</td></tr>
-        <tr><td><b>Meduza</b></td><td><b>Arhiva.</b> Snimke susreta i dana predstavljanja za one koji nisu mogli prisustvovati.</td><td>CARNET</td></tr>
-        <tr><td><b>Prijava AAI@EduHr / skole.hr</b></td><td><b>Jedan identitet.</b> Nastavnici već imaju te korisničke račune, pa im nije potrebna nova registracija. To ujedno znači da skupina mora dolaziti iz sustava obrazovanja.</td><td>Postojeći sustavni računi</td></tr>
-      </tbody>
-    </table></div>
-    <div class="sec-head"><h3>Niz objava na DOT-u</h3><p class="note">Četiri objave, dogovorene s glavnim urednikom u koraku 0 kako bi se uklopile u urednički plan.</p></div>
-    <div class="tbl"><table>
-      <thead><tr><th>Objava</th><th>Kada</th><th>Sadržaj</th></tr></thead>
-      <tbody>
-        <tr><td><b>1. Poziv</b></td><td class="num">do 13. 11.</td><td>Što je CARNET Hub, izazov, datumi, poveznica za upis u e-kolegij na Loomenu</td></tr>
-        <tr><td><b>2. Što smo čuli</b></td><td class="num">tjedan od 23. 11.</td><td>Glavni problemi sa susreta slušanja, riječima nastavnika</td></tr>
-        <tr><td><b>3. Što timovi isprobavaju</b></td><td class="num">tjedan od 30. 11.</td><td>3–4 timske ideje, poziv na dan predstavljanja</td></tr>
-        <tr><td><b>4. Rezultati</b></td><td class="num">do 9. 12.</td><td>Radni rezultati na Edutoriju, snimka na Meduzi, „Rekli ste, napravili smo”, poveznica na pokretanje CARNET Hub-a</td></tr>
-      </tbody>
-    </table></div>
+    <div class="row-end"><button class="tgl" id="resetTicks">Poništi kontrolni popis</button></div>
+    <p class="note">Jedan ciklus traje oko mjesec dana. Od 2027. novi ciklus počinje svako tromjesečje, a koraci 0–2 (priprema) provode se jednom po odjelu. Označene stavke kontrolnog popisa spremaju se samo u vašem pregledniku. Datumi su prijedlog i pretpostavljaju pokretanje CARNET Huba 14. prosinca 2026.</p>
   </div>
   </details>
 </section>
@@ -341,16 +358,17 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   </summary>
   <div class="cbody">
     <div class="tbl"><table>
-      <thead><tr><th>Uloga</th><th>Tko</th><th>Odgovoran za</th><th>Vrijeme u PoC-u</th></tr></thead>
+      <thead><tr><th>Uloga</th><th>Tko</th><th>Odgovoran za</th><th>Vrijeme u dokazu koncepta</th></tr></thead>
       <tbody>
         <tr><td><b>Vlasnik teme</b></td><td>Voditelj/ica iz odjela koji je predložio temu (ispunjavatelj/ica upitnika)</td><td>Izazov, stručni sadržaj, pristup mreži, predaja nalaza vlasniku usluge</td><td class="num">~20 h</td></tr>
-        <tr><td><b>Facilitator CARNET Hub-a</b></td><td>Odjel za istraživanje / tim CARNET Hub-a</td><td>Formati, moderiranje, prostor, komunikacija, mjerenje, ažuriranje vodiča</td><td class="num">~25 h</td></tr>
+        <tr><td><b>Facilitator CARNET Huba</b></td><td>Odjel za istraživanje / tim CARNET Huba</td><td>Formati, moderiranje, prostor, komunikacija, mjerenje, ažuriranje vodiča</td><td class="num">~25 h</td></tr>
         <tr><td><b>Nastavnici</b></td><td>15–25 iz mreže vlasnika teme</td><td>Izazovi iz prakse, ideje, mini-pilot u razredu, radni rezultati, povratna informacija kolegama</td><td class="num">4–8 h po osobi</td></tr>
-        <tr><td><b>Akademski validator</b></td><td>npr. Fakultet organizacije i informatike (FOI)</td><td>Pedagoška provjera radnih rezultata na sukreaciji i danu predstavljanja</td><td class="num">~5 h</td></tr>
-        <tr><td><b>Vodstvo ustanova</b></td><td>Ravnatelji/ce i dekani/ce ustanova sudionika</td><td>Obaviješteni; odobravaju vrijeme nastavnika</td><td class="num">~0,5 h</td></tr>
+        <tr><td><b>Akademski validator</b></td><td>npr. Fakultet organizacije i informatike (FOI)</td><td>Pedagoška provjera radnih rezultata na sukreaciji i danu predstavljanja</td><td class="num">~5 h (vanjski)</td></tr>
+        <tr><td><b>Vodstvo ustanova</b></td><td>Ravnatelji/ce i dekani/ce ustanova sudionika</td><td>Obaviješteni; odobravaju vrijeme nastavnika</td><td class="num">~0,5 h (vanjski)</td></tr>
         <tr><td><b>Vlasnik usluge</b></td><td>Odjel za obrazovne usluge (Edutorij, Loomen)</td><td>Prima nalaze i odgovara što će se promijeniti</td><td class="num">~2 h</td></tr>
       </tbody>
     </table></div>
+    <p class="note">Rad djelatnika CARNET-a (~47 h) zbroj je triju CARNET-ovih uloga: vlasnika teme, facilitatora i vlasnika usluge. Akademski validator i vodstvo ustanova vanjski su sudionici i ne ulaze u taj zbroj.</p>
   </div>
   </details>
 </section>
@@ -371,8 +389,8 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     <div class="tbl"><table>
       <thead><tr><th>KPI</th><th>Kriterij</th><th>Predložena vrijednost</th><th>Način mjerenja</th></tr></thead>
       <tbody>
-        <tr><td>Broj prijavljenih nastavnika</td><td><span class="pill f">izvedivost</span></td><td class="num">≥ 15</td><td>Upisi u e-kolegij na Loomenu s privolom</td></tr>
-        <tr><td>Utrošeni sati djelatnika u odnosu na plan</td><td><span class="pill f">izvedivost</span></td><td class="num">≤ 110 %</td><td>Tjedna evidencija sati, obje CARNET-ove uloge</td></tr>
+        <tr><td>Broj prijavljenih nastavnika</td><td><span class="pill f">izvedivost</span></td><td class="num">≥ 15</td><td>Prijave putem obrasca na DOT-u s privolom</td></tr>
+        <tr><td>Utrošeni sati djelatnika u odnosu na plan</td><td><span class="pill f">izvedivost</span></td><td class="num">≤ 110 %</td><td>Tjedna evidencija sati CARNET-ovih uloga (vlasnik teme, facilitator, vlasnik usluge)</td></tr>
         <tr><td>Obaviješteno vodstvo ustanova</td><td><span class="pill f">izvedivost</span></td><td class="num">100 %</td><td>Obavijest poslana ravnatelju/ici ili dekanu/ici svakog sudionika</td></tr>
         <tr><td>Povratak sa susreta na sukreaciju</td><td><span class="pill d">poželjnost</span></td><td class="num">≥ 50 %</td><td>Izvješće o dolascima na Loomenu</td></tr>
         <tr><td>Izrađeni i recenzirani radni rezultati</td><td><span class="pill v">opravdanost</span></td><td class="num">≥ 3</td><td>Broj na danu predstavljanja</td></tr>
@@ -405,12 +423,47 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     <div class="sec-head">
       <span class="eyebrow">Spremno za prilagodbu</span>
       <h2 id="tpl-h">Predlošci</h2>
-      <span class="s-teaser">Šest predložaka za kopiranje: poziv, scenariji susreta, pitanja, predaja, retrospektiva</span>
+      <span class="s-teaser">Šest predložaka za kopiranje: poziv, scenarij susreta, plan sukreacije, kratka pitanja, predaja nalaza, retrospektiva</span>
     </div>
   </summary>
   <div class="cbody">
     <div class="tpl-tabs" role="tablist" id="tpltabs" aria-label="Predlošci"></div>
     <div class="tpl" id="tpl"></div>
+  </div>
+  </details>
+</section>
+
+<section aria-labelledby="dig-h">
+  <details class="disc">
+  <summary>
+    <div class="sec-head">
+      <span class="eyebrow">Digitalna podrška · samo postojeće CARNET-ove usluge</span>
+      <h2 id="dig-h">Dva mjesta koja nastavnici trebaju znati</h2>
+      <span class="s-teaser">DOT kao ulazna vrata, Loomen kao radna soba · plus niz od četiri objave</span>
+    </div>
+  </summary>
+  <div class="cbody">
+    <p class="note">Nastavnici vide niz objava na DOT-u koji ih obavještava što se događa i jedan e-kolegij na Loomenu u kojem se radi. Sve ostalo odvija se u pozadini. Za dokaz koncepta ništa se ne razvija iznova.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Usluga</th><th>Uloga u ciklusu</th><th>Vlasnik / odobrava</th></tr></thead>
+      <tbody>
+        <tr><td><b>DOT</b> (Središnji obrazovni portal)</td><td><b>Ulazna vrata.</b> Kratki niz objava najavljuje ciklus, upućuje na prijavu i izvještava o rezultatima. Prijava se odvija putem obrasca na odredišnoj stranici ciklusa na DOT-u (u izradi, u sklopu dizajna odredišne stranice).</td><td>Urednički odbor DOT-a i glavni urednik</td></tr>
+        <tr><td><b>Loomen</b></td><td><b>Radna soba.</b> Jedan e-kolegij za skupinu (prijavljene upisuje facilitator), timskim grupama, forumom, zajedničkim predloškom za bilješke i kratkim upitnicima. Ujedno izvor podataka o dolascima i ocjenama korisnosti.</td><td>Odjel za obrazovne usluge</td></tr>
+        <tr><td><b>Edutorij</b></td><td><b>Polica.</b> Recenzirani radni rezultati objavljuju se ovdje nakon dana predstavljanja.</td><td>Odjel za obrazovne usluge</td></tr>
+        <tr><td><b>Meduza</b></td><td><b>Arhiva.</b> Snimke susreta i dana predstavljanja za one koji nisu mogli prisustvovati.</td><td>CARNET</td></tr>
+        <tr><td><b>Prijava AAI@EduHr / skole.hr</b></td><td><b>Jedan identitet.</b> Nastavnici već imaju te korisničke račune, pa im nije potrebna nova registracija. To ujedno znači da skupina mora dolaziti iz sustava obrazovanja.</td><td>Postojeći sustavni računi</td></tr>
+      </tbody>
+    </table></div>
+    <div class="sec-head"><h3>Niz objava na DOT-u</h3><p class="note">Četiri objave, dogovorene s glavnim urednikom u koraku 0 kako bi se uklopile u urednički plan.</p></div>
+    <div class="tbl"><table>
+      <thead><tr><th>Objava</th><th>Kada</th><th>Sadržaj</th></tr></thead>
+      <tbody>
+        <tr><td><b>1. Poziv</b></td><td class="num">do 20. 11.</td><td>Što je CARNET Hub, izazov, datumi, poveznica na obrazac za prijavu</td></tr>
+        <tr><td><b>2. Što smo čuli</b></td><td class="num">tjedan od 30. 11.</td><td>Glavni problemi sa susreta slušanja, riječima nastavnika</td></tr>
+        <tr><td><b>3. Što timovi isprobavaju</b></td><td class="num">do 4. 12.</td><td>3–4 timske ideje, poziv na dan predstavljanja</td></tr>
+        <tr><td><b>4. Rezultati</b></td><td class="num">do 14. 12.</td><td>Radni rezultati na Edutoriju, snimka na Meduzi, „Rekli ste, napravili smo”, poveznica na pokretanje CARNET Huba</td></tr>
+      </tbody>
+    </table></div>
   </div>
   </details>
 </section>
@@ -429,13 +482,13 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
       <thead><tr><th>Rizik</th><th>Mjera</th></tr></thead>
       <tbody>
         <tr><td>Umor pred kraj polugodišta u studenom i prosincu</td><td>Svaki susret kraći od 90 minuta, uvijek s mogućnošću sudjelovanja na daljinu; pilot u razredu je jedan mali radni rezultat, a ne cijela priprema za sat.</td></tr>
-        <tr><td>Desetak dana je kratko vrijeme za okupljanje sudionika</td><td>Pozivati samo iz postojeće mreže odjela, a poziv neka pošalje osoba koju nastavnici već poznaju.</td></tr>
+        <tr><td>Tjedan dana (19.–25. 11.) kratko je vrijeme za okupljanje sudionika</td><td>Pozivati samo iz postojeće mreže odjela, a poziv neka pošalje osoba koju nastavnici već poznaju.</td></tr>
         <tr><td>Dostupnost MultiLaba</td><td>Rezervirati datume prvog susreta i dana predstavljanja u koraku 0. Ako termin otpadne, susret se održava na daljinu.</td></tr>
         <tr><td>Akademski validator ili partneri bez sustavnog korisničkog računa</td><td>Provjeriti imaju li AAI@EduHr račun u koraku 1. Ako nemaju, osigurati gostujući pristup e-kolegiju ili sudjelovanje samo putem prijenosa.</td></tr>
-        <tr><td>Popunjeni urednički termini na DOT-u</td><td>Rezervirati sve četiri objave u koraku 0. Objave su kratke, a može ih pripremiti facilitator CARNET Hub-a i poslati glavnom uredniku na odobrenje.</td></tr>
+        <tr><td>Popunjeni urednički termini na DOT-u</td><td>Rezervirati sve četiri objave u koraku 0. Objave su kratke, a može ih pripremiti facilitator CARNET Huba i poslati glavnom uredniku na odobrenje.</td></tr>
         <tr><td>Prekoračenje sati djelatnika</td><td>Tjedno pratiti sate. Ako je plan prekoračen do 3. tjedna, skraćuje se druga sukreacijska provjera, a ne dan predstavljanja.</td></tr>
         <tr><td>Osobni podaci iz povratnih informacija, fotografija i snimki</td><td>Rečenica o privoli u obrascu za prijavu; snimaju se samo izlagači koji pristanu, u skladu s Općom uredbom o zaštiti podataka (GDPR).</td></tr>
-        <tr><td>Materijali izrađeni uz pomoć umjetne inteligencije</td><td>Označiti sadržaj izrađen umjetnom inteligencijom, kako zahtijeva točka 7.4. specifikacije CARNET Hub-a (Akt o umjetnoj inteligenciji EU-a, članak 50.).</td></tr>
+        <tr><td>Materijali izrađeni uz pomoć umjetne inteligencije</td><td>Označiti sadržaj izrađen umjetnom inteligencijom, kako zahtijeva točka 7.4. specifikacije CARNET Huba (Akt o umjetnoj inteligenciji EU-a, članak 50.).</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -472,7 +525,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     <div class="sec-head">
       <span class="eyebrow">Osnova</span>
       <h2 id="src-h">Izvori</h2>
-      <span class="s-teaser">Osam izvora: pilot, upitnik, SPO zajednice, DigCompEdu, EDEH, BrAIn, JTBD</span>
+      <span class="s-teaser">Sedam izvora i napomena: pilot, upitnik, SPO zajednice, DigCompEdu, EDEH, BrAIn, JTBD</span>
     </div>
   </summary>
   <div class="cbody">
@@ -484,13 +537,13 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
       <li>Europsko čvorište za digitalno obrazovanje (EDEH), vremenski ograničene tematske skupine („squads”) (radna verzija pregleda referentnih hubova, poglavlje 5).</li>
       <li>Projekt BrAIn u medijima: <a href="https://www.novilist.hr/?p=1748743" target="_blank" rel="noopener">Novi list</a>, <a href="https://dnevnik.hr/vijesti/tech/cuc2025-hrvatska-medu-prvima-uvodi-umjetnu-inteligenciju-u-osnovne-i-srednje-skole---907404.html" target="_blank" rel="noopener">Dnevnik.hr</a>.</li>
       <li>Christensen, Hall, Dillon i Duncan (2016.), <i>Competing Against Luck</i>, HarperBusiness. Metoda Jobs to Be Done kao osnova tablice ishoda za nastavnike.</li>
-      <li>Koraci, trajanja, procjene rada, ciljane vrijednosti te razvrstavanje tema u zajednice i formate prijedlog su radnog tima CARNET Hub-a, a ne preuzete referentne vrijednosti.</li>
+      <li>Koraci, trajanja, procjene rada, ciljane vrijednosti te razvrstavanje tema u zajednice i formate prijedlog su radnog tima CARNET Huba, a ne preuzete referentne vrijednosti.</li>
     </ul>
   </div>
   </details>
 </section>
 
-<footer>Nacrt v0.2 · 7. studenoga 2026. (v0.1: 26. listopada 2026.) · Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Hub-a.</footer>
+<footer>Nacrt v0.3 · 9. studenoga 2026. (v0.2: 7. studenoga 2026.; v0.1: 26. listopada 2026.) · Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
 </div>
 
 <script>
@@ -622,59 +675,59 @@ const TOPICS = [
 const CHALLENGES = TOPICS.filter(x=>x.f==="c");
 
 const STEPS = [
-  {k:"align", n:"0", t:"Usklađivanje", w:"9.–11. 11.", type:"prep",
+  {k:"align", n:"0", t:"Usklađivanje", w:"16.–17. 11.", type:"prep",
    goal:"Dogovoriti čemu služi ovaj dokaz koncepta i što mu odjel može dati.",
-   who:"Voditelj/ica iz odjela, facilitator CARNET Hub-a", format:"Sastanak od 1 h, na daljinu", effort:"3 h",
+   who:"Voditelj/ica iz odjela, facilitator CARNET Huba", format:"Sastanak od 1 h, na daljinu", effort:"3 h",
    does:["Zajedno proći kroz ovaj vodič.","Vlasnik teme odabire temu iz kataloga tematskih zajednica iznad.","Dogovoriti broj sati djelatnika i imenovati jednu osobu iz odjela kao voditelja.","Rezervirati MultiLab za prvi susret i dan predstavljanja.","Upoznati glavnog urednika DOT-a i rezervirati četiri termina za objave."],
-   out:["Odabrani izazov","Plan sati i imenovani voditelj","Dva termina u MultiLabu"],
+   out:["Odabrana tema i njezin izazov","Plan sati i imenovani voditelj","Dva termina u MultiLabu"],
    reuse:"Za sljedeće odjele ovo postaje uvodni razgovor od 30 minuta."},
-  {k:"codesign", n:"1", t:"Sudizajn", w:"9.–13. 11.", type:"prep",
+  {k:"codesign", n:"1", t:"Sudizajn", w:"17.–19. 11.", type:"prep",
    goal:"Oblikovati ciklus prema mreži odjela i odabranom izazovu.",
-   who:"Voditelj/ica iz odjela, facilitator CARNET Hub-a, akademski validator (po želji)", format:"Radionica od 2 h", effort:"6 h",
-   does:["Mapirati mrežu odjela: koga pozvati i kojim kanalom.","Potvrditi akademskog validatora.","Dogovoriti ciljane vrijednosti pokazatelja uspjeha.","Prilagoditi predloške poziva i susreta.","Postaviti e-kolegij za skupinu na Loomenu sa samoupisom."],
+   who:"Voditelj/ica iz odjela, facilitator CARNET Huba, akademski validator (po želji)", format:"Radionica od 2 h", effort:"6 h",
+   does:["Mapirati mrežu odjela: koga pozvati i kojim kanalom.","Potvrditi akademskog validatora.","Dogovoriti ciljane vrijednosti pokazatelja uspjeha.","Prilagoditi predloške poziva i susreta.","Postaviti e-kolegij za skupinu na Loomenu i dogovoriti obrazac za prijavu na DOT-u."],
    out:["Popis pozvanih","Dogovorene ciljane vrijednosti","Konačni predlošci"],
    reuse:"Mapa mreže i ciljane vrijednosti prenose se u sljedeći ciklus."},
-  {k:"recruit", n:"2", t:"Okupljanje", w:"9.–20. 11.", type:"prep",
+  {k:"recruit", n:"2", t:"Okupljanje", w:"19.–25. 11.", type:"prep",
    goal:"Okupiti 15–25 nastavnika preko ljudi koje već poznaju.",
-   who:"Poziv šalje voditelj/ica iz odjela, facilitator CARNET Hub-a prati prijave", format:"Osobni pozivi + kratki obrazac za prijavu", effort:"6 h",
-   does:["Pozvati nastavnike iz mreže vlasnika teme: {mreza}.","Obrazac prikuplja ime, ustanovu, predmet, željeni format sudjelovanja i privolu.","Poslati kratku obavijest ravnatelju/ici ili dekanu/ici svakog sudionika.","Poslati podsjetnik 3 dana prije prvog susreta."],
+   who:"Poziv šalje voditelj/ica iz odjela, facilitator CARNET Huba prati prijave", format:"Osobni pozivi + kratki obrazac za prijavu", effort:"6 h",
+   does:["Pozvati nastavnike iz mreže vlasnika teme: {mreza}.","Obrazac za prijavu na odredišnoj stranici DOT-a prikuplja ime, ustanovu, predmet, željeni format sudjelovanja i privolu.","Facilitator upisuje prijavljene u e-kolegij na Loomenu.","Poslati kratku obavijest ravnatelju/ici ili dekanu/ici svakog sudionika.","Zatvoriti prijave 25. 11. i istog dana poslati podsjetnik svim prijavljenima."],
    out:["Popis prijava s privolom","Podjela: uživo / na daljinu"],
-   reuse:"Prijavljeni postaju prvi popis zajednice CARNET Hub-a."},
-  {k:"listen", n:"3", t:"Slušanje", w:"Tjedan od 16. 11.", type:"cycle",
+   reuse:"Prijavljeni postaju prvi popis zajednice CARNET Huba."},
+  {k:"listen", n:"3", t:"Slušanje", w:"26. 11.", type:"cycle",
    goal:"Čuti što je trenutno teško, u opuštenom okruženju.",
-   who:"Nastavnici; facilitator CARNET Hub-a moderira, voditelj/ica iz odjela sluša", format:"Susret od 90 min, MultiLab + na daljinu", effort:"8 h",
+   who:"Nastavnici; facilitator CARNET Huba moderira, voditelj/ica iz odjela sluša", format:"Susret od 90 min, MultiLab + na daljinu", effort:"8 h",
    does:["Početno stanje: samoprocjena sigurnosti 1–5 na ulazu ili online.","Krug priča: \"Ispričajte kada ste posljednji put ovo pokušali. Što se dogodilo, kome ili čemu ste se obratili, od čega ste odustali?\"","Grupirati priče na zidu ili digitalnoj ploči, uključujući ono što nastavnici danas koriste.","Glasati za 2–3 najčešća problema.","Dogovoriti 5–6 kratkih razgovora jedan na jedan (20 min, online) s dobrovoljcima.","Završiti jednim kratkim pitanjem o korisnosti."],
    out:["Grupirani problemi","Što nastavnici danas koriste","Prva 2–3 problema","Početna samoprocjena sigurnosti","Bilješke iz 5–6 razgovora"],
    reuse:"Od 2027. ovo je mjesečni otvoreni susret."},
-  {k:"cocreate", n:"4", t:"Sukreacija", w:"Tjedan od 23. 11.", type:"cycle",
+  {k:"cocreate", n:"4", t:"Sukreacija", w:"1. 12.", type:"cycle",
    goal:"Pretvoriti probleme u male ideje koje će timovi isprobati.",
    who:"Nastavnici u timovima od 3–5, akademski validator, obje CARNET-ove uloge", format:"Susret od 2 h, na daljinu ili u MultiLabu", effort:"8 h",
    does:["Svaki od glavnih problema preformulirati u pitanje „Kako bismo mogli…?”.","Oformiti 3–4 mala tima, svaki bira jednu ideju.","Svaki tim definira jedan mali radni rezultat koji će isprobati u razredu.","Validator daje kratku pedagošku povratnu informaciju."],
    out:["3–4 timske ideje","Jedan definirani radni rezultat po timu"],
    reuse:"Timovi su prototip vremenski ograničenih tematskih skupina."},
-  {k:"try", n:"5", t:"Isprobavanje", w:"30. 11.–4. 12.", type:"cycle",
+  {k:"try", n:"5", t:"Isprobavanje", w:"2.–9. 12.", type:"cycle",
    goal:"Isprobati svaki radni rezultat jednom, u stvarnom razredu.",
-   who:"Nastavnici, facilitator CARNET Hub-a na raspolaganju", format:"Samostalno + jedna provjera od 45 min na daljinu", effort:"4 h",
+   who:"Nastavnici, facilitator CARNET Huba na raspolaganju", format:"Samostalno + jedna provjera od 45 min na daljinu", effort:"4 h",
    does:["Svaki tim isproba svoj radni rezultat na jednom satu.","Članovi u zajednički predložak bilježe što je uspjelo, a što nije.","Provjera sredinom tjedna radi rješavanja zapreka.","Timovi biraju člana koji će izlagati na danu predstavljanja."],
    out:["Isprobani radni rezultati","Kratke bilješke po timu"],
    reuse:"Predložak za bilješke u kasnijim ciklusima postaje zapis u portfoliju."},
-  {k:"show", n:"6", t:"Predstavljanje", w:"7. 12.", type:"cycle",
+  {k:"show", n:"6", t:"Predstavljanje", w:"10. 12.", type:"cycle",
    goal:"Učiniti rezultate vidljivima i prenijeti ih u CARNET-ove usluge.",
-   who:"Timovi izlažu; validator i vlasnik usluge sudjeluju", format:"Dan predstavljanja od 90 min, MultiLab + na daljinu, snimka na Meduzi", effort:"10 h",
+   who:"Timovi izlažu; validator i vlasnik usluge sudjeluju", format:"Dan predstavljanja od 90 min, MultiLab + na daljinu, snimka na Meduzi", effort:"8 h",
    does:["Svaki tim u 5 minuta predstavlja svoj radni rezultat.","Kolegijalna recenzija prema kratkom kontrolnom popisu, samo unutar skupine.","Svaki tim sam odlučuje hoće li objaviti radni rezultat na Edutoriju.","Vlasnik usluge uživo čuje nalaze.","Završna pitanja: ishodi za nastavnike i „bih li se ponovno uključio/la”."],
    out:["Recenzirani radni rezultati","Dobrovoljno predani sadržaji za Edutorij","Snimka na Meduzi","Bilješka o predaji nalaza vlasniku usluge"],
    reuse:"Od 2027. ovo je tromjesečni dan predstavljanja."},
-  {k:"reflect", n:"7", t:"Refleksija", w:"8.–9. 12.", type:"cycle",
-   goal:"Procijeniti izvedivost i opravdanost te priču prenijeti na pokretanje CARNET Hub-a.",
-   who:"Voditelj/ica iz odjela, facilitator CARNET Hub-a, 2–3 nastavnika", format:"Retrospektiva od 1 h + termin na pokretanju", effort:"5 h",
-   does:["Odvojeno usporediti KPI-jeve CARNET-a i ishode za nastavnike s ciljanim vrijednostima.","Retrospektiva: zadržati, promijeniti, ukinuti.","Ažurirati ovaj vodič na verziju v1.","Predstaviti ciklus na pokretanju CARNET Hub-a, po mogućnosti zajedno s nastavnikom."],
-   out:["Dvije ocijenjene tablice","Vodič v1","Primjer za pokretanje CARNET Hub-a"],
+  {k:"reflect", n:"7", t:"Refleksija", w:"11.–14. 12.", type:"cycle",
+   goal:"Procijeniti izvedivost i opravdanost te priču prenijeti na pokretanje CARNET Huba.",
+   who:"Voditelj/ica iz odjela, facilitator CARNET Huba, 2–3 nastavnika", format:"Retrospektiva od 1 h + termin na pokretanju", effort:"4 h",
+   does:["Odvojeno usporediti KPI-jeve CARNET-a i ishode za nastavnike s ciljanim vrijednostima.","Retrospektiva: zadržati, promijeniti, ukinuti.","Ažurirati ovaj vodič na verziju v1.","Predstaviti ciklus na pokretanju CARNET Huba, po mogućnosti zajedno s nastavnikom."],
+   out:["Dvije ocijenjene tablice","Vodič v1","Primjer za pokretanje CARNET Huba"],
    reuse:"Priča s pokretanja ujedno je poziv budućim ambasadorima."}
 ];
 
 const TEMPLATES = [
   {k:"invite", t:"Poziv", body:
-`Predmet: Pridružite se kratkom sukreacijskom ciklusu CARNET Hub-a (9. 11. – 9. 12.)
+`Predmet: Pridružite se kratkom sukreacijskom ciklusu CARNET Huba (16. 11. – 14. 12.)
 
 Poštovani/a [ime],
 
@@ -683,20 +736,25 @@ CARNET pokreće Hub, mjesto na kojem nastavnici i CARNET zajedno oblikuju digita
 „Kako bi nastavnici mogli [izazov]?”
 
 Što uključuje:
-• otvoreni susret od 90 minuta (tjedan od 16. 11., MultiLab ili na daljinu)
-• jedan sukreacijski susret od 2 sata (tjedan od 23. 11.)
-• isprobavanje jedne male ideje u vašem razredu (30. 11. – 4. 12.)
-• dan predstavljanja od 90 minuta (7. 12.)
+• otvoreni susret od 90 minuta (četvrtak, 26. 11., MultiLab ili na daljinu)
+• jedan sukreacijski susret od 2 sata (utorak, 1. 12.)
+• isprobavanje jedne male ideje u vašem razredu (2. – 9. 12.)
+• dan predstavljanja od 90 minuta (četvrtak, 10. 12.)
 
-Za prvi susret nije potrebna nikakva priprema. Upis u e-kolegij na Loomenu prijavom AAI@EduHr ili skole.hr: [poveznica]
-Više o ciklusu na DOT-u: [poveznica]
+Ukupno vam treba 4–8 sati kroz četiri tjedna. Za prvi susret nije potrebna nikakva priprema.
+
+Prijave do 25. 11. putem obrasca na DOT-u: [poveznica]
+Nakon prijave upisat ćemo vas u e-kolegij na Loomenu, u koji ulazite prijavom AAI@EduHr ili skole.hr.
+
+U obrascu tražimo privolu za obradu osobnih podataka. Snimamo samo izlagače koji na to pristanu. O vašem sudjelovanju kratko ćemo obavijestiti ravnatelja/icu ili dekana/icu vaše ustanove.
 
 [Ime voditelja/ice iz odjela]`},
   {k:"meetup", t:"Scenarij susreta", body:
 `SUSRET SLUŠANJA · 90 min
 
+Na ulazu, prije početka: samoprocjena sigurnosti 1–5 (na papiru ili online)
+
 00–10  Dobrodošlica, zašto smo ovdje, pravila (nema pogrešnih odgovora, nema prezentacija)
-00–05  Samoprocjena sigurnosti 1–5 (na papiru ili online)
 10–40  Krug priča: „Ispričajte kada ste posljednji put pokušali [izazov].
        Što se dogodilo? Kome ili čemu ste se obratili? Od čega ste odustali?”
 40–60  Grupiranje ljepljivih papirića / digitalne ploče u teme
@@ -704,7 +762,7 @@ Više o ciklusu na DOT-u: [poveznica]
 75–85  Što slijedi, termin sukreacijskog susreta
 85–90  Kratko pitanje: „Koliko vam je današnji susret bio koristan? 1–5”
 
-Moderira: facilitator CARNET Hub-a · Bilježi: voditelj/ica iz odjela`},
+Moderira: facilitator CARNET Huba · Bilježi: voditelj/ica iz odjela`},
   {k:"cocreate", t:"Plan sukreacije", body:
 `SUKREACIJSKI SUSRET · 2 h
 
@@ -773,13 +831,22 @@ Odluka: ponoviti u 1. tromjesečju 2027.?  da / uz promjene / ne`}
 
 const DIG = {
   align:"Upoznati glavnog urednika DOT-a i rezervirati četiri termina za objave.",
-  codesign:"Postaviti e-kolegij na Loomenu sa samoupisom; pripremiti 1. objavu za DOT.",
-  recruit:"1. objava na DOT-u upućuje na e-kolegij; nastavnici se upisuju prijavom AAI@EduHr ili skole.hr.",
+  codesign:"Postaviti e-kolegij na Loomenu; pripremiti obrazac za prijavu i 1. objavu na DOT-u.",
+  recruit:"1. objava na DOT-u upućuje na obrazac za prijavu; facilitator upisuje prijavljene u e-kolegij, u koji ulaze prijavom AAI@EduHr ili skole.hr.",
   listen:"Digitalna ploča za grupiranje; kratko pitanje kao upitnik na Loomenu; nakon susreta 2. objava na DOT-u.",
   cocreate:"Timske grupe i forum u e-kolegiju; nakon susreta 3. objava na DOT-u.",
   try:"Bilješke u zajedničkom predlošku na Loomenu; pitanja na forumu.",
   show:"Prijenos i snimka na Meduzi; timovi koji to žele predaju recenzirane radne rezultate na Edutorij.",
-  reflect:"Izvješća s Loomena za stopu povratka i ocjene korisnosti; 4. objava na DOT-u upućuje na pokretanje CARNET Hub-a."
+  reflect:"Izvješća s Loomena za stopu povratka i ocjene korisnosti; 4. objava na DOT-u upućuje na pokretanje CARNET Huba."
+};
+/* Which templates belong to which step (keys from TEMPLATES) */
+const STEP_TPL = {
+  codesign:["invite","meetup"],
+  recruit:["invite"],
+  listen:["meetup","pulse"],
+  cocreate:["cocreate","pulse"],
+  show:["pulse","handover"],
+  reflect:["retro"]
 };
 let challenge = null, current = 0, tpl = 0, block = null;
 const store = {
@@ -836,7 +903,8 @@ function renderPanel(){
     const own=`<span class="own">${esc(OWNERS[t.o].n)}</span>`;
     if(t.f==="c"){
       const btn=document.createElement("button");btn.className="tp";btn.setAttribute("aria-pressed",String(challenge===t.id));
-      btn.innerHTML=`<span class="fmt c">${FORMATS.c.l}</span>${own}<span class="tt">Iz upitnika: ${esc(t.t)}</span><span class="q">${esc(t.q)}</span><span class="out">${esc(t.out)}</span>`;
+      const sel=challenge===t.id?`<span class="sel">✓ Odabrano · ponovni klik poništava odabir</span>`:"";
+      btn.innerHTML=`<span class="fmt c">${FORMATS.c.l}</span>${sel}${own}<span class="tt">Iz upitnika: ${esc(t.t)}</span><span class="q">${esc(t.q)}</span><span class="out">${esc(t.out)}</span>`;
       btn.onclick=()=>{challenge=challenge===t.id?null:t.id;store.set("hubac-hr-challenge",challenge);renderPanel();renderActive();renderDetail();renderTpl()};
       grid.appendChild(btn);
     } else {
@@ -848,6 +916,11 @@ function renderPanel(){
 }
 function renderActive(){
   const el=document.getElementById("active"), c=topicById(challenge);
+  const ct=document.getElementById("cycTopic");
+  ct.className="cyc-topic"+(c?"":" none");
+  ct.innerHTML=c?`<b>Tema ciklusa:</b> ${esc(c.q)}`:`<b>Tema još nije odabrana.</b> <button class="lnk" id="goPick">Odaberite je u kartici Tematske zajednice i teme</button>; dotad koraci i predlošci prikazuju zamjenski tekst.`;
+  const gp=document.getElementById("goPick");
+  if(gp)gp.onclick=()=>{const d=document.querySelector("#pick-h").closest("details");d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"})};
   if(!c){el.innerHTML=`<p class="note"><b>Nije odabrana tema.</b> Odaberite temu formata Ciklus aktivacije. Za dokaz koncepta to je jedna od tema Odjela za razvoj i implementaciju obrazovnih sustava (zajednice A i B).</p>`;return}
   const b=BLOCKS.find(x=>x.id===c.b), o=OWNERS[c.o];
   el.innerHTML=`<span class="eyebrow">Odabrana tema za ovaj ciklus</span>
@@ -881,8 +954,13 @@ function renderDetail(){
    <div class="dcol">
      <dl class="facts"><dt>Tko</dt><dd>${s.who}</dd><dt>Format</dt><dd>${s.format}</dd><dt>Platforma</dt><dd>${DIG[s.k]}</dd><dt>Rad djelatnika</dt><dd class="mono">${s.effort} (procjena)</dd></dl>
      <div class="block"><h4>Rezultati koraka</h4><ul class="plain">${s.out.map(o=>`<li>${esc(o)}</li>`).join("")}</ul></div>
+     ${(STEP_TPL[s.k]||[]).length?`<div class="block"><h4>Predlošci za ovaj korak</h4><div class="tlinks">${STEP_TPL[s.k].map(k=>`<button class="lnk" data-tpl="${k}">${esc(TEMPLATES.find(x=>x.k===k).t)}</button>`).join("")}</div></div>`:""}
      <p class="reuse"><b>Obrazac koji se ponavlja.</b> ${s.reuse}</p>
    </div>`;
+  el.querySelectorAll("[data-tpl]").forEach(b=>b.onclick=()=>{
+    tpl=TEMPLATES.findIndex(x=>x.k===b.dataset.tpl);renderTpl();
+    const d=document.querySelector("#tpl-h").closest("details");d.open=true;d.scrollIntoView({behavior:"smooth",block:"start"});
+  });
   el.querySelectorAll("input[type=checkbox]").forEach(cb=>cb.onchange=()=>{
     const arr=ticks[s.k]||[];arr[+cb.dataset.i]=cb.checked;ticks[s.k]=arr;store.set("hubac-hr-ticks",ticks);renderStepper();
   });
@@ -914,6 +992,17 @@ document.getElementById("toggleAll").onclick=()=>{
   allCards().forEach(d=>d.open=open);syncToggleLabel();
 };
 allCards().forEach(d=>d.addEventListener("toggle",syncToggleLabel));
+
+/* Clear saved checklist ticks (stored only in this browser) */
+document.getElementById("resetTicks").onclick=()=>{
+  if(!confirm("Poništiti sve označene stavke kontrolnog popisa u ovom pregledniku?"))return;
+  ticks={};store.set("hubac-hr-ticks",ticks);renderStepper();renderDetail();
+};
+
+/* Print: open every card, then restore what the reader had open */
+let openBeforePrint=null;
+addEventListener("beforeprint",()=>{openBeforePrint=allCards().map(d=>d.open);allCards().forEach(d=>d.open=true)});
+addEventListener("afterprint",()=>{if(openBeforePrint)allCards().forEach((d,i)=>d.open=openBeforePrint[i]);openBeforePrint=null;syncToggleLabel()});
 
 renderFrame();renderBlocks();renderPanel();renderActive();renderStepper();renderDetail();renderTpl();syncToggleLabel();
 </script>
