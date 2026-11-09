@@ -200,7 +200,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
 
 <section class="card" style="--c:var(--teal)" aria-labelledby="prep-h">
   <div class="sec-head"><span class="eyebrow">2 · Priprema</span><h2 id="prep-h">Koraci 0–2: usklađivanje, sudizajn, okupljanje</h2>
-    <p class="note">Svaka stavka ima vrijednost, odgovornu osobu, rok i status. Stavke prate kontrolne popise iz vodiča Ciklus aktivacije.</p></div>
+    <p class="note">Svaka stavka ima svoj unos (npr. datum objave ili lokaciju), odgovornu osobu, rok za izvršenje i status. Datum u unosu je datum samog događaja ili objave, a rok za izvršenje je do kada stavka mora biti obavljena. Stavke prate kontrolne popise iz vodiča Ciklus aktivacije.</p></div>
   <div id="prep" style="display:flex;flex-direction:column;gap:10px"></div>
 </section>
 
@@ -243,36 +243,37 @@ const LISTS_DEFAULT = {
 };
 let LISTS = JSON.parse(JSON.stringify(LISTS_DEFAULT));
 
-/* Preparation items for steps 0–2. t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
+/* Preparation items for steps 0–2. l: item name, v: label of its value field (never "Rok": the due date has its own field),
+   t: text | number | date | url | list:<Popisi list> | multi:<Popisi list> */
 const STEP_NAMES = ["Usklađivanje","Sudizajn","Okupljanje"];
 const PREP = [
-  {id:"p0_vlasnik", k:0, l:"Vlasnik teme (odjel)", t:"text", pre:tp=>OWNERS[tp.o].n},
-  {id:"p0_voditelj", k:0, l:"Imenovani voditelj/ica iz odjela", t:"text"},
-  {id:"p0_sati", k:0, l:"Dogovoreni sati djelatnika CARNET-a", t:"number"},
-  {id:"p0_multilab", k:0, l:"MultiLab za susrete", t:"list:Lokacija"},
-  {id:"p0_ml_prvi", k:0, l:"MultiLab rezerviran: prvi susret", t:"date"},
-  {id:"p0_ml_dan", k:0, l:"MultiLab rezerviran: dan predstavljanja", t:"date"},
-  {id:"p0_urednik", k:0, l:"Glavni urednik DOT-a (kontakt)", t:"text"},
-  {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv (datum)", t:"date"},
-  {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli (datum)", t:"date"},
-  {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju (datum)", t:"date"},
-  {id:"p0_dot4", k:0, l:"DOT objava 4 · Rezultati (datum)", t:"date"},
-  {id:"p1_validator", k:1, l:"Akademski validator (ime)", t:"text"},
-  {id:"p1_val_ust", k:1, l:"Ustanova validatora", t:"text"},
-  {id:"p1_val_potvrda", k:1, l:"Validator potvrdio sudjelovanje", t:"list:Da/Ne"},
-  {id:"p1_kpi", k:1, l:"Ciljane vrijednosti pokazatelja dogovorene", t:"list:Da/Ne"},
-  {id:"p1_kanali", k:1, l:"Kanali poziva", t:"multi:Kanal poziva"},
-  {id:"p1_loomen", k:1, l:"Poveznica na e-kolegij na Loomenu", t:"url"},
-  {id:"p1_obrazac", k:1, l:"Poveznica na obrazac za prijavu na DOT-u", t:"url"},
-  {id:"p1_predlosci", k:1, l:"Predlošci poziva i susreta prilagođeni", t:"list:Da/Ne"},
-  {id:"p2_poziv", k:2, l:"Datum slanja poziva", t:"date"},
-  {id:"p2_rok", k:2, l:"Rok za prijave", t:"date"},
-  {id:"p2_cilj", k:2, l:"Ciljani broj sudionika", t:"number"},
-  {id:"p2_prijave", k:2, l:"Broj prijavljenih", t:"number"},
-  {id:"p2_uzivo", k:2, l:"Prijavljeni uživo", t:"number"},
-  {id:"p2_daljina", k:2, l:"Prijavljeni na daljinu", t:"number"},
-  {id:"p2_vodstvo", k:2, l:"Obavijesti vodstvu ustanova poslane", t:"list:Da/Ne"},
-  {id:"p2_podsjetnik", k:2, l:"Podsjetnik prijavljenima poslan", t:"list:Da/Ne"}
+  {id:"p0_vlasnik", k:0, l:"Vlasnik teme", v:"Odjel", t:"text", pre:tp=>OWNERS[tp.o].n},
+  {id:"p0_voditelj", k:0, l:"Imenovani voditelj/ica iz odjela", v:"Ime i prezime", t:"text"},
+  {id:"p0_sati", k:0, l:"Dogovoreni sati djelatnika CARNET-a", v:"Broj sati", t:"number"},
+  {id:"p0_multilab", k:0, l:"MultiLab za susrete", v:"Lokacija", t:"list:Lokacija"},
+  {id:"p0_ml_prvi", k:0, l:"Rezervacija MultiLaba: prvi susret", v:"Datum susreta", t:"date"},
+  {id:"p0_ml_dan", k:0, l:"Rezervacija MultiLaba: dan predstavljanja", v:"Datum predstavljanja", t:"date"},
+  {id:"p0_urednik", k:0, l:"Glavni urednik DOT-a", v:"Ime i kontakt", t:"text"},
+  {id:"p0_dot1", k:0, l:"DOT objava 1 · Poziv", v:"Datum objave", t:"date"},
+  {id:"p0_dot2", k:0, l:"DOT objava 2 · Što smo čuli", v:"Datum objave", t:"date"},
+  {id:"p0_dot3", k:0, l:"DOT objava 3 · Što timovi isprobavaju", v:"Datum objave", t:"date"},
+  {id:"p0_dot4", k:0, l:"DOT objava 4 · Rezultati", v:"Datum objave", t:"date"},
+  {id:"p1_validator", k:1, l:"Akademski validator", v:"Ime i prezime", t:"text"},
+  {id:"p1_val_ust", k:1, l:"Ustanova validatora", v:"Ustanova", t:"text"},
+  {id:"p1_val_potvrda", k:1, l:"Validator potvrdio sudjelovanje", v:"Potvrđeno", t:"list:Da/Ne"},
+  {id:"p1_kpi", k:1, l:"Ciljane vrijednosti pokazatelja dogovorene", v:"Dogovoreno", t:"list:Da/Ne"},
+  {id:"p1_kanali", k:1, l:"Kanali poziva", v:"Kanali", t:"multi:Kanal poziva"},
+  {id:"p1_loomen", k:1, l:"E-kolegij na Loomenu", v:"Poveznica", t:"url"},
+  {id:"p1_obrazac", k:1, l:"Obrazac za prijavu na DOT-u", v:"Poveznica", t:"url"},
+  {id:"p1_predlosci", k:1, l:"Predlošci poziva i susreta prilagođeni", v:"Prilagođeno", t:"list:Da/Ne"},
+  {id:"p2_poziv", k:2, l:"Slanje poziva", v:"Datum slanja", t:"date"},
+  {id:"p2_rok", k:2, l:"Zatvaranje prijava", v:"Zadnji dan prijava", t:"date"},
+  {id:"p2_cilj", k:2, l:"Ciljani broj sudionika", v:"Broj", t:"number"},
+  {id:"p2_prijave", k:2, l:"Broj prijavljenih", v:"Broj", t:"number"},
+  {id:"p2_uzivo", k:2, l:"Prijavljeni uživo", v:"Broj", t:"number"},
+  {id:"p2_daljina", k:2, l:"Prijavljeni na daljinu", v:"Broj", t:"number"},
+  {id:"p2_vodstvo", k:2, l:"Obavijesti vodstvu ustanova", v:"Poslano", t:"list:Da/Ne"},
+  {id:"p2_podsjetnik", k:2, l:"Podsjetnik prijavljenima", v:"Poslano", t:"list:Da/Ne"}
 ];
 
 /* Standard cycle meetings (steps 3–7 of the Ciklus aktivacije guide). */
@@ -369,7 +370,7 @@ function renderTema(){
 }
 function prepVal(it){const p=S.prep[it.id]||{};return p}
 function valueInput(it,p){
-  const v=p.vrijednost??"", a=`data-s="prep" data-id="${it.id}" data-f="vrijednost"`;
+  const v=p.vrijednost??"", a=`data-s="prep" data-id="${it.id}" data-f="vrijednost" aria-label="${esc(it.v+": "+it.l)}"`;
   const [kind,list]=it.t.split(":");
   if(kind==="list") return `<select ${a}>${opts(list,v,"—")}</select>`;
   if(kind==="multi"){
@@ -392,15 +393,13 @@ function renderPrep(){
         return `<div class="pitem" data-status="${esc(p.status||"")}" id="pi-${it.id}">
           <div class="phead"><span class="l">${esc(it.l)}</span><select aria-label="Status: ${esc(it.l)}" data-s="prep" data-id="${it.id}" data-f="status">${opts("Status stavke",p.status||"Nije započeto")}</select></div>
           <div class="pgrid">
-            <div class="f"><span>Vrijednost</span>${valueInput(it,p)}</div>
+            ${it.t.startsWith("multi:")?`<div class="f"><span>${esc(it.v)}</span>${valueInput(it,p)}</div>`:`<label class="f"><span>${esc(it.v)}</span>${valueInput(it,p)}</label>`}
             <label class="f"><span>Odgovorna osoba</span><input data-s="prep" data-id="${it.id}" data-f="odgovorna_osoba" value="${esc(p.odgovorna_osoba||"")}"></label>
-            <label class="f"><span>Rok</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
+            <label class="f" title="Do kada stavka mora biti obavljena"><span>Rok za izvršenje</span><input type="date" data-s="prep" data-id="${it.id}" data-f="rok" value="${esc(p.rok||"")}"></label>
             <label class="f"><span>Napomena</span><input data-s="prep" data-id="${it.id}" data-f="napomena" value="${esc(p.napomena||"")}"></label>
           </div></div>`;
       }).join("")}</div></details>`;
   }).join("");
-  // value inputs that are plain inputs need an accessible name; the visible "Vrijednost" span is not a <label>
-  PREP.forEach(it=>{const el=document.querySelector(`[data-id="${it.id}"][data-f="vrijednost"]:not([data-multi])`);if(el)el.setAttribute("aria-label",it.l)});
 }
 function renderProgress(){
   [0,1,2].forEach(k=>{const [d,n]=stepProgress(k);$("prog"+k).innerHTML=`<span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo`});
