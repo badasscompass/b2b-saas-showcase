@@ -229,7 +229,8 @@ details.ev>summary[data-warn]::after{content:"⚠";color:var(--warn);font-weight
 .pitem.fact .pgrid{grid-template-columns:1fr}
 .tag-fact{font-family:var(--f-mono);font-size:11px;font-weight:600;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px;align-self:flex-start}
 .pitem.compact.fact .phead{flex-direction:row;align-items:center;justify-content:space-between}
-.prep-off{background:var(--surface-2);border-left:4px solid var(--teal);border-radius:8px;padding:10px 12px;max-width:none}
+.prep-off{background:var(--surface-2);border-left:4px solid var(--teal);border-radius:8px;padding:10px 12px;max-width:none;color:var(--ink);font-size:14px}
+.prep-off .btn{margin-top:8px;display:inline-block}
 /* Sticky bottom bar: section links, warnings, save */
 body{padding-bottom:96px}
 .sbar{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 18px rgba(0,0,0,.08);padding:10px max(16px, env(safe-area-inset-left, 0px)) calc(10px + env(safe-area-inset-bottom, 0px));display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
@@ -726,6 +727,13 @@ function renderNav(){
 function prepVisibility(){
   const on=isCycle();
   $("prep").hidden=!on; $("prepOff").hidden=on; $("btnAddCycle").hidden=!on;
+  if(on) return;
+  const tp=topicById(topicId), catalog=(FORMATS[tp.f]||{}).l||"", cyc=FORMATS.c.l;
+  $("prepOff").innerHTML=catalog===cyc
+    ? `U katalogu tema ova je tema <b>${esc(cyc)}</b>, ali je u ovom planu „Format teme” postavljen na <b>${esc(S.tema.format_teme||"—")}</b>, pa je priprema skrivena. Već uneseni podaci pripreme ostaju sačuvani. <button type="button" class="btn ghost" id="btnFmtBack">Vrati format na ${esc(cyc)}</button>`
+    : `Priprema u koracima 0–2 odnosi se samo na teme formata <b>${esc(cyc)}</b>. Ova tema ima format <b>${esc(S.tema.format_teme||catalog)}</b>, pa se planiraju samo događanja. Ako se tema ipak provodi kao ciklus, promijenite „Format teme” u bloku 1; već uneseni podaci pripreme ostaju sačuvani.`;
+  const bb=$("btnFmtBack");
+  if(bb) bb.onclick=()=>{S.tema.format_teme=cyc;const sel=document.querySelector('[data-s="tema"][data-f="format_teme"]');if(sel)sel.value=cyc;prepVisibility();touch();toast("Format vraćen na "+cyc)};
 }
 
 /* ---------- Name suggestions from names already used in the plan ---------- */
