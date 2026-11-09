@@ -279,7 +279,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
   </div>
   <div class="toolbar">
     <span class="hint">Kartice se otvaraju klikom. Počnite odabirom teme, pa prođite korake.</span>
-    <span class="btns-r"><a class="tgl" href="../hub-planer/">Planiranje teme →</a> <button class="tgl" id="toggleAll" aria-expanded="false">Otvori sve</button></span>
+    <span class="btns-r"><a class="tgl" id="toPlanner" href="../hub-planer/">Planiranje teme →</a> <button class="tgl" id="toggleAll" aria-expanded="false">Otvori sve</button></span>
   </div>
 </header>
 
@@ -735,6 +735,10 @@ let ticks = store.get("hubac-hr-ticks") || {};
 challenge = store.get("hubac-hr-challenge");
 if(!CHALLENGES.some(x=>x.id===challenge)) challenge = null;
 block = store.get("hubac-hr-block");
+/* Links from the planner: ?tema=<topic id> selects the topic, ?korak=<0-7> opens that step. */
+const QP=new URLSearchParams(location.search);
+if(CHALLENGES.some(x=>x.id===QP.get("tema"))){challenge=QP.get("tema");store.set("hubac-hr-challenge",challenge);block=CHALLENGES.find(x=>x.id===challenge).b;store.set("hubac-hr-block",block)}
+if(/^[0-7]$/.test(QP.get("korak")||"")) current=+QP.get("korak");
 if(!BLOCKS.some(b=>b.id===block)) block = challenge ? CHALLENGES.find(x=>x.id===challenge).b : "A";
 
 function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]))}
@@ -792,8 +796,10 @@ function renderPanel(){
     }
   });
 }
+function plannerUrl(hash){return "../hub-planer/"+(challenge?"?tema="+encodeURIComponent(challenge):"")+(hash||"")}
 function renderActive(){
   const el=document.getElementById("active"), c=topicById(challenge);
+  document.getElementById("toPlanner").href=plannerUrl();
   const ct=document.getElementById("cycTopic");
   ct.className="cyc-topic"+(c?"":" none");
   ct.innerHTML=c?`<b>Tema ciklusa:</b> ${esc(c.q)}`:`<b>Tema još nije odabrana.</b> <button class="lnk" id="goPick">Odaberite je u kartici Tematske zajednice i teme</button>; dotad koraci i predlošci prikazuju zamjenski tekst.`;
@@ -834,6 +840,7 @@ function renderDetail(){
      <dl class="facts"><dt>Tko</dt><dd>${s.who}</dd><dt>Format</dt><dd>${s.format}</dd><dt>Platforma</dt><dd>${DIG[s.k]}</dd><dt>Rad djelatnika</dt><dd class="mono">${s.effort} (procjena)</dd></dl>
      <div class="block"><h4>Rezultati koraka</h4><ul class="plain">${s.out.map(o=>`<li>${esc(o)}</li>`).join("")}</ul></div>
      ${(STEP_TPL[s.k]||[]).length?`<div class="block"><h4>Predlošci za ovaj korak</h4><div class="tlinks">${STEP_TPL[s.k].map(k=>`<button class="lnk" data-tpl="${k}">${esc(TEMPLATES.find(x=>x.k===k).t)}</button>`).join("")}</div></div>`:""}
+     <div class="block"><h4>U planeru</h4><p class="note"><a href="${plannerUrl(s.type==="prep"?"#prep-h":"#ev-h")}">${s.type==="prep"?"Isplanirajte ovaj korak u planeru (priprema)":"Isplanirajte susrete ciklusa u planeru (događanja)"} →</a>${challenge?"":" Tema još nije odabrana, pa ćete je odabrati u planeru."}</p></div>
      <p class="reuse"><b>Obrazac koji se ponavlja.</b> ${s.reuse}</p>
    </div>`;
   el.querySelectorAll("[data-tpl]").forEach(b=>b.onclick=()=>{
@@ -884,6 +891,7 @@ addEventListener("beforeprint",()=>{openBeforePrint=allCards().map(d=>d.open);al
 addEventListener("afterprint",()=>{if(openBeforePrint)allCards().forEach((d,i)=>d.open=openBeforePrint[i]);openBeforePrint=null;syncToggleLabel()});
 
 renderFrame();renderBlocks();renderPanel();renderActive();renderStepper();renderDetail();renderTpl();syncToggleLabel();
+if(QP.has("korak")){const d=document.getElementById("cyc-h").closest("details");d.open=true;syncToggleLabel();setTimeout(()=>d.scrollIntoView({block:"start"}),0)}
 </script>
 
 </body></html>

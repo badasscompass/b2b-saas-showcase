@@ -135,6 +135,10 @@ details.step>summary{list-style:none;cursor:pointer;padding:14px 16px;display:fl
 details.step>summary::-webkit-details-marker{display:none}
 details.step>summary:hover{filter:brightness(.97)}
 details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:16px}
+.glink{font-size:12.5px;font-weight:600;color:var(--sc);text-decoration:none;margin-left:auto;margin-right:14px}
+.glink:hover{text-decoration:underline;text-underline-offset:3px}
+.guide-link{font-size:13.5px;font-weight:600}
+.guide-link a{color:var(--ink)}
 .prog{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
 .bar{width:90px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--good)}
@@ -291,6 +295,7 @@ body{padding-bottom:96px}
     <button class="btn primary" id="btnAddEv" type="button">+ Dodaj događanje</button>
     <button class="btn ghost" id="btnAddCycle" type="button">+ Dodaj susrete ciklusa (koraci 3–7)</button>
   </div>
+  <p class="note" id="evGuide">Što se događa na kojem susretu opisuje vodič: <a href="../ciklus-aktivacije/?korak=3" target="_blank" rel="noopener" data-korak="3">slušanje</a> · <a href="../ciklus-aktivacije/?korak=4" target="_blank" rel="noopener" data-korak="4">sukreacija</a> · <a href="../ciklus-aktivacije/?korak=5" target="_blank" rel="noopener" data-korak="5">isprobavanje</a> · <a href="../ciklus-aktivacije/?korak=6" target="_blank" rel="noopener" data-korak="6">predstavljanje</a> · <a href="../ciklus-aktivacije/?korak=7" target="_blank" rel="noopener" data-korak="7">refleksija</a> ↗</p>
   <div class="evlist" id="evlist"></div>
 </section>
 
@@ -490,6 +495,9 @@ function renderInfo(){
   el.innerHTML=`<span class="fmt">${esc(FORMATS[tp.f].l)}</span>
     ${tp.q?`<p class="q">${esc(tp.q)}</p>`:""}
     ${tp.rh?`<p>${esc(tp.rh)}</p>`:""}
+    <p class="guide-link">${tp.f==="c"
+      ?`<a href="../ciklus-aktivacije/?tema=${encodeURIComponent(tp.id)}" target="_blank" rel="noopener">Otvori ovu temu u vodiču Ciklus aktivacije ↗</a>`
+      :`<a href="../ciklus-aktivacije/" target="_blank" rel="noopener">Vodič Ciklus aktivacije: kako se teme ovog formata uklapaju u ritam Huba ↗</a>`}</p>
     <dl class="facts"><dt>Zajednica</dt><dd>${esc(blockName(tp.b))}</dd><dt>Vlasnik teme</dt><dd>${esc(o.n)}</dd><dt>Mreža</dt><dd>${esc(o.s)}</dd>${remoteTopics[tp.id]?`<dt>U tablici</dt><dd>zadnje spremanje ${esc(remoteTopics[tp.id].azurirano)}${remoteTopics[tp.id].planer?" · "+esc(remoteTopics[tp.id].planer):""}</dd>`:""}</dl>`;
 }
 function renderTema(){
@@ -537,7 +545,7 @@ function renderPrep(){
   $("prep").innerHTML=[0,1,2].map(k=>{
     const [d,n]=stepProgress(k);
     return `<details class="step s${k}"${k===0?" open":""}>
-      <summary><span class="t"><span class="k">KORAK ${k}</span>${STEP_NAMES[k]}</span><span class="prog" id="prog${k}"><span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo</span></summary>
+      <summary><span class="t"><span class="k">KORAK ${k}</span>${STEP_NAMES[k]}</span><a class="glink" href="../ciklus-aktivacije/?korak=${k}${topicId?"&tema="+encodeURIComponent(topicId):""}" target="_blank" rel="noopener">Vodič: korak ${k} ↗</a><span class="prog" id="prog${k}"><span class="bar"><i style="width:${Math.round(d/n*100)}%"></i></span>${d}/${n} gotovo</span></summary>
       <div class="pitems">${stepBody(k,tp)}</div></details>`;
   }).join("");
 }
@@ -730,7 +738,8 @@ function renderNav(){
 }
 function prepVisibility(){
   const on=isCycle();
-  $("prep").hidden=!on; $("prepOff").hidden=on; $("btnAddCycle").hidden=!on;
+  $("prep").hidden=!on; $("prepOff").hidden=on; $("btnAddCycle").hidden=!on; $("evGuide").hidden=!on;
+  document.querySelectorAll("#evGuide a[data-korak]").forEach(a=>a.href=`../ciklus-aktivacije/?korak=${a.dataset.korak}&tema=${encodeURIComponent(topicId)}`);
   if(on) return;
   const tp=topicById(topicId), catalog=(FORMATS[tp.f]||{}).l||"", cyc=FORMATS.c.l;
   $("prepOff").innerHTML=catalog===cyc
