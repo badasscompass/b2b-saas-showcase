@@ -223,7 +223,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
 <script>
 /* ---------- Configuration ---------- */
 /* Default Apps Script web-app URL. Leave empty until deployed; planners can also set it under "Postavke veze". */
-const DEFAULT_API_URL = "";
+const DEFAULT_API_URL = "https://script.google.com/macros/s/AKfycbwu6_0qSU5YJTnPS3ZmY_NmJ9Tjnz4p3XYUmkfRi8Q52JMopbf_D-yv_fhdlNcZGv5BNw/exec";
 
 /* Default dropdown values. The Popisi tab of the Google Sheet overrides any list it defines (same header name). */
 const LISTS_DEFAULT = {
@@ -330,7 +330,7 @@ async function api(action, params, body){
     const j=await r.json();
     return j;
   }catch(e){
-    throw new Error(e.name==="AbortError"?"Tablica ne odgovara (isteklo vrijeme).":"Veza s tablicom nije uspjela. Provjerite adresu i internetsku vezu.");
+    throw new Error(e.name==="AbortError"?"Tablica ne odgovara (isteklo vrijeme).":"Veza s tablicom nije uspjela. Provjerite adresu, internetsku vezu i da je web-aplikacija objavljena s pristupom „Anyone” (svatko), a ne samo za prijavljene korisnike.");
   }finally{clearTimeout(t)}
 }
 let remoteTopics = {};
@@ -606,7 +606,7 @@ addEventListener("beforeunload",e=>{if(S&&S.dirty&&apiCfg().url){e.preventDefaul
 /* ---------- Start ---------- */
 (function init(){
   const cfg=apiCfg();$("apiUrl").value=cfg.url;$("apiKod").value=cfg.kod;
-  if(!cfg.url)$("settings").open=true;
+  if(!cfg.url||!cfg.kod)$("settings").open=true;
   const q=new URLSearchParams(location.search).get("tema");
   selectTopic(topicById(q)?q:(store.get("hubplan-last")||""));
   if(cfg.url&&cfg.kod) refreshRemote(true);

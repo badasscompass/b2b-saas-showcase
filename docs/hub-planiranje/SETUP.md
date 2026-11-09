@@ -31,7 +31,7 @@ Open the sheet → **File → Settings → Time zone** → `(GMT+01:00) Central 
 ## 3. Deploy as a web app
 
 1. **Deploy → New deployment** → type **Web app**.
-2. **Execute as:** Me. **Who has access:** Anyone.
+2. **Execute as:** Me. **Who has access:** Anyone. (Not "Only myself" and not "Anyone with Google account": with those, Google answers with a sign-in redirect and the page cannot connect.)
 3. **Deploy**, approve the permission prompt (the script only edits this spreadsheet).
 4. Copy the **Web app URL** (ends with `/exec`).
 
