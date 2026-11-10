@@ -206,6 +206,16 @@ details.step>summary .t{font-weight:700;font-family:var(--f-display);font-size:1
 :is(.chip,.ev .ss)[data-st="Održano"]{background:var(--violet-soft)}
 :is(.chip,.ev .ss)[data-st="Otkazano"]{background:var(--coral-soft);text-decoration:line-through}
 .evlist{display:flex;flex-direction:column;gap:10px}
+.evsel{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;padding:6px 2px}
+.evsel .cb{min-height:0}
+.evsel input{width:18px;height:18px;min-height:0;accent-color:var(--violet)}
+.evrow{display:flex;gap:10px;align-items:flex-start}
+.evrow>details{flex:1;min-width:0}
+.evpick{padding-top:13px;cursor:pointer}
+.evpick input{width:18px;height:18px;min-height:0;margin:0;accent-color:var(--violet)}
+.evrow.picked>details{box-shadow:0 0 0 2px var(--violet)}
+.clearrow{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;border-top:1px dashed var(--line);padding-top:12px}
+.clearrow .note{flex:1 1 280px}
 details.ev{border:1px solid var(--line);border-left:5px solid var(--vc,var(--line));border-radius:10px;background:var(--surface)}
 details.ev>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
 details.ev>summary::-webkit-details-marker{display:none}
@@ -250,6 +260,8 @@ body{padding-bottom:96px}
 @media (max-width:600px){.bright .state span:last-child{display:none}.bnav{font-size:13px;gap:4px 10px}}
 .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:calc(100% - 32px);z-index:10;display:none}
 .toast.show{display:block}
+.toast .undo{all:unset;cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-left:12px;color:var(--mark)}
+.toast .undo:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
 </style>
 </head>
 <body>
@@ -285,6 +297,7 @@ body{padding-bottom:96px}
   <div class="tinfo" id="tinfo"></div>
   <div class="fields" id="temaFields"></div>
   <div class="wmsg" id="w-tema"></div>
+  <div class="clearrow" id="clearRow"><button class="btn ghost" id="btnClear" type="button">Očisti plan teme</button><span class="note">Briše sve unose ove teme (blokovi 1–3) samo u ovom pregledniku. Tablica se mijenja tek kad kliknete „Spremi u tablicu”; do tada „Učitaj iz tablice” vraća spremljenu verziju.</span></div>
 </section>
 
 <section class="card" style="--c:var(--violet)" aria-labelledby="ev-h">
@@ -296,6 +309,10 @@ body{padding-bottom:96px}
     <button class="btn ghost" id="btnAddCycle" type="button">+ Dodaj susrete ciklusa (koraci 3–7)</button>
   </div>
   <p class="note" id="evGuide">Što se događa na kojem susretu opisuje vodič: <a href="../ciklus-aktivacije/?korak=3" target="_blank" rel="noopener" data-korak="3">slušanje</a> · <a href="../ciklus-aktivacije/?korak=4" target="_blank" rel="noopener" data-korak="4">sukreacija</a> · <a href="../ciklus-aktivacije/?korak=5" target="_blank" rel="noopener" data-korak="5">isprobavanje</a> · <a href="../ciklus-aktivacije/?korak=6" target="_blank" rel="noopener" data-korak="6">predstavljanje</a> · <a href="../ciklus-aktivacije/?korak=7" target="_blank" rel="noopener" data-korak="7">refleksija</a> ↗</p>
+  <div class="evsel" id="evsel" hidden>
+    <label class="cb"><input type="checkbox" id="selAll">Odaberi sva</label>
+    <button class="btn ghost" id="btnDelSel" type="button" disabled>Ukloni odabrana</button>
+  </div>
   <div class="evlist" id="evlist"></div>
 </section>
 
@@ -422,7 +439,12 @@ const store = {
 function topicById(id){return TOPICS.find(t=>t.id===id)}
 function blockName(id){return id==="S"?STRATEGIC.n:(BLOCKS.find(b=>b.id===id)||{}).n||id}
 function newId(){return "d"+Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
-function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),3200)}
+function toast(msg,undo){
+  const t=$("toast");
+  t.innerHTML=esc(msg)+(undo?'<button type="button" class="undo">Poništi</button>':"");
+  if(undo) t.querySelector(".undo").onclick=()=>{undo();t.classList.remove("show");clearTimeout(toast._t)};
+  t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),undo?9000:3200);
+}
 function fmtDate(iso){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||"");return m?`${+m[3]}. ${+m[2]}. ${m[1]}.`:(iso||"")}
 function filled(v){return String(v??"").trim()!==""}
 function isCycle(){return !!S&&S.tema.format_teme==="Ciklus aktivacije"}
@@ -602,10 +624,13 @@ function evMulti(ev,f,label,list,wide){
 function evSelect(ev,f,list){return `<select data-s="ev" data-id="${ev.id}" data-f="${f}">${opts(list,ev[f]||"","—")}</select>`}
 function renderEvents(openId){
   const el=$("evlist");
-  if(!S.events.length){el.innerHTML=`<div class="empty">Još nema događanja. Dodajte prvo događanje ili standardne susrete ciklusa.</div>`;renderEvSummary();return}
+  if(!S.events.length){el.innerHTML=`<div class="empty">Još nema događanja. Dodajte prvo događanje ili standardne susrete ciklusa.</div>`;SEL.clear();renderEvSummary();updateSel();return}
   // Events are listed by date; events without a date come last, in the order they were added.
   S.events.sort((a,b)=>(a.datum||"9999-99-99").localeCompare(b.datum||"9999-99-99"));
+  [...SEL].forEach(id=>{if(!S.events.some(e=>e.id===id))SEL.delete(id)});
   el.innerHTML=S.events.map((ev,i)=>`
+    <div class="evrow${SEL.has(ev.id)?" picked":""}" id="evr-${ev.id}">
+    <label class="evpick"><input type="checkbox" data-pick="${ev.id}"${SEL.has(ev.id)?" checked":""} aria-label="Odaberi događanje: ${esc(ev.naziv||"bez naziva")}"></label>
     <details class="ev" id="ev-${ev.id}" style="--vc:${EV_COLORS[ev.vrsta]||"var(--line)"}"${ev.id===openId?" open":""}>
       <summary id="evs-${ev.id}">${evSummaryHtml(ev)}</summary>
       <div class="evbody">
@@ -642,9 +667,25 @@ function renderEvents(openId){
           <button class="btn ghost" type="button" data-act="del" data-id="${ev.id}">Ukloni</button>
         </div>
       </div>
-    </details>`).join("");
+    </details>
+    </div>`).join("");
   S.events.forEach(applyEvFormat);
   renderEvSummary();
+  updateSel();
+}
+/* ---------- Selecting and removing events ---------- */
+const SEL=new Set();
+function updateSel(){
+  if(!S) return;
+  const n=S.events.length, k=[...SEL].filter(id=>S.events.some(e=>e.id===id)).length;
+  $("evsel").hidden=!n;
+  const all=$("selAll"); all.checked=n>0&&k===n; all.indeterminate=k>0&&k<n;
+  const b=$("btnDelSel"); b.disabled=!k; b.textContent=k?`Ukloni odabrana (${k})`:"Ukloni odabrana";
+}
+function snapshotEvents(){return JSON.parse(JSON.stringify(S.events))}
+function restoreEvents(snap,tid){
+  if(topicId!==tid) return;
+  S.events=snap;touch();renderEvents();toast("Događanja su vraćena");
 }
 /* Online events need no venue, in-person events no remote platform: hide those fields (values are kept). */
 function applyEvFormat(ev){
@@ -765,7 +806,7 @@ function renderAll(){
   const on=!!S;
   ["temaFields","prep","evlist","evSummary"].forEach(id=>$(id).hidden=!on);
   ["btnAddEv","btnAddCycle","btnLoad","btnSave","btnSave2"].forEach(id=>$(id).disabled=!on);
-  $("bar").hidden=!on;
+  $("bar").hidden=!on; $("clearRow").hidden=!on; if(!on) $("evsel").hidden=true;
   if(on){renderTema();renderPrep();renderEvents();prepVisibility();renderChecks();renderNav();refreshNames()}
   else $("prepOff").hidden=true;
   renderState();
@@ -774,7 +815,7 @@ function renderAll(){
 /* ---------- Topic switching ---------- */
 function selectTopic(id){
   topicId=topicById(id)?id:null;
-  S=topicId?loadLocal(topicId):null;
+  S=topicId?loadLocal(topicId):null; SEL.clear();
   store.set("hubplan-last",topicId);
   const u=new URL(location.href); if(topicId)u.searchParams.set("tema",topicId);else u.searchParams.delete("tema"); history.replaceState(null,"",u);
   renderAll();
@@ -849,7 +890,8 @@ document.addEventListener("click",e=>{
   const i=S.events.findIndex(x=>x.id===b.dataset.id); if(i<0) return;
   if(b.dataset.act==="del"){
     if(!confirm(`Ukloniti događanje „${S.events[i].naziv||"bez naziva"}”?`)) return;
-    S.events.splice(i,1);touch();renderEvents();toast("Događanje uklonjeno");
+    const snap=snapshotEvents(), tid=topicId;
+    SEL.delete(S.events[i].id);S.events.splice(i,1);touch();renderEvents();toast("Događanje uklonjeno",()=>restoreEvents(snap,tid));
   }else if(b.dataset.act==="copy"){
     const c=Object.assign({},S.events[i],{id:newId(),naziv:(S.events[i].naziv||"Događanje")+" (kopija)",status:"Ideja"});
     S.events.splice(i+1,0,c);touch();renderEvents(c.id);$("ev-"+c.id).scrollIntoView({behavior:"smooth",block:"nearest"});
@@ -857,6 +899,34 @@ document.addEventListener("click",e=>{
 });
 $("topic").addEventListener("change",e=>selectTopic(e.target.value));
 $("btnSave2").onclick=()=>save(false);
+document.addEventListener("change",e=>{
+  const id=e.target.dataset&&e.target.dataset.pick; if(!id||!S) return;
+  if(e.target.checked) SEL.add(id); else SEL.delete(id);
+  $("evr-"+id).classList.toggle("picked",e.target.checked); updateSel();
+});
+$("selAll").onchange=e=>{
+  if(!S) return;
+  S.events.forEach(ev=>e.target.checked?SEL.add(ev.id):SEL.delete(ev.id));
+  document.querySelectorAll("[data-pick]").forEach(cb=>{cb.checked=e.target.checked;$("evr-"+cb.dataset.pick).classList.toggle("picked",e.target.checked)});
+  updateSel();
+};
+$("btnDelSel").onclick=()=>{
+  const ids=S.events.filter(ev=>SEL.has(ev.id)).map(ev=>ev.id); if(!ids.length) return;
+  const names=S.events.filter(ev=>SEL.has(ev.id)).map(ev=>ev.naziv||"bez naziva");
+  if(!confirm(`Ukloniti ${ids.length} ${ids.length===1?"događanje":"događanja"}?\n\n• ${names.slice(0,8).join("\n• ")}${names.length>8?"\n• …":""}`)) return;
+  const snap=snapshotEvents(), tid=topicId;
+  S.events=S.events.filter(ev=>!SEL.has(ev.id)); SEL.clear();
+  touch();renderEvents();toast(`Uklonjeno: ${ids.length}`,()=>restoreEvents(snap,tid));
+};
+$("btnClear").onclick=()=>{
+  if(!S) return;
+  const tp=topicById(topicId);
+  if(!confirm(`Očistiti cijeli plan teme „${tp.t}”?\n\nBrišu se okvir teme, sva događanja i priprema u ovom pregledniku. Google tablica se ne mijenja dok ne kliknete „Spremi u tablicu”; do tada „Učitaj iz tablice” vraća spremljenu verziju.`)) return;
+  const snap=JSON.parse(JSON.stringify(S)), tid=topicId;
+  const n=blank(tp); n.ucitano=S.ucitano; n.spremljeno=S.spremljeno; n.dirty=true;
+  S=n; SEL.clear(); saveLocal(); renderAll();
+  toast("Plan teme je očišćen",()=>{if(topicId!==tid)return;S=snap;saveLocal();renderAll();toast("Plan je vraćen")});
+};
 $("navWarn").onclick=()=>{
   const w=[...document.querySelectorAll(".wmsg")].find(x=>x.innerHTML&&!x.closest("[hidden]"));
   if(!w) return;
@@ -923,7 +993,7 @@ async function load(){
     (r.priprema||[]).forEach(p=>{n.prep[p.stavka_id]={vrijednost:p.vrijednost,odgovorna_osoba:p.odgovorna_osoba,rok:p.rok,status:p.status,napomena:p.napomena,poveznica:p.poveznica||"",newsletter:p.newsletter||""}});
     n.events=(r.dogadjanja||[]).map(d=>Object.assign({},d,{id:d.dogadjanje_id||newId()}));
     n.events.forEach(e=>{delete e.dogadjanje_id;delete e.tema_id;delete e.azurirano});
-    S=n;saveLocal();renderAll();
+    S=n;SEL.clear();saveLocal();renderAll();
     toast(r.tema?"Učitano iz tablice":"Tema još nije spremljena u tablicu; prikazan je prazan plan");
   }catch(e){setErr(e.message)}finally{busy(false)}
 }
