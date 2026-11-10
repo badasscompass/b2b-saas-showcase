@@ -11,14 +11,16 @@
  *  - Do not reorder the columns of the data tabs; the order below is the contract.
  */
 
-const VERSION = 2; // the planning page warns when it talks to an older script
+const VERSION = 3; // the planning page warns when it talks to an older script
 
 const TABS = { teme: 'Teme', priprema: 'Priprema', dogadjanja: 'Dogadjanja', popisi: 'Popisi' };
 
 const COLS = {
   teme: ['tema_id', 'tema', 'zajednica', 'vlasnik_teme', 'format_teme', 'planer',
          'razdoblje_od', 'razdoblje_do', 'planirani_broj_dogadjanja', 'napomena',
-         'azurirano', 'azurirao'],
+         'azurirano', 'azurirao',
+         // v3: added at the end so rows saved by v1/v2 keep their column positions
+         'ishod_skupine'],
   priprema: ['tema_id', 'korak', 'stavka_id', 'stavka', 'vrijednost', 'odgovorna_osoba',
              'rok', 'status', 'napomena', 'azurirano',
              // v2: added at the end so rows saved by v1 keep their column positions
@@ -36,6 +38,7 @@ const EXAMPLE_ID = 'PRIMJER';
 
 /* Header labels for columns added after the template was created; written once if the cell is empty. */
 const ADDED_HEADERS = {
+  teme: { ishod_skupine: 'Ishod nakon refleksije' },
   priprema: { poveznica: 'Poveznica', newsletter: 'Newsletter / mailing lista' }
 };
 

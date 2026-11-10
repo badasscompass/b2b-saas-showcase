@@ -275,7 +275,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     <span>Razdoblje <b>16. 11. – 14. 12. 2026.</b></span>
     <span>Skupina <b>15–25 nastavnika</b></span>
     <span>Rad djelatnika CARNET-a <b>~47 h (procjena)</b></span>
-    <span>Status <b>v0.3 · prijedlog</b></span>
+    <span>Status <b>v0.5 · prijedlog</b></span>
   </div>
   <div class="toolbar">
     <span class="hint">Kartice se otvaraju klikom. Počnite odabirom teme, pa prođite korake.</span>
@@ -289,15 +289,19 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     <div class="sec-head">
       <span class="eyebrow">Zajednički jezik</span>
       <h2 id="gloss-h">Pojmovnik</h2>
-      <span class="s-teaser">Deset pojmova koje vodič koristi: tema, izazov, ciklus, radni rezultat i uloge</span>
+      <span class="s-teaser">Četrnaest pojmova koje vodič koristi: aktivacija, vrste aktivnosti, tema, zajednica, tim, interesna skupina (SIG) i uloge</span>
     </div>
   </summary>
   <div class="cbody">
     <dl class="facts gloss">
+      <dt>Aktivacija</dt><dd>Opći cilj Huba: uključiti obrazovnu zajednicu kao trajnog sukreatora. Ostvaruje se kroz četiri vrste aktivnosti: ciklus aktivacije, radna skupina, događanje u ritmu i CUC.</dd>
       <dt>Tema</dt><dd>Prijedlog iz upitnika „Hub – sukreacija odgovori”; pripada jednoj tematskoj zajednici i ima vlasnika teme.</dd>
       <dt>Izazov</dt><dd>Tema preformulirana u pitanje „Kako bi nastavnici mogli…?”; na njemu radi jedan ciklus aktivacije.</dd>
-      <dt>Tematska zajednica</dt><dd>Trajni okvir (A–E) u kojem se ciklusi i događanja ponavljaju.</dd>
-      <dt>Ciklus aktivacije</dt><dd>Osam koraka u oko mjesec dana, od usklađivanja do refleksije.</dd>
+      <dt>Tematska zajednica</dt><dd>Trajni okvir (A–E) koji pokreće CARNET i u kojem se ciklusi i događanja ponavljaju. Zajednica se ne formalizira; ona je okvir.</dd>
+      <dt>Tim</dt><dd>Mala skupina od 3–5 nastavnika koja unutar jednog ciklusa radi na jednoj ideji; traje koliko i ciklus.</dd>
+      <dt>Interesna skupina (SIG)</dt><dd>Trajna skupina unutar jedne tematske zajednice koju vode članovi. Nastaje iz timova ciklusa tek kad u koraku 7 ispuni uvjete formalizacije; potvrđuje se na 12 mjeseci, uz obnovu.</dd>
+      <dt>Radna skupina</dt><dd>Skupina koju saziva CARNET oko inicijative koja već teče, s dionicima koji na njoj već rade (npr. istraživanja; međunarodne skupine s NREN-ovima). Hub joj je komunikacijski kanal. Nije SIG i ne prelazi u SIG; može ciklusu predložiti novu temu.</dd>
+      <dt>Ciklus aktivacije</dt><dd>Jedna vrsta aktivnosti: osam koraka u oko mjesec dana, od usklađivanja do refleksije. Naziv označava isključivo tu vrstu aktivnosti; svako tromjesečje provodi se jedan ciklus, a zajednica ne mora imati vlastiti.</dd>
       <dt>Dokaz koncepta</dt><dd>Prvi, skraćeni ciklus (16. 11. – 14. 12. 2026.) koji provjerava model prije pokretanja CARNET Huba.</dd>
       <dt>Radni rezultat</dt><dd>Mali, konkretan proizvod tima (aktivnost, scenarij, predložak) isproban u razredu.</dd>
       <dt>Vlasnik teme</dt><dd>Odjel koji je predložio temu; donosi stručni sadržaj i mrežu nastavnika.</dd>
@@ -319,7 +323,7 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     </div>
   </summary>
   <div class="cbody">
-    <p class="note">Svih 21 tema iz upitnika „Hub – sukreacija odgovori” razvrstano je u pet tematskih zajednica i jedan pojas izvan trenutnog ritma. Zajednica je trajni okvir u kojem se ciklusi ponavljaju. Ciklus aktivacije provodi se za jednu temu formata <span class="fmt c">Ciklus aktivacije</span>; ostale teme ulaze u ritam Huba kao <span class="fmt e">Događanje u ritmu</span> ili <span class="fmt w">Radna skupina</span>. Odabrana tema prenosi se u korake i predloške u nastavku.</p>
+    <p class="note">Svih 21 tema iz upitnika „Hub – sukreacija odgovori” razvrstano je u pet tematskih zajednica i jedan pojas izvan trenutnog ritma. Zajednica je trajni okvir u kojem se ciklusi ponavljaju. Ciklus aktivacije provodi se za jednu temu formata <span class="fmt c">Ciklus aktivacije</span>, jedan po tromjesečju; ostale teme ulaze u ritam Huba kao <span class="fmt e">Događanje u ritmu</span> ili <span class="fmt w">Radna skupina</span>. Zajednica ne mora imati vlastiti ciklus: u 2027. teme formata ciklusa nose zajednice A i B, a C, D i E sudjeluju kroz radne skupine i događanja. Odabrana tema prenosi se u korake i predloške u nastavku.</p>
     <div class="active" id="active" aria-live="polite"></div>
     <div class="frame" id="frame"></div>
     <div class="blocks" role="tablist" id="blocks" aria-label="Tematske zajednice"></div>
@@ -503,16 +507,28 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
     <div class="sec-head">
       <span class="eyebrow">Ako se dokaz koncepta pokaže uspješnim</span>
       <h2 id="after-h">Ritam koji se ponavlja od 2027.</h2>
-      <span class="s-teaser">Mjesečno → dvotjedno → tromjesečno → godišnje · plus ljestvica sudjelovanja</span>
+      <span class="s-teaser">Mjesečno → dvotjedno → tromjesečno → godišnje · put od teme do interesne skupine (SIG) · ljestvica sudjelovanja</span>
     </div>
   </summary>
   <div class="cbody">
-    <p class="note">Isti obrazac, koji može provoditi svaki odjel koji donese temu. Svaka tematska zajednica koristi isti ritam: teme formata Događanje u ritmu dolaze kao gost mjesečnog susreta, tromjesečnog dana predstavljanja ili CUC-a, a radne skupine sastaju se u ritmu tematskih skupina. Svaki završeni ciklus prilika je da sudionici napreduju na ljestvici sudjelovanja.</p>
+    <p class="note">Isti obrazac, koji može provoditi svaki odjel koji donese temu. Svaka tematska zajednica koristi isti ritam: teme formata Događanje u ritmu dolaze kao gost mjesečnog susreta, tromjesečnog dana predstavljanja ili CUC-a, radne skupine koje saziva CARNET koriste Hub kao komunikacijski kanal (objave na DOT-u, gostovanje na mjesečnom susretu, dan predstavljanja), a interesne skupine (SIG) sastaju se u dvotjednom ritmu. Veliki formati iz upitnika (bootcamp, simpoziji, regionalni dani, hackaton) nisu u planu za 2027.; CUC je te godine jedini veliki format. Svaki završeni ciklus prilika je da sudionici napreduju na ljestvici sudjelovanja.</p>
+    <h3>Od teme do interesne skupine (SIG)</h3>
+    <p class="note">Tematske zajednice pokreće CARNET. Interesne skupine nastaju iz ciklusa aktivacije i vode ih članovi. Svaki pojam označava jednu fazu.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Faza</th><th>Tko pokreće</th><th>Trajanje</th><th>Prelazi dalje kada</th></tr></thead>
+      <tbody>
+        <tr><td><b>1. Tema</b></td><td>Odjel CARNET-a putem upitnika; od 2027. svatko putem obrasca za prijedloge</td><td>Do odluke</td><td>Bude razvrstana u tematsku zajednicu</td></tr>
+        <tr><td><b>2. Tematska zajednica</b> (A–E)</td><td>CARNET</td><td>Trajno</td><td>Ne prelazi dalje; ona je okvir</td></tr>
+        <tr><td><b>3. Tim ciklusa</b></td><td>Vlasnik teme i facilitator, unutar jednog ciklusa aktivacije</td><td>Oko mjesec dana</td><td>Ispuni uvjete formalizacije u koraku 7</td></tr>
+        <tr><td><b>4. Interesna skupina (SIG)</b></td><td>Članovi, uz sumoderatora iz svojih redova; CARNET je pokrovitelj</td><td>12 mjeseci, uz obnovu</td><td>Godišnji pregled</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note"><b>Uvjeti formalizacije (prijedlog; provjeravaju se u koraku 7, potrebno je svih pet):</b> najmanje 60 % sudionika uključilo bi se u sljedeći ciklus; održana je barem jedna aktivnost koju vodi nastavnik; vlasnik usluge prihvatio je barem jedan nalaz; imenovan je sumoderator iz redova članova; članovi dolaze iz najmanje tri ustanove. Prva tri uvjeta već se mjere u tablici KPI-jeva CARNET-a. Formalizirana skupina dobiva stalni dvotjedni termin, prostor na Loomenu, odjeljak na stranici CARNET Huba i termin na CUC-u.</p>
     <div class="rhythm">
       <div class="rh"><span class="eyebrow">Mjesečno</span><b>Otvoreni susret + newsletter</b><span class="note">Ulazna točka. Opušteno, uz moderatora, s vremenom se dodaju kratka izlaganja gostiju.</span></div>
-      <div class="rh"><span class="eyebrow">Svaka 2 tjedna, tijekom ciklusa</span><b>Sastanak tematske skupine</b><span class="note">Mala, vremenski ograničena skupina koja radi na jednom izazovu.</span></div>
+      <div class="rh"><span class="eyebrow">Svaka 2 tjedna, tijekom ciklusa</span><b>Sastanak tima ili interesne skupine (SIG)</b><span class="note">Tijekom ciklusa sastaju se timovi koji rade na jednom izazovu; nakon formalizacije isti termin preuzima SIG.</span></div>
       <div class="rh"><span class="eyebrow">Tromjesečno</span><b>Dan predstavljanja + predaja nalaza</b><span class="note">Prikaz radnih rezultata, recenzija prije objave na Edutoriju, nalazi vlasnicima usluga, „Rekli ste, napravili smo”.</span></div>
-      <div class="rh"><span class="eyebrow">Godišnje</span><b>CARNET-ova korisnička konferencija (CUC)</b><span class="note">Najbolji piloti na glavnoj pozornici. Nije potreban novi veliki događaj.</span></div>
+      <div class="rh"><span class="eyebrow">Godišnje</span><b>CARNET-ova korisnička konferencija (CUC)</b><span class="note">Najbolji piloti na glavnoj pozornici. U 2027. jedini veliki format: uvod Huba, nalazi godine i proširene aktivnosti uz konferenciju.</span></div>
     </div>
     <div class="ladder" aria-label="Ljestvica sudjelovanja">
       <span class="r">Posjetitelj</span><span class="a">→</span><span class="r">Sudionik</span><span class="a">→</span><span class="r">Kreator</span><span class="a">→</span><span class="r">Sumoderator</span><span class="a">→</span><span class="r">Ambasador</span>
@@ -539,13 +555,13 @@ footer{font-size:12.5px;color:var(--muted);border-top:2px solid var(--coral);pad
       <li>Europsko čvorište za digitalno obrazovanje (EDEH), vremenski ograničene tematske skupine („squads”) (radna verzija pregleda referentnih hubova, poglavlje 5).</li>
       <li>Projekt BrAIn u medijima: <a href="https://www.novilist.hr/?p=1748743" target="_blank" rel="noopener">Novi list</a>, <a href="https://dnevnik.hr/vijesti/tech/cuc2025-hrvatska-medu-prvima-uvodi-umjetnu-inteligenciju-u-osnovne-i-srednje-skole---907404.html" target="_blank" rel="noopener">Dnevnik.hr</a>.</li>
       <li>Christensen, Hall, Dillon i Duncan (2016.), <i>Competing Against Luck</i>, HarperBusiness. Metoda Jobs to Be Done kao osnova tablice ishoda za nastavnike.</li>
-      <li>Koraci, trajanja, procjene rada, ciljane vrijednosti te razvrstavanje tema u zajednice i formate prijedlog su radnog tima CARNET Huba, a ne preuzete referentne vrijednosti.</li>
+      <li>Koraci, trajanja, procjene rada, ciljane vrijednosti, uvjeti formalizacije interesnih skupina te razvrstavanje tema u zajednice i formate prijedlog su radnog tima CARNET Huba, a ne preuzete referentne vrijednosti.</li>
     </ul>
   </div>
   </details>
 </section>
 
-<footer>Nacrt v0.3 · 9. studenoga 2026. (v0.2: 7. studenoga 2026.; v0.1: 26. listopada 2026.) · Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
+<footer>Nacrt v0.5 · 11. studenoga 2026. (v0.4: 10. studenoga 2026.; v0.3: 9. studenoga 2026.; v0.2: 7. studenoga 2026.; v0.1: 26. listopada 2026.) · Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
 </div>
 
 <script src="../hub-data.js"></script>
@@ -582,7 +598,7 @@ const STEPS = [
    who:"Nastavnici u timovima od 3–5, akademski validator, obje CARNET-ove uloge", format:"Susret od 2 h, na daljinu ili u MultiLabu", effort:"8 h",
    does:["Svaki od glavnih problema preformulirati u pitanje „Kako bismo mogli…?”.","Oformiti 3–4 mala tima, svaki bira jednu ideju.","Svaki tim definira jedan mali radni rezultat koji će isprobati u razredu.","Validator daje kratku pedagošku povratnu informaciju."],
    out:["3–4 timske ideje","Jedan definirani radni rezultat po timu"],
-   reuse:"Timovi su prototip vremenski ograničenih tematskih skupina."},
+   reuse:"Timovi ciklusa polazište su za interesnu skupinu (SIG); o formalizaciji se odlučuje u koraku 7."},
   {k:"try", n:"5", t:"Isprobavanje", w:"2.–9. 12.", type:"cycle",
    goal:"Isprobati svaki radni rezultat jednom, u stvarnom razredu.",
    who:"Nastavnici, facilitator CARNET Huba na raspolaganju", format:"Samostalno + jedna provjera od 45 min na daljinu", effort:"4 h",
@@ -598,8 +614,8 @@ const STEPS = [
   {k:"reflect", n:"7", t:"Refleksija", w:"11.–14. 12.", type:"cycle",
    goal:"Procijeniti izvedivost i opravdanost te priču prenijeti na pokretanje CARNET Huba.",
    who:"Voditelj/ica iz odjela, facilitator CARNET Huba, 2–3 nastavnika", format:"Retrospektiva od 1 h + termin na pokretanju", effort:"4 h",
-   does:["Odvojeno usporediti KPI-jeve CARNET-a i ishode za nastavnike s ciljanim vrijednostima.","Retrospektiva: zadržati, promijeniti, ukinuti.","Ažurirati ovaj vodič na verziju v1.","Predstaviti ciklus na pokretanju CARNET Huba, po mogućnosti zajedno s nastavnikom."],
-   out:["Dvije ocijenjene tablice","Vodič v1","Primjer za pokretanje CARNET Huba"],
+   does:["Odvojeno usporediti KPI-jeve CARNET-a i ishode za nastavnike s ciljanim vrijednostima.","Retrospektiva: zadržati, promijeniti, ukinuti.","Ažurirati ovaj vodič na verziju v1.","Predstaviti ciklus na pokretanju CARNET Huba, po mogućnosti zajedno s nastavnikom.","Provjeriti pet uvjeta formalizacije i odlučiti nastavljaju li timovi kao interesna skupina (SIG) unutar tematske zajednice."],
+   out:["Dvije ocijenjene tablice","Vodič v1","Primjer za pokretanje CARNET Huba","Odluka o skupini: SIG, još jedan ciklus ili zaključenje"],
    reuse:"Priča s pokretanja ujedno je poziv budućim ambasadorima."}
 ];
 
@@ -703,8 +719,16 @@ DIO B · Ishodi za nastavnike
   Sigurnost pri dijeljenju:             [  ] / 5
   Imaju čime pokazati sudjelovanje:     [  ] %
 
+DIO C · Formalizacija interesne skupine (SIG) — potrebno je svih pet
+  „Uključio/la bih se ponovno” ≥ 60 %:            da / ne
+  Barem jedna aktivnost koju vodi nastavnik:      da / ne
+  Vlasnik usluge prihvatio barem jedan nalaz:     da / ne
+  Imenovan sumoderator iz redova članova:         da / ne   [ime]
+  Članovi iz najmanje tri ustanove:               da / ne
+
 Zadržati / Promijeniti / Ukinuti
-Odluka: ponoviti u 1. tromjesečju 2027.?  da / uz promjene / ne`}
+Odluka o skupini: formalizirati kao SIG / još jedan ciklus / zaključiti
+Odluka o ciklusu: ponoviti u 1. tromjesečju 2027.?  da / uz promjene / ne`}
 ];
 
 const DIG = {

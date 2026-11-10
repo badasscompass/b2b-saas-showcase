@@ -36,9 +36,9 @@ u['A1'].font=Font(bold=True,size=14)
 for c in ('A3','A8','A15'): u[c].font=Font(bold=True)
 u.column_dimensions['A'].width=120
 for r in range(1,len(rows)+1): u.cell(r,1).alignment=Alignment(wrap_text=True,vertical='top')
-teme=tab('Teme',["Tema ID","Tema","Zajednica","Vlasnik teme","Format teme","Planer/ica","Razdoblje od","Razdoblje do","Planirani broj događanja","Napomena","Ažurirano","Ažurirao/la"],
- ["PRIMJER","Kontinuirana podrška nastavnicima u planiranju i primjeni obrazovnih tehnologija","Nastavnička praksa i digitalne kompetencije","Odjel za razvoj i implementaciju obrazovnih sustava","Ciklus aktivacije","Ime Prezime","2026-11-16","2026-12-14",6,"Primjer retka","2026-11-09 12:00:00","Ime Prezime"],
- [10,48,34,34,18,18,13,13,12,30,19,18])
+teme=tab('Teme',["Tema ID","Tema","Zajednica","Vlasnik teme","Format teme","Planer/ica","Razdoblje od","Razdoblje do","Planirani broj događanja","Napomena","Ažurirano","Ažurirao/la","Ishod nakon refleksije"],
+ ["PRIMJER","Kontinuirana podrška nastavnicima u planiranju i primjeni obrazovnih tehnologija","Nastavnička praksa i digitalne kompetencije","Odjel za razvoj i implementaciju obrazovnih sustava","Ciklus aktivacije","Ime Prezime","2026-11-16","2026-12-14",6,"Primjer retka","2026-11-09 12:00:00","Ime Prezime","Još nije odlučeno"],
+ [10,48,34,34,18,18,13,13,12,30,19,18,22])
 prip=tab('Priprema',["Tema ID","Korak","Stavka ID","Stavka","Vrijednost","Odgovorna osoba","Rok","Status","Napomena","Ažurirano","Poveznica","Newsletter / mailing lista"],
  ["PRIMJER","0","p0_multilab","MultiLab za susrete","MultiLab Zagreb","Ime Prezime","2026-11-17","U tijeku","Primjer retka","2026-11-09 12:00:00","",""],
  [10,7,14,40,30,20,12,16,30,19,36,14])
