@@ -364,7 +364,7 @@ body.ov-on .wrap,body.ov-on .sbar{display:none!important}
   <div id="prep" style="display:flex;flex-direction:column;gap:10px"></div>
 </section>
 
-<footer>Nacrt v0.2 · 9. studenoga 2026. · Povezano s vodičem <a href="../ciklus-aktivacije/">Ciklus aktivacije</a>. Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
+<footer>Nacrt v0.3 · 10. studenoga 2026. · Povezano s vodičem <a href="../ciklus-aktivacije/">Ciklus aktivacije</a>. Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
 </div>
 <div class="ov" id="overview" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -401,6 +401,7 @@ const LISTS_DEFAULT = {
   "Status događanja": ["Ideja","Planirano","Potvrđeno","Održano","Otkazano"],
   "Status stavke": ["Nije započeto","U tijeku","Gotovo","Blokirano","Nije primjenjivo"],
   "Da/Ne": ["Da","Ne"],
+  "Ishod skupine": ["Još nije odlučeno","Formalizirati kao SIG","Još jedan ciklus","Zaključiti"],
   "Kanal poziva": ["E-pošta","Mreža odjela","Objava na DOT-u","Društvene mreže","Osobni kontakt"],
   "Odjel": Object.values(OWNERS).map(o=>o.n).concat(["Vanjski partner"])
 };
@@ -500,7 +501,7 @@ function opts(list, val, blank){
 let topicId = null, S = null;
 const keyFor = id => "hubplan-v1-"+id;
 function blank(tp){
-  return {tema:{planer:"", format_teme:(FORMATS[tp.f]||{}).l||"", razdoblje_od:"", razdoblje_do:"", planirani_broj_dogadjanja:"", napomena:""},
+  return {tema:{planer:"", format_teme:(FORMATS[tp.f]||{}).l||"", razdoblje_od:"", razdoblje_do:"", planirani_broj_dogadjanja:"", ishod_skupine:"", napomena:""},
           prep:{}, events:[], ucitano:"", dirty:false, spremljeno:""};
 }
 function loadLocal(id){const tp=topicById(id);const s=store.get(keyFor(id));return s&&s.tema?Object.assign(blank(tp),s):blank(tp)}
@@ -528,10 +529,10 @@ async function api(action, params, body){
   }finally{clearTimeout(t)}
 }
 let remoteTopics = {};
-const NEEDS_SCRIPT = 2;
+const NEEDS_SCRIPT = 3;
 function checkVersion(r){
   if(r&&r.ok&&!(r.verzija>=NEEDS_SCRIPT)){
-    setErr("Skripta u tablici je starija verzija: poveznice i newsletter za DOT objave neće se spremiti. Ažurirajte Apps Script (Deploy → Manage deployments → New version).");
+    setErr("Skripta u tablici je starija verzija: ishod nakon refleksije, poveznice i newsletter za DOT objave možda se neće spremiti. Ažurirajte Apps Script (Deploy → Manage deployments → New version).");
     return false;
   }
   return true;
@@ -557,7 +558,7 @@ function renderInfo(){
   const bl=BLOCKS.find(b=>b.id===tp.b);
   el.style.setProperty("--bc",bl?`var(${bl.c})`:"var(--warn)");el.style.setProperty("--bs",bl?`var(${bl.cs})`:"var(--amber-soft)");
   el.innerHTML=`<span class="fmt">${esc(FORMATS[tp.f].l)}</span>
-    ${tp.q?`<p class="q">${esc(tp.q)}</p>`:""}
+    ${tp.q&&tp.f==="c"?`<p class="q">${esc(tp.q)}</p>`:""}
     ${tp.rh?`<p>${esc(tp.rh)}</p>`:""}
     <p class="guide-link">${tp.f==="c"
       ?`<a href="../ciklus-aktivacije/?tema=${encodeURIComponent(tp.id)}" target="_blank" rel="noopener">Otvori ovu temu u vodiču Ciklus aktivacije ↗</a>`
@@ -572,6 +573,7 @@ function renderTema(){
     <label class="f"><span>Razdoblje ciklusa od</span><input type="date" data-s="tema" data-f="razdoblje_od" value="${esc(t.razdoblje_od)}"></label>
     <label class="f"><span>Razdoblje ciklusa do</span><input type="date" data-s="tema" data-f="razdoblje_do" value="${esc(t.razdoblje_do)}"></label>
     <label class="f"><span>Planirani broj događanja</span><input type="number" min="0" step="1" inputmode="numeric" data-s="tema" data-f="planirani_broj_dogadjanja" value="${esc(t.planirani_broj_dogadjanja)}"></label>
+    <label class="f" id="f-ishod" title="Formalizacija kao interesna skupina (SIG) traži svih pet uvjeta iz vodiča, korak 7"><span>Ishod nakon refleksije (korak 7)</span><select data-s="tema" data-f="ishod_skupine">${opts("Ishod skupine",t.ishod_skupine||"Još nije odlučeno")}</select></label>
     <label class="f wide"><span>Napomena o temi</span><textarea data-s="tema" data-f="napomena">${esc(t.napomena)}</textarea></label>`;
 }
 function prepVal(it){const p=S.prep[it.id]||{};return p}
@@ -840,6 +842,7 @@ function overviewHtml(){
       <dt>Planer/ica</dt><dd>${dash(t.planer)}</dd>
       <dt>Razdoblje ciklusa</dt><dd>${filled(t.razdoblje_od)||filled(t.razdoblje_do)?esc(fmtDate(t.razdoblje_od)||"…")+" – "+esc(fmtDate(t.razdoblje_do)||"…"):'<span class="muted">—</span>'}</dd>
       <dt>Događanja</dt><dd>${n} upisano${isNaN(plan)?"":` · planirano ${plan}`}</dd>
+      ${isCycle()&&filled(t.ishod_skupine)?`<dt>Ishod nakon refleksije</dt><dd>${esc(t.ishod_skupine)}</dd>`:""}
       ${filled(t.napomena)?`<dt>Napomena</dt><dd>${esc(t.napomena)}</dd>`:""}
     </dl>`;
   // events timeline (already sorted by date; undated last)
@@ -949,7 +952,7 @@ function renderNav(){
 }
 function prepVisibility(){
   const on=isCycle();
-  $("prep").hidden=!on; $("prepOff").hidden=on; $("btnAddCycle").hidden=!on; $("evGuide").hidden=!on;
+  const fi=$("f-ishod"); if(fi) fi.hidden=!on; $("prep").hidden=!on; $("prepOff").hidden=on; $("btnAddCycle").hidden=!on; $("evGuide").hidden=!on;
   document.querySelectorAll("#evGuide a[data-korak]").forEach(a=>a.href=`../ciklus-aktivacije/?korak=${a.dataset.korak}&tema=${encodeURIComponent(topicId)}`);
   if(on) return;
   const tp=topicById(topicId), catalog=(FORMATS[tp.f]||{}).l||"", cyc=FORMATS.c.l;
@@ -1161,7 +1164,7 @@ async function load(){
     if(!r.ok) throw new Error(r.error||"Učitavanje nije uspjelo.");
     applyLists(r.popisi);
     const tp=topicById(topicId), n=blank(tp);
-    if(r.tema){["planer","format_teme","razdoblje_od","razdoblje_do","planirani_broj_dogadjanja","napomena"].forEach(k=>n.tema[k]=r.tema[k]||"");n.ucitano=r.tema.azurirano;n.spremljeno=r.tema.azurirano}
+    if(r.tema){["planer","format_teme","razdoblje_od","razdoblje_do","planirani_broj_dogadjanja","napomena"].forEach(k=>n.tema[k]=r.tema[k]||"");n.tema.ishod_skupine=("ishod_skupine" in r.tema)?(r.tema.ishod_skupine||""):(S.tema.ishod_skupine||"");n.ucitano=r.tema.azurirano;n.spremljeno=r.tema.azurirano}
     (r.priprema||[]).forEach(p=>{n.prep[p.stavka_id]={vrijednost:p.vrijednost,odgovorna_osoba:p.odgovorna_osoba,rok:p.rok,status:p.status,napomena:p.napomena,poveznica:p.poveznica||"",newsletter:p.newsletter||""}});
     n.events=(r.dogadjanja||[]).map(d=>Object.assign({},d,{id:d.dogadjanje_id||newId()}));
     n.events.forEach(e=>{delete e.dogadjanje_id;delete e.tema_id;delete e.azurirano});
