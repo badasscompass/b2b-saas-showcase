@@ -258,6 +258,45 @@ body{padding-bottom:96px}
 .bright{display:flex;gap:10px;align-items:center;margin-left:auto}
 .bright .state{font-size:13px}
 @media (max-width:600px){.bright .state span:last-child{display:none}.bnav{font-size:13px;gap:4px 10px}}
+/* Read-only overview (printable / Save as PDF). Fixed light palette so print and PDF look the same in dark mode. */
+body.ov-on .wrap,body.ov-on .sbar{display:none!important}
+.ov{max-width:960px;margin:0 auto;background:#fff;color:#111;border-radius:12px;padding:28px 32px;box-shadow:0 2px 14px rgba(0,0,0,.08);font-size:13.5px;line-height:1.45}
+.ov[hidden]{display:none}
+.ovbar{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin:0 auto 14px;max-width:960px}
+.ovbar .btn{background:#fff}
+.ov h1{font-size:26px;line-height:1.15;margin:2px 0 6px;color:#111}
+.ov h2{font-size:17px;margin:22px 0 8px;padding-bottom:4px;border-bottom:2px solid #1a4bd4;color:#111}
+.ov h3{font-size:14px;margin:14px 0 6px;color:#1a4bd4;font-family:var(--f-mono);text-transform:uppercase;letter-spacing:.06em}
+.ov .ovsub{color:#444;font-size:13px}
+.ov .ovq{font-weight:600;font-size:15px;margin:6px 0 10px;max-width:none}
+.ov dl.ovf{display:grid;grid-template-columns:200px 1fr;gap:4px 14px;margin:0}
+.ov dl.ovf dt{color:#555}
+.ov dl.ovf dd{margin:0}
+.ov table{width:100%;border-collapse:collapse;font-size:12.5px}
+.ov th,.ov td{border-bottom:1px solid #ddd;padding:6px 8px;text-align:left;vertical-align:top}
+.ov th{background:#eef3ff;font-weight:600;color:#111}
+.ov td.nw{white-space:nowrap}
+.ov table.tasks{table-layout:fixed}
+.ov table.tasks td{overflow-wrap:anywhere}
+.ov .muted{color:#666}
+.ov .stbad{color:#b42318;font-weight:600}
+.ov .stok{color:#147a4b;font-weight:600}
+.ov .stnow{color:#1a4bd4;font-weight:600}
+.ov .note{color:#444;font-size:12px}
+.ov .stamp{display:inline-block;border-radius:6px;padding:4px 10px;font-size:12.5px;margin-top:6px}
+.ov .stamp.saved{background:#d7f3ee;color:#0b5a50}
+.ov .stamp.unsaved{background:#ffe9bf;color:#6b4100}
+.ov footer.ovfoot{margin-top:24px;border-top:1px solid #ddd;padding-top:8px;color:#666;font-size:11.5px}
+@media (max-width:600px){.ov{padding:18px 16px}.ov dl.ovf{grid-template-columns:1fr}.ov .tblwrap{overflow-x:auto}.ov table{min-width:560px}}
+@media print{
+  @page{size:A4;margin:14mm}
+  body{background:#fff!important;padding:0!important}
+  .ovbar,.toast{display:none!important}
+  .ov{box-shadow:none;border-radius:0;padding:0;max-width:none}
+  .ov tr{break-inside:avoid}
+  .ov h2,.ov h3{break-after:avoid}
+  .ov .tblwrap{overflow:visible}.ov table{min-width:0}
+}
 .toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;max-width:calc(100% - 32px);z-index:10;display:none}
 .toast.show{display:block}
 .toast .undo{all:unset;cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px;margin-left:12px;color:var(--mark)}
@@ -277,6 +316,8 @@ body{padding-bottom:96px}
 <section class="card sync" aria-label="Veza s tablicom">
   <div class="state local" id="state" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="stateText">Spremljeno samo u ovom pregledniku</span></div>
   <div class="btns">
+    <button class="btn ghost" id="btnOverview" type="button">Pregled i PDF</button>
+    <button class="btn ghost" id="btnIcs" type="button">Kalendar (.ics)</button>
     <button class="btn ghost" id="btnLoad" type="button">Učitaj iz tablice</button>
     <button class="btn primary" id="btnSave" type="button">Spremi u tablicu</button>
   </div>
@@ -325,6 +366,7 @@ body{padding-bottom:96px}
 
 <footer>Nacrt v0.2 · 9. studenoga 2026. · Povezano s vodičem <a href="../ciklus-aktivacije/">Ciklus aktivacije</a>. Izrađeno uz pomoć umjetne inteligencije, označeno u skladu s točkom 7.4. specifikacije CARNET Huba.</footer>
 </div>
+<div class="ov" id="overview" hidden></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <datalist id="dl-names"></datalist>
 <nav class="sbar" id="bar" aria-label="Brza navigacija i spremanje" hidden>
@@ -770,6 +812,134 @@ function renderChecks(){
 }
 
 /* ---------- Bottom bar: section links with counts ---------- */
+/* ---------- Overview (read-only, printable / Save as PDF) ---------- */
+function todayStr(){const d=new Date();return `${d.getDate()}. ${d.getMonth()+1}. ${d.getFullYear()}.`}
+function stClass(st){return st==="Gotovo"||st==="Potvrđeno"||st==="Održano"?"stok":st==="Blokirano"||st==="Otkazano"?"stbad":st==="U tijeku"||st==="Planirano"?"stnow":"muted"}
+function dash(v){return filled(v)?esc(v):'<span class="muted">—</span>'}
+function prepValueText(it,p){
+  let v=String(p.vrijednost||"");
+  if(it.t==="date") v=fmtDate(v);
+  const extra=[];
+  if(it.x==="objava"){ if(filled(p.poveznica)) extra.push("objava: "+p.poveznica); if(p.newsletter==="Da") extra.push("poslano i u newsletteru"); }
+  return [v,...extra].filter(filled).join(" · ");
+}
+function overviewHtml(){
+  const tp=topicById(topicId), o=OWNERS[tp.o], t=S.tema;
+  const plan=parseInt(t.planirani_broj_dogadjanja,10), n=S.events.length;
+  const stamp=S.dirty||!S.spremljeno
+    ? `<span class="stamp unsaved">Verzija iz preglednika · ${S.spremljeno?"ima promjena koje nisu spremljene u tablicu":"još nije spremljena u tablicu"}</span>`
+    : `<span class="stamp saved">Odgovara verziji spremljenoj u tablicu ${esc(S.spremljeno)}</span>`;
+  let h=`<span class="ovsub">CARNET Hub · Plan teme · izrađeno ${todayStr()}</span>
+    <h1>${esc(tp.t)}</h1>
+    ${tp.q?`<p class="ovq">${esc(tp.q)}</p>`:""}${stamp}
+    <h2>Okvir teme</h2>
+    <dl class="ovf">
+      <dt>Tematska zajednica</dt><dd>${esc(blockName(tp.b))}</dd>
+      <dt>Vlasnik teme</dt><dd>${esc(o.n)}</dd>
+      <dt>Format teme</dt><dd>${dash(t.format_teme)}</dd>
+      <dt>Planer/ica</dt><dd>${dash(t.planer)}</dd>
+      <dt>Razdoblje ciklusa</dt><dd>${filled(t.razdoblje_od)||filled(t.razdoblje_do)?esc(fmtDate(t.razdoblje_od)||"…")+" – "+esc(fmtDate(t.razdoblje_do)||"…"):'<span class="muted">—</span>'}</dd>
+      <dt>Događanja</dt><dd>${n} upisano${isNaN(plan)?"":` · planirano ${plan}`}</dd>
+      ${filled(t.napomena)?`<dt>Napomena</dt><dd>${esc(t.napomena)}</dd>`:""}
+    </dl>`;
+  // events timeline (already sorted by date; undated last)
+  const evs=[...S.events].sort((a,b)=>(a.datum||"9999-99-99").localeCompare(b.datum||"9999-99-99"));
+  h+=`<h2>Događanja (${n})</h2>`;
+  if(!n) h+=`<p class="muted">Još nema upisanih događanja.</p>`;
+  else h+=`<div class="tblwrap"><table><thead><tr><th>Kada</th><th>Događanje</th><th>Tko</th><th>Gdje</th><th>Publika</th><th>Status</th></tr></thead><tbody>${evs.map(ev=>{
+      const when=ev.datum?`${esc(fmtDate(ev.datum))}${ev.pocetak?"<br>"+esc(ev.pocetak):""}${ev.trajanje?" · "+esc(ev.trajanje):""}`:'<span class="muted">bez datuma</span>';
+      const who=[ev.voditelj,ev.odjel,ev.gosti?"gosti: "+ev.gosti:""].filter(filled).map(esc).join("<br>");
+      const where=[ev.format,ev.format!=="Online"?ev.lokacija:"",ev.format!=="Uživo"&&ev.platforma?"na daljinu: "+ev.platforma:"",ev.snimanje==="Da"?"snima se":""].filter(filled).map(esc).join("<br>");
+      return `<tr><td class="nw">${when}</td><td><b>${esc(ev.naziv||"Bez naziva")}</b><br><span class="muted">${esc(ev.vrsta||"vrsta nije odabrana")}</span>${ev.ocekivani_broj?`<br><span class="muted">očekivano: ${esc(ev.ocekivani_broj)}</span>`:""}</td><td>${who||'<span class="muted">—</span>'}</td><td>${where||'<span class="muted">—</span>'}</td><td>${dash(ev.publika)}</td><td class="${stClass(ev.status)}">${esc(ev.status||"—")}</td></tr>`;
+    }).join("")}</tbody></table></div>`;
+  // preparation (cycle topics only)
+  if(isCycle()){
+    const done=PREP.filter(isDone).length;
+    h+=`<h2>Priprema · koraci 0–2 (${done}/${PREP.length} gotovo)</h2>`;
+    [0,1,2].forEach(k=>{
+      const items=PREP.filter(i=>i.k===k), [d,m]=stepProgress(k);
+      const facts=items.filter(i=>i.fact), tasks=items.filter(i=>!i.fact);
+      h+=`<h3>Korak ${k} · ${esc(STEP_NAMES[k])} · ${d}/${m} gotovo</h3>`;
+      if(facts.length) h+=`<dl class="ovf">${facts.map(it=>`<dt>${esc(it.l)}</dt><dd>${dash(prepValueText(it,prepVal(it)))}</dd>`).join("")}</dl>`;
+      if(tasks.length) h+=`<div class="tblwrap"><table class="tasks" style="margin-top:8px"><colgroup><col style="width:32%"><col style="width:28%"><col style="width:16%"><col style="width:11%"><col style="width:13%"></colgroup><thead><tr><th>Zadatak</th><th>Unos</th><th>Odgovorna osoba</th><th>Rok</th><th>Status</th></tr></thead><tbody>${tasks.map(it=>{
+          const p=prepVal(it), st=p.status||"Nije započeto";
+          return `<tr><td>${esc(it.l)}${filled(p.napomena)?`<br><span class="note">${esc(p.napomena)}</span>`:""}</td><td>${dash(prepValueText(it,p))}</td><td>${dash(p.odgovorna_osoba)}</td><td class="nw">${dash(fmtDate(p.rok))}</td><td class="${stClass(st)}">${esc(st)}</td></tr>`;
+        }).join("")}</tbody></table></div>`;
+    });
+  }
+  h+=`<footer class="ovfoot">Izrađeno u planeru CARNET Huba (${esc(location.origin+location.pathname)}?tema=${esc(topicId)}) · ${todayStr()}</footer>`;
+  return h;
+}
+let ovPrevTitle=null;
+function openOverview(){
+  if(!S) return;
+  const ov=$("overview");
+  ov.innerHTML=`<div class="ovbar"><button class="btn ghost" type="button" id="ovBack">← Natrag na uređivanje</button><button class="btn primary" type="button" id="ovPrint">Ispiši ili spremi kao PDF</button></div>${overviewHtml()}`;
+  // the bar sits inside .ov on screen; move it above for a cleaner page
+  ov.hidden=false; document.body.classList.add("ov-on"); scrollTo(0,0);
+  $("ovBack").onclick=closeOverview;
+  $("ovPrint").onclick=()=>window.print();
+  $("ovBack").focus();
+}
+function closeOverview(){$("overview").hidden=true;document.body.classList.remove("ov-on")}
+/* PDF file name = page title while printing; Ctrl+P on the form also prints the overview. */
+let ovOpenedForPrint=false;
+addEventListener("beforeprint",()=>{
+  if(!S) return;
+  if(!document.body.classList.contains("ov-on")){openOverview();ovOpenedForPrint=true}
+  if(ovPrevTitle===null) ovPrevTitle=document.title;
+  document.title=`Plan teme – ${topicById(topicId).t.slice(0,60)} – ${new Date().toISOString().slice(0,10)}`;
+});
+addEventListener("afterprint",()=>{
+  if(ovPrevTitle){document.title=ovPrevTitle;ovPrevTitle=null}
+  if(ovOpenedForPrint){closeOverview();ovOpenedForPrint=false}
+});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&document.body.classList.contains("ov-on"))closeOverview()});
+
+/* ---------- Calendar export (.ics, RFC 5545) ---------- */
+const ICS_TZ=["BEGIN:VTIMEZONE","TZID:Europe/Zagreb","BEGIN:DAYLIGHT","TZOFFSETFROM:+0100","TZOFFSETTO:+0200","TZNAME:CEST","DTSTART:19700329T020000","RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=-1SU","END:DAYLIGHT","BEGIN:STANDARD","TZOFFSETFROM:+0200","TZOFFSETTO:+0100","TZNAME:CET","DTSTART:19701025T030000","RRULE:FREQ=YEARLY;BYMONTH=10;BYDAY=-1SU","END:STANDARD","END:VTIMEZONE"];
+function icsEsc(v){return String(v||"").replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\r?\n/g,"\\n")}
+function icsFold(line){
+  // fold at 73 UTF-8 bytes, continuation lines start with a space
+  const out=[];let cur="",bytes=0;
+  for(const ch of line){const b=new TextEncoder().encode(ch).length;if(bytes+b>73){out.push(cur);cur=" "+ch;bytes=1+b}else{cur+=ch;bytes+=b}}
+  out.push(cur);return out.join("\r\n");
+}
+const DUR={"45 min":"PT45M","60 min":"PT1H","90 min":"PT1H30M","120 min":"PT2H","Pola dana":"PT4H"};
+function eventsIcs(){
+  const tp=topicById(topicId), now=new Date().toISOString().replace(/[-:]/g,"").replace(/\.\d+Z$/,"Z");
+  const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//CARNET Hub//Planer teme//HR","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:"+icsEsc("CARNET Hub · "+tp.t),...ICS_TZ];
+  let added=0;
+  S.events.filter(ev=>/^\d{4}-\d{2}-\d{2}$/.test(ev.datum||"")).forEach(ev=>{
+    const d=ev.datum.replace(/-/g,""), timed=/^\d{2}:\d{2}$/.test(ev.pocetak||"")&&ev.trajanje!=="Cijeli dan";
+    const desc=[
+      "Tema: "+tp.t, ev.vrsta&&"Vrsta: "+ev.vrsta, ev.voditelj&&"Vodi: "+ev.voditelj, ev.odjel&&"Odjel: "+ev.odjel,
+      ev.gosti&&"Gosti: "+ev.gosti, ev.publika&&"Publika: "+ev.publika, ev.format&&"Format: "+ev.format,
+      ev.platforma&&ev.format!=="Uživo"&&"Na daljinu: "+ev.platforma, ev.status&&"Status: "+ev.status, ev.napomena&&"Napomena: "+ev.napomena
+    ].filter(Boolean).join("\n");
+    const loc=ev.format==="Online"?(ev.platforma||"Online"):[ev.lokacija,ev.format==="Hibridno"&&ev.platforma?"i na daljinu: "+ev.platforma:""].filter(filled).join(", ");
+    lines.push("BEGIN:VEVENT","UID:"+ev.id+"-"+topicId+"@carnet-hub-planer","DTSTAMP:"+now);
+    if(timed){lines.push("DTSTART;TZID=Europe/Zagreb:"+d+"T"+ev.pocetak.replace(":","")+"00","DURATION:"+(DUR[ev.trajanje]||"PT1H"))}
+    else{const nx=new Date(ev.datum+"T12:00:00");nx.setDate(nx.getDate()+1);lines.push("DTSTART;VALUE=DATE:"+d,"DTEND;VALUE=DATE:"+nx.toISOString().slice(0,10).replace(/-/g,""))}
+    lines.push("SUMMARY:"+icsEsc(ev.naziv||ev.vrsta||"Događanje"));
+    if(loc) lines.push("LOCATION:"+icsEsc(loc));
+    lines.push("DESCRIPTION:"+icsEsc(desc));
+    lines.push("STATUS:"+(ev.status==="Otkazano"?"CANCELLED":ev.status==="Potvrđeno"||ev.status==="Održano"?"CONFIRMED":"TENTATIVE"));
+    lines.push("END:VEVENT"); added++;
+  });
+  lines.push("END:VCALENDAR");
+  return {text:lines.map(icsFold).join("\r\n")+"\r\n", added, skipped:S.events.length-added};
+}
+function downloadIcs(){
+  if(!S) return;
+  const r=eventsIcs();
+  if(!r.added){toast(S.events.length?"Nijedno događanje nema datum, pa kalendar nema što preuzeti":"Još nema događanja");return}
+  const blob=new Blob([r.text],{type:"text/calendar;charset=utf-8"}), a=document.createElement("a");
+  a.href=URL.createObjectURL(blob); a.download=`carnet-hub-${topicId}-dogadjanja.ics`;
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  toast(`Preuzeto događanja: ${r.added}`+(r.skipped?` · bez datuma, nisu uključena: ${r.skipped}`:""));
+}
+
 function renderNav(){
   if(!S) return;
   const plan=parseInt(S.tema.planirani_broj_dogadjanja,10);
@@ -805,7 +975,7 @@ function renderAll(){
   renderTopicSelect();renderInfo();
   const on=!!S;
   ["temaFields","prep","evlist","evSummary"].forEach(id=>$(id).hidden=!on);
-  ["btnAddEv","btnAddCycle","btnLoad","btnSave","btnSave2"].forEach(id=>$(id).disabled=!on);
+  ["btnAddEv","btnAddCycle","btnLoad","btnSave","btnSave2","btnOverview","btnIcs"].forEach(id=>$(id).disabled=!on);
   $("bar").hidden=!on; $("clearRow").hidden=!on; if(!on) $("evsel").hidden=true;
   if(on){renderTema();renderPrep();renderEvents();prepVisibility();renderChecks();renderNav();refreshNames()}
   else $("prepOff").hidden=true;
@@ -899,6 +1069,8 @@ document.addEventListener("click",e=>{
 });
 $("topic").addEventListener("change",e=>selectTopic(e.target.value));
 $("btnSave2").onclick=()=>save(false);
+$("btnOverview").onclick=openOverview;
+$("btnIcs").onclick=downloadIcs;
 document.addEventListener("change",e=>{
   const id=e.target.dataset&&e.target.dataset.pick; if(!id||!S) return;
   if(e.target.checked) SEL.add(id); else SEL.delete(id);
