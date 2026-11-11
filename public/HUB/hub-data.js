@@ -51,14 +51,10 @@ const BLOCKS = [
    d:"Tko odlučuje o tehnologiji u obrazovanju i čija prava ona mora poštovati, uz razmjenu iskustava europskih mreža o umjetnoj inteligenciji. Predloženi suvlasnik zajednice: Sektor za umjetnu inteligenciju (nije odgovorio na upitnik; dva odjela navode ga kao pomoć).",
    aud:"nastavnici, učenici, roditelji, stručnjaci i donositelji odluka",
    spo:"NEVA (dio o umjetnoj inteligenciji) · horizontalna tema Podaci"},
-  {id:"E", c:"--amber", cs:"--amber-soft", n:"Ustanove, zrelost i tehnička zajednica",
-   d:"Digitalna zrelost ustanova, interoperabilnost usluga i zajednica IT osoblja koje podržava nastavu.",
-   aud:"IT osoblje, školski administratori, ravnatelji i uprave",
-   spo:"nema izravnog prethodnika u SPO 2024./2025."},
-  {id:"Z", c:"--muted", cs:"--surface-2", n:"Zajednica i javnost · izvan trenutnog ritma",
-   d:"Popularizacija znanosti, suradnja s narodnim knjižnicama i re/integracija djece i mladih (interesna zajednica iz strategije sektora; bez teme u upitniku). Zasad izvan ritma Huba, jer se sudionici izvan sustava obrazovanja još ne okupljaju.",
-   aud:"šira zajednica, učenici i roditelji; manjine i useljenici (re/integracija)",
-   spo:"STRIBOR · Učenje za sve generacije; GRADINA · dijaspora i strani učenici"}
+  {id:"E", c:"--amber", cs:"--amber-soft", n:"Ustanove i tehničke zajednice",
+   d:"Digitalna zrelost ustanova, interoperabilnost usluga i zajednica IT osoblja koje podržava nastavu, uz suradnju s narodnim knjižnicama i popularizaciju znanosti. Ovdje je i interesna zajednica za re/integraciju djece i mladih iz strategije sektora, zasad bez teme u upitniku.",
+   aud:"IT osoblje, školski administratori, ravnatelji i uprave; knjižnice, učenici i roditelji",
+   spo:"STRIBOR · Učenje za sve generacije; GRADINA · dijaspora i strani učenici (za dio o knjižnicama, popularizaciji znanosti i re/integraciji)"}
 ];
 
 const TOPICS = [
@@ -117,11 +113,10 @@ const TOPICS = [
    rh:"Godišnje središnje događanje (dva dana, oko 150 sudionika; sudionici su spremni platiti sudjelovanje). Nije u planu za 2027.: te godine najava i proširena aktivnost uz CUC."},
   {id:"r5b", b:"E", o:"r5", f:"e", t:"Regionalna događanja za škole (jednodnevna, po ROC-evima)",
    rh:"Jednodnevni regionalni dan za administratore, nastavnike i ravnatelje u gradu MultiLaba, umjesto lokalnog mjesečnog susreta. Nije u planu za 2027.; teme u 2027. ulaze u mjesečne susrete."},
-
-  {id:"r2a", b:"Z", o:"r2", f:"e", t:"Suradnja s narodnim knjižnicama",
-   rh:"Partnerstvo: knjižnice kao dodatni prostori za radionice i kanal diseminacije CARNET-ovih usluga. Zasad izvan ritma."},
-  {id:"r5a", b:"Z", o:"r5", f:"e", t:"Znanstveno-popularni inkubator (STEM)",
-   rh:"Postojeći Znanstveni piknik i STEM događanja; Hub ih može najaviti na DOT-u, ali ih zasad ne uključuje u ritam."},
+  {id:"r2a", b:"E", o:"r2", f:"e", t:"Suradnja s narodnim knjižnicama",
+   rh:"Partnerstvo u ritmu Huba: radionice u narodnim knjižnicama kao gost mjesečnog susreta, a knjižnice su i kanal diseminacije CARNET-ovih usluga."},
+  {id:"r5a", b:"E", o:"r5", f:"e", t:"Znanstveno-popularni inkubator (STEM)",
+   rh:"Znanstveni piknik i STEM događanja najavljuju se na DOT-u i dolaze kao gost mjesečnog susreta ili tromjesečnog dana predstavljanja. Hub u 2027. ne organizira vlastito veliko STEM događanje."},
 
   {id:"r4a", b:"S", o:"r4", f:"s", t:"Provedba nacionalnih planova u kontekstu MZOM-a (BrAIn, e-Sveučilišta, ATTEND)"},
   {id:"r4b", b:"S", o:"r4", f:"s", t:"Razvoj digitalne zrelosti obrazovnih ustanova (škole i visoka učilišta)"}
