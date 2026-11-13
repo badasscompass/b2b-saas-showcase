@@ -330,7 +330,7 @@ function baseline(){
   return S;
 }
 let S=baseline(), sel=null, downloads=null;
-let COL={gov:false,casc:false,legend:false,forum:false,det:false,checks:false,open:false,pool:false};
+let COL={gov:true,casc:true,legend:true,forum:true,det:true,checks:true,open:true,pool:true};
 const mkTog=k=>`<button class="tog" data-col="${k}">${COL[k]?'&#9656;':'&#9662;'}</button>`;
 const hide=k=>COL[k]?' style="display:none"':'';
 
@@ -549,7 +549,7 @@ document.addEventListener('click',e=>{
   const hd=e.target.closest('.panel-hd[data-col]');
   if(hd){COL[hd.dataset.col]=!COL[hd.dataset.col];render();return;}
   if(id==='lang-hr'||id==='lang-en'){LANG=id==='lang-hr'?'hr':'en';render();}
-  else if(id==='reset'){S=baseline();sel=null;progBase();CM=CM0.map(x=>({...x}));COL=Object.fromEntries(Object.keys(COL).map(k=>[k,false]));render();}
+  else if(id==='reset'){S=baseline();sel=null;progBase();CM=CM0.map(x=>({...x}));COL=Object.fromEntries(Object.keys(COL).map(k=>[k,true]));render();}
   else if(id==='pdf')exportPdf();
   else if(id==='f-add'){
     const n=document.getElementById('f-name').value.trim();
