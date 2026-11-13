@@ -144,6 +144,7 @@ table.pt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 .panel-hd h3,.panel-hd h3.sec{margin:0;padding:0;border:none}
 .tog{background:none;border:none;padding:4px 8px;font-size:12px;font-weight:700;line-height:1;color:#9ba3b0;cursor:pointer;border-radius:5px}
 .tog:hover{color:#1c2330;background:#f0f2f5}
+.ph-body{margin-top:12px}
 </style>
 </head>
 <body>
@@ -375,7 +376,7 @@ function gov(){
     <div class="sub2"><div class="gn">${g('sites')}</div><div class="gn"><b>${tr('extE')}</b>${tr('extES')}</div></div></div>
   </div>
   <div class="gn" style="margin-top:8px;border-style:dashed"><b>${tr('shared')}</b>${tr('sharedS')}</div>`;
-  return `<div class="panel-hd" data-col="gov"><h3 class="sec">${tr('govT')}</h3>${mkTog('gov')}</div><div style="margin-top:12px"${hide('gov')}>${body}</div>`;
+  return `<div class="panel-hd" data-col="gov"><h3 class="sec">${tr('govT')}</h3>${mkTog('gov')}</div><div class="ph-body"${hide('gov')}>${body}</div>`;
 }
 function comm(){
   const s=cmSums();
@@ -397,7 +398,7 @@ function casc(){
     b+=`<tr><td>${esc(L(p.n))}</td><td>${tr(p.goal)}</td><td>${tr(p.scope)}</td><td>${ls.length?esc(ls.join('; ')):'<span class="none">'+tr('pNone')+'</span>'}</td></tr>`;
   }
   b+=`</table><div class="frm" style="grid-template-columns:2fr 1fr 1fr auto"><input id="p-name" placeholder="${tr('pAdd')}"><select id="p-goal">${GOALS.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><select id="p-scope">${SCOPES.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><button id="p-add">${tr('pAddB')}</button></div>`;
-  return `<div class="panel-hd" data-col="casc"><h3 class="sec">${tr('cascT')}</h3>${mkTog('casc')}</div><div style="margin-top:12px"${hide('casc')}>${b}</div>`;
+  return `<div class="panel-hd" data-col="casc"><h3 class="sec">${tr('cascT')}</h3>${mkTog('casc')}</div><div class="ph-body"${hide('casc')}>${b}</div>`;
 }
 function issues(){
   const out=[];
@@ -420,7 +421,7 @@ function render(){
    <span class="sub">${i.length?tr('nChecks',i.length):tr('okStatus')}</span>${downloads?`<button id="pdf" class="pri">${tr('pdf')}</button>`:''}</div>`;
   document.getElementById('gov').innerHTML=gov();
   document.getElementById('casc').innerHTML=casc();
-  document.getElementById('legend').innerHTML=`<div class="panel-hd" data-col="legend"><span style="font-size:13px;font-weight:600;color:#5b6472">${LANG==='hr'?'Legenda':'Legend'}</span>${mkTog('legend')}</div><div style="margin-top:8px;font-size:13px;color:#5b6472;line-height:1.6"${hide('legend')}>${tr('legend')}</div>`;
+  document.getElementById('legend').innerHTML=`<div class="panel-hd" data-col="legend"><span style="font-size:13px;font-weight:600;color:#5b6472">${LANG==='hr'?'Legenda':'Legend'}</span>${mkTog('legend')}</div><div class="ph-body"${hide('legend')}>${tr('legend')}</div>`;
   let h='';
   for(let q=0;q<4;q++){
     const host=S.host[q];
@@ -446,7 +447,7 @@ function render(){
   }
   pt+=`<div class="stack" style="--c:#6b7482"><h4>${tr('strat')}</h4>${STRAT.map(s=>`<div class="none" style="margin-bottom:3px">${esc(L(s))}</div>`).join('')}</div>`;
   document.getElementById('pool').innerHTML=`<div class="pool-head"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><h3 style="margin:0;font-size:15px;font-weight:800">${tr('poolT')}</h3>${mkTog('pool')}</div><div class="sub"${COL.pool?' style="display:none"':''}>${tr('poolS')}</div></div><div class="pool-topics" data-drop="pool"${hide('pool')}>${pt}</div>`;
-  document.getElementById('forum').innerHTML=`<div class="panel-hd" data-col="forum"><h3>${tr('fT')}</h3>${mkTog('forum')}</div><div style="margin-top:12px"${hide('forum')}><div class="frm" style="grid-template-columns:1fr 1fr 1fr auto">
+  document.getElementById('forum').innerHTML=`<div class="panel-hd" data-col="forum"><h3>${tr('fT')}</h3>${mkTog('forum')}</div><div class="ph-body"${hide('forum')}><div class="frm" style="grid-template-columns:1fr 1fr 1fr auto">
     <input id="f-name" placeholder="${tr('fName')}">
     <select id="f-comm">${Object.keys(COMM).map(b=>`<option value="${b}">${b} · ${L(COMM[b][1])}</option>`).join('')}</select>
     <select id="f-fmt"><option value="c">${tr('fmtC')}</option><option value="e">${tr('fmtE')}</option><option value="w">${tr('fmtW')}</option></select>
@@ -454,14 +455,14 @@ function render(){
     <button id="f-add">${tr('fAdd')}</button></div></div>`;
   details();
   const pl=T.filter(t=>placed(t.id)),up=pl.filter(t=>!PROG[t.id]).length;
-  document.getElementById('checks').innerHTML=`<div class="panel-hd" data-col="checks"><h3>${tr('chkT')}</h3>${mkTog('checks')}</div><div style="margin-top:12px"${hide('checks')}>`+(i.length?'<ul class="flag">'+i.map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':`<span class="ok">${tr('chkOk')}</span>`)+`<div class="sub" style="margin-top:6px">${tr('chkTr',pl.length-up,pl.length)}</div></div>`;
-  document.getElementById('open').innerHTML=`<div class="panel-hd" data-col="open"><h3>${tr('openT')}</h3>${mkTog('open')}</div><div style="margin-top:12px"${hide('open')}><ul>${X.open.map(o=>`<li>${o[LANG==='hr'?1:0]}</li>`).join('')}</ul></div>`;
+  document.getElementById('checks').innerHTML=`<div class="panel-hd" data-col="checks"><h3>${tr('chkT')}</h3>${mkTog('checks')}</div><div class="ph-body"${hide('checks')}>`+(i.length?'<ul class="flag">'+i.map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':`<span class="ok">${tr('chkOk')}</span>`)+`<div class="sub" style="margin-top:6px">${tr('chkTr',pl.length-up,pl.length)}</div></div>`;
+  document.getElementById('open').innerHTML=`<div class="panel-hd" data-col="open"><h3>${tr('openT')}</h3>${mkTog('open')}</div><div class="ph-body"${hide('open')}><ul>${X.open.map(o=>`<li>${o[LANG==='hr'?1:0]}</li>`).join('')}</ul></div>`;
 }
 function details(){
   const el=document.getElementById('det');
-  if(!sel||!byId[sel]){el.innerHTML=`<div class="panel-hd" data-col="det"><h3>${tr('detT')}</h3>${mkTog('det')}</div><div style="margin-top:12px"${hide('det')}><span class="none">${tr('detHint')}</span></div>`;return;}
+  if(!sel||!byId[sel]){el.innerHTML=`<div class="panel-hd" data-col="det"><h3>${tr('detT')}</h3>${mkTog('det')}</div><div class="ph-body"${hide('det')}><span class="none">${tr('detHint')}</span></div>`;return;}
   const t=byId[sel];
-  el.innerHTML=`<div class="panel-hd" data-col="det"><h3>${esc(L(t.n))}</h3>${mkTog('det')}</div><div style="margin-top:12px"${hide('det')}>
+  el.innerHTML=`<div class="panel-hd" data-col="det"><h3>${esc(L(t.n))}</h3>${mkTog('det')}</div><div class="ph-body"${hide('det')}>
   <div><b style="color:${COMM[t.b][0]}">${tr('detCom')} ${t.b}</b> · ${tr(FK[t.f])} · ${tr('detOwner')}: ${esc(L(OWN[t.o]))}</div>
   ${t.q?`<p><b>${tr('detQ')}</b>: ${t.q}</p><p><b>${tr('detO')}</b>: ${t.out}</p>`:''}
   ${t.note?`<p>${esc(L(t.note))}</p>`:''}
