@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CARNET Hub · Godišnji planer 2027 / Annual Planner 2027</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#1c2330;background:#f5f6f8}
+.wrap{max-width:1280px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0}
+.sub{color:#5b6472;font-size:13px;margin-top:2px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.bar .sp{flex:1}
+button{font:inherit;padding:7px 14px;border-radius:8px;border:1px solid #c5cad3;background:#fff;cursor:pointer}
+button.pri{background:#1f3a8a;color:#fff;border-color:#1f3a8a}
+button.on{background:#1c2330;color:#fff;border-color:#1c2330}
+button:disabled{opacity:.5;cursor:default}
+.gov{background:#fff;border:1px solid #dde0e6;border-radius:10px;padding:10px 12px;margin-bottom:12px}
+.gn{background:#eceef2;border:1px solid #cfd3da;border-radius:8px;padding:6px 9px;font-size:12px}
+.gn b{display:block;font-size:12.5px}
+.gov .note{font-size:12px;color:#5b6472;margin-top:6px}
+.layout{display:grid;grid-template-columns:1fr 270px;gap:12px;align-items:start}
+@media(max-width:1000px){.layout{grid-template-columns:1fr}}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.q{background:#fff;border:1px solid #dde0e6;border-radius:10px;padding:10px}
+.q header b{font-size:14px}
+.gates{font-size:11.5px;color:#5b6472;margin:2px 0 8px}
+.host{display:flex;align-items:center;gap:8px;padding:6px;border:1px dashed #b8bec9;border-radius:8px;margin-bottom:8px;font-size:12px;color:#4a5260}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;background:#1f3a8a;color:#fff;font-weight:600;cursor:grab;touch-action:none;user-select:none}
+.lbl{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#6b7482;margin:8px 0 3px}
+.slot{min-height:44px;border:1.5px dashed #c5cad3;border-radius:8px;padding:4px;display:flex;align-items:center}
+.slot .empty,.bt .empty{color:#97a0ae;font-size:12px;padding:4px}
+.blk{border:1px solid #cfd3da;border-radius:8px;padding:5px 6px;margin-bottom:5px;background:#fafbfc;cursor:grab;touch-action:none;user-select:none}
+.blk .bh{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.blk .ev{font-weight:700}
+.blk.panel{border-left:4px solid #7a5af8}.blk.meetup{border-left:4px solid #12a594}.blk.workshop{border-left:4px solid #e08a00}
+.card{--c:#555;position:relative;background:color-mix(in srgb,var(--c) 14%,#fff);border:1.5px solid var(--c);border-left-width:5px;border-radius:7px;padding:4px 7px;font-size:12px;line-height:1.3;cursor:grab;touch-action:none;user-select:none;width:100%}
+.card.prop{border-style:dashed;border-left-style:solid}
+.card .cm{font-weight:700;color:var(--c);margin-right:5px}
+.lifted{opacity:.35}
+.ghost{position:fixed;z-index:99;pointer-events:none;width:220px;opacity:.9;box-shadow:0 6px 18px rgba(0,0,0,.25)}
+.over{outline:3px solid #1f3a8a;outline-offset:1px;background:#eef2ff}
+.pool{background:#fff;border:1px solid #dde0e6;border-radius:10px;padding:10px;position:sticky;top:8px;max-height:96vh;overflow:auto}
+.pool h3{margin:0 0 6px;font-size:14px}
+.stack{margin-bottom:10px;border-left:4px solid var(--c);padding-left:6px}
+.stack h4{margin:0 0 4px;font-size:12px;color:var(--c)}
+.stack .card{margin-bottom:4px}
+.none{font-size:12px;color:#97a0ae}
+.panel2{background:#fff;border:1px solid #dde0e6;border-radius:10px;padding:10px 12px;margin-top:12px;font-size:13px}
+.panel2 h3{margin:0 0 6px;font-size:14px}
+.flag{color:#a4400f}.ok{color:#176b3a}
+ul{margin:4px 0 0 18px;padding:0}
+.det .src{font-size:12px;color:#5b6472}
+.legend{font-size:12px;color:#5b6472;margin:6px 0}
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#1c2330;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;display:none;z-index:100}
+body.dragging{cursor:grabbing}
+.tier{display:flex;justify-content:center}
+.tier .gn{flex:0 1 460px;text-align:center}
+.arw{text-align:center;color:#7a8291;line-height:1.1;margin:3px 0;font-size:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sub2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+@media(max-width:700px){.two,.sub2{grid-template-columns:1fr}}
+.col{border-radius:8px;padding:8px;border:1px solid}
+.hubc{background:#f5f3ff;border-color:#c4b5fd}.mlc{background:#f0fdfa;border-color:#5eead4}
+.col .gn{background:#fff}
+.cs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;align-items:stretch}
+@media(max-width:900px){.cs{grid-template-columns:1fr}}
+.cl{background:#eef2ff;border:1px solid #c7d2fe;border-radius:8px;padding:6px 8px;font-size:12px}
+.cl b{display:block;font-size:12.5px}
+.cl.sup{margin-top:6px;background:#f5f6f8;border-color:#cfd3da}
+table.pt{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+.pt th,.pt td{border-bottom:1px solid #e3e6ec;padding:4px 6px;text-align:left;vertical-align:top}
+.pt select{font:inherit;font-size:12px;padding:2px 4px}
+.frm{display:grid;gap:4px;margin-top:6px}
+.frm input,.frm select{font:inherit;font-size:12px;padding:4px 6px;border:1px solid #c5cad3;border-radius:6px;width:100%}
+.frm button{font-size:12px;padding:5px 8px}
+h3.sec{margin:0 0 6px;font-size:14px}
+.dotted{margin:8px auto;max-width:640px;border:2px dotted #8a93a3;border-radius:10px;padding:6px 10px;background:#fbfbfd}
+.dotted summary,#opd summary{cursor:pointer;font-size:13px;font-weight:600}
+.rm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+@media(max-width:700px){.rm{grid-template-columns:1fr}}
+.rm .col b{display:block;font-size:12.5px}
+.rm .col div{font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="hdr"></div>
+  <div class="gov" id="gov"></div>
+  <div class="gov" id="casc"></div>
+  <div class="layout">
+    <div>
+      <div class="legend" id="legend"></div>
+      <div class="qs" id="qs"></div>
+      <div class="panel2 det" id="det"></div>
+      <div class="panel2" id="checks"></div>
+      <div class="panel2" id="open"></div>
+    </div>
+    <aside class="pool" id="pool" data-drop="pool"></aside>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+let LANG='hr';
+const X={
+title:['CARNET Hub · Annual Planner 2027','CARNET Hub · Godišnji planer 2027'],
+sub:['Communities A–E (colours) → quarterly activation cycles, working groups and rhythm events. Drag topics, host cities and event blocks.','Zajednice A–E (boje) → tromjesečni ciklusi aktivacije, radne skupine i događanja u ritmu. Povucite teme, gradove domaćine i blokove događanja.'],
+reset:['Reset to baseline','Vrati početno stanje'],
+pdf:['Export PDF','Izvezi PDF'],
+okStatus:['Plan consistent','Plan je dosljedan'],
+nChecks:['{0} open check(s)','Otvorenih provjera: {0}'],
+govT:['Governance hierarchy','Hijerarhija upravljanja'],
+mgmt:['CARNET management','Uprava CARNET-a'],mgmtS:['appoints the committee','imenuje odbor'],
+cmte:['CARNET Hub Committee','Odbor CARNET Huba'],
+cmteS:['one body, two remits · 9–11 members, 1-year mandate, quarterly sessions, consensus else majority','jedno tijelo, dvije zadaće · 9–11 članova, mandat godinu dana, tromjesečne sjednice, konsenzus ili većina'],
+hubR:['Hub programme remit','Zadaća: program Huba'],hubRS:['Hub programme and community events','program Huba i događanja zajednice'],
+lead:['Hub programme lead','Voditelj programa Huba'],leadS:['annual plan, priorities, budget; drives goals to initiatives','godišnji plan, prioriteti, proračun; vodi od ciljeva do inicijativa'],
+tOwn:['Theme owners','Vlasnici tema'],tOwnS:['CARNET departments','odjeli CARNET-a'],
+fac:['Facilitators','Facilitatori'],facS:['Hub team (external pool: open)','tim Huba (vanjski skup: otvoreno)'],
+perC:['per cycle, alongside','po ciklusu, uz njih'],
+sOwn:['Service owners','Vlasnici usluga'],sOwnS:['answer findings','odgovaraju na nalaze'],
+val:['Academic validators','Akademski validatori'],valS:['external quality check','vanjska provjera kvalitete'],
+mlR:['MultiLab remit','Zadaća: MultiLab'],mlRS:['Physical space and external events','fizički prostor i vanjska događanja'],
+mlH:['MultiLab head','Voditelj MultiLaba'],mlHS:['space, equipment, bookings','prostor, oprema, rezervacije'],
+coord:['Local coordinators ×4','Lokalni koordinatori ×4'],
+sites:['City sites','Gradske lokacije'],sitesS:['4 MultiLabs','4 MultiLaba'],
+extE:['External events','Vanjska događanja'],extES:['hosts, partners','domaćini, partneri'],
+shared:['Shared interface','Zajedničko sučelje'],sharedS:['calendar and room booking · only Hub events count toward Hub KPIs (key performance indicators)','kalendar i rezervacija prostora · samo događanja Huba ulaze u KPI-jeve Huba (ključne pokazatelje uspješnosti)'],
+govN:['Gates: programme adopted 6 weeks and published 3 weeks before each quarter. The DOT team does the first proposal check (≤5 working days) and reports quarterly; its full name is not given in the documents I read. SIG = special interest group.','Rokovi: program se donosi 6 tjedana, a objavljuje 3 tjedna prije svakog tromjesečja. Tim DOT-a radi prvu provjeru prijedloga (≤5 radnih dana) i izvješćuje tromjesečno; puni naziv DOT-a nije naveden u dokumentima koje sam čitao. SIG = interesna skupina.'],
+cmT:['Committee composition and remit split (proposal)','Sastav odbora i podjela zadaća (prijedlog)'],
+cmG:['Group','Skupina'],cmN:['Seats','Broj članova'],cmRole:['Role in committee','Uloga u odboru'],cmRem:['Remit','Zadaća'],
+optH:['Hub programme','Program Huba'],optM:['MultiLab','MultiLab'],optB:['Both','Obje'],
+g_carnet:['CARNET','CARNET'],g_teach:['Teachers (primary and secondary)','Nastavnici (OŠ i SŠ)'],g_he:['Higher education (professors, faculty management)','Visoko obrazovanje (profesori, upravljačko osoblje fakulteta)'],g_head:['School principals / management','Ravnatelji / uprave škola'],g_stud:['Pupils and students','Učenici i studenti'],g_ngo:['NGO','NGO'],g_edt:['EdTech companies','Edtech tvrtke'],
+r_carnet:['chair, liaison to the Hub and DOT','predsjedavajući, veza s HUB-om i DOT-om'],r_teach:['classroom needs, good-practice examples','potrebe učionice, primjeri dobre prakse'],r_he:['research, teaching at faculties','istraživanja, nastava na fakultetima'],r_head:['digital maturity of institutions','digitalna zrelost ustanove'],r_stud:['learner perspective','perspektiva učenika'],r_ngo:['civil society, informal education','civilno društvo, neformalno obrazovanje'],r_edt:['industry trends, link to companies','trendovi u industriji, veza s tvrtkama'],
+cmTot:['Total seats','Ukupno članova'],cmHub:['Hub programme remit seats','Članovi zadaće programa Huba'],cmMl:['MultiLab remit seats','Članovi zadaće MultiLaba'],
+remHubT:['Hub programme remit decides','Zadaća programa Huba odlučuje'],remHub:['quarterly Hub programme: themes, formats, speakers, selection criteria, decisions on proposals (from the plan)','tromjesečni program Huba: teme, formati, predavači, kriteriji odabira, odluke o prijedlozima (iz plana)'],
+remMlT:['MultiLab remit decides','Zadaća MultiLaba odlučuje'],remMl:['priorities for physical space, booking rules, external events (my wording of your split)','prioriteti fizičkog prostora, pravila rezervacije, vanjska događanja (moja formulacija vaše podjele)'],
+cmOpt:['optional view','neobavezan prikaz'],
+cmN2:['Proposal, not in the plan: the committee still decides as one body; remit leads prepare the items for their remit. Remit allocation per group is editable and is my reading of each group\'s role. The plan\'s conflict-of-interest rule matters most for the EdTech seat.','Prijedlog, nije u planu: odbor i dalje odlučuje kao jedno tijelo, a nositelji zadaća pripremaju točke iz svoje zadaće. Dodjela zadaće po skupini može se mijenjati i moje je tumačenje uloge svake skupine. Pravilo o sukobu interesa iz plana najvažnije je za mjesto edtech tvrtke.'],
+cascT:['Strategy cascade (provisional)','Kaskada strategije (privremeno)'],
+c1:['1 · Strategic goals','1 · Strateški ciljevi'],c1s:['ministry-led (MZOM) and CARNET-led','pod vodstvom ministarstva (MZOM) i CARNET-a'],
+c2:['2 · Programmes','2 · Programi'],c2s:['long horizon; national or international; solo or partnership','dugi horizont; nacionalni ili međunarodni; samostalni ili u partnerstvu'],
+c3:['3 · Themes (A–E)','3 · Teme (A–E)'],c3s:['sifted from goals and programmes; non-binding framework','izdvojene iz ciljeva i programa; neobvezujući okvir'],
+c4:['4 · Topics','4 · Podteme'],c4s:['generated by Hub leads and external stakeholders via the open forum','nastaju od voditelja Huba i vanjskih dionika putem otvorenog foruma'],
+c5:['5 · Initiatives','5 · Inicijative'],c5s:['quarterly cycles, working groups, monthly rhythm events (the grid below)','tromjesečni ciklusi, radne skupine, mjesečna događanja u ritmu (mreža ispod)'],
+supT:['Supporting operations and activities','Prateće operacije i aktivnosti'],supS:['day-to-day work outside the quarterly grid, for example a department receiving a research request. Not scheduled here.','svakodnevni rad izvan tromjesečne mreže, primjerice odjel koji primi zahtjev za istraživanje. Ovdje se ne planira.'],
+pProg:['Programme','Program'],pGoal:['Strategic goal','Strateški cilj'],pScope:['Scope','Opseg'],pLink:['Linked initiatives','Povezane inicijative'],pNone:['none placed','nijedna postavljena'],
+pAdd:['Add programme','Dodaj program'],pAddB:['Add','Dodaj'],
+cascN:['MZOM = the ministry responsible for science and education. Goal and scope labels on programmes are my provisional classification; only the programme names come from the documents.','MZOM = ministarstvo nadležno za znanost i obrazovanje. Oznake cilja i opsega programa moja su privremena klasifikacija; iz dokumenata su samo nazivi programa.'],
+goal_min:['Ministry-led','Pod vodstvom ministarstva'],goal_car:['CARNET-led','Pod vodstvom CARNET-a'],goal_tbc:['to confirm','za potvrdu'],
+sc_np:['National · partnership','Nacionalni · partnerstvo'],sc_ns:['National · solo','Nacionalni · samostalno'],sc_ip:['International · partnership','Međunarodni · partnerstvo'],sc_is:['International · solo','Međunarodni · samostalno'],
+legend:['Dashed card border = my proposed placement (not documented in the operational plan). Solid = documented. Drag a host city onto another quarter\'s host to swap quarters and dates; supporting event cities follow the rotation. Drag an event block onto another block (same quarter) to swap cities. Click a card for details.','Iscrtkani rub kartice = moj prijedlog smještaja (nije dokumentirano u operativnom planu). Pun rub = dokumentirano. Povucite grad domaćina na domaćina drugog tromjesečja da zamijenite tromjesečja i datume; gradovi potpore slijede rotaciju. Povucite blok događanja na drugi blok (isto tromjesečje) da zamijenite gradove. Kliknite karticu za detalje.'],
+adopt:['Adopt','Donošenje'],publish:['Publish','Objava'],
+hostsC:['hosts the activation cycle','domaćin ciklusa aktivacije'],
+lCycle:['Activation cycle (1 topic)','Ciklus aktivacije (1 tema)'],lWg:['Working group','Radna skupina'],lEv:['Rhythm events (supporting cities)','Događanja u ritmu (gradovi potpore)'],
+eCycle:['drop cycle topic','spustite temu ciklusa'],eWg:['drop working group','spustite radnu skupinu'],eEv:['drop event topic','spustite temu događanja'],
+panel:['Panel','Panel'],meetup:['Meet-up','Meet-up'],workshop:['Workshop','Radionica'],
+cycleIn:['cycle in','ciklus u'],
+poolT:['Topic pool','Skup tema'],poolS:['Unplaced topics by community. Drop here to unplace.','Nepostavljene teme po zajednicama. Spustite ovdje za uklanjanje.'],
+allPlaced:['all placed','sve postavljeno'],strat:['Strategic framework (not scheduled)','Strateški okvir (ne planira se)'],
+fT:['Add topic from the open forum','Dodaj temu s otvorenog foruma'],fName:['Topic name','Naziv teme'],fAdd:['Add to pool','Dodaj u skup'],fHub:['Hub lead','Voditelj Huba'],fExt:['External stakeholder','Vanjski dionik'],
+fmtC:['Activation cycle','Ciklus aktivacije'],fmtE:['Rhythm event','Događanje u ritmu'],fmtW:['Working group','Radna skupina'],fmtS:['Strategic framework','Strateški okvir'],
+detT:['Topic details','Detalji teme'],detHint:['Click a topic card.','Kliknite karticu teme.'],
+detCom:['Community','Zajednica'],detOwner:['owner','vlasnik'],detDoc:['Placement documented in the operational plan.','Smještaj je dokumentiran u operativnom planu.'],detProp:['Placement is my proposal.','Smještaj je moj prijedlog.'],detSrc:['Source: Hub questionnaire (topic data shared with the guide and planner pages).','Izvor: upitnik Huba (podaci o temama zajednički s vodičem i planerom).'],
+detQ:['Guiding question','Vodeće pitanje'],detO:['Working output','Radni rezultat'],detForum:['Proposed via the open forum by','Predložio putem otvorenog foruma:'],detProg:['Programme','Program'],none:['none','nema'],
+toastNoTopic:['Enter a topic name first','Prvo unesite naziv teme'],toastNoProg:['Enter a programme name first','Prvo unesite naziv programa'],
+toastMismatch:['That topic type does not fit this slot (cycle, working group or event)','Ta vrsta teme ne odgovara ovom mjestu (ciklus, radna skupina ili događanje)'],
+toastSwap:['{0} now hosts {1}, {2} hosts {3}; event cities re-rotated','{0} sada domaćin u {1}, {2} u {3}; gradovi događanja ponovno rotirani'],
+chkT:['Plan check','Provjera plana'],chkOk:['All rules satisfied: 4 cycles, 3–4 working groups.','Sva pravila zadovoljena: 4 ciklusa, 3–4 radne skupine.'],
+chkNoC:['{0}: no activation cycle topic','{0}: nema teme ciklusa aktivacije'],chkQ4:[' (on demand from A/B candidates)',' (na zahtjev iz kandidata A/B)'],
+chkNP:['{0} is not in the 2027 plan ({1} {2})','{0} nije u planu za 2027. ({1} {2})'],
+chkWg:['Working groups: {0} placed, plan says 3–4','Radne skupine: postavljeno {0}, plan navodi 3–4'],
+chkCm:['Committee seats add up to {0}–{1}; the plan says 9–11','Zbroj članova odbora je {0}–{1}; plan navodi 9–11'],
+chkTr:['Traceability (informational; the framework is non-binding): {0} of {1} placed initiatives are linked to a programme.','Sljedivost (informativno; okvir je neobvezujući): {0} od {1} postavljenih inicijativa povezano je s programom.'],
+openT:['Open points (from the plan; my reading, not verified)','Otvorena pitanja (iz plana; moje tumačenje, nije provjereno)'],
+open:[
+ ['Approver of the annual plan and the escalation point are unnamed in the plan.','Odobravatelj godišnjeg plana i točka eskalacije u planu nisu imenovani.'],
+ ['The Programme Committee is not yet appointed, while the Q1 adoption gate (20 Nov 2026) is near.','Programski odbor još nije imenovan, a rok za donošenje programa Q1 (20. 11. 2026.) je blizu.'],
+ ['The composition table sums to 9–12 seats, the plan says 9–11. The split into two remits within one committee is a proposal.','Tablica sastava daje 9–12 članova, a plan navodi 9–11. Podjela na dvije zadaće unutar jednog odbora je prijedlog.'],
+ ['Gates for Q2–Q4 and the city-role rotation (panel = next city, meet-up = next+2, workshop = next+3) are my derivation; Q1 gate dates are from the plan.','Rokovi za Q2–Q4 i rotacija uloga gradova (panel = sljedeći grad, meet-up = +2, radionica = +3) moja su izvedenica; datumi roka za Q1 su iz plana.'],
+ ['Q4 cycle topic is "on demand" from A/B candidates, left empty on purpose.','Tema ciklusa Q4 je „na zahtjev” iz kandidata A/B, namjerno je ostavljena praznom.'],
+ ['Documented placements: Q1 teacher support or personal plan, Q2 multimedia studio workshops, Q3 "Is technology ready?", Q2 research panel, research working group. Other placements are proposals.','Dokumentirani smještaji: Q1 podrška nastavnicima ili osobni plan, Q2 radionice multimedijskih studija, Q3 „Je li tehnologija spremna?”, Q2 istraživački panel, radna skupina za istraživanja. Ostali smještaji su prijedlozi.']
+],
+npTag:['(not in 2027 plan)','(nije u planu za 2027.)'],
+pdfNoTopic:['(no topic assigned)','(tema nije dodijeljena)'],pdfEmpty:['(empty)','(prazno)'],pdfNoneW:['(none)','(nema)'],
+pdfHost:['Host: {0} - cycle in {1} 2027','Domacin: {0} - ciklus u {1} 2027.'],
+pdfSub:['Communities A-E > quarterly activation cycles, working groups, rhythm events. Gates: adopt 6 weeks, publish 3 weeks before quarter. Dashed card = proposed placement. Generated {0}.','Zajednice A-E > tromjesecni ciklusi aktivacije, radne skupine, dogadjanja u ritmu. Rokovi: donosenje 6 tjedana, objava 3 tjedna prije tromjesecja. Iscrtkana kartica = prijedlog smjestaja. Izradeno {0}.'],
+pdfGov:['Governance: CARNET management appoints the CARNET Hub Committee (one body, two remits; 9-11 members, 1-year mandate, quarterly sessions). Hub programme remit (Hub programme and community events): Hub programme lead > theme owners, facilitators, service owners, academic validators. MultiLab remit (physical space and external events): MultiLab head > 4 local coordinators > city sites, external events. Shared interface: calendar and room booking. Year end: SIG (special interest group) review.','Upravljanje: uprava CARNET-a imenuje Odbor CARNET Huba (jedno tijelo, dvije zadace; 9-11 clanova, mandat godinu dana, tromjesecne sjednice). Zadaca programa Huba (program Huba i dogadjanja zajednice): voditelj programa Huba > vlasnici tema, facilitatori, vlasnici usluga, akademski validatori. Zadaca MultiLaba (fizicki prostor i vanjska dogadjanja): voditelj MultiLaba > 4 lokalna koordinatora > gradske lokacije, vanjska dogadjanja. Zajednicko sucelje: kalendar i rezervacija prostora. Kraj godine: pregled SIG-ova (interesnih skupina).'],
+pdfComm:['Communities','Zajednice'],pdfUnpl:['Unplaced topics','Nepostavljene teme'],pdfNone2:['none','nema'],
+pdfCasc:['Strategy cascade (provisional)','Kaskada strategije (privremeno)'],
+pdfCascT:['1 Strategic goals (ministry-led MZOM, CARNET-led) > 2 Programmes (long horizon; national or international; solo or partnership) > 3 Themes A-E (sifted from goals and programmes; non-binding framework) > 4 Topics (generated by Hub leads and external stakeholders via the open forum) > 5 Initiatives (quarterly cycles, working groups, monthly rhythm events). Supporting operations and activities (day-to-day work, e.g. a department receiving a research request) run alongside and are not scheduled here.','1 Strateski ciljevi (pod vodstvom ministarstva MZOM, CARNET-a) > 2 Programi (dugi horizont; nacionalni ili medjunarodni; samostalni ili u partnerstvu) > 3 Teme A-E (izdvojene iz ciljeva i programa; neobvezujuci okvir) > 4 Podteme (nastaju od voditelja Huba i vanjskih dionika putem otvorenog foruma) > 5 Inicijative (tromjesecni ciklusi, radne skupine, mjesecna dogadjanja u ritmu). Pratece operacije i aktivnosti (svakodnevni rad, npr. odjel koji primi zahtjev za istrazivanje) teku usporedno i ovdje se ne planiraju.'],
+pdfProgs:['Programmes','Programi'],pdfLinked:['linked','povezano'],
+pdfUnl:['Placed initiatives without a programme (informational)','Postavljene inicijative bez programa (informativno)'],
+pdfForum:['Topics added via the open forum','Teme dodane putem otvorenog foruma'],
+pdfProgNote:['Programme names come from the documents (strategic framework topics and the international working groups). Goal and scope labels are the author\'s provisional classification.','Nazivi programa su iz dokumenata (teme strateškog okvira i međunarodne radne skupine). Oznake cilja i opsega privremena su klasifikacija autora.'],
+pdfCmT:['Committee composition and remit split (proposal)','Sastav odbora i podjela zadaca (prijedlog)'],
+pdfOpenT:['Open points (author reading of the operational plan, not verified)','Otvorena pitanja (autorovo tumacenje operativnog plana, nije provjereno)'],
+pdfPlan:['Plan check','Provjera plana'],pdfAllOk:['All rules satisfied.','Sva pravila zadovoljena.'],
+pdfSaved:['PDF saved','PDF spremljen'],pdfCancel:['Export cancelled','Izvoz otkazan'],pdfFail:['Export unavailable here','Izvoz ovdje nije dostupan'],pdfLib:['PDF library did not load','PDF biblioteka nije učitana']
+};
+const tr=(k,...a)=>{let s=X[k][LANG==='hr'?1:0];a.forEach((v,i)=>s=s.split('{'+i+'}').join(v));return s;};
+const L=o=>LANG==='hr'?o.hr:o.en;
+
+const ORDER=['Zagreb','Osijek','Rijeka','Split'];
+const QN=[{en:'Q1 · Jan–Mar 2027',hr:'Q1 · sij–ožu 2027.'},{en:'Q2 · Apr–Jun 2027',hr:'Q2 · tra–lip 2027.'},{en:'Q3 · Jul–Sep 2027',hr:'Q3 · srp–ruj 2027.'},{en:'Q4 · Oct–Dec 2027',hr:'Q4 · lis–pro 2027.'}];
+const QM=[{en:'Jan',hr:'siječnju'},{en:'Apr',hr:'travnju'},{en:'Jul',hr:'srpnju'},{en:'Oct',hr:'listopadu'}];
+const GATE=[[{en:'20 Nov 2026',hr:'20. 11. 2026.'},{en:'11 Dec 2026',hr:'11. 12. 2026.'}],[{en:'18 Feb 2027',hr:'18. 2. 2027.'},{en:'11 Mar 2027',hr:'11. 3. 2027.'}],[{en:'20 May 2027',hr:'20. 5. 2027.'},{en:'10 Jun 2027',hr:'10. 6. 2027.'}],[{en:'20 Aug 2027',hr:'20. 8. 2027.'},{en:'10 Sep 2027',hr:'10. 9. 2027.'}]];
+const ROLES=['panel','meetup','workshop'];
+const COMM={A:['#2563eb',{en:'Teacher practice and digital competences',hr:'Nastavnička praksa i digitalne kompetencije'}],B:['#0d9488',{en:'Innovation, content and technology evaluation',hr:'Inovacije, sadržaji i vrednovanje tehnologije'}],C:['#7c3aed',{en:'Research and evidence',hr:'Istraživanja i dokazi'}],D:['#e4572e',{en:'AI, ethics and user rights',hr:'Umjetna inteligencija, etika i prava korisnika'}],E:['#c98a00',{en:'Institutions and technical community',hr:'Ustanove i tehničke zajednice'}]};
+const OWN={
+r1:{en:'Dept for Development and Implementation of Educational Systems',hr:'Odjel za razvoj i implementaciju obrazovnih sustava'},
+r2:{en:'Sector for Development and Application of Technology and Innovation in Education',hr:'Sektor za razvoj i primjenu tehnologija i inovacija u obrazovanju'},
+r3:{en:'Research Service · Dept for Applied Research and Innovation in Education',hr:'Služba za istraživanja · Odjel za primijenjena istraživanja i inovacije u obrazovanju'},
+r4:{en:'Sector level (Technology and Innovation sector)',hr:'Sektor za razvoj i primjenu tehnologija i inovacija u obrazovanju (razina sektora)'},
+r5:{en:'National Services and Support · User Service',hr:'Sektor nacionalnih servisa i podrške · Služba za korisnike'},
+r6:{en:'Research Service',hr:'Služba za istraživanja'},
+r7:{en:'International Cooperation',hr:'Međunarodna suradnja'},
+r8:{en:'Service for Innovation and Emerging Digital Education Technologies',hr:'Služba za inovacije i primjenu digitalnih obrazovnih tehnologija u nastajanju'},
+f0:{en:'Open forum (owner to assign)',hr:'Otvoreni forum (vlasnika treba dodijeliti)'}};
+const FK={c:'fmtC',e:'fmtE',w:'fmtW',s:'fmtS'};
+const T=[
+{id:'t1',b:'A',o:'r1',f:'c',doc:1,n:{en:'Continuous teacher support in applying educational technology',hr:'Kontinuirana podrška nastavnicima u planiranju i primjeni obrazovnih tehnologija'},q:'Kako bi nastavnici mogli iskoristiti više mogućnosti Edutorija i Loomena pri izradi digitalnih obrazovnih sadržaja?',out:'Radni rezultat: jedan poboljšani sadržaj po timu, recenziran prema zajedničkom kontrolnom popisu.'},
+{id:'t2',b:'A',o:'r1',f:'c',doc:1,n:{en:'Personal teacher plan and portfolio',hr:'Osobni nastavnički plan i portfolio primjene obrazovnih tehnologija'},q:'Kako bi nastavnici mogli uz manje papirologije pokazati ono što već rade s digitalnim alatima i za to dobiti priznanje?',out:'Radni rezultat: jednostranični predložak za refleksiju i dokaze, koji svaki sudionik isproba na vlastitoj praksi.'},
+{id:'r6a',b:'A',o:'r6',f:'c',n:{en:'Methodical workshops for teacher studies: modern devices',hr:'Metodičke radionice za nastavničke studije: primjena modernih uređaja u nastavi'},q:'Kako bi budući nastavnici mogli osmisliti svrhovitu primjenu modernih uređaja u nastavi svog predmeta?',out:'Radni rezultat: 2–3 nastavna scenarija s uređajem, isprobana na metodičkoj vježbi ili satu.'},
+{id:'r6b',b:'A',o:'r6',f:'c',doc:1,n:{en:'Multimedia studio workshops',hr:'Radionice za primjenu multimedijskih studija u pripremi multimedijskih sadržaja'},q:'Kako bi nastavnici mogli u multimedijskom studiju izraditi kratki obrazovni sadržaj koji će ponovno koristiti?',out:'Radni rezultat: jedan kratki multimedijski sadržaj po timu, spreman za Meduzu ili Edutorij.'},
+{id:'r2b',b:'A',o:'r2',f:'e',n:{en:'Teacher workshops: digital literacy',hr:'Radionice za nastavnike s ciljem osnaživanja u području digitalne pismenosti'},note:{en:'Subject-based workshops in the Hub rhythm; CARNET supplies content, partners logistics. Re-sorted from cycle format; confirm with the proposer.',hr:'Tematske radionice po predmetima kao radionice u ritmu Huba: CARNET daje sadržaj i materijale, partneri logistiku (iz upitnika). Presloženo iz formata ciklusa; potvrditi s predlagateljem.'}},
+{id:'t3',b:'B',o:'r1',f:'c',n:{en:'Sustainable innovation in classroom technology use',hr:'Održive inovacije primjene obrazovnih tehnologija u nastavi'},q:'Kako bi jedna inovacija iz razreda mogla postati scenarij poučavanja koji drugi mogu prilagoditi i ponovno koristiti?',out:'Radni rezultat: 2–3 isprobana scenarija poučavanja, provjerena s akademskim validatorom, spremna za Edutorij.'},
+{id:'r8d',b:'B',o:'r8',f:'c',doc:1,n:{en:'Is technology ready for education?',hr:'Je li tehnologija spremna za obrazovanje?'},q:'Kako bi nastavnici mogli na temelju iskustva iz stvarne nastave procijeniti služi li neki alat učenju?',out:'Radni rezultat: nacrt kriterija pedagoške vrijednosti, isproban na 2–3 alata u MultiLabu, uz povratnu informaciju tvrtkama.'},
+{id:'r8a',b:'B',o:'r8',f:'c',n:{en:'Digital art and creative industries',hr:'Razvoj digitalne umjetnosti i kreativnih industrija'},q:'Kako bi nastavnici mogli uz digitalno pripovijedanje ili dizajn igara potaknuti učenike da tehnologiju stvaraju, a ne samo koriste?',out:'Radni rezultat: 2–3 učeničke aktivnosti stvaranja, isprobane u razredu i prikazane na danu predstavljanja.'},
+{id:'r8c',b:'B',o:'r8',f:'e',n:{en:'Conviviality and community',hr:'Konvivijalnost i zajednica: tehnologija oblikovana prema potrebama obrazovanja'},note:{en:'Teacher–industry meetings as a guest slot of the monthly meet-up; MultiLab open slots are MultiLab\'s own activity. No hackathon planned for 2027.',hr:'Susreti nastavnika i industrije kao gost mjesečnog susreta; otvoreni termini u MultiLabu vlastita su aktivnost MultiLaba pod njegovim brendom. Hackaton nije u planu za 2027.'}},
+{id:'r3a',b:'C',o:'r3',f:'w',doc:1,n:{en:'Research on digital technology use in education',hr:'Istraživanja primjene digitalne tehnologije u obrazovanju'},note:{en:'Research working group convened by CARNET; receives findings of all cycles. Hub is the communication channel. No symposia in 2027; findings presented at CUC (CARNET User Conference).',hr:'Radna skupina za istraživanja koju saziva CARNET i koja prima nalaze svih ciklusa; Hub joj je komunikacijski kanal (objave na DOT-u, gostovanje na mjesečnom susretu, dan predstavljanja). Simpoziji nisu u planu za 2027.; nalazi godine predstavljaju se na CUC-u.'}},
+{id:'r6c',b:'C',o:'r6',f:'e',doc:1,n:{en:'Debates on educational research',hr:'Rasprave na temu obrazovnih istraživanja'},note:{en:'Panel as guest part of the monthly meet-up or the quarterly presentation day; participants briefed in advance.',hr:'Panel rasprava kao gostujući dio mjesečnog susreta ili tromjesečnog dana predstavljanja; sudionici dobivaju detaljne upute unaprijed.'}},
+{id:'r7a',b:'D',o:'r7',f:'w',n:{en:'AI in education',hr:'Primjena umjetne inteligencije u obrazovanju'},note:{en:'International working group with national research and education networks via GÉANT, convened by CARNET; short presentations and online thematic meetings. Good practices can enter the cycle as a new topic. Partners without AAI@EduHr join as guests (path B).',hr:'Međunarodna radna skupina s NREN-ovima kroz GÉANT, saziva je CARNET; kratka predstavljanja i tematski susreti na daljinu. Odabrane prakse ulaze u ciklus kao nova tema. Partneri bez AAI@EduHr ulaze gostujućim pristupom (put B).'}},
+{id:'r8b',b:'D',o:'r8',f:'e',n:{en:'Ethics and democracy: who decides on technology?',hr:'Etika i demokracija: tko odlučuje o tehnologiji u obrazovanju?'},note:{en:'Round table as quarterly panel; workshops on data protection, authorship and user rights as a guest of the meet-up.',hr:'Okrugli stol kao tromjesečni panel; radionice o zaštiti podataka, autorstvu i pravima korisnika kao gost mjesečnog susreta.'}},
+{id:'r7c',b:'E',o:'r7',f:'w',n:{en:'Digital maturity of organisations',hr:'Digitalna zrelost organizacija u obrazovanju'},note:{en:'International working group; comparative presentations and peer reviews; results go back to the strategic framework. Guest access (path B).',hr:'Međunarodna radna skupina s NREN-ovima, saziva je CARNET: usporedna predstavljanja i kolegijalni osvrti; rezultati se vraćaju u strateški okvir. Partneri bez AAI@EduHr ulaze gostujućim pristupom (put B).'}},
+{id:'r7b',b:'E',o:'r7',f:'w',n:{en:'Interoperability of educational services',hr:'Interoperabilnost obrazovnih servisa i usluga'},note:{en:'International working group; technical elaboration in a separate workshop. Guest access (path B).',hr:'Međunarodna radna skupina s NREN-ovima, saziva je CARNET; tehnička razrada na zasebnoj radionici. Partneri bez AAI@EduHr ulaze gostujućim pristupom (put B).'}},
+{id:'r2a',b:'E',o:'r2',f:'e',n:{en:'Cooperation with public libraries',hr:'Suradnja s narodnim knjižnicama'},note:{en:'Workshops in public libraries as a guest of the monthly meet-up; libraries are also a dissemination channel.',hr:'Partnerstvo u ritmu Huba: radionice u narodnim knjižnicama kao gost mjesečnog susreta, a knjižnice su i kanal diseminacije CARNET-ovih usluga.'}},
+{id:'r5c',b:'E',o:'r5',f:'e',np:1,n:{en:'Sysadmin bootcamp',hr:'Bootcamp za sistemce: događanje za IT osoblje akademskih ustanova'},note:{en:'Annual two-day event, about 150 participants. NOT in the 2027 plan: announcement and extended activity alongside CUC.',hr:'Godišnje središnje događanje (dva dana, oko 150 sudionika). Nije u planu za 2027.: te godine najava i proširena aktivnost uz CUC.'}},
+{id:'r5b',b:'E',o:'r5',f:'e',np:1,n:{en:'Regional school events',hr:'Regionalna događanja za škole (jednodnevna, po ROC-evima)'},note:{en:'One-day regional events. NOT in the 2027 plan; topics go into monthly meet-ups.',hr:'Jednodnevni regionalni dan u gradu MultiLaba. Nije u planu za 2027.; teme u 2027. ulaze u mjesečne susrete.'}},
+{id:'r5a',b:'E',o:'r5',f:'e',np:1,n:{en:'Science-popular (STEM) incubator',hr:'Znanstveno-popularni inkubator (STEM)'},note:{en:'Announced on DOT; guest of meet-up or presentation day. Hub runs no large STEM event of its own in 2027.',hr:'Znanstveni piknik i STEM događanja najavljuju se na DOT-u i dolaze kao gost mjesečnog susreta ili tromjesečnog dana predstavljanja. Hub u 2027. ne organizira vlastito veliko STEM događanje.'}}
+];
+const STRAT=[{en:'Implementation of national plans in the MZOM context (BrAIn, e-Universities, ATTEND)',hr:'Provedba nacionalnih planova u kontekstu MZOM-a (BrAIn, e-Sveučilišta, ATTEND)'},{en:'Digital maturity development of educational institutions',hr:'Razvoj digitalne zrelosti obrazovnih ustanova (škole i visoka učilišta)'}];
+const byId=Object.fromEntries(T.map(t=>[t.id,t]));
+const GOALS=['goal_min','goal_car','goal_tbc'],SCOPES=['sc_np','sc_ns','sc_ip','sc_is'];
+let PROGS=[],PROG={},fcount=0,pcount=0;
+function progBase(){
+  PROGS=[
+   {id:'p1',n:{en:'Implementation of national plans (BrAIn, e-Universities, ATTEND)',hr:'Provedba nacionalnih planova (BrAIn, e-Sveučilišta, ATTEND)'},goal:'goal_min',scope:'sc_np'},
+   {id:'p2',n:{en:'Digital maturity development of educational institutions',hr:'Razvoj digitalne zrelosti obrazovnih ustanova'},goal:'goal_tbc',scope:'sc_np'},
+   {id:'p3',n:{en:'International cooperation with research and education networks (GÉANT)',hr:'Međunarodna suradnja s istraživačkim i obrazovnim mrežama (GÉANT)'},goal:'goal_car',scope:'sc_ip'}];
+  PROG={r7a:'p3',r7b:'p3',r7c:'p3'};
+  for(let i=T.length-1;i>=0;i--)if(T[i].forum){delete byId[T[i].id];T.splice(i,1);}
+}
+progBase();
+const CM0=[
+ {id:'carnet',min:2,max:3,rem:'both'},{id:'teach',min:2,max:2,rem:'hub'},{id:'he',min:1,max:2,rem:'hub'},
+ {id:'head',min:1,max:1,rem:'hub'},{id:'stud',min:1,max:2,rem:'both'},{id:'ngo',min:1,max:1,rem:'ml'},{id:'edt',min:1,max:1,rem:'ml'}];
+let CM=CM0.map(x=>({...x})),CMOPEN=false,OPENQ=false;
+
+function roles(host){const i=ORDER.indexOf(host);return{panel:ORDER[(i+1)%4],meetup:ORDER[(i+2)%4],workshop:ORDER[(i+3)%4]};}
+function baseline(){
+  const S={host:[...ORDER],cyc:['t1','r6b','r8d',null],wg:['r3a','r7a','r7c',null],ev:[]};
+  for(let q=0;q<4;q++){const r=roles(S.host[q]);S.ev.push({panel:{city:r.panel,topic:null},meetup:{city:r.meetup,topic:null},workshop:{city:r.workshop,topic:null}});}
+  S.ev[1].panel.topic='r6c';
+  return S;
+}
+let S=baseline(), sel=null, downloads=null;
+
+function unplace(id){
+  for(let q=0;q<4;q++){
+    if(S.cyc[q]===id)S.cyc[q]=null;
+    if(S.wg[q]===id)S.wg[q]=null;
+    for(const k of ROLES)if(S.ev[q][k].topic===id)S.ev[q][k].topic=null;
+  }
+}
+function placed(id){
+  for(let q=0;q<4;q++){
+    if(S.cyc[q]===id||S.wg[q]===id)return true;
+    for(const k of ROLES)if(S.ev[q][k].topic===id)return true;
+  }
+  return false;
+}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+function card(id){
+  const t=byId[id],c=COMM[t.b][0];
+  const tip=L(t.n)+' · '+tr(FK[t.f])+' · '+L(OWN[t.o]);
+  return `<div class="card ${t.doc?'':'prop'}" style="--c:${c}" title="${esc(tip)}" data-drag='{"kind":"topic","id":"${id}"}'><span class="cm">${t.b}</span>${esc(L(t.n))}${t.np?' <i>'+tr('npTag')+'</i>':''}</div>`;
+}
+function cmSums(){
+  let mn=0,mx=0,hmn=0,hmx=0,mmn=0,mmx=0;
+  for(const c of CM){mn+=c.min;mx+=c.max;if(c.rem!=='ml'){hmn+=c.min;hmx+=c.max;}if(c.rem!=='hub'){mmn+=c.min;mmx+=c.max;}}
+  return{mn,mx,hmn,hmx,mmn,mmx};
+}
+const rng=(a,b)=>a===b?a:a+'–'+b;
+function gov(){
+  const g=k=>`<b>${tr(k)}</b>${tr(k+'S')}`;
+  return `<h3 class="sec">${tr('govT')}</h3>
+  <div class="tier"><div class="gn">${g('mgmt')}</div></div><div class="arw">&#8595;</div>
+  <div class="tier"><div class="gn">${g('cmte')}</div></div>
+  <details id="cmd" class="dotted" ${CMOPEN?'open':''}><summary>${tr('cmT')} <span class="none">· ${tr('cmOpt')} · ${rng(cmSums().mn,cmSums().mx)}</span></summary>${comm()}</details>
+  <div class="arw">&#8595;</div>
+  <div class="two">
+   <div class="col hubc"><div class="gn">${g('hubR')}</div><div class="arw">&#8595;</div><div class="gn">${g('lead')}</div><div class="arw">&#8595;</div>
+    <div class="sub2"><div class="gn">${g('tOwn')}</div><div class="gn">${g('fac')}</div></div><div class="arw">${tr('perC')}</div>
+    <div class="sub2"><div class="gn">${g('sOwn')}</div><div class="gn">${g('val')}</div></div></div>
+   <div class="col mlc"><div class="gn">${g('mlR')}</div><div class="arw">&#8595;</div><div class="gn"><b>${tr('mlH')}</b>${tr('mlHS')}</div><div class="arw">&#8595;</div>
+    <div class="gn"><b>${tr('coord')}</b>Zagreb, Osijek, Rijeka, Split</div><div class="arw">&#8595;</div>
+    <div class="sub2"><div class="gn">${g('sites')}</div><div class="gn"><b>${tr('extE')}</b>${tr('extES')}</div></div></div>
+  </div>
+  <div class="gn" style="margin-top:8px;border-style:dashed"><b>${tr('shared')}</b>${tr('sharedS')}</div>
+  <div class="note">${tr('govN')}</div>`;
+}
+function comm(){
+  const s=cmSums();
+  let h=`<table class="pt"><tr><th>${tr('cmG')}</th><th>${tr('cmN')}</th><th>${tr('cmRole')}</th><th>${tr('cmRem')}</th></tr>`;
+  for(const c of CM){
+    h+=`<tr><td>${tr('g_'+c.id)}</td><td>${rng(c.min,c.max)}</td><td>${tr('r_'+c.id)}</td><td><select data-cm="${c.id}"><option value="hub" ${c.rem==='hub'?'selected':''}>${tr('optH')}</option><option value="ml" ${c.rem==='ml'?'selected':''}>${tr('optM')}</option><option value="both" ${c.rem==='both'?'selected':''}>${tr('optB')}</option></select></td></tr>`;
+  }
+  h+=`<tr><th>${tr('cmTot')}</th><th>${rng(s.mn,s.mx)}</th><th>${tr('cmHub')}: ${rng(s.hmn,s.hmx)} · ${tr('cmMl')}: ${rng(s.mmn,s.mmx)}</th><th></th></tr></table>
+  <div class="rm"><div class="col hubc"><b>${tr('remHubT')}</b><div>${tr('remHub')}</div></div><div class="col mlc"><b>${tr('remMlT')}</b><div>${tr('remMl')}</div></div></div>
+  <div class="note">${tr('cmN2')}</div>`;
+  return h;
+}
+function casc(){
+  let h=`<h3 class="sec">${tr('cascT')}</h3><div class="cs">`;
+  for(const k of ['c1','c2','c3','c4','c5'])h+=`<div class="cl"><b>${tr(k)}</b>${tr(k+'s')}</div>`;
+  h+=`</div><div class="cl sup"><b>${tr('supT')}</b>${tr('supS')}</div>`;
+  h+=`<table class="pt"><tr><th>${tr('pProg')}</th><th>${tr('pGoal')}</th><th>${tr('pScope')}</th><th>${tr('pLink')}</th></tr>`;
+  for(const p of PROGS){
+    const ls=T.filter(t=>PROG[t.id]===p.id&&placed(t.id)).map(t=>L(t.n));
+    h+=`<tr><td>${esc(L(p.n))}</td><td>${tr(p.goal)}</td><td>${tr(p.scope)}</td><td>${ls.length?esc(ls.join('; ')):'<span class="none">'+tr('pNone')+'</span>'}</td></tr>`;
+  }
+  h+=`</table><div class="frm" style="grid-template-columns:2fr 1fr 1fr auto"><input id="p-name" placeholder="${tr('pAdd')}"><select id="p-goal">${GOALS.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><select id="p-scope">${SCOPES.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><button id="p-add">${tr('pAddB')}</button></div><div class="note">${tr('cascN')}</div>`;
+  return h;
+}
+function issues(){
+  const out=[];
+  for(let q=0;q<4;q++){
+    const qs=L(QN[q]).split(' ')[0];
+    if(!S.cyc[q])out.push(tr('chkNoC',qs)+(q===3?tr('chkQ4'):''));
+    for(const k of ROLES){const t=S.ev[q][k].topic;if(t&&byId[t].np)out.push(tr('chkNP',L(byId[t].n),qs,tr(k)));}
+  }
+  const n=S.wg.filter(Boolean).length;
+  if(n<3||n>4)out.push(tr('chkWg',n));
+  const s=cmSums();
+  if(s.mn<9||s.mx>11)out.push(tr('chkCm',s.mn,s.mx));
+  return out;
+}
+function render(){
+  document.documentElement.lang=LANG;
+  const i=issues();
+  document.getElementById('hdr').innerHTML=`<h1>${tr('title')}</h1><div class="sub">${tr('sub')}</div>
+   <div class="bar"><button id="lang-hr" class="${LANG==='hr'?'on':''}">HR</button><button id="lang-en" class="${LANG==='en'?'on':''}">EN</button><button id="reset">${tr('reset')}</button><span class="sp"></span>
+   <span class="sub">${i.length?tr('nChecks',i.length):tr('okStatus')}</span>${downloads?`<button id="pdf" class="pri">${tr('pdf')}</button>`:''}</div>`;
+  document.getElementById('gov').innerHTML=gov();
+  document.getElementById('casc').innerHTML=casc();
+  document.getElementById('legend').textContent=tr('legend');
+  let h='';
+  for(let q=0;q<4;q++){
+    const host=S.host[q];
+    h+=`<section class="q"><header><b>${L(QN[q])}</b></header>
+    <div class="gates">${tr('adopt')} ${L(GATE[q][0])} · ${tr('publish')} ${L(GATE[q][1])}</div>
+    <div class="host" data-drop="host" data-q="${q}"><span class="chip" data-drag='{"kind":"host","q":${q}}'>${host}</span><span>${tr('hostsC')}<br>${LANG==='hr'?'u ':''}${LANG==='hr'?L(QM[q]):QM[q].en} 2027${LANG==='hr'?'.':''}</span></div>
+    <div class="lbl">${tr('lCycle')}</div>
+    <div class="slot" data-drop="slot-c" data-q="${q}">${S.cyc[q]?card(S.cyc[q]):'<span class="empty">'+tr('eCycle')+'</span>'}</div>
+    <div class="lbl">${tr('lWg')}</div>
+    <div class="slot" data-drop="slot-w" data-q="${q}">${S.wg[q]?card(S.wg[q]):'<span class="empty">'+tr('eWg')+'</span>'}</div>
+    <div class="lbl">${tr('lEv')}</div>`;
+    for(const k of ROLES){
+      const e=S.ev[q][k];
+      h+=`<div class="blk ${k}" data-drag='{"kind":"blk","q":${q},"role":"${k}"}' data-drop="blk" data-q="${q}" data-role="${k}"><div class="bh"><span class="ev">${tr(k)}</span><b>${e.city}</b></div><div class="bt">${e.topic?card(e.topic):'<span class="empty">'+tr('eEv')+'</span>'}</div></div>`;
+    }
+    h+=`</section>`;
+  }
+  document.getElementById('qs').innerHTML=h;
+  let p=`<h3>${tr('poolT')}</h3><div class="sub" style="margin-bottom:8px">${tr('poolS')}</div>`;
+  for(const b of Object.keys(COMM)){
+    const ids=T.filter(t=>t.b===b&&!placed(t.id));
+    p+=`<div class="stack" style="--c:${COMM[b][0]}"><h4>${b} · ${L(COMM[b][1])}</h4>${ids.length?ids.map(t=>card(t.id)).join(''):'<div class="none">'+tr('allPlaced')+'</div>'}</div>`;
+  }
+  p+=`<div class="stack" style="--c:#6b7482"><h4>${tr('strat')}</h4>${STRAT.map(s=>`<div class="none" style="margin-bottom:3px">${esc(L(s))}</div>`).join('')}</div>`;
+  p+=`<div class="stack" style="--c:#1f3a8a"><h4>${tr('fT')}</h4><div class="frm">
+    <input id="f-name" placeholder="${tr('fName')}">
+    <select id="f-comm">${Object.keys(COMM).map(b=>`<option value="${b}">${b} · ${L(COMM[b][1])}</option>`).join('')}</select>
+    <select id="f-fmt"><option value="c">${tr('fmtC')}</option><option value="e">${tr('fmtE')}</option><option value="w">${tr('fmtW')}</option></select>
+    <select id="f-by"><option value="Hub">${tr('fHub')}</option><option value="Ext">${tr('fExt')}</option></select>
+    <button id="f-add">${tr('fAdd')}</button></div></div>`;
+  document.getElementById('pool').innerHTML=p;
+  details();
+  const pl=T.filter(t=>placed(t.id)),up=pl.filter(t=>!PROG[t.id]).length;
+  document.getElementById('checks').innerHTML=`<h3>${tr('chkT')}</h3>`+(i.length?'<ul class="flag">'+i.map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':`<span class="ok">${tr('chkOk')}</span>`)+`<div class="sub" style="margin-top:6px">${tr('chkTr',pl.length-up,pl.length)}</div>`;
+  document.getElementById('open').innerHTML=`<details id="opd" ${OPENQ?'open':''}><summary>${tr('openT')} <span class="none">· ${X.open.length}</span></summary><ul>${X.open.map(o=>`<li>${o[LANG==='hr'?1:0]}</li>`).join('')}</ul></details>`;
+}
+function details(){
+  const el=document.getElementById('det');
+  if(!sel||!byId[sel]){el.innerHTML=`<h3>${tr('detT')}</h3><span class="none">${tr('detHint')}</span>`;return;}
+  const t=byId[sel];
+  el.innerHTML=`<h3>${esc(L(t.n))}</h3><div><b style="color:${COMM[t.b][0]}">${tr('detCom')} ${t.b}</b> · ${tr(FK[t.f])} · ${tr('detOwner')}: ${esc(L(OWN[t.o]))}</div>
+  <div class="src">${t.doc?tr('detDoc'):tr('detProp')} ${tr('detSrc')}</div>
+  ${t.q?`<p><b>${tr('detQ')}</b>: ${t.q}</p><p><b>${tr('detO')}</b>: ${t.out}</p>`:''}
+  ${t.note?`<p>${esc(L(t.note))}</p>`:''}
+  ${t.forum?`<p>${tr('detForum')} ${t.by==='Hub'?tr('fHub'):tr('fExt')}.</p>`:''}
+  <p><b>${tr('detProg')}</b> <select id="prog-sel"><option value="">${tr('none')}</option>${PROGS.map(p=>`<option value="${p.id}" ${PROG[sel]===p.id?'selected':''}>${esc(L(p.n))}</option>`).join('')}</select></p>`;
+}
+
+function canDrop(d,el){
+  const k=el.dataset.drop;
+  if(d.kind==='topic'){
+    const t=byId[d.id];
+    if(k==='pool')return true;
+    if(k==='slot-c')return t.f==='c';
+    if(k==='slot-w')return t.f==='w';
+    if(k==='blk')return t.f==='e';
+    return false;
+  }
+  if(d.kind==='host')return k==='host'&&+el.dataset.q!==d.q;
+  if(d.kind==='blk')return k==='blk'&&+el.dataset.q===d.q&&el.dataset.role!==d.role;
+  return false;
+}
+function reroll(q){const r=roles(S.host[q]);for(const k of ROLES)S.ev[q][k].city=r[k];}
+function doDrop(d,el){
+  const q=+el.dataset.q,k=el.dataset.drop;
+  if(d.kind==='topic'){
+    unplace(d.id);
+    if(k==='slot-c')S.cyc[q]=d.id;
+    else if(k==='slot-w')S.wg[q]=d.id;
+    else if(k==='blk')S.ev[q][el.dataset.role].topic=d.id;
+  }else if(d.kind==='host'){
+    [S.host[d.q],S.host[q]]=[S.host[q],S.host[d.q]];
+    reroll(d.q);reroll(q);
+    const m=i=>LANG==='hr'?QM[i].hr:QM[i].en;
+    toast(tr('toastSwap',S.host[d.q],m(d.q),S.host[q],m(q)));
+  }else if(d.kind==='blk'){
+    const a=S.ev[q][d.role],b=S.ev[q][el.dataset.role];
+    [a.city,b.city]=[b.city,a.city];
+  }
+  render();
+}
+let drag=null;
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('[data-drag]');if(!el)return;
+  drag={el,d:JSON.parse(el.dataset.drag),sx:e.clientX,sy:e.clientY,moved:false,ghost:null};
+});
+window.addEventListener('pointermove',e=>{
+  if(!drag)return;
+  if(!drag.moved){
+    if(Math.hypot(e.clientX-drag.sx,e.clientY-drag.sy)<5)return;
+    drag.moved=true;
+    const g=drag.el.cloneNode(true);g.classList.add('ghost');g.removeAttribute('data-drag');g.removeAttribute('data-drop');
+    document.body.appendChild(g);drag.ghost=g;drag.el.classList.add('lifted');document.body.classList.add('dragging');
+  }
+  drag.ghost.style.left=(e.clientX+8)+'px';drag.ghost.style.top=(e.clientY+8)+'px';
+  document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));
+  const t=document.elementFromPoint(e.clientX,e.clientY);
+  const tg=t&&t.closest('[data-drop]');
+  if(tg&&canDrop(drag.d,tg))tg.classList.add('over');
+});
+window.addEventListener('pointerup',e=>{
+  if(!drag)return;
+  const cur=drag;drag=null;
+  document.querySelectorAll('.over').forEach(x=>x.classList.remove('over'));
+  document.body.classList.remove('dragging');
+  if(cur.ghost)cur.ghost.remove();
+  cur.el.classList.remove('lifted');
+  if(!cur.moved){
+    if(cur.d.kind==='topic'){sel=cur.d.id;details();}
+    return;
+  }
+  const t=document.elementFromPoint(e.clientX,e.clientY);
+  const tg=t&&t.closest('[data-drop]');
+  if(tg&&canDrop(cur.d,tg))doDrop(cur.d,tg);
+  else if(tg&&cur.d.kind==='topic')toast(tr('toastMismatch'));
+});
+window.addEventListener('pointercancel',()=>{
+  if(drag){if(drag.ghost)drag.ghost.remove();drag.el.classList.remove('lifted');document.body.classList.remove('dragging');drag=null;}
+});
+let tt;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(tt);tt=setTimeout(()=>t.style.display='none',3200);}
+
+document.addEventListener('click',e=>{
+  const id=e.target.id;
+  if(id==='lang-hr'||id==='lang-en'){LANG=id==='lang-hr'?'hr':'en';render();}
+  else if(id==='reset'){S=baseline();sel=null;progBase();CM=CM0.map(x=>({...x}));render();}
+  else if(id==='pdf')exportPdf();
+  else if(id==='f-add'){
+    const n=document.getElementById('f-name').value.trim();
+    if(!n){toast(tr('toastNoTopic'));return;}
+    const nid='f'+(++fcount),t={id:nid,b:document.getElementById('f-comm').value,o:'f0',f:document.getElementById('f-fmt').value,n:{en:n,hr:n},forum:1,by:document.getElementById('f-by').value};
+    T.push(t);byId[nid]=t;sel=nid;render();
+  }else if(id==='p-add'){
+    const n=document.getElementById('p-name').value.trim();
+    if(!n){toast(tr('toastNoProg'));return;}
+    PROGS.push({id:'px'+(++pcount),n:{en:n,hr:n},goal:document.getElementById('p-goal').value,scope:document.getElementById('p-scope').value});
+    render();
+  }
+});
+document.addEventListener('toggle',e=>{if(e.target.id==='cmd')CMOPEN=e.target.open;if(e.target.id==='opd')OPENQ=e.target.open;},true);
+document.addEventListener('change',e=>{
+  if(e.target.id==='prog-sel'&&sel){if(e.target.value)PROG[sel]=e.target.value;else delete PROG[sel];render();}
+  else if(e.target.dataset&&e.target.dataset.cm){CM.find(c=>c.id===e.target.dataset.cm).rem=e.target.value;render();}
+});
+
+downloads=true;
+
+function clean(s){const m={š:'s',č:'c',ć:'c',ž:'z',đ:'dj',Š:'S',Č:'C',Ć:'C',Ž:'Z',Đ:'Dj'};return String(s).replace(/[–—]/g,'-').replace(/≤/g,'<=').replace(/≥/g,'>=').replace(/→/g,'>').replace(/[„”“]/g,'"').replace(/[šćčžđŠČĆŽĐ]/g,c=>m[c]);}
+function rgb(h){return[parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)];}
+function tint(h,a){return rgb(h).map(v=>Math.round(255-(255-v)*a));}
+async function exportPdf(){
+  if(!window.jspdf){toast(tr('pdfLib'));return;}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+  const M=10,W=297-2*M,gap=3,cw=(W-3*gap)/4;
+  const nm=id=>L(byId[id].n);
+  doc.setFont('helvetica','bold');doc.setFontSize(15);doc.text(clean(tr('title')),M,M+5);
+  doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);
+  doc.text(clean(tr('pdfSub',new Date().toISOString().slice(0,10))),M,M+10);
+  doc.setTextColor(30);doc.setFontSize(7.5);
+  const gl=doc.splitTextToSize(clean(tr('pdfGov')),W);doc.text(gl,M,M+15);
+  let top=M+15+gl.length*3.4+2;
+  const drawBox=(x,y,w,lines,color,dashed)=>{
+    const h=lines.length*3.3+2.4;
+    doc.setFillColor(...tint(color,.15));doc.setDrawColor(...rgb(color));doc.setLineWidth(.3);
+    if(dashed)doc.setLineDashPattern([1,.8],0);else doc.setLineDashPattern([],0);
+    doc.roundedRect(x,y,w,h,1,1,'FD');doc.setLineDashPattern([],0);
+    doc.setFillColor(...rgb(color));doc.rect(x,y,1.2,h,'F');
+    doc.setFontSize(7);doc.setTextColor(30);doc.text(lines,x+2.4,y+3.3);
+    return h+1.2;
+  };
+  const label=(x,y,s)=>{doc.setFontSize(6);doc.setTextColor(110);doc.setFont('helvetica','bold');doc.text(clean(s).toUpperCase(),x,y);doc.setFont('helvetica','normal');return 3;};
+  const tline=(id,w)=>{const t=byId[id];return doc.splitTextToSize(clean(`${t.b} | ${nm(id)}${t.np?' '+tr('npTag'):''}`),w-4);};
+  let maxY=top;
+  for(let q=0;q<4;q++){
+    const x=M+q*(cw+gap);let y=top;
+    doc.setFillColor(38,50,90);doc.rect(x,y,cw,6,'F');doc.setTextColor(255);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.text(clean(L(QN[q])),x+2,y+4.2);
+    y+=8;doc.setFont('helvetica','normal');doc.setTextColor(80);doc.setFontSize(6.5);
+    doc.text(clean(`${tr('adopt')} ${L(GATE[q][0])} | ${tr('publish')} ${L(GATE[q][1])}`),x,y);y+=4;
+    doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(30);
+    doc.text(clean(tr('pdfHost',S.host[q],LANG==='hr'?QM[q].hr:QM[q].en)),x,y);doc.setFont('helvetica','normal');y+=4;
+    y+=label(x,y,tr('lCycle'));
+    if(S.cyc[q]){const t=byId[S.cyc[q]];y+=drawBox(x,y,cw,tline(S.cyc[q],cw),COMM[t.b][0],!t.doc);}
+    else{y+=drawBox(x,y,cw,[clean(tr('pdfEmpty'))],'#999999',true);}
+    y+=label(x,y,tr('lWg'));
+    if(S.wg[q]){const t=byId[S.wg[q]];y+=drawBox(x,y,cw,tline(S.wg[q],cw),COMM[t.b][0],!t.doc);}
+    else{y+=drawBox(x,y,cw,[clean(tr('pdfNoneW'))],'#999999',true);}
+    y+=label(x,y,tr('lEv'));
+    for(const k of ROLES){
+      const e=S.ev[q][k];
+      doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(30);doc.text(clean(`${tr(k)} - ${e.city}`),x,y+1);doc.setFont('helvetica','normal');y+=3;
+      if(e.topic){const t=byId[e.topic];y+=drawBox(x,y,cw,tline(e.topic,cw),COMM[t.b][0],!t.doc);}
+      else{doc.setFontSize(6.5);doc.setTextColor(130);doc.text(clean(tr('pdfNoTopic')),x+1,y+1);y+=4;}
+    }
+    maxY=Math.max(maxY,y);
+  }
+  let y=maxY+3;
+  doc.setFontSize(7.5);doc.setFont('helvetica','bold');doc.setTextColor(30);doc.text(clean(tr('pdfComm')),M,y);doc.setFont('helvetica','normal');
+  let lx=M+20;
+  for(const b of Object.keys(COMM)){doc.setFillColor(...rgb(COMM[b][0]));doc.rect(lx,y-2.4,3,3,'F');doc.setTextColor(30);const s=clean(`${b} ${L(COMM[b][1])}`);doc.text(s,lx+4,y);lx+=doc.getTextWidth(s)+7;}
+  y+=5;
+  const un=T.filter(t=>!placed(t.id)).map(t=>t.b+': '+L(t.n));
+  const ul=doc.splitTextToSize(clean(tr('pdfUnpl')+' - '+(un.join('; ')||tr('pdfNone2'))),W);
+  doc.setFontSize(7);doc.text(ul,M,y);y+=ul.length*3.2+2;
+  if(y>185){doc.addPage();y=M+4;}
+  const is=issues();
+  doc.setFont('helvetica','bold');doc.text(clean(tr('pdfPlan')),M,y);doc.setFont('helvetica','normal');y+=3.5;
+  const il=doc.splitTextToSize(clean(is.length?is.map(s=>'- '+s).join('\n'):tr('pdfAllOk')),W);doc.text(il,M,y);y+=il.length*3.2+2;
+
+  doc.addPage();
+  let z=M+6;
+  const head=s=>{doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(30);doc.text(clean(s),M,z);z+=5;doc.setFont('helvetica','normal');doc.setFontSize(8);};
+  const para=s=>{const l=doc.splitTextToSize(clean(s),W);if(z+l.length*3.6>200){doc.addPage();z=M+6;}doc.text(l,M,z);z+=l.length*3.6+2;};
+  head(tr('pdfCmT'));
+  const sm=cmSums();
+  for(const c of CM)para(`${tr('g_'+c.id)}: ${rng(c.min,c.max)} | ${tr('r_'+c.id)} | ${tr(c.rem==='hub'?'optH':c.rem==='ml'?'optM':'optB')}`);
+  para(`${tr('cmTot')}: ${rng(sm.mn,sm.mx)} | ${tr('cmHub')}: ${rng(sm.hmn,sm.hmx)} | ${tr('cmMl')}: ${rng(sm.mmn,sm.mmx)}`);
+  para(`${tr('remHubT')}: ${tr('remHub')}`);para(`${tr('remMlT')}: ${tr('remMl')}`);para(tr('cmN2'));
+  z+=2;head(tr('pdfCasc'));para(tr('pdfCascT'));
+  head(tr('pdfProgs'));
+  for(const p of PROGS){
+    const ls=T.filter(t=>PROG[t.id]===p.id&&placed(t.id)).map(t=>L(t.n));
+    para(`${L(p.n)} | ${tr(p.goal)} | ${tr(p.scope)} | ${tr('pdfLinked')}: ${ls.join('; ')||tr('pNone')}`);
+  }
+  head(tr('pdfUnl'));para(T.filter(t=>placed(t.id)&&!PROG[t.id]).map(t=>L(t.n)).join('; ')||tr('pdfNone2'));
+  head(tr('pdfForum'));para(T.filter(t=>t.forum).map(t=>`${L(t.n)} (${t.b}, ${tr(FK[t.f])})`).join('; ')||tr('pdfNone2'));
+  head(tr('pdfOpenT'));
+  for(const o of X.open)para('- '+o[LANG==='hr'?1:0]);
+  doc.setTextColor(110);doc.setFontSize(7);para(tr('pdfProgNote'));
+  const blob=new Blob([doc.output('arraybuffer')],{type:'application/pdf'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=LANG==='hr'?'carnet-hub-godisnji-plan-2027.pdf':'carnet-hub-annual-plan-2027.pdf';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast(tr('pdfSaved'));
+}
+render();
+</script>
+</body>
+</html>
