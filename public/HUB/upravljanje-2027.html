@@ -133,11 +133,17 @@ table.pt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 
 /* ── Details / open points ── */
 .dotted{margin:12px auto;max-width:640px;border:2px dotted #9ba3b0;border-radius:12px;padding:10px 14px;background:#fbfbfd}
-.dotted summary,#opd summary{cursor:pointer;font-size:14px;font-weight:700}
+.dotted summary{cursor:pointer;font-size:14px;font-weight:700}
 .rm{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
 @media(max-width:700px){.rm{grid-template-columns:1fr}}
 .rm .col b{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
 .rm .col div{font-size:13.5px}
+
+/* ── Collapsible ── */
+.panel-hd{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;padding-bottom:10px;border-bottom:2px solid #eceef2;margin-bottom:0}
+.panel-hd h3,.panel-hd h3.sec{margin:0;padding:0;border:none}
+.tog{background:none;border:none;padding:4px 8px;font-size:12px;font-weight:700;line-height:1;color:#9ba3b0;cursor:pointer;border-radius:5px}
+.tog:hover{color:#1c2330;background:#f0f2f5}
 </style>
 </head>
 <body>
@@ -314,7 +320,7 @@ progBase();
 const CM0=[
  {id:'carnet',min:2,max:3,rem:'both'},{id:'teach',min:2,max:2,rem:'hub'},{id:'he',min:1,max:2,rem:'hub'},
  {id:'head',min:1,max:1,rem:'hub'},{id:'stud',min:1,max:2,rem:'both'},{id:'ngo',min:1,max:1,rem:'ml'},{id:'edt',min:1,max:1,rem:'ml'}];
-let CM=CM0.map(x=>({...x})),CMOPEN=false,OPENQ=false;
+let CM=CM0.map(x=>({...x})),CMOPEN=false;
 
 function roles(host){const i=ORDER.indexOf(host);return{panel:ORDER[(i+1)%4],meetup:ORDER[(i+2)%4],workshop:ORDER[(i+3)%4]};}
 function baseline(){
@@ -324,6 +330,9 @@ function baseline(){
   return S;
 }
 let S=baseline(), sel=null, downloads=null;
+let COL={gov:false,casc:false,legend:false,forum:false,det:false,checks:false,open:false,pool:false};
+const mkTog=k=>`<button class="tog" data-col="${k}">${COL[k]?'&#9656;':'&#9662;'}</button>`;
+const hide=k=>COL[k]?' style="display:none"':'';
 
 function unplace(id){
   for(let q=0;q<4;q++){
@@ -353,8 +362,7 @@ function cmSums(){
 const rng=(a,b)=>a===b?a:a+'–'+b;
 function gov(){
   const g=k=>`<b>${tr(k)}</b>${tr(k+'S')}`;
-  return `<h3 class="sec">${tr('govT')}</h3>
-  <div class="tier"><div class="gn">${g('mgmt')}</div></div><div class="arw">&#8595;</div>
+  const body=`<div class="tier"><div class="gn">${g('mgmt')}</div></div><div class="arw">&#8595;</div>
   <div class="tier"><div class="gn">${g('cmte')}</div></div>
   <details id="cmd" class="dotted" ${CMOPEN?'open':''}><summary>${tr('cmT')} <span class="none">· ${tr('cmOpt')} · ${rng(cmSums().mn,cmSums().mx)}</span></summary>${comm()}</details>
   <div class="arw">&#8595;</div>
@@ -367,6 +375,7 @@ function gov(){
     <div class="sub2"><div class="gn">${g('sites')}</div><div class="gn"><b>${tr('extE')}</b>${tr('extES')}</div></div></div>
   </div>
   <div class="gn" style="margin-top:8px;border-style:dashed"><b>${tr('shared')}</b>${tr('sharedS')}</div>`;
+  return `<div class="panel-hd" data-col="gov"><h3 class="sec">${tr('govT')}</h3>${mkTog('gov')}</div><div style="margin-top:12px"${hide('gov')}>${body}</div>`;
 }
 function comm(){
   const s=cmSums();
@@ -379,16 +388,16 @@ function comm(){
   return h;
 }
 function casc(){
-  let h=`<h3 class="sec">${tr('cascT')}</h3><div class="cs">`;
-  for(const k of ['c1','c2','c3','c4','c5'])h+=`<div class="cl"><b>${tr(k)}</b>${tr(k+'s')}</div>`;
-  h+=`</div><div class="cl sup"><b>${tr('supT')}</b>${tr('supS')}</div>`;
-  h+=`<table class="pt"><tr><th>${tr('pProg')}</th><th>${tr('pGoal')}</th><th>${tr('pScope')}</th><th>${tr('pLink')}</th></tr>`;
+  let b=`<div class="cs">`;
+  for(const k of ['c1','c2','c3','c4','c5'])b+=`<div class="cl"><b>${tr(k)}</b>${tr(k+'s')}</div>`;
+  b+=`</div><div class="cl sup"><b>${tr('supT')}</b>${tr('supS')}</div>`;
+  b+=`<table class="pt"><tr><th>${tr('pProg')}</th><th>${tr('pGoal')}</th><th>${tr('pScope')}</th><th>${tr('pLink')}</th></tr>`;
   for(const p of PROGS){
     const ls=T.filter(t=>PROG[t.id]===p.id&&placed(t.id)).map(t=>L(t.n));
-    h+=`<tr><td>${esc(L(p.n))}</td><td>${tr(p.goal)}</td><td>${tr(p.scope)}</td><td>${ls.length?esc(ls.join('; ')):'<span class="none">'+tr('pNone')+'</span>'}</td></tr>`;
+    b+=`<tr><td>${esc(L(p.n))}</td><td>${tr(p.goal)}</td><td>${tr(p.scope)}</td><td>${ls.length?esc(ls.join('; ')):'<span class="none">'+tr('pNone')+'</span>'}</td></tr>`;
   }
-  h+=`</table><div class="frm" style="grid-template-columns:2fr 1fr 1fr auto"><input id="p-name" placeholder="${tr('pAdd')}"><select id="p-goal">${GOALS.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><select id="p-scope">${SCOPES.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><button id="p-add">${tr('pAddB')}</button></div>`;
-  return h;
+  b+=`</table><div class="frm" style="grid-template-columns:2fr 1fr 1fr auto"><input id="p-name" placeholder="${tr('pAdd')}"><select id="p-goal">${GOALS.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><select id="p-scope">${SCOPES.map(g=>`<option value="${g}">${tr(g)}</option>`).join('')}</select><button id="p-add">${tr('pAddB')}</button></div>`;
+  return `<div class="panel-hd" data-col="casc"><h3 class="sec">${tr('cascT')}</h3>${mkTog('casc')}</div><div style="margin-top:12px"${hide('casc')}>${b}</div>`;
 }
 function issues(){
   const out=[];
@@ -411,7 +420,7 @@ function render(){
    <span class="sub">${i.length?tr('nChecks',i.length):tr('okStatus')}</span>${downloads?`<button id="pdf" class="pri">${tr('pdf')}</button>`:''}</div>`;
   document.getElementById('gov').innerHTML=gov();
   document.getElementById('casc').innerHTML=casc();
-  document.getElementById('legend').textContent=tr('legend');
+  document.getElementById('legend').innerHTML=`<div class="panel-hd" data-col="legend"><span style="font-size:13px;font-weight:600;color:#5b6472">${LANG==='hr'?'Legenda':'Legend'}</span>${mkTog('legend')}</div><div style="margin-top:8px;font-size:13px;color:#5b6472;line-height:1.6"${hide('legend')}>${tr('legend')}</div>`;
   let h='';
   for(let q=0;q<4;q++){
     const host=S.host[q];
@@ -436,27 +445,29 @@ function render(){
     pt+=`<div class="stack" style="--c:${COMM[b][0]}"><h4>${b} · ${L(COMM[b][1])}</h4>${ids.length?ids.map(t=>card(t.id)).join(''):'<div class="none">'+tr('allPlaced')+'</div>'}</div>`;
   }
   pt+=`<div class="stack" style="--c:#6b7482"><h4>${tr('strat')}</h4>${STRAT.map(s=>`<div class="none" style="margin-bottom:3px">${esc(L(s))}</div>`).join('')}</div>`;
-  document.getElementById('pool').innerHTML=`<div class="pool-head"><h3>${tr('poolT')}</h3><div class="sub">${tr('poolS')}</div></div><div class="pool-topics" data-drop="pool">${pt}</div>`;
-  document.getElementById('forum').innerHTML=`<h3>${tr('fT')}</h3><div class="frm" style="grid-template-columns:1fr 1fr 1fr auto">
+  document.getElementById('pool').innerHTML=`<div class="pool-head"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px"><h3 style="margin:0;font-size:15px;font-weight:800">${tr('poolT')}</h3>${mkTog('pool')}</div><div class="sub"${COL.pool?' style="display:none"':''}>${tr('poolS')}</div></div><div class="pool-topics" data-drop="pool"${hide('pool')}>${pt}</div>`;
+  document.getElementById('forum').innerHTML=`<div class="panel-hd" data-col="forum"><h3>${tr('fT')}</h3>${mkTog('forum')}</div><div style="margin-top:12px"${hide('forum')}><div class="frm" style="grid-template-columns:1fr 1fr 1fr auto">
     <input id="f-name" placeholder="${tr('fName')}">
     <select id="f-comm">${Object.keys(COMM).map(b=>`<option value="${b}">${b} · ${L(COMM[b][1])}</option>`).join('')}</select>
     <select id="f-fmt"><option value="c">${tr('fmtC')}</option><option value="e">${tr('fmtE')}</option><option value="w">${tr('fmtW')}</option></select>
     <select id="f-by"><option value="Hub">${tr('fHub')}</option><option value="Ext">${tr('fExt')}</option></select>
-    <button id="f-add">${tr('fAdd')}</button></div>`;
+    <button id="f-add">${tr('fAdd')}</button></div></div>`;
   details();
   const pl=T.filter(t=>placed(t.id)),up=pl.filter(t=>!PROG[t.id]).length;
-  document.getElementById('checks').innerHTML=`<h3>${tr('chkT')}</h3>`+(i.length?'<ul class="flag">'+i.map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':`<span class="ok">${tr('chkOk')}</span>`)+`<div class="sub" style="margin-top:6px">${tr('chkTr',pl.length-up,pl.length)}</div>`;
-  document.getElementById('open').innerHTML=`<details id="opd" ${OPENQ?'open':''}><summary>${tr('openT')} <span class="none">· ${X.open.length}</span></summary><ul>${X.open.map(o=>`<li>${o[LANG==='hr'?1:0]}</li>`).join('')}</ul></details>`;
+  document.getElementById('checks').innerHTML=`<div class="panel-hd" data-col="checks"><h3>${tr('chkT')}</h3>${mkTog('checks')}</div><div style="margin-top:12px"${hide('checks')}>`+(i.length?'<ul class="flag">'+i.map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':`<span class="ok">${tr('chkOk')}</span>`)+`<div class="sub" style="margin-top:6px">${tr('chkTr',pl.length-up,pl.length)}</div></div>`;
+  document.getElementById('open').innerHTML=`<div class="panel-hd" data-col="open"><h3>${tr('openT')}</h3>${mkTog('open')}</div><div style="margin-top:12px"${hide('open')}><ul>${X.open.map(o=>`<li>${o[LANG==='hr'?1:0]}</li>`).join('')}</ul></div>`;
 }
 function details(){
   const el=document.getElementById('det');
-  if(!sel||!byId[sel]){el.innerHTML=`<h3>${tr('detT')}</h3><span class="none">${tr('detHint')}</span>`;return;}
+  if(!sel||!byId[sel]){el.innerHTML=`<div class="panel-hd" data-col="det"><h3>${tr('detT')}</h3>${mkTog('det')}</div><div style="margin-top:12px"${hide('det')}><span class="none">${tr('detHint')}</span></div>`;return;}
   const t=byId[sel];
-  el.innerHTML=`<h3>${esc(L(t.n))}</h3><div><b style="color:${COMM[t.b][0]}">${tr('detCom')} ${t.b}</b> · ${tr(FK[t.f])} · ${tr('detOwner')}: ${esc(L(OWN[t.o]))}</div>
+  el.innerHTML=`<div class="panel-hd" data-col="det"><h3>${esc(L(t.n))}</h3>${mkTog('det')}</div><div style="margin-top:12px"${hide('det')}>
+  <div><b style="color:${COMM[t.b][0]}">${tr('detCom')} ${t.b}</b> · ${tr(FK[t.f])} · ${tr('detOwner')}: ${esc(L(OWN[t.o]))}</div>
   ${t.q?`<p><b>${tr('detQ')}</b>: ${t.q}</p><p><b>${tr('detO')}</b>: ${t.out}</p>`:''}
   ${t.note?`<p>${esc(L(t.note))}</p>`:''}
   ${t.forum?`<p>${tr('detForum')} ${t.by==='Hub'?tr('fHub'):tr('fExt')}.</p>`:''}
-  <p><b>${tr('detProg')}</b> <select id="prog-sel"><option value="">${tr('none')}</option>${PROGS.map(p=>`<option value="${p.id}" ${PROG[sel]===p.id?'selected':''}>${esc(L(p.n))}</option>`).join('')}</select></p>`;
+  <p><b>${tr('detProg')}</b> <select id="prog-sel"><option value="">${tr('none')}</option>${PROGS.map(p=>`<option value="${p.id}" ${PROG[sel]===p.id?'selected':''}>${esc(L(p.n))}</option>`).join('')}</select></p>
+  </div>`;
 }
 
 function canDrop(d,el){
@@ -534,8 +545,11 @@ let tt;function toast(m){const t=document.getElementById('toast');t.textContent=
 
 document.addEventListener('click',e=>{
   const id=e.target.id;
+  if(e.target.classList.contains('tog')&&e.target.dataset.col){COL[e.target.dataset.col]=!COL[e.target.dataset.col];render();return;}
+  const hd=e.target.closest('.panel-hd[data-col]');
+  if(hd){COL[hd.dataset.col]=!COL[hd.dataset.col];render();return;}
   if(id==='lang-hr'||id==='lang-en'){LANG=id==='lang-hr'?'hr':'en';render();}
-  else if(id==='reset'){S=baseline();sel=null;progBase();CM=CM0.map(x=>({...x}));render();}
+  else if(id==='reset'){S=baseline();sel=null;progBase();CM=CM0.map(x=>({...x}));COL=Object.fromEntries(Object.keys(COL).map(k=>[k,false]));render();}
   else if(id==='pdf')exportPdf();
   else if(id==='f-add'){
     const n=document.getElementById('f-name').value.trim();
@@ -549,7 +563,7 @@ document.addEventListener('click',e=>{
     render();
   }
 });
-document.addEventListener('toggle',e=>{if(e.target.id==='cmd')CMOPEN=e.target.open;if(e.target.id==='opd')OPENQ=e.target.open;},true);
+document.addEventListener('toggle',e=>{if(e.target.id==='cmd')CMOPEN=e.target.open;},true);
 document.addEventListener('change',e=>{
   if(e.target.id==='prog-sel'&&sel){if(e.target.value)PROG[sel]=e.target.value;else delete PROG[sel];render();}
   else if(e.target.dataset&&e.target.dataset.cm){CM.find(c=>c.id===e.target.dataset.cm).rem=e.target.value;render();}
