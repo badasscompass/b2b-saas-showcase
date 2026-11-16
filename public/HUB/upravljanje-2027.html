@@ -159,7 +159,6 @@ table.pt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
       <div class="panel2" id="forum"></div>
       <div class="panel2 det" id="det"></div>
       <div class="panel2" id="checks"></div>
-      <div class="panel2" id="open"></div>
     </div>
     <aside class="pool" id="pool"></aside>
   </div>
@@ -456,7 +455,6 @@ function render(){
   details();
   const pl=T.filter(t=>placed(t.id)),up=pl.filter(t=>!PROG[t.id]).length;
   document.getElementById('checks').innerHTML=`<div class="panel-hd" data-col="checks"><h3>${tr('chkT')}</h3>${mkTog('checks')}</div><div class="ph-body"${hide('checks')}>`+(i.length?'<ul class="flag">'+i.map(x=>`<li>${esc(x)}</li>`).join('')+'</ul>':`<span class="ok">${tr('chkOk')}</span>`)+`<div class="sub" style="margin-top:6px">${tr('chkTr',pl.length-up,pl.length)}</div></div>`;
-  document.getElementById('open').innerHTML=`<div class="panel-hd" data-col="open"><h3>${tr('openT')}</h3>${mkTog('open')}</div><div class="ph-body"${hide('open')}><ul>${X.open.map(o=>`<li>${o[LANG==='hr'?1:0]}</li>`).join('')}</ul></div>`;
 }
 function details(){
   const el=document.getElementById('det');
