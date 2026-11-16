@@ -366,13 +366,22 @@ function gov(){
   <div class="tier"><div class="gn">${g('cmte')}</div></div>
   <details id="cmd" class="dotted" ${CMOPEN?'open':''}><summary>${tr('cmT')} <span class="none">· ${tr('cmOpt')} · ${rng(cmSums().mn,cmSums().mx)}</span></summary>${comm()}</details>
   <div class="arw">&#8595;</div>
-  <div class="two">
-   <div class="col hubc"><div class="gn">${g('hubR')}</div><div class="arw">&#8595;</div><div class="gn">${g('lead')}</div><div class="arw">&#8595;</div>
-    <div class="sub2"><div class="gn">${g('tOwn')}</div><div class="gn">${g('fac')}</div></div><div class="arw">${tr('perC')}</div>
-    <div class="sub2"><div class="gn">${g('sOwn')}</div><div class="gn">${g('val')}</div></div></div>
-   <div class="col mlc"><div class="gn">${g('mlR')}</div><div class="arw">&#8595;</div><div class="gn"><b>${tr('mlH')}</b>${tr('mlHS')}</div><div class="arw">&#8595;</div>
-    <div class="gn"><b>${tr('coord')}</b>Zagreb, Osijek, Rijeka, Split</div><div class="arw">&#8595;</div>
-    <div class="sub2"><div class="gn">${g('sites')}</div><div class="gn"><b>${tr('extE')}</b>${tr('extES')}</div></div></div>
+  <div class="gn" style="padding:16px">
+   <div class="sub2" style="gap:16px;align-items:start">
+    <div>
+     <div style="font-size:13px;font-weight:700;color:#1e3a8a;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #a78bfa">${tr('hubR')} <span style="font-weight:400;color:#5b6472">· ${tr('hubRS')}</span></div>
+     <div class="gn">${g('lead')}</div><div class="arw">&#8595;</div>
+     <div class="sub2"><div class="gn">${g('tOwn')}</div><div class="gn">${g('fac')}</div></div>
+     <div class="arw">${tr('perC')}</div>
+     <div class="sub2"><div class="gn">${g('sOwn')}</div><div class="gn">${g('val')}</div></div>
+    </div>
+    <div style="border-left:1px solid #dde0e6;padding-left:16px">
+     <div style="font-size:13px;font-weight:700;color:#0f766e;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #2dd4bf">${tr('mlR')} <span style="font-weight:400;color:#5b6472">· ${tr('mlRS')}</span></div>
+     <div class="gn"><b>${tr('mlH')}</b>${tr('mlHS')}</div><div class="arw">&#8595;</div>
+     <div class="gn"><b>${tr('coord')}</b>Zagreb, Osijek, Rijeka, Split</div><div class="arw">&#8595;</div>
+     <div class="sub2"><div class="gn">${g('sites')}</div><div class="gn"><b>${tr('extE')}</b>${tr('extES')}</div></div>
+    </div>
+   </div>
   </div>
   <div class="gn" style="margin-top:8px;border-style:dashed"><b>${tr('shared')}</b>${tr('sharedS')}</div>`;
   return `<div class="panel-hd" data-col="gov"><h3 class="sec">${tr('govT')}</h3>${mkTog('gov')}</div><div class="ph-body"${hide('gov')}>${body}</div>`;
