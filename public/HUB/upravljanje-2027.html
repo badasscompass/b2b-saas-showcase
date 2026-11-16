@@ -403,8 +403,7 @@ function comm(){
   for(const c of CM){
     h+=`<tr><td>${tr('g_'+c.id)}</td><td>${rng(c.min,c.max)}</td><td>${tr('r_'+c.id)}</td></tr>`;
   }
-  h+=`<tr><th>${tr('cmTot')}</th><th>${rng(s.mn,s.mx)}</th><th>${tr('cmHub')}: ${rng(s.hmn,s.hmx)} · ${tr('cmMl')}: ${rng(s.mmn,s.mmx)}</th></tr></table>
-  <div class="rm"><div class="col hubc"><b>${tr('remHubT')}</b><div>${tr('remHub')}</div></div><div class="col mlc"><b>${tr('remMlT')}</b><div>${tr('remMl')}</div></div></div>`;
+  h+=`<tr><th>${tr('cmTot')}</th><th>${rng(s.mn,s.mx)}</th><th>${tr('cmHub')}: ${rng(s.hmn,s.hmx)} · ${tr('cmMl')}: ${rng(s.mmn,s.mmx)}</th></tr></table>`;
   return h;
 }
 function casc(){
