@@ -389,10 +389,12 @@ function gov(){
   </div>
   <div style="margin-top:8px;border:1px solid #fed7aa;border-left:4px solid #ea580c;border-radius:10px;padding:11px 14px;background:color-mix(in srgb,#ea580c 7%,#fff)">
    <b style="color:#c2410c">Portal DOT</b>
-   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px">
-    <div class="gn">${LANG==='hr'?'Uredništvo':'Editorial board'}</div>
-    <div class="gn">${LANG==='hr'?'Stranica zajednice Huba':'Hub community landing page'}</div>
-    <div class="gn">${LANG==='hr'?'Rezervacije':'Reservations'}</div>
+   <div style="display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap">
+    <div class="gn" style="flex:1">${LANG==='hr'?'Uredništvo':'Editorial board'}</div>
+    <span style="color:#9ba3b0;font-size:18px;flex-shrink:0">&#8594;</span>
+    <div class="gn" style="flex:1">${LANG==='hr'?'Stranica zajednice Huba':'Hub community landing page'}</div>
+    <span style="color:#9ba3b0;font-size:18px;flex-shrink:0">&#8594;</span>
+    <div class="gn" style="flex:1">${LANG==='hr'?'Forma za prijavu i rezervaciju':'Registration and reservation form'}</div>
    </div>
   </div>`;
   return `<div class="panel-hd" data-col="gov"><h3 class="sec">${tr('govT')}</h3>${mkTog('gov')}</div><div class="ph-body"${hide('gov')}>${body}</div>`;
