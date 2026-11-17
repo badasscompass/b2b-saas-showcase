@@ -169,7 +169,7 @@ table.pt{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
 let LANG='hr';
 const X={
 title:['CARNET Hub · Annual Planner 2027','CARNET Hub · Godišnji planer 2027'],
-sub:['Communities A–E (colours) → quarterly activation cycles, working groups and rhythm events. Drag topics, host cities and event blocks.','Zajednice A–E (boje) → tromjesečni ciklusi aktivacije, radne skupine i događanja u ritmu. Povucite teme, gradove domaćine i blokove događanja.'],
+sub:['Communities A–E (colours) · one pedagogical challenge per quarter · connect existing activities, community proposes and leads. Drag topics, host cities and event blocks.','Zajednice A–E (boje) · jedan pedagoški izazov po kvartalu · povezivanje postojećih aktivnosti, zajednica predlaže i vodi. Povucite teme, gradove domaćine i blokove događanja.'],
 reset:['Reset to baseline','Vrati početno stanje'],
 pdf:['Export PDF','Izvezi PDF'],
 okStatus:['Plan consistent','Plan je dosljedan'],
@@ -178,7 +178,7 @@ govT:['Governance hierarchy','Hijerarhija upravljanja'],
 mgmt:['CARNET management','Uprava CARNET-a'],mgmtS:['appoints the committee','imenuje odbor'],
 cmte:['CARNET Hub Committee','Odbor CARNET Huba'],
 cmteS:['one body, two remits · 9–11 members, 1-year mandate, quarterly sessions, consensus else majority','jedno tijelo, dvije zadaće · 9–11 članova, mandat godinu dana, tromjesečne sjednice, konsenzus ili većina'],
-hubR:['Hub programme remit','Zadaća: program Huba'],hubRS:['Hub programme and community events','program Huba i događanja zajednice'],
+hubR:['Hub programme remit','Zadaća: program Huba'],hubRS:['programme, community events · 3 connection modes: label+calendar / MultiLab slot / share materials','program, događanja zajednice · 3 načina: oznaka+kalendar / termin u MultiLabu / dijeljenje materijala'],
 lead:['Hub programme lead','Voditelj programa Huba'],leadS:['annual plan, priorities, budget; drives goals to initiatives','godišnji plan, prioriteti, proračun; vodi od ciljeva do inicijativa'],
 tOwn:['Theme owners','Vlasnici tema'],tOwnS:['CARNET departments','odjeli CARNET-a'],
 fac:['Facilitators','Facilitatori'],facS:['Hub team (external pool: open)','tim Huba (vanjski skup: otvoreno)'],
@@ -186,7 +186,7 @@ perC:['per cycle, alongside','po ciklusu, uz njih'],
 sOwn:['Service owners','Vlasnici usluga'],sOwnS:['answer findings','odgovaraju na nalaze'],
 val:['Academic validators','Akademski validatori'],valS:['external quality check','vanjska provjera kvalitete'],
 mlR:['MultiLab remit','Zadaća: MultiLab'],mlRS:['Physical space and external events','fizički prostor i vanjska događanja'],
-mlH:['MultiLab head','Voditelj MultiLaba'],mlHS:['space, equipment, bookings','prostor, oprema, rezervacije'],
+mlH:['MultiLab head','Voditelj MultiLaba'],mlHS:['space, equipment, bookings · monthly Hub events · quarterly activation event','prostor, oprema, rezervacije · mj. Hub događanja · kvart. događaj aktivacije'],
 coord:['Local coordinators ×4','Lokalni koordinatori ×4'],
 sites:['City sites','Gradske lokacije'],sitesS:['4 MultiLabs','4 MultiLaba'],
 extE:['External events','Vanjska događanja'],extES:['hosts, partners','domaćini, partneri'],
@@ -368,7 +368,7 @@ function gov(){
   <div class="arw">&#8595;</div>
   <div class="gn" style="padding:16px">
    <div style="background:#eef2ff;border:1.5px solid #818cf8;border-radius:10px;padding:11px 14px;margin-bottom:10px">
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#4338ca;margin-bottom:3px">${LANG==='hr'?'Program Huba · izvršna funkcija':'Hub programme · executive function'}</div>
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#4338ca;margin-bottom:3px">${LANG==='hr'?'Tim Huba · izvršna funkcija':'Hub team · executive function'}</div>
     ${g('lead')}
    </div>
    <div class="arw">&#8595;</div>
@@ -380,15 +380,15 @@ function gov(){
      <div class="sub2"><div class="gn">${g('sOwn')}</div><div class="gn">${g('val')}</div></div>
     </div>
     <div style="border-top:2px solid #ea580c;padding-top:10px">
-     <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#c2410c;margin-bottom:6px">Portal DOT</div>
-     <div class="gn" style="background:color-mix(in srgb,#ea580c 6%,#fff);border-color:#fed7aa;margin-bottom:5px">${LANG==='hr'?'Uredništvo':'Editorial board'}</div>
+     <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#c2410c;margin-bottom:6px">${LANG==='hr'?'Portal DOT · ulazna vrata':'Portal DOT · entry point'}</div>
+     <div class="gn" style="background:color-mix(in srgb,#ea580c 6%,#fff);border-color:#fed7aa;margin-bottom:5px">${LANG==='hr'?'Kvartalni pregled: izazov, aktivnosti, poziv':'Quarterly overview: challenge, activities, invitation'}</div>
      <div class="arw">&#8595;</div>
-     <div class="gn" style="background:color-mix(in srgb,#ea580c 6%,#fff);border-color:#fed7aa;margin-bottom:5px">${LANG==='hr'?'Stranica zajednice Huba':'Hub community landing page'}</div>
+     <div class="gn" style="background:color-mix(in srgb,#ea580c 6%,#fff);border-color:#fed7aa;margin-bottom:5px">${LANG==='hr'?'Prijavni obrazac (zajednica predlaže)':'Registration form (community proposes)'}</div>
      <div class="arw">&#8595;</div>
-     <div class="gn" style="background:color-mix(in srgb,#ea580c 6%,#fff);border-color:#fed7aa">${LANG==='hr'?'Forma za prijavu i rezervaciju':'Registration and reservation form'}</div>
+     <div class="gn" style="background:color-mix(in srgb,#ea580c 6%,#fff);border-color:#fed7aa">${LANG==='hr'?'Edutorij (polica) · Meduza (arhiva)':'Edutorij (shelf) · Meduza (archive)'}</div>
     </div>
     <div style="border-top:2px solid #0d9488;padding-top:10px">
-     <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#0f766e;margin-bottom:6px">${LANG==='hr'?'MultiLab · lokalna operativa':'MultiLab · local operations'}</div>
+     <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;color:#0f766e;margin-bottom:6px">${LANG==='hr'?'MultiLab · prostor':'MultiLab · space'}</div>
      <div class="gn"><b>${tr('mlH')}</b>${tr('mlHS')}</div><div class="arw">&#8595;</div>
      <div class="gn"><b>${tr('coord')}</b>Zagreb, Osijek, Rijeka, Split</div><div class="arw">&#8595;</div>
      <div class="sub2"><div class="gn">${g('sites')}</div><div class="gn"><b>${tr('extE')}</b>${tr('extES')}</div></div>
